@@ -1,0 +1,46 @@
+{
+  "name": "Tripwire",
+  "tagline": "Agents that make business decisions, record exactly which data each one depends on, and reopen only the affected decisions when that data changes.",
+  "hackathon": "Open Agent Hackathon 2026",
+  "track": "Track 03: Reasoning Architecture",
+  "team": "solo",
+  "entry_point": { "method": "POST", "path": "/run", "host": "0.0.0.0", "port": 8000, "format": "JSON in, JSON out" },
+  "run": {
+    "docker": "docker build -t tripwire . && docker run -p 8000:8000 -e SAMPLE_MODE=true tripwire",
+    "node": "npm install && SAMPLE_MODE=true npm start",
+    "sample_mode": "SAMPLE_MODE=true runs offline with bundled data and rule-based model fallbacks; no keys needed"
+  },
+  "agents": [
+    { "name": "Planner", "role": "selects approved SQL templates", "model": "nvidia/nemotron-3.5-lightning-30b-a3b" },
+    { "name": "Analyst", "role": "runs queries, computes metrics, summarises findings", "model": "nvidia/nemotron-3.5-lightning-30b-a3b" },
+    { "name": "Evidence Critic", "role": "checks findings against query hashes, rejects stale memory, reviews summary and decision", "model": null },
+    { "name": "Memory Keeper", "role": "recalls, withholds stale and records claims with lineage", "engine": "Meterless H-MEM" },
+    { "name": "Risk Officer", "role": "risk grading, escalation, content-safety check", "model": "nvidia/nemotron-3.5-content-safety" },
+    { "name": "Decider", "role": "keep / dual_source / exit with confidence and tripwires", "model": "nvidia/nemotron-3-ultra-550b-a55b", "thinking": true },
+    { "name": "Watcher", "role": "selective reopen on data change", "model": null }
+  ],
+  "sponsor_technology": {
+    "zetaris": {
+      "used_for": "all source reads via Zetaris SQL (REST); approved decisions appended to a Parquet ledger through Zetaris RUN EXPORT and read back with Zetaris SQL",
+      "code": ["app/adapters/zetaris.ts", "app/sql/zetaris_tables.ts", "scripts/zetaris_setup.ts"]
+    },
+    "meterless": {
+      "engines": ["H-MEM"],
+      "used_for": "claim memory with row-level lineage (derivedFrom), recall, supersession and audit ledger",
+      "code": ["app/adapters/hmem.ts", "vendor/hmem/"],
+      "notes": "reference engine vendored (Apache-2.0, upstream commit 1742dec); hash embedder, not semantic"
+    },
+    "nvidia": {
+      "models": ["nvidia/nemotron-3-ultra-550b-a55b", "nvidia/nemotron-3.5-lightning-30b-a3b", "nvidia/nemotron-3.5-content-safety"],
+      "endpoint": "https://integrate.api.nvidia.com/v1",
+      "code": ["app/adapters/model.ts"]
+    },
+    "cursor": { "used_for": "development environment; project rules and Cursor CLI-written tests", "code": [".cursor/rules/tripwire.mdc"] }
+  },
+  "examples": { "inputs": "input_examples/", "outputs": "output_examples/" },
+  "logs": "logs/trace-<run_id>.jsonl and stdout",
+  "data": { "real": "SEC EDGAR quarterly financials (public domain)", "synthetic": "supplier spend and change files 02, 03" },
+  "pre_existing_components": ["vendor/hmem (Meterless H-MEM, Apache-2.0)", "open-source npm libraries", "planning notes (no code)"],
+  "demo_video": null,
+  "license": {"project": "not yet chosen", "vendor/hmem": "Apache-2.0"}
+}
