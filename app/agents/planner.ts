@@ -5,7 +5,8 @@ import { callModel, type Deps, type RunState } from "../orchestration/state.js";
 
 const AGENT = "Planner";
 const ORDER = ["supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration"];
-const REQUIRED = ["supplier_spend_row", "supplier_financials_latest"];
+// A keep/dual-source/exit call needs all four views: without history there is no trend, without the category no alternatives.
+const REQUIRED = ORDER;
 
 export async function plan(deps: Deps, s: RunState): Promise<string[]> {
   const options = TEMPLATES.filter((t) => ORDER.includes(t.id));
@@ -36,12 +37,13 @@ export async function plan(deps: Deps, s: RunState): Promise<string[]> {
     steps = [...ORDER];
     focus = "full review (rule-based plan)";
   }
-  for (const r of REQUIRED) if (!steps.includes(r)) steps.push(r);
+  const added = REQUIRED.filter((r) => !steps.includes(r));
+  steps.push(...added);
   steps = ORDER.filter((id) => steps.includes(id));
 
   deps.tracer.emit({
     decision_id: s.decision_id, agent_name: AGENT, action: "plan", event: "handoff", target_agent: "Analyst",
-    status: res.fallback ? "fallback" : "success", input_summary: s.question, output_summary: `${steps.join(" → ")}${focus ? ` | focus: ${focus}` : ""}`,
+    status: res.fallback ? "fallback" : "success", input_summary: s.question, output_summary: `${steps.join(" → ")}${focus ? ` | focus: ${focus}` : ""}${added.length && !res.fallback ? ` | policy added: ${added.join(", ")}` : ""}`,
   });
   return steps;
 }

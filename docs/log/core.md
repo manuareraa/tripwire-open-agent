@@ -15,3 +15,6 @@
 - `agent -p --model composer-2.5` (Cursor CLI, run under `scripts/memguard.sh`) wrote `test/model.test.ts`: 6 cases against a mocked `fetch`
   (no key, thinking flag + reasoning excerpt, guard sends user-only, 400 retry without `response_format`, 500 fallback, JSON extraction).
   Reviewed and kept as written; all pass.
+- Live smoke (real Nemotron, fake data, SUP-02): Lightning planned and summarised, Ultra decided with thinking on (~40 s), content-safety guard ran,
+  critic approved round 1 → `dual_source` @ 0.8, escalated. First run showed the Planner skipping history and category queries, so the
+  decision lacked trend and alternatives; all four views are now required and the trace notes when policy added a step.
