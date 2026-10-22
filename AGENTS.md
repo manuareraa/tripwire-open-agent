@@ -23,8 +23,8 @@ Tripwire: agents that make a supplier decision (keep / dual_source / exit), reco
 ## 4. Code layout and ownership
 | Path | Owner stream |
 |---|---|
-| `app/types.ts`, `app/config.ts`, `app/tracing.ts` | scaffold (shared contracts; change only via integrator) |
-| `app/adapters/zetaris.ts`, `app/sql/` | zetaris-gateway |
+| `app/types.ts`, `app/config.ts`, `app/tracing.ts`, `app/sql/templates.ts` | scaffold (shared contracts; change only via integrator) |
+| `app/adapters/zetaris.ts`, `app/sql/zetaris_*.ts`, `scripts/zetaris_*` | zetaris-gateway |
 | `app/adapters/sample_data.ts`, `data/`, `scripts/fetch_edgar.ts`, `input_examples/` | data-samples |
 | `app/adapters/hmem.ts`, `vendor/hmem/` | hmem-memory |
 | `app/adapters/model.ts` | model-nemotron |
