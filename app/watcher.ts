@@ -29,10 +29,10 @@ export async function reopenFor(deps: Deps, store: DecisionStore, changed: RowRe
   } catch (e) {
     // Without lineage we cannot be selective: fall back to checking every active decision.
     dependents = [...activeIds];
-    t.emit({ agent_name: AGENT, action: "lineage_lookup", event: "fallback", sponsor: "meterless-hmem", status: "fallback", output_summary: `memory unavailable (${(e as Error).message}); checking all ${dependents.length}` });
+    t.emit({ agent_name: AGENT, action: "lineage_lookup", event: "fallback", sponsor: deps.memory.name ?? "memory", status: "fallback", output_summary: `memory unavailable (${(e as Error).message}); checking all ${dependents.length}` });
   }
   t.emit({
-    agent_name: AGENT, action: "lineage_lookup", event: "sponsor_call", sponsor: "meterless-hmem", status: "success",
+    agent_name: AGENT, action: "lineage_lookup", event: "sponsor_call", sponsor: deps.memory.name ?? "memory", status: "success",
     input_summary: `${changed.table}:${changed.key} changed`,
     output_summary: `${dependents.length} of ${active.length} active decisions depend on this row: ${dependents.join(", ") || "none"}`,
   });

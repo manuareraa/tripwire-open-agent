@@ -10,7 +10,7 @@ export async function recallPrior(deps: Deps, s: RunState): Promise<void> {
   try {
     s.priorClaims = await deps.memory.recall(s.subject_id, s.question, 20);
   } catch (e) {
-    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "fallback", sponsor: "meterless-hmem", status: "fallback", output_summary: `memory unavailable: ${(e as Error).message}` });
+    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "fallback", sponsor: deps.memory.name ?? "memory", status: "fallback", output_summary: `memory unavailable: ${(e as Error).message}` });
     s.priorClaims = [];
     return;
   }
@@ -20,7 +20,7 @@ export async function recallPrior(deps: Deps, s: RunState): Promise<void> {
   s.staleClaims = s.priorClaims.filter((c) => c.derivedFrom.some((d) => current.has(rowId(d.row)) && current.get(rowId(d.row)) !== d.result_hash));
 
   deps.tracer.emit({
-    decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "sponsor_call", sponsor: "meterless-hmem",
+    decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "sponsor_call", sponsor: deps.memory.name ?? "memory",
     target_agent: "Decider", status: "success",
     output_summary: `${s.priorClaims.length} prior claims; ${s.staleClaims.length} stale` +
       (s.staleClaims.length ? ` (e.g. "${s.staleClaims[0].text}" is based on data that has since changed)` : ""),
@@ -52,11 +52,11 @@ export async function record(deps: Deps, s: RunState, decision: Decision): Promi
       written++;
     }
     deps.tracer.emit({
-      decision_id: s.decision_id, agent_name: AGENT, action: "remember", event: "sponsor_call", sponsor: "meterless-hmem", status: "success",
+      decision_id: s.decision_id, agent_name: AGENT, action: "remember", event: "sponsor_call", sponsor: deps.memory.name ?? "memory", status: "success",
       output_summary: `${written} claims stored with lineage${superseded ? `, ${superseded} superseding the old decision` : ""}`,
     });
   } catch (e) {
     s.limitations.push(`Memory write failed after ${written} claims; reopen may miss this decision`);
-    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "remember", event: "error", sponsor: "meterless-hmem", status: "failed", output_summary: (e as Error).message });
+    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "remember", event: "error", sponsor: deps.memory.name ?? "memory", status: "failed", output_summary: (e as Error).message });
   }
 }

@@ -189,6 +189,8 @@ export interface MemoryClaim {
 
 /** Wraps Meterless H-MEM (in-process). */
 export interface MemoryStore {
+  /** Shown in traces as the sponsor/backing store, e.g. "meterless-hmem" or "local-lineage". */
+  readonly name?: string;
   remember(claim: Omit<MemoryClaim, "id" | "created_at">): Promise<MemoryClaim>;
   recall(subject_id: string, query: string, limit?: number): Promise<MemoryClaim[]>;
   /** Decisions whose claims derive from this row (selective reopen). */
