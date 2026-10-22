@@ -44,6 +44,23 @@ export async function verifyEvidence(deps: Deps, s: RunState): Promise<void> {
   refreshFindings(s);
 }
 
+/** Stale-memory catch: re-check each recalled H-MEM claim against today's evidence hashes; reject reuse of stale ones. */
+export function reviewMemory(deps: Deps, s: RunState): string[] {
+  if (!s.priorClaims.length) return [];
+  const issues = s.staleClaims.map((c) => {
+    const rows = c.derivedFrom.map((d) => `${d.row.table}:${d.row.key}`).join(", ");
+    return `"${c.text}" (from ${rows}, hash ${c.derivedFrom[0]?.result_hash.slice(0, 12) ?? "?"}) no longer matches the data`;
+  });
+  deps.tracer.emit({
+    decision_id: s.decision_id, agent_name: AGENT, action: "review_memory", event: "critique",
+    target_agent: issues.length ? "MemoryKeeper" : "Analyst", status: issues.length ? "needs_revision" : "success",
+    output_summary: issues.length
+      ? `REJECT ${issues.length} recalled claim(s) as evidence: ${issues.slice(0, 2).join("; ")}${issues.length > 2 ? "; …" : ""}`
+      : `${s.priorClaims.length} recalled claims still match today's evidence`,
+  });
+  return issues;
+}
+
 /** Every acceptable written form of a metric value (e.g. 0.312 → 0.31, 31.2, 31). */
 function allowedForms(metrics: MetricValue[], extra: number[]): number[] {
   const out: number[] = [];

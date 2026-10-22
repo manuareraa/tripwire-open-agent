@@ -1,6 +1,6 @@
 {
   "mode": "reopen",
-  "subject_id": "SUP-20",
-  "question": "Vishay filed a new quarter (data/sample/changes/01_new_quarter.json). Re-check the decision.",
-  "changed": { "table": "supplier_financials", "key": "103730" }
+  "subject_id": "SUP-06",
+  "question": "Our spend share with SUP-06 jumped (data/sample/changes/02_spend_share_jump.json). Which decisions need another look?",
+  "change_file": "02_spend_share_jump.json"
 }

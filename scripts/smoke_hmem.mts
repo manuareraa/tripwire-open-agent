@@ -23,6 +23,7 @@ for (let i = 1; i <= 20; i++) {
   const { decision } = await runDecide(deps, id, "Keep, dual-source or exit this supplier?");
   store.put(decision);
   tally[decision.decision] = (tally[decision.decision] ?? 0) + 1;
+  if (process.env.VERBOSE) console.log(id, decision.decision, decision.confidence, decision.risk, decision.rationale.slice(0, 110));
 }
 console.log("decisions:", tally);
 const rows = await gateway.applyChange("02_spend_share_jump.json").catch(async () => gateway.applyChange(gateway.listChangeFiles()[1]));

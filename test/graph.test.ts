@@ -78,5 +78,9 @@ describe("decision graph (rule-based path, no keys)", () => {
     expect(report.work_saved).toBe(4);
     expect(store.active()).toHaveLength(5);
     expect(store.get(report.reopened[0].old)!.status).toBe("superseded");
+    // The Critic caught the remembered claims built on the old filing and sent them back to the Memory Keeper.
+    const memReject = d.tracer.all().find((e) => e.action === "review_memory" && e.status === "needs_revision");
+    expect(memReject?.target_agent).toBe("MemoryKeeper");
+    expect(d.tracer.all().some((e) => e.action === "drop_stale")).toBe(true);
   });
 });

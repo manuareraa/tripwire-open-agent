@@ -47,17 +47,17 @@ export async function buildRuntime(): Promise<Runtime> {
   const model: ModelClient = config.useNemotron ? new NemotronClient() : new RulesOnlyClient();
   if (!config.useNemotron) notes.push("No NVIDIA_API_KEY (or SAMPLE_MODE=true); agents use rule-based fallbacks");
 
-  let memory: MemoryStore = new LocalMemory(join(ledgerDir, "memory.json"));
-  if (!config.sampleMode) {
-    const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemoryStore");
-    if (Hmem) {
-      try {
-        memory = new Hmem({ persistDir: process.env.HMEM_DIR ?? join(config.dataDir, "memory") });
-      } catch (e) {
-        notes.push(`H-MEM unavailable (${(e as Error).message}); using local lineage index`);
-      }
-    } else notes.push("H-MEM adapter not present; using local lineage index");
-  }
+  // H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback.
+  let memory: MemoryStore | undefined;
+  const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemoryStore");
+  if (Hmem) {
+    try {
+      memory = new Hmem({ persistDir: process.env.HMEM_DIR ?? join(ledgerDir, "memory") });
+    } catch (e) {
+      notes.push(`H-MEM unavailable (${(e as Error).message}); using local lineage index`);
+    }
+  } else notes.push("H-MEM adapter not present; using local lineage index");
+  memory ??= new LocalMemory(join(ledgerDir, "memory.json"));
 
   return {
     gateway, sample, model, memory,

@@ -59,10 +59,26 @@ app.post("/run", async (c) => {
       remember(tracer);
       return c.json(toResponse(tracer.run_id, decision, { trace_file: tracer.file }));
     }
-    const changed = body.changed ?? { table: "supplier_spend", key: body.subject_id };
-    const report = await withTimeout(reopenFor(deps, rt.store, changed), config.limits.runTimeoutMs);
+    // A reopen needs a decision to reopen: on a fresh server, make the baseline decision first (it is traced).
+    let baseline: Decision | undefined;
+    if (!rt.store.active().some((d) => d.subject_id === body.subject_id)) {
+      baseline = (await withTimeout(runDecide(deps, body.subject_id, body.question ?? "Baseline decision before the change"), config.limits.runTimeoutMs)).decision;
+      rt.store.put(baseline);
+    }
+    let changedRows = body.changed ? [body.changed] : [{ table: "supplier_spend", key: body.subject_id }];
+    if (body.change_file) {
+      if (rt.gateway !== rt.sample) {
+        return c.json({ error: "live_data", detail: "change_file applies to sample data only; with Zetaris, edit the source table" }, 409);
+      }
+      if (!rt.sample.listChangeFiles().includes(body.change_file)) return c.json({ error: "not_found", detail: `no change file ${body.change_file}` }, 404);
+      const rows = await rt.sample.applyChange(body.change_file);
+      if (!body.changed) changedRows = rows;
+    }
+    const reports = [];
+    for (const changed of changedRows) reports.push(await withTimeout(reopenFor(deps, rt.store, changed), config.limits.runTimeoutMs));
     remember(tracer);
-    return c.json({ run_id: tracer.run_id, trace_file: tracer.file, ...report });
+    const baselineOut = baseline ? { decision_id: baseline.decision_id, decision: baseline.decision, confidence: baseline.confidence } : undefined;
+    return c.json({ run_id: tracer.run_id, trace_file: tracer.file, baseline: baselineOut, ...reports[0], reports: reports.length > 1 ? reports : undefined });
   } catch (e) {
     tracer.emit({ agent_name: "Server", action: "run_failed", event: "error", status: "failed", output_summary: (e as Error).message });
     remember(tracer);

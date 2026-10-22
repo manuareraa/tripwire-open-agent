@@ -63,6 +63,8 @@ export interface RunRequest {
   subject_id: string;
   question?: string;
   changed?: RowRef;
+  /** SAMPLE_MODE only: a file in data/sample/changes/ to apply before the reopen check. */
+  change_file?: string;
 }
 
 export interface RunResponse {

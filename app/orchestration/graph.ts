@@ -1,11 +1,11 @@
-// The decision graph: Planner → Analyst → Critic (evidence) → Memory Keeper (recall) → Analyst summary ⇄ Critic
+// The decision graph: Planner → Analyst → Critic (evidence) → Memory Keeper (recall) ⇄ Critic (stale memory) → Analyst summary ⇄ Critic
 // → Risk Officer → Decider ⇄ Critic (max 3 rounds) → Risk Officer final check → Memory Keeper (record).
 import { config } from "../config.js";
 import { compileTripwires } from "../tripwires.js";
 import { plan } from "../agents/planner.js";
 import { gather, rulesSummary, summarize } from "../agents/analyst.js";
-import { reviewDecision, reviewSummary, verifyEvidence } from "../agents/critic.js";
-import { recallPrior, record } from "../agents/memory_keeper.js";
+import { reviewDecision, reviewMemory, reviewSummary, verifyEvidence } from "../agents/critic.js";
+import { dropStale, recallPrior, record } from "../agents/memory_keeper.js";
 import { assess, finalCheck } from "../agents/risk.js";
 import { decide, rulesDecision } from "../agents/decider.js";
 import type { DecisionDraft, Deps, RunState } from "./state.js";
@@ -36,6 +36,7 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
   await gather(deps, s);
   await verifyEvidence(deps, s);
   await recallPrior(deps, s);
+  if (reviewMemory(deps, s).length) dropStale(deps, s);
 
   // Summary: model writes, Critic checks every number, bounded retries, then rule-based text.
   let feedback: string | undefined;

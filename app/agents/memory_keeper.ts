@@ -14,16 +14,33 @@ export async function recallPrior(deps: Deps, s: RunState): Promise<void> {
     s.priorClaims = [];
     return;
   }
-  // A claim is stale when the row it came from now hashes differently.
-  const current = new Map<string, string>();
-  for (const r of Object.values(s.results)) for (const d of r.evidence.depends_on) current.set(rowId(d), r.evidence.result_hash);
-  s.staleClaims = s.priorClaims.filter((c) => c.derivedFrom.some((d) => current.has(rowId(d.row)) && current.get(rowId(d.row)) !== d.result_hash));
+  // A claim is stale when no query run today over its source row reproduces the hash it was built from.
+  // (Several templates read the same row, e.g. latest and history financials, so keep every hash per row.)
+  const current = new Map<string, Set<string>>();
+  for (const r of Object.values(s.results)) {
+    for (const d of r.evidence.depends_on) {
+      if (!current.has(rowId(d))) current.set(rowId(d), new Set());
+      current.get(rowId(d))!.add(r.evidence.result_hash);
+    }
+  }
+  s.staleClaims = s.priorClaims.filter((c) => c.derivedFrom.some((d) => current.has(rowId(d.row)) && !current.get(rowId(d.row))!.has(d.result_hash)));
 
   deps.tracer.emit({
     decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "sponsor_call", sponsor: deps.memory.name ?? "memory",
     target_agent: "Decider", status: "success",
     output_summary: `${s.priorClaims.length} prior claims; ${s.staleClaims.length} stale` +
       (s.staleClaims.length ? ` (e.g. "${s.staleClaims[0].text}" is based on data that has since changed)` : ""),
+  });
+}
+
+/** After the Critic rejects stale claims: keep them only as "stale" context, never as facts. */
+export function dropStale(deps: Deps, s: RunState): void {
+  if (!s.staleClaims.length) return;
+  const stale = new Set(s.staleClaims.map((c) => c.id));
+  s.priorClaims = s.priorClaims.filter((c) => !stale.has(c.id));
+  deps.tracer.emit({
+    decision_id: s.decision_id, agent_name: AGENT, action: "drop_stale", event: "retry", target_agent: "Decider", status: "success",
+    output_summary: `${stale.size} stale claim(s) withheld as facts and passed to the Decider as "changed since"; they are superseded when this decision is recorded`,
   });
 }
 
