@@ -1,0 +1,14 @@
+node_modules/
+dist/
+logs/*
+!logs/.keep
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+.DS_Store
+coverage/
+data/cache/

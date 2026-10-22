@@ -1,0 +1,12 @@
+---
+description: Tripwire project rules (worktrees, memory limits, contracts, honesty)
+alwaysApply: true
+---
+
+Follow AGENTS.md at the repo root. In short:
+- Edit only inside your own git worktree and only the files your stream owns (AGENTS.md §4).
+- Code against `app/types.ts`; do not change it.
+- Run installs, tests and servers through `scripts/memguard.sh -- <cmd>`.
+- Never read, print or commit `.env` files or API keys.
+- No hardcoded answers; every sponsor call has a timeout and a logged fallback.
+- TypeScript ESM, `.js` import suffixes, vitest tests in `test/`.

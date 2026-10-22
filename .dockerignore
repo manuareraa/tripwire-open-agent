@@ -1,0 +1,12 @@
+node_modules
+dist
+logs
+.env
+.env.*
+!.env.example
+.git
+secrets
+credentials
+docs/log
+coverage
+data/cache
