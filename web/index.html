@@ -1,1 +1,241 @@
-<!doctype html><title>Tripwire</title><p>UI coming</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tripwire</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1c1a; --muted: #6b6860; --line: #e4e1d8;
+    --keep: #2f7d4f; --dual: #b26b00; --exit: #b3261e; --accent: #2b59c3; --soft: #f0eee7;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #151513; --panel: #1e1e1b; --ink: #ecebe6; --muted: #9d9a90; --line: #33322d; --soft: #262622;
+      --keep: #5fbf85; --dual: #e3a03a; --exit: #ef6a5f; --accent: #7aa2ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+  header .tag { color: var(--muted); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  .chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); white-space: nowrap; }
+  .chip.live { border-color: var(--keep); color: var(--keep); }
+  .chip.fallback { border-color: var(--dual); color: var(--dual); }
+  main { display: grid; grid-template-columns: 260px minmax(0, 1fr) minmax(0, 420px); gap: 16px; padding: 16px 20px; }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 10px; }
+  h3 { font-size: 13px; margin: 14px 0 6px; color: var(--muted); }
+  button { font: inherit; border: 1px solid var(--line); background: var(--soft); color: var(--ink); border-radius: 7px; padding: 6px 10px; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity: 0.5; cursor: progress; }
+  select, input, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 6px 8px; width: 100%; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .list { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; max-height: 46vh; overflow: auto; }
+  .item { display: flex; justify-content: space-between; gap: 6px; padding: 6px 8px; border-radius: 7px; cursor: pointer; border: 1px solid transparent; }
+  .item:hover, .item.sel { background: var(--soft); border-color: var(--line); }
+  .item .sub { color: var(--muted); font-size: 12px; }
+  .k { font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.04em; }
+  .k.keep { color: var(--keep); } .k.dual_source { color: var(--dual); } .k.exit { color: var(--exit); }
+  .status { font-size: 11px; color: var(--muted); }
+  .status.superseded, .status.rejected { text-decoration: line-through; }
+  .big { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .warn { border-left: 3px solid var(--dual); padding: 6px 10px; background: var(--soft); border-radius: 0 7px 7px 0; margin: 8px 0; }
+  .warn.red { border-color: var(--exit); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td, th { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; }
+  code, .mono { font-family: var(--mono); font-size: 12px; }
+  details summary { cursor: pointer; color: var(--accent); font-size: 12px; }
+  pre { white-space: pre-wrap; word-break: break-word; background: var(--soft); padding: 8px; border-radius: 7px; font-family: var(--mono); font-size: 11.5px; margin: 6px 0; }
+  .trace { display: flex; flex-direction: column; gap: 6px; max-height: 70vh; overflow: auto; }
+  .ev { border-left: 3px solid var(--line); padding: 4px 8px; font-size: 12.5px; }
+  .ev .who { font-weight: 600; } .ev .what { color: var(--muted); }
+  .ev.sponsor_call { border-color: var(--accent); }
+  .ev.critique.needs_revision, .ev.retry { border-color: var(--exit); }
+  .ev.critique.success { border-color: var(--keep); }
+  .ev.fallback, .ev.escalation { border-color: var(--dual); }
+  .ev.decision { border-color: var(--ink); }
+  .badge { font-size: 10.5px; padding: 0 6px; border-radius: 999px; background: var(--soft); border: 1px solid var(--line); margin-left: 4px; }
+  .report { margin-top: 10px; font-size: 13px; }
+  .report .num { font-size: 22px; font-weight: 700; }
+  .empty { color: var(--muted); padding: 20px 0; }
+  .spin { display: inline-block; width: 10px; height: 10px; border: 2px solid var(--muted); border-top-color: transparent; border-radius: 50%; animation: s 0.8s linear infinite; margin-right: 6px; }
+  @keyframes s { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Tripwire</h1>
+  <span class="tag">Supplier decisions that know when to reopen themselves</span>
+  <div class="chips" id="modes"></div>
+</header>
+<main>
+  <section>
+    <h2>Ask</h2>
+    <div class="row">
+      <select id="supplier" aria-label="Supplier"></select>
+      <button class="primary" id="decide">Decide</button>
+    </div>
+    <h3>Decisions</h3>
+    <div class="list" id="decisions"></div>
+    <h3>Something changed</h3>
+    <div class="meta">Apply a change to the source data. The Watcher checks only the decisions that depend on the changed row.</div>
+    <div class="list" id="changes"></div>
+    <div class="report" id="report"></div>
+  </section>
+
+  <section id="detail"><div class="empty">Pick a supplier and press Decide, or open a decision.</div></section>
+
+  <section>
+    <h2>Agent trace</h2>
+    <div class="trace" id="trace"><div class="empty">Every handoff, tool call, critique and fallback shows here.</div></div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const LABEL = { keep: "Keep", dual_source: "Dual-source", exit: "Exit" };
+let selected = null;
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, { headers: { "content-type": "application/json" }, ...opts });
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(body.detail || body.error || r.statusText), { body });
+  return body;
+}
+
+async function loadHealth() {
+  const h = await api("/health");
+  const m = h.modes;
+  const chip = (label, val, live) => `<span class="chip ${live ? "live" : "fallback"}" title="${esc(live ? "live" : "fallback")}">${label}: ${esc(val)}</span>`;
+  $("modes").innerHTML =
+    chip("data", m.data === "zetaris" ? "Zetaris" : "bundled sample", m.data === "zetaris") +
+    chip("models", m.model === "nemotron" ? "NVIDIA Nemotron" : "rules only", m.model === "nemotron") +
+    chip("memory", m.memory === "meterless-hmem" ? "H-MEM" : "local lineage", m.memory === "meterless-hmem");
+  $("modes").title = m.notes.join("\n");
+}
+
+function fillSuppliers() {
+  const s = $("supplier");
+  for (let i = 1; i <= 20; i++) { const id = `SUP-${String(i).padStart(2, "0")}`; s.add(new Option(id, id)); }
+  s.value = "SUP-18";
+}
+
+async function loadDecisions() {
+  const list = await api("/decisions");
+  $("decisions").innerHTML = list.length ? list.map((d) => `
+    <div class="item ${d.decision_id === selected ? "sel" : ""}" data-id="${esc(d.decision_id)}">
+      <div><div>${esc(d.subject_id)} <span class="k ${d.decision}">${LABEL[d.decision]}</span></div>
+      <div class="sub mono">${esc(d.decision_id)}</div></div>
+      <div class="status ${d.status}">${esc(d.status)}${d.escalated ? " ⚑" : ""}</div>
+    </div>`).join("") : `<div class="meta">None yet.</div>`;
+  for (const el of $("decisions").querySelectorAll(".item")) el.onclick = () => openDecision(el.dataset.id);
+}
+
+async function loadChanges() {
+  const files = await api("/changes").catch(() => []);
+  $("changes").innerHTML = files.map((f) => `<button data-f="${esc(f)}">${esc(f.replace(/\.json$/, "").replace(/^\d+_/, "").replace(/_/g, " "))}</button>`).join("");
+  for (const b of $("changes").querySelectorAll("button")) b.onclick = () => applyChange(b.dataset.f, b);
+}
+
+function fmt(v) { return typeof v === "number" ? (Math.abs(v) >= 1e5 ? v.toLocaleString() : String(v)) : esc(v); }
+
+function renderDecision(d) {
+  selected = d.decision_id;
+  const conf = Math.round((d.confidence ?? 0) * 100);
+  $("detail").innerHTML = `
+    <h2>${esc(d.subject_id)} · <span class="mono">${esc(d.decision_id)}</span></h2>
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div><div class="big k ${d.decision}" style="font-size:28px">${LABEL[d.decision]}</div>
+      <div class="meta">confidence ${conf}% · risk ${esc(d.risk ?? "?")} · status <b>${esc(d.status)}</b>${d.supersedes ? ` · supersedes <span class="mono">${esc(d.supersedes)}</span>` : ""}</div></div>
+    </div>
+    ${d.escalated ? `<div class="warn red"><b>Escalated to a senior buyer.</b> ${esc((d.escalation_reasons || []).join("; "))}</div>` : ""}
+    <h3>Why</h3><div>${esc(d.rationale || "")}</div>
+    ${d.summary ? `<details><summary>Analyst summary</summary><div class="meta" style="margin-top:6px">${esc(d.summary)}</div></details>` : ""}
+    <h3>Evidence (every number traces to a query)</h3>
+    <table><tr><th>Finding</th><th>Query</th><th>Result hash</th></tr>
+      ${(d.findings || []).map((f) => `<tr><td>${esc(f.claim)}</td><td><details><summary class="mono">${esc(f.evidence.template_id)}</summary><pre>${esc(f.evidence.sql)}</pre></details></td><td class="mono">${esc(f.evidence.result_hash.slice(0, 12))}</td></tr>`).join("")}
+    </table>
+    <h3>Tripwires: reopen this decision if…</h3>
+    <table><tr><th>Condition</th><th>Watches rows</th></tr>
+      ${(d.tripwires || []).map((t) => `<tr><td><b>${esc(t.metric)}</b> ${esc(t.op)} ${esc(t.threshold ?? "")}</td><td class="mono">${esc(t.depends_on.map((r) => `${r.table}:${r.key}`).join(", "))}</td></tr>`).join("")}
+    </table>
+    ${(d.limitations || []).length ? `<h3>Limitations</h3><ul class="meta">${d.limitations.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}
+    ${d.status === "proposed" ? `
+      <h3>Human approval</h3>
+      <textarea id="reason" rows="2" placeholder="${d.escalated ? "Reason required for an escalated decision" : "Optional note"}"></textarea>
+      <div class="row" style="margin-top:8px"><button class="primary" id="approve">Approve and write back</button><button id="reject">Reject</button></div>
+      <div id="writeres" class="meta"></div>` : d.approved_by_reason ? `<div class="meta">Approved: ${esc(d.approved_by_reason)}</div>` : ""}
+  `;
+  const a = $("approve");
+  if (a) {
+    a.onclick = async () => {
+      a.disabled = true;
+      try {
+        const r = await api(`/decisions/${d.decision_id}/approve`, { method: "POST", body: JSON.stringify({ reason: $("reason").value }) });
+        renderDecision(r.decision);
+        $("detail").insertAdjacentHTML("beforeend", `<div class="warn ${r.write.written ? "" : "red"}">${r.write.written ? "Written" : "NOT written"}: ${esc(r.write.detail)}</div>`);
+        await loadTrace(r.run_id, true);
+      } catch (e) { $("writeres").textContent = e.message; a.disabled = false; }
+      loadDecisions();
+    };
+    $("reject").onclick = async () => { await api(`/decisions/${d.decision_id}/reject`, { method: "POST" }); openDecision(d.decision_id); loadDecisions(); };
+  }
+}
+
+async function openDecision(id) { renderDecision(await api(`/decisions/${id}`)); loadDecisions(); }
+
+function renderTrace(events, append = false) {
+  const html = events.map((e) => `
+    <div class="ev ${e.event} ${e.status}">
+      <span class="who">${esc(e.agent_name)}</span>${e.target_agent ? ` → ${esc(e.target_agent)}` : ""}
+      <span class="what">· ${esc(e.action)}</span>${e.sponsor ? `<span class="badge">${esc(e.sponsor)}</span>` : ""}${e.event === "fallback" ? `<span class="badge">fallback</span>` : ""}
+      ${e.output_summary ? `<div>${esc(e.output_summary)}</div>` : ""}
+    </div>`).join("");
+  $("trace").innerHTML = append ? $("trace").innerHTML + html : html || `<div class="empty">No events.</div>`;
+}
+async function loadTrace(run_id, append) { renderTrace(await api(`/trace/${run_id}`), append); }
+
+async function decide() {
+  const b = $("decide"); b.disabled = true;
+  const sup = $("supplier").value;
+  $("detail").innerHTML = `<div class="empty"><span class="spin"></span>Planner, Analyst, Critic, Memory Keeper, Risk Officer and Decider are working on ${esc(sup)}… (the reasoning model can take up to a minute)</div>`;
+  try {
+    const r = await api("/run", { method: "POST", body: JSON.stringify({ mode: "decide", subject_id: sup }) });
+    await openDecision(r.decision_id);
+    await loadTrace(r.run_id);
+  } catch (e) { $("detail").innerHTML = `<div class="warn red">${esc(e.message)}</div>`; }
+  b.disabled = false;
+}
+
+async function applyChange(file, btn) {
+  btn.disabled = true;
+  $("report").innerHTML = `<span class="spin"></span>Applying ${esc(file)}…`;
+  try {
+    const r = await api(`/changes/${encodeURIComponent(file)}/apply`, { method: "POST" });
+    $("report").innerHTML = r.reports.map((x) => `
+      <div class="warn">
+        <div><span class="mono">${esc(x.changed.table)}:${esc(x.changed.key)}</span> changed</div>
+        <div><span class="num">${x.dependents.length}</span> of ${x.active} active decisions depend on it ·
+             <span class="num">${x.reopened.length}</span> reopened ·
+             <span class="num">${x.work_saved}</span> not re-run</div>
+        ${x.reopened.map((o) => `<div>Reopened <a href="#" data-id="${esc(o.new.decision_id)}">${esc(o.old)} → ${LABEL[o.new.decision]}</a>: ${esc(o.fired.join("; "))}</div>`).join("")}
+        ${x.still_valid.map((v) => `<div class="meta">${esc(v.decision_id)} still holds: no tripwire fired</div>`).join("")}
+      </div>`).join("") || `<div class="meta">No rows changed.</div>`;
+    for (const a of $("report").querySelectorAll("a[data-id]")) a.onclick = (ev) => { ev.preventDefault(); openDecision(a.dataset.id); };
+    await loadTrace(r.run_id);
+    loadDecisions();
+  } catch (e) { $("report").innerHTML = `<div class="warn red">${esc(e.message)}</div>`; btn.disabled = false; }
+}
+
+$("decide").onclick = decide;
+fillSuppliers();
+loadHealth(); loadDecisions(); loadChanges();
+</script>
+</body>
+</html>
