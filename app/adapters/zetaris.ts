@@ -2,7 +2,7 @@
 // decision ledger as an append-only Parquet table written with RUN EXPORT ... saveMode 'append'.
 // Zetaris has no row-level INSERT/UPDATE; this append-and-read-back path is what was proven on Oct 22
 // (docs/log/zetaris-gateway.md).
-import { createHash, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import type { DataGateway, Decision, Evidence, QueryResult, RowRef, TemplateSpec } from "../types.js";
 import { ROW_KEY, TABLES, TEMPLATES, getTemplate, renderTemplate } from "../sql/templates.js";
 import {
@@ -166,25 +166,10 @@ function sqlErrorMessage(text: string): string {
   }
 }
 
-// ---------- hashing (contract request: move to a shared module) ----------
+// ---------- hashing (shared with the sample gateway) ----------
 
-function sortKeys(v: unknown): unknown {
-  if (Array.isArray(v)) return v.map(sortKeys);
-  if (v && typeof v === "object") {
-    return Object.fromEntries(
-      Object.keys(v as object)
-        .sort()
-        .map((k) => [k, sortKeys((v as Record<string, unknown>)[k])]),
-    );
-  }
-  return v;
-}
-
-/** SHA-256 of canonical JSON: keys sorted at every level, rows sorted by their canonical JSON. */
-export function canonicalHash(rows: Record<string, unknown>[]): string {
-  const canon = rows.map((r) => JSON.stringify(sortKeys(r))).sort();
-  return createHash("sha256").update(`[${canon.join(",")}]`).digest("hex");
-}
+import { canonicalHash } from "../hash.js";
+export { canonicalHash };
 
 // ---------- typing of returned rows ----------
 

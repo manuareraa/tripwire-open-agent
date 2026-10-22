@@ -1,6 +1,5 @@
 // SAMPLE_MODE DataGateway: serves the SQL templates from bundled CSVs in data/sample/, no keys needed.
 // Each template is evaluated in JS with the same filter/order/limit as its SQL. Results are flagged sample: true.
-import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -39,28 +38,8 @@ export interface SampleOptions {
   ledgerDir?: string;
 }
 
-// ---------- canonical hashing (shared rule: sorted keys, sorted rows) ----------
-
-function canonical(v: unknown): string {
-  if (v === undefined) return "null";
-  if (v === null || typeof v !== "object") return JSON.stringify(v);
-  if (Array.isArray(v)) return `[${v.map(canonical).join(",")}]`;
-  const o = v as Row;
-  return `{${Object.keys(o)
-    .sort()
-    .map((k) => `${JSON.stringify(k)}:${canonical(o[k])}`)
-    .join(",")}}`;
-}
-
-/** Canonical JSON of a row set: each row with sorted keys, rows sorted by their canonical text. */
-export function canonicalRows(rows: Row[]): string {
-  return `[${rows.map(canonical).sort().join(",")}]`;
-}
-
-/** SHA-256 hex of canonicalRows(rows). The Evidence Critic recomputes this to "prove" a number. */
-export function resultHash(rows: Row[]): string {
-  return createHash("sha256").update(canonicalRows(rows)).digest("hex");
-}
+export { canonicalRows, resultHash } from "../hash.js";
+import { resultHash } from "../hash.js";
 
 // ---------- CSV ----------
 

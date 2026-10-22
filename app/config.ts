@@ -14,6 +14,8 @@ export const config = {
     baseUrl: env.ZETARIS_BASE_URL ?? "http://localhost:3000",
     orgId: env.ZETARIS_ORG_ID ?? "",
     apiKey: env.ZETARIS_API_KEY ?? "",
+    username: env.ZETARIS_USERNAME ?? "",
+    storageRoot: env.ZETARIS_STORAGE_ROOT ?? "",
     timeoutMs: Number(env.ZETARIS_TIMEOUT_MS ?? 30000),
   },
   nvidia: {
