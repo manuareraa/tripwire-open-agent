@@ -13,3 +13,6 @@ credentials/
 coverage/
 data/cache/
 data/ledger/
+
+# H-MEM persistence (app/adapters/hmem.ts)
+data/memory/

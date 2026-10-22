@@ -49,10 +49,10 @@ export async function buildRuntime(): Promise<Runtime> {
 
   let memory: MemoryStore = new LocalMemory(join(ledgerDir, "memory.json"));
   if (!config.sampleMode) {
-    const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemory");
+    const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemoryStore");
     if (Hmem) {
       try {
-        memory = new Hmem();
+        memory = new Hmem({ persistDir: process.env.HMEM_DIR ?? join(config.dataDir, "memory") });
       } catch (e) {
         notes.push(`H-MEM unavailable (${(e as Error).message}); using local lineage index`);
       }

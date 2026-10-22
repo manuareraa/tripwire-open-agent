@@ -53,7 +53,7 @@ export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Pro
     agent_name: req.agent_name,
     action: res.fallback ? "model_unavailable" : `model_call_${req.tier}`,
     event: res.fallback ? "fallback" : "sponsor_call",
-    sponsor: "nvidia",
+    sponsor: res.fallback ? undefined : "nvidia",
     status: res.fallback ? "fallback" : "success",
     output_summary: res.fallback ? `rule-based path (${res.error})` : `${res.model}${res.thinking ? " (thinking on)" : ""}`,
     data: {
