@@ -1,11 +1,14 @@
-// Runtime config. SAMPLE_MODE is on when asked for, or when no live credentials exist.
+// Runtime config. SAMPLE_MODE=true forces fully offline (bundled data, rule-based agents).
+// Otherwise each sponsor is used live when its credentials exist, and falls back when they don't.
 
 const env = process.env;
+const forcedSample = env.SAMPLE_MODE === "true";
 
 export const config = {
-  sampleMode:
-    env.SAMPLE_MODE === "true" ||
-    (!env.ZETARIS_API_KEY && !env.ZETARIS_PASSWORD && !env.NVIDIA_API_KEY),
+  sampleMode: forcedSample || (!env.ZETARIS_API_KEY && !env.ZETARIS_PASSWORD && !env.NVIDIA_API_KEY),
+  useZetaris: !forcedSample && !!(env.ZETARIS_API_KEY || env.ZETARIS_PASSWORD),
+  useNemotron: !forcedSample && !!env.NVIDIA_API_KEY,
+  dataDir: env.DATA_DIR ?? "data",
   port: Number(env.PORT ?? 8000),
   zetaris: {
     baseUrl: env.ZETARIS_BASE_URL ?? "http://localhost:3000",

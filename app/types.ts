@@ -49,6 +49,10 @@ export interface Decision {
   limitations: string[];
   supersedes?: string;
   escalated: boolean;
+  escalation_reasons?: string[];
+  risk?: "low" | "medium" | "high";
+  rationale?: string;
+  summary?: string;
   created_at: string;
   approved_by_reason?: string;
 }
@@ -158,8 +162,12 @@ export interface ModelResponse {
   tokens_in: number;
   tokens_out: number;
   latency_ms: number;
-  /** true when deterministic rules answered instead of a model. */
+  /** true when no model answered (no key, timeout, error); the agent must use its rule-based path. */
   fallback: boolean;
+  /** Why the model was not used, when fallback = true. */
+  error?: string;
+  /** Short excerpt of the model's reasoning trace, when thinking was on. */
+  reasoning_excerpt?: string;
 }
 
 export interface ModelClient {
