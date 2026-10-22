@@ -94,7 +94,7 @@ async function writeTable(table: string, rows: Record<string, unknown>[]) {
   for (let i = 0; i < rows.length; i += CHUNK) {
     await sql(exportSql(table, rowsSelect(table, rows.slice(i, i + CHUNK)), i === 0 ? "overwrite" : "append"));
   }
-  await ignoreSql(dropTableSql(table), /not (exist|found)|does not|no such|unknown/i);
+  await ignoreSql(dropTableSql(table), /not (exist|found)|does(n't| not) exist|no such|unknown/i);
   await sql(registerTableSql(table));
 }
 

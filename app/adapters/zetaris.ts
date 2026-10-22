@@ -83,7 +83,9 @@ export class ZetarisClient {
       if (err.name === "TimeoutError" || err.name === "AbortError") {
         throw new ZetarisError("timeout", `${path} timed out after ${this.opts.timeoutMs} ms`);
       }
-      throw new ZetarisError("network", `cannot reach ${this.opts.baseUrl}: ${err.message}`);
+      const cause = (err as Error & { cause?: { code?: string; message?: string } }).cause;
+      const why = cause ? ` (${cause.code ?? cause.message ?? "unknown cause"})` : "";
+      throw new ZetarisError("network", `cannot reach ${this.opts.baseUrl}: ${err.message}${why}`);
     }
   }
 
@@ -105,8 +107,23 @@ export class ZetarisClient {
     if (!this.orgId) throw new ZetarisError("config", "no org id (set ZETARIS_ORG_ID)");
   }
 
-  /** Run exactly one statement. Values come back as strings (or null). */
+  /**
+   * Run exactly one statement. Values come back as strings (or null).
+   * A read (SELECT/SHOW) is retried once on a network error, e.g. a stale keep-alive socket;
+   * writes are never retried here, so an append cannot land twice.
+   */
   async sql(statement: string, limit = 1000): Promise<SqlResult> {
+    try {
+      return await this.sqlOnce(statement, limit);
+    } catch (e) {
+      if (e instanceof ZetarisError && e.kind === "network" && /^\s*(SELECT|SHOW)\b/i.test(statement)) {
+        return await this.sqlOnce(statement, limit);
+      }
+      throw e;
+    }
+  }
+
+  private async sqlOnce(statement: string, limit: number): Promise<SqlResult> {
     await this.login();
     const res = await this.call("/api/proxy/sql-editor/sqls/run-query", {
       method: "POST",
