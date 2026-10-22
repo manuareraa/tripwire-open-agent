@@ -54,7 +54,7 @@ export function defaultTripwires(metrics: MetricValue[]): TripwireDraft[] {
     let threshold: number;
     switch (name) {
       case "current_ratio": threshold = v >= 1.1 ? 1.0 : v * 0.85; break;
-      case "debt_to_equity": threshold = Math.max(2.0, v * 1.2); break;
+      case "debt_to_equity": threshold = Math.max(3.0, v * 1.2); break;
       case "spend_share": threshold = Math.min(1, v + 0.1); break;
       case "revenue_change_pct": threshold = Math.min(-10, v - 10); break;
       case "gross_margin": threshold = v * 0.8; break;

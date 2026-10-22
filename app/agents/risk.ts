@@ -6,7 +6,8 @@ import { callModel, type DecisionDraft, type Deps, type RiskLevel, type RunState
 const AGENT = "RiskOfficer";
 
 /** Policy thresholds; the Critic accepts these numbers in prose since they are policy, not data. */
-export const RISK_THRESHOLDS = [1, 2, 0.1, -10, 0.25, 12];
+// debt_to_equity in the data is total liabilities ÷ equity (not interest-bearing debt), so the distress line is 3, not 2.
+export const RISK_THRESHOLDS = [1, 3, 0.1, -10, 0.25, 12];
 
 export function assess(deps: Deps, s: RunState): void {
   const v = new Map(s.metrics.map((m) => [m.metric, m.value]));
@@ -20,7 +21,7 @@ export function assess(deps: Deps, s: RunState): void {
   const alts = v.get("category_alternatives");
   const lead = v.get("lead_time_weeks");
   if (cr !== undefined && cr < 1) distress.push(`current ratio ${cr} < 1`);
-  if (de !== undefined && de > 2) distress.push(`debt/equity ${de} > 2`);
+  if (de !== undefined && de > 3) distress.push(`liabilities/equity ${de} > 3`);
   if (gm !== undefined && gm < 0.1) distress.push(`gross margin ${gm} < 0.1`);
   if (rev !== undefined && rev < -10) distress.push(`revenue change ${rev}% < -10%`);
   if (share !== undefined && share >= 0.25) exposure.push(`spend share ${share} ≥ 0.25`);

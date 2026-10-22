@@ -12,7 +12,7 @@ export interface MetricDef {
 
 export const METRICS: MetricDef[] = [
   { name: "current_ratio", label: "Current ratio", template: "supplier_financials_latest", worseWhen: "lower", unit: "ratio" },
-  { name: "debt_to_equity", label: "Debt to equity", template: "supplier_financials_latest", worseWhen: "higher", unit: "ratio" },
+  { name: "debt_to_equity", label: "Liabilities to equity", template: "supplier_financials_latest", worseWhen: "higher", unit: "ratio" },
   { name: "gross_margin", label: "Gross margin", template: "supplier_financials_latest", worseWhen: "lower", unit: "share" },
   { name: "revenue_change_pct", label: "Revenue change across reported periods", template: "supplier_financials_history", worseWhen: "lower", unit: "pct" },
   { name: "spend_share", label: "Share of our category spend", template: "supplier_spend_row", worseWhen: "higher", unit: "share" },
