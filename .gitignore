@@ -12,3 +12,6 @@ credentials/
 .DS_Store
 coverage/
 data/cache/
+
+# H-MEM persistence (app/adapters/hmem.ts)
+data/memory/
