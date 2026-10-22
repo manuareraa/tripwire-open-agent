@@ -1,0 +1,18 @@
+{
+  "description": "Real SEC filing for VSH (period 2026-07-04), held back from the base sample so the demo can show it arriving. Figures from https://www.sec.gov/Archives/edgar/data/103730/000010373026000065/",
+  "synthetic": false,
+  "table": "supplier_financials",
+  "key": "103730",
+  "row": {
+    "cik": "103730",
+    "ticker": "VSH",
+    "name": "Vishay Intertechnology, Inc.",
+    "sic": "3670",
+    "period_end": "2026-07-04",
+    "revenue": 888575000,
+    "gross_margin": 0.2334,
+    "current_ratio": 1.8022,
+    "debt_to_equity": 0.7702,
+    "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000065/"
+  }
+}

@@ -12,3 +12,4 @@ credentials/
 .DS_Store
 coverage/
 data/cache/
+data/ledger/
