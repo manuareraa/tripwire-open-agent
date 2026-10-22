@@ -1,0 +1,16 @@
+{
+  "description": "SYNTHETIC: our chemicals spend shifts toward SUP-06 (Celanese) after a competing contract lapses; its share of category spend jumps from 0.35 to 0.58 and open POs rise.",
+  "synthetic": true,
+  "table": "supplier_spend",
+  "key": "SUP-06",
+  "row": {
+    "supplier_id": "SUP-06",
+    "cik": "1306830",
+    "category": "chemicals",
+    "spend_share": 0.58,
+    "lead_time_weeks": 7,
+    "open_po_value": 3150000,
+    "contract_end": "2027-06-30",
+    "updated_at": "2026-10-23T10:00:00Z"
+  }
+}

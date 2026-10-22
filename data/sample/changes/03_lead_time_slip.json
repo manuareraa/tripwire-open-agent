@@ -1,0 +1,16 @@
+{
+  "description": "SYNTHETIC: SUP-12 (XPO) quotes a longer lead time, 3 -> 9 weeks.",
+  "synthetic": true,
+  "table": "supplier_spend",
+  "key": "SUP-12",
+  "row": {
+    "supplier_id": "SUP-12",
+    "cik": "1166003",
+    "category": "logistics",
+    "spend_share": 0.10,
+    "lead_time_weeks": 9,
+    "open_po_value": 150000,
+    "contract_end": "2027-03-31",
+    "updated_at": "2026-10-23T11:00:00Z"
+  }
+}
