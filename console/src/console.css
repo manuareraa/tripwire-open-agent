@@ -494,3 +494,23 @@ body { padding-bottom: var(--ab-h, 0px); }
 .bk-num { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--surface); font-size: 12.5px; color: var(--muted); }
 .bk-num b { color: var(--ink); font-weight: 650; }
 .bk-num svg { width: 12px; height: 12px; }
+
+/* Which model handled each step */
+.calls { display: grid; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; font-size: 13px; }
+.call { display: grid; grid-template-columns: 1.1fr 1.6fr 1.4fr .7fr .6fr; gap: 10px; padding: 8px 12px; border-top: 1px solid var(--line); align-items: start; }
+.call:first-child { border-top: 0; }
+.call.h { background: var(--surface-2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.call small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 2px; overflow-wrap: anywhere; }
+.call .m { font-family: var(--font-mono, ui-monospace, monospace); font-size: 12px; overflow-wrap: anywhere; }
+.call .swap { color: var(--dual); }
+.call .rp { color: var(--primary); }
+.call.fb { color: var(--muted); }
+@media (max-width: 640px) { .call { grid-template-columns: 1fr 1fr; } .call.h { display: none; } }
+
+/* How current each source was */
+.srcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.src-f { padding: 10px 12px; border: 1px solid var(--line); border-left: 3px solid var(--keep); border-radius: var(--radius-sm); background: var(--surface-2); font-size: 13px; display: grid; gap: 2px; }
+.src-f .st { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--keep); }
+.src-f.stale { border-left-color: var(--dual); } .src-f.stale .st { color: var(--dual); }
+.src-f.missing { border-left-color: var(--exit); } .src-f.missing .st { color: var(--exit); }
+.src-f small { color: var(--muted); font-size: 11.5px; }

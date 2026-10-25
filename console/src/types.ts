@@ -46,6 +46,35 @@ export interface Decision {
   tripwires?: Tripwire[];
   limitations?: string[];
   approved_by_reason?: string;
+  sources?: SourceFreshness[];
+  model_calls?: ModelCall[];
+}
+
+export interface ModelCall {
+  agent: string;
+  tier: string;
+  model: string;
+  requested_model?: string;
+  provider?: string;
+  thinking: boolean;
+  tokens_in: number;
+  tokens_out: number;
+  latency_ms: number;
+  receipt_id?: string;
+  replayed_from?: string;
+  fallback?: string;
+}
+
+export interface SourceFreshness {
+  table: string;
+  label: string;
+  system: string;
+  as_of?: string;
+  age_days?: number;
+  max_age_days: number;
+  basis: string;
+  status: "fresh" | "stale" | "missing";
+  note: string;
 }
 
 export interface WriteResult { written?: boolean; method?: string; detail?: string }

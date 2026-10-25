@@ -17,7 +17,7 @@ export function newState(run_id: string, subject_id: string, question: string, s
   return {
     run_id, subject_id, question, supersedes,
     decision_id: `DEC-${subject_id}-${stamp}`,
-    plan: [], results: {}, freshness: [], metrics: [], findings: [], summary: "",
+    plan: [], results: {}, freshness: [], modelCalls: [], metrics: [], findings: [], summary: "",
     priorClaims: [], staleClaims: [],
     risk: { level: "low", flags: [], thinking: false },
     rounds: 0, limitations: [], escalated: false, escalationReasons: [],
@@ -89,6 +89,7 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     tripwires: compileTripwires(s.decision_id, [...draft.tripwires, ...(backup?.tripwires ?? [])], [...s.metrics, ...(backup?.metrics ?? [])]),
     limitations: [...new Set([...s.limitations, ...draft.limitations])],
     sources: s.freshness,
+    model_calls: s.modelCalls,
     supersedes: supersedes?.decision_id,
     ...(backup ? { backup: backup.backup } : {}),
     escalated: s.escalated,

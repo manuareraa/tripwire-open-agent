@@ -3,7 +3,7 @@ import type { MetricValue } from "../metrics.js";
 import type { TripwireDraft } from "../tripwires.js";
 import type { SourceFreshness } from "../freshness.js";
 import type {
-  DataGateway, Decision, DecisionKind, Finding, MemoryClaim, MemoryStore, ModelClient, ModelRequest, ModelResponse, QueryResult,
+  DataGateway, Decision, DecisionKind, Finding, MemoryClaim, MemoryStore, ModelCall, ModelClient, ModelRequest, ModelResponse, QueryResult,
 } from "../types.js";
 
 export interface Deps {
@@ -35,6 +35,8 @@ export interface RunState {
   results: Record<string, QueryResult>;
   /** How current each source fragment is, measured against its policy line. */
   freshness: SourceFreshness[];
+  /** Every model call so far, in order; copied onto the decision. */
+  modelCalls: ModelCall[];
   metrics: MetricValue[];
   findings: Finding[];
   summary: string;
@@ -48,9 +50,20 @@ export interface RunState {
   escalationReasons: string[];
 }
 
+/** Nightshift's receipt id, wherever this runtime version puts it. */
+const receiptId = (res: ModelResponse) => res.receipt?.receipt_id ?? res.receipt?.id ?? res.receipt?.["receipt.id"] ?? res.receipt?.["header.meterless-receipt-id"];
+
 /** Every model call goes through here so the trace records model, thinking, tokens, latency and fallbacks. */
 export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Promise<ModelResponse> {
   const res = await deps.model.complete(req);
+  s.modelCalls.push({
+    agent: req.agent_name, tier: req.tier, model: res.model, provider: res.provider, thinking: res.thinking,
+    tokens_in: res.tokens_in, tokens_out: res.tokens_out, latency_ms: res.latency_ms,
+    ...(res.requested_model && res.requested_model !== res.model ? { requested_model: res.requested_model } : {}),
+    ...(receiptId(res) ? { receipt_id: receiptId(res) } : {}),
+    ...(res.replayed_from ? { replayed_from: res.replayed_from } : {}),
+    ...(res.fallback ? { fallback: res.error ?? "no model answered" } : {}),
+  });
   const via = res.provider === "meterless-nightshift" ? "Meterless Nightshift" : "NVIDIA direct (backup)";
   // When the provider served a different model than the one asked for, say so rather than claim the requested one.
   const swapped = res.requested_model && res.requested_model !== res.model ? ` (asked for ${res.requested_model})` : "";
@@ -65,7 +78,7 @@ export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Pro
     output_summary: res.fallback
       ? `rule-based path (${res.error})`
       : `${res.model}${swapped} via ${via}` +
-        `${res.thinking ? " (thinking on)" : ""}${res.receipt?.receipt_id ? `, receipt ${res.receipt.receipt_id}` : ""}${replay}`,
+        `${res.thinking ? " (thinking on)" : ""}${receiptId(res) ? `, receipt ${receiptId(res)}` : ""}${replay}`,
     data: {
       model: res.model, requested_model: res.requested_model, provider: res.provider, tier: req.tier, thinking: res.thinking,
       tokens_in: res.tokens_in, tokens_out: res.tokens_out, latency_ms: res.latency_ms, reasoning_excerpt: res.reasoning_excerpt,

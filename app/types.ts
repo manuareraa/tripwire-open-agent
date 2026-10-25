@@ -61,6 +61,8 @@ export interface Decision {
   limitations: string[];
   /** Freshness of each source fragment when the decision was made. */
   sources?: SourceFreshness[];
+  /** Every model call made for this decision: which model really answered each step, or why none did. */
+  model_calls?: ModelCall[];
   supersedes?: string;
   backup?: Backup;
   escalated: boolean;
@@ -200,6 +202,24 @@ export interface ModelResponse {
   requested_model?: string;
   /** Set when this answer is a replay of a recorded live call: the time it was recorded. */
   replayed_from?: string;
+}
+
+/** One model call as a decision records it, so the answer to "which model handled this?" travels with the decision. */
+export interface ModelCall {
+  agent: string;
+  tier: ModelTier;
+  /** The model that answered (the provider's own report), or the one asked for when none answered. */
+  model: string;
+  requested_model?: string;
+  provider?: string;
+  thinking: boolean;
+  tokens_in: number;
+  tokens_out: number;
+  latency_ms: number;
+  receipt_id?: string;
+  replayed_from?: string;
+  /** Set when no model answered and the agent used its rule-based path; says why. */
+  fallback?: string;
 }
 
 export interface ModelClient {
