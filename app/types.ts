@@ -190,14 +190,21 @@ export interface ModelClient {
   complete(req: ModelRequest): Promise<ModelResponse>;
 }
 
+export interface Lineage {
+  row: RowRef;
+  result_hash: string;
+  /** Query template the hash came from. Older claims have none; they are compared row by row. */
+  template_id?: string;
+}
+
 export interface MemoryClaim {
   id: string;
   subject_id: string;
   text: string;
   metric?: string;
   value?: number | string;
-  /** Lineage: the rows and evidence hashes this claim came from. */
-  derivedFrom: { row: RowRef; result_hash: string }[];
+  /** Lineage: the rows and evidence hashes this claim came from, and the query template that produced each hash. */
+  derivedFrom: Lineage[];
   decision_id?: string;
   supersedes?: string;
   created_at: string;

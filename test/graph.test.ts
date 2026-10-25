@@ -87,4 +87,26 @@ describe("decision graph (rule-based path, no keys)", () => {
     expect(memReject?.target_agent).toBe("MemoryKeeper");
     expect(d.tracer.all().some((e) => e.action === "drop_stale")).toBe(true);
   });
+
+  it("re-deciding with no data change finds no stale memory and keeps the same confidence", async () => {
+    const d = deps();
+    // SUP-03 is dual-sourced with a backup, whose claims come from other queries than the ones run at recall.
+    const first = await runDecide(d, "SUP-03", "Review");
+    expect(first.decision.backup).toBeDefined();
+    const again = await runDecide(d, "SUP-03", "Review", first.decision);
+    expect(again.state.priorClaims.length).toBeGreaterThan(0);
+    expect(again.state.staleClaims).toHaveLength(0);
+    expect(again.decision.confidence).toBe(first.decision.confidence);
+    expect(d.tracer.all().some((e) => e.action === "review_memory" && e.status === "needs_revision")).toBe(false);
+  });
+
+  it("still treats a claim as stale when its own query now hashes differently", async () => {
+    const gateway = new FakeGateway();
+    const d = deps(new ScriptedModel(), gateway);
+    const first = await runDecide(d, "SUP-01", "Review");
+    gateway.tables.spend.find((r) => r.supplier_id === "SUP-01")!.lead_time_weeks = 30;
+    const again = await runDecide(d, "SUP-01", "Review", first.decision);
+    expect(again.state.staleClaims.length).toBeGreaterThan(0);
+    expect(again.state.staleClaims.every((c) => c.derivedFrom.some((x) => x.row.table === "supplier_spend"))).toBe(true);
+  });
 });

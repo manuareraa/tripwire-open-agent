@@ -6,6 +6,7 @@ import {
   HmemMemoryStore,
   callHmem,
   checkStale,
+  parseLineageRef,
   rowKey,
 } from "../app/adapters/hmem.js";
 import type { MemoryClaim, RowRef } from "../app/types.js";
@@ -77,6 +78,17 @@ describe("HmemMemoryStore", () => {
 
       const loaded = store.get(created.id);
       expect(loaded).toEqual(created);
+    });
+
+    it("round-trips the query template in lineage and still reads refs written without one", async () => {
+      const store = memoryStore();
+      const row: RowRef = { table: "supplier_spend", key: "SUP/7@x" };
+      const created = await store.remember({
+        subject_id: "SUP/7@x", decision_id: "dec-7", text: "Lead time 12 weeks",
+        derivedFrom: [{ row, result_hash: "h1", template_id: "supplier_spend_row" }],
+      });
+      expect(store.get(created.id)!.derivedFrom).toEqual([{ row, result_hash: "h1", template_id: "supplier_spend_row" }]);
+      expect(parseLineageRef("row:supplier_spend/SUP-01#h2")).toEqual({ row: { table: "supplier_spend", key: "SUP-01" }, result_hash: "h2" });
     });
   });
 

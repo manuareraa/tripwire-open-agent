@@ -1,7 +1,7 @@
 // Memory Keeper: recalls prior claims (Meterless H-MEM), catches stale ones, and records new claims
 // with derivedFrom lineage so the Watcher can find exactly which decisions depend on a changed row.
 import type { Deps, RunState } from "../orchestration/state.js";
-import type { Decision, MemoryClaim } from "../types.js";
+import type { Decision, Lineage, MemoryClaim } from "../types.js";
 
 const AGENT = "MemoryKeeper";
 const rowId = (r: { table: string; key: string }) => `${r.table}:${r.key}`;
@@ -14,16 +14,28 @@ export async function recallPrior(deps: Deps, s: RunState): Promise<void> {
     s.priorClaims = [];
     return;
   }
-  // A claim is stale when no query run today over its source row reproduces the hash it was built from.
-  // (Several templates read the same row, e.g. latest and history financials, so keep every hash per row.)
-  const current = new Map<string, Set<string>>();
+  // A claim is stale when today's run of the same query over its source row gives a different hash. Hashes are
+  // only comparable within one template: category_concentration and supplier_spend_row both read a spend row but
+  // hash different results, so comparing across them would call every unchanged claim stale. A claim whose query
+  // is not run today (e.g. a backup's own rows) is left unverified here; the Watcher still finds it by row.
+  // Older claims carry no template and fall back to "any hash run today over that row".
+  const byTemplate = new Map<string, Set<string>>();
+  const byRow = new Map<string, Set<string>>();
+  const add = (m: Map<string, Set<string>>, k: string, h: string) => {
+    if (!m.has(k)) m.set(k, new Set());
+    m.get(k)!.add(h);
+  };
   for (const r of Object.values(s.results)) {
     for (const d of r.evidence.depends_on) {
-      if (!current.has(rowId(d))) current.set(rowId(d), new Set());
-      current.get(rowId(d))!.add(r.evidence.result_hash);
+      add(byTemplate, `${r.evidence.template_id}|${rowId(d)}`, r.evidence.result_hash);
+      add(byRow, rowId(d), r.evidence.result_hash);
     }
   }
-  s.staleClaims = s.priorClaims.filter((c) => c.derivedFrom.some((d) => current.has(rowId(d.row)) && !current.get(rowId(d.row))!.has(d.result_hash)));
+  const changed = (d: Lineage) => {
+    const seen = d.template_id ? byTemplate.get(`${d.template_id}|${rowId(d.row)}`) : byRow.get(rowId(d.row));
+    return seen !== undefined && !seen.has(d.result_hash);
+  };
+  s.staleClaims = s.priorClaims.filter((c) => c.derivedFrom.some(changed));
 
   deps.tracer.emit({
     decision_id: s.decision_id, agent_name: AGENT, action: "recall", event: "sponsor_call", sponsor: deps.memory.name ?? "memory",
@@ -57,7 +69,7 @@ export async function record(deps: Deps, s: RunState, decision: Decision): Promi
         text: f.claim,
         metric: f.metric,
         value: f.value,
-        derivedFrom: f.evidence.depends_on.map((row) => ({ row, result_hash: f.evidence.result_hash })),
+        derivedFrom: f.evidence.depends_on.map((row) => ({ row, result_hash: f.evidence.result_hash, template_id: f.evidence.template_id })),
         decision_id: decision.decision_id,
       };
       const old = oldByMetric.get(f.metric);

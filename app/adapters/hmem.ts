@@ -4,7 +4,7 @@
 // H-MEM's state.json is the single source of truth (no side files):
 //   content     = claim text
 //   chatId      = subject_id (H-MEM's native scope filter, used by recall)
-//   derivedFrom = one "row:<table>/<key>#<result_hash>" ref per lineage entry (parts URI-encoded)
+//   derivedFrom = one "row:<table>/<key>#<result_hash>[@<template_id>]" ref per lineage entry (parts URI-encoded)
 //   tags        = subject:<id>, decision:<id>, metric:<name>, value:<json>
 //   supersedes / supersededBy = H-MEM's supersession fields
 // dependentsOf() is an exact scan over derivedFrom (H-MEM has no reverse index); retrieval
@@ -12,7 +12,7 @@
 
 import { HMEM } from "../../vendor/hmem/src/index.js";
 import type { LedgerEntry, MemoryRecord } from "../../vendor/hmem/src/index.js";
-import type { MemoryClaim, MemoryStore, RowRef, TraceEvent } from "../types.js";
+import type { Lineage, MemoryClaim, MemoryStore, RowRef, TraceEvent } from "../types.js";
 
 export type NewClaim = Omit<MemoryClaim, "id" | "created_at">;
 
@@ -33,13 +33,15 @@ const enc = encodeURIComponent;
 export function rowKey(row: RowRef): string {
   return `${enc(row.table)}/${enc(row.key)}`;
 }
-function lineageRef(row: RowRef, result_hash: string): string {
-  return `row:${rowKey(row)}#${enc(result_hash)}`;
+function lineageRef(d: Lineage): string {
+  return `row:${rowKey(d.row)}#${enc(d.result_hash)}${d.template_id ? `@${enc(d.template_id)}` : ""}`;
 }
-function parseLineageRef(ref: string): { row: RowRef; result_hash: string } | null {
-  const m = /^row:([^/#]*)\/([^/#]*)#(.*)$/.exec(ref);
+export function parseLineageRef(ref: string): Lineage | null {
+  const m = /^row:([^/#]*)\/([^/#]*)#([^@]*)(?:@(.*))?$/.exec(ref);
   if (!m) return null;
-  return { row: { table: decodeURIComponent(m[1]), key: decodeURIComponent(m[2]) }, result_hash: decodeURIComponent(m[3]) };
+  const out: Lineage = { row: { table: decodeURIComponent(m[1]), key: decodeURIComponent(m[2]) }, result_hash: decodeURIComponent(m[3]) };
+  if (m[4]) out.template_id = decodeURIComponent(m[4]);
+  return out;
 }
 function tagValue(tags: string[], prefix: string): string | undefined {
   const t = tags.find((x) => x.startsWith(prefix + ":"));
@@ -67,7 +69,7 @@ export class HmemMemoryStore implements MemoryStore {
     if (claim.supersedes && !this.hmem.store.get(claim.supersedes)) {
       throw new Error(`hmem: cannot supersede unknown claim ${claim.supersedes}`);
     }
-    const refs = claim.derivedFrom.map((d) => lineageRef(d.row, d.result_hash));
+    const refs = claim.derivedFrom.map(lineageRef);
     const tags = [`subject:${claim.subject_id}`];
     if (claim.decision_id) tags.push(`decision:${claim.decision_id}`);
     if (claim.metric) tags.push(`metric:${claim.metric}`);
@@ -176,7 +178,7 @@ export class HmemMemoryStore implements MemoryStore {
 function toClaim(m: MemoryRecord): MemoryClaim {
   const derivedFrom = (m.derivedFrom ?? [])
     .map(parseLineageRef)
-    .filter((x): x is { row: RowRef; result_hash: string } => x !== null);
+    .filter((x): x is Lineage => x !== null);
   const valueTag = tagValue(m.tags, "value");
   const claim: MemoryClaim = {
     id: m.id,
