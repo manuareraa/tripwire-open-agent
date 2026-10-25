@@ -187,6 +187,8 @@ export interface ModelResponse {
 }
 
 export interface ModelClient {
+  /** false when no model can run (no key, or rules-only), so traces do not promise model reasoning. */
+  readonly enabled?: boolean;
   complete(req: ModelRequest): Promise<ModelResponse>;
 }
 

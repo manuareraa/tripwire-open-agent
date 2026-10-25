@@ -44,7 +44,7 @@ export function assess(deps: Deps, s: RunState): void {
   deps.tracer.emit({
     decision_id: s.decision_id, agent_name: AGENT, action: "assess_risk", event: level === "high" ? "escalation" : "handoff",
     target_agent: "Decider", status: "success",
-    output_summary: `risk ${level}${flags.length ? `: ${flags.join("; ")}` : ""}; reasoning budget: thinking ${s.risk.thinking ? "ON" : "off"}`,
+    output_summary: `risk ${level}${flags.length ? `: ${flags.join("; ")}` : ""}; reasoning budget: thinking ${s.risk.thinking ? "ON" : "off"}${deps.model.enabled === false ? " (no model: rule-based path)" : ""}`,
   });
 }
 

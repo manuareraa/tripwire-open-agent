@@ -26,6 +26,10 @@ export class NemotronClient implements ModelClient {
     private fetchImpl: FetchLike = fetch,
   ) {}
 
+  get enabled(): boolean {
+    return !!this.apiKey;
+  }
+
   async complete(req: ModelRequest): Promise<ModelResponse> {
     const model = modelFor(req.tier);
     const thinking = req.tier !== "guard" && !!req.thinking;
@@ -92,6 +96,7 @@ export class NemotronClient implements ModelClient {
 
 /** Used in SAMPLE_MODE: every call reports fallback so agents run their rule-based paths. */
 export class RulesOnlyClient implements ModelClient {
+  readonly enabled = false;
   async complete(req: ModelRequest): Promise<ModelResponse> {
     return fallback(modelFor(req.tier), false, Date.now(), "SAMPLE_MODE: rules only");
   }

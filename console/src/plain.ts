@@ -118,7 +118,7 @@ export function say(e: TraceEvent): { title: string; detail: string } {
       m = o.match(/^risk (\w+)(?:: (.+?))?; reasoning budget: thinking (\w+)/);
       if (!m) return { title: "Graded the risk", detail: plain(o) };
       const flags = m[2] ? m[2].split("; ").map((f) => flagText(readFlag(f))) : [];
-      return { title: `Graded the risk: ${m[1]}`, detail: `${flags.length ? `Red flags: ${flags.join("; ")}.` : "No red flags."} ${m[3] === "ON" ? "Deep thinking is on for the Decider." : "Deep thinking is not needed."}` };
+      return { title: `Graded the risk: ${m[1]}`, detail: `${flags.length ? `Red flags: ${flags.join("; ")}.` : "No red flags."} ${/no model/.test(o) ? (m[3] === "ON" ? "Deep thinking would be on, but no model is set up, so the rule-based path decides." : "No model is set up, so the rule-based path decides.") : m[3] === "ON" ? "Deep thinking is on for the Decider." : "Deep thinking is not needed."}` };
     }
     case "propose_decision": {
       m = o.match(/^(\w+) @ ([\d.]+); tripwires: (.*)$/);
@@ -168,7 +168,10 @@ export function say(e: TraceEvent): { title: string; detail: string } {
       return { title: m ? `Reopened ${m[1]} of ${plural(m[2], "decision")}` : "Finished checking", detail: m ? `${plural(m[3], "decision")} did not need re-running.` : plain(o) };
     case "model_unavailable": return { title: "No model available: used the rule-based path", detail: cap(o.replace(/^rule-based path \((.+)\)$/, "$1")) };
     case "approve":
-      return { title: "Approved by a person", detail: /^written via/.test(o) ? "Written to the decision ledger in Zetaris." : cap(o.replace(/^approved but NOT written: /, "Approved, but not written to the ledger: ")) };
+      if (/^written via zetaris/.test(o)) return { title: "Approved by a person", detail: "Written to the decision ledger in Zetaris." };
+      if (/^written via sample/.test(o)) return { title: "Approved by a person", detail: "Written to the local sample ledger (sample mode, not Zetaris)." };
+      if (/^written via/.test(o)) return { title: "Approved by a person", detail: "Written to the decision ledger." };
+      return { title: "Approved by a person", detail: cap(o.replace(/^approved but NOT written: /, "Approved, but not written to the ledger: ")) };
     case "run_failed": return { title: "The run failed", detail: o };
     case "read_table": return { title: `Zetaris read the ${TABLE[arg] ?? arg}`, detail: plain(o) };
     case "apply_change": return { title: `Zetaris wrote the change into the ${TABLE[arg] ?? arg}`, detail: plain(o) };
@@ -192,6 +195,8 @@ export function say(e: TraceEvent): { title: string; detail: string } {
 /** Write result from the approve call, in words. */
 export function writeText(w: WriteResult | undefined) {
   if (!w) return "";
+  if (w.written && /^sample/.test(String(w.method))) return "Saved to the local sample ledger. This is sample mode, so nothing was written to Zetaris.";
+  if (w.written && !/^zetaris/.test(String(w.method ?? "zetaris"))) return "Saved to the decision ledger.";
   if (w.written) { const n = (String(w.detail).match(/read back (\d+) row/) || [])[1]; return `Saved to the decision ledger in Zetaris${n ? ` and read back to confirm (${plural(n, "row")})` : ""}.`; }
   return cap(String(w.detail || "The ledger write did not happen."));
 }

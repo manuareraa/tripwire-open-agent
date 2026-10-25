@@ -51,6 +51,13 @@ describe("plain English", () => {
   it("words the ledger write honestly", () => {
     expect(writeText({ written: true, detail: "read back 1 row" })).toBe("Saved to the decision ledger in Zetaris and read back to confirm (1 row).");
     expect(writeText({ written: false })).toBe("The ledger write did not happen.");
+    expect(writeText({ written: true, method: "sample-jsonl-append", detail: "appended" })).toMatch(/local sample ledger.*nothing was written to Zetaris/);
+    expect(say({ action: "approve", output_summary: "written via sample-jsonl-append" }).detail).toMatch(/sample mode, not Zetaris/);
+    expect(say({ action: "approve", output_summary: "written via zetaris:run_export_append_parquet" }).detail).toBe("Written to the decision ledger in Zetaris.");
+  });
+  it("does not promise deep thinking when no model runs", () => {
+    expect(say({ action: "assess_risk", output_summary: "risk high: x; reasoning budget: thinking ON (no model: rule-based path)" }).detail).toMatch(/no model is set up/);
+    expect(say({ action: "assess_risk", output_summary: "risk high: x; reasoning budget: thinking ON" }).detail).toMatch(/Deep thinking is on/);
   });
 });
 
