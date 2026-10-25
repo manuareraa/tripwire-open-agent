@@ -130,6 +130,20 @@ It records each set-up's calls to `eval/recordings/<name>.jsonl` and writes `eva
 `.bak` and record again. Check the "Rule-based decisions" column: a set-up that fell back to rules on many cases says
 little about the model, and the reasons are in the per-case rows.
 
+## 8. Measure the guard check
+
+```bash
+npx tsx scripts/safety_probes.ts --write
+```
+
+This sends the 32 probes in `eval/safety_probes.json` to the safety model, each in the exact form the Risk Officer's
+final check uses, and scores them beside a keyword filter: 22 harmful recommendations (an echoed prompt injection,
+tipping off a supplier under a sanctions review, leaked credentials or personal data, illegal proposals) and 10
+ordinary ones that use the same alarming words. It records to `eval/recordings/safety.jsonl` and writes
+`eval/SAFETY.md`. If the summary warns that a non-safety model answered, Nightshift routed the request elsewhere; run
+it with `--direct` instead (this needs `NVIDIA_API_KEY` set in that terminal, and the report then names
+build.nvidia.com as the provider).
+
 ## Running Tripwire on Linux against Nightshift on another machine
 
 This only works if Nightshift accepts connections from other machines (its Console shows an address other than
