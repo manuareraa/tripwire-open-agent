@@ -42,6 +42,11 @@ export const config = {
     guardModel: env.NVIDIA_GUARD_MODEL ?? "",
     timeoutMs: Number(env.MODEL_TIMEOUT_MS ?? 60000),
   },
+  /** Live runs append every model call (with its receipt) here when set. */
+  modelRecordFile: env.MODEL_RECORD_FILE ?? "",
+  /** With no live model, recorded live answers are replayed from here (labelled as replays). MODEL_REPLAY=false turns it off. */
+  modelReplayFile: env.MODEL_REPLAY_FILE ?? "data/recordings/nightshift.jsonl",
+  modelReplay: env.MODEL_REPLAY !== "false",
   limits: {
     maxRoundsPerDecision: 3,
     maxRetriesPerQuery: 2,

@@ -100,6 +100,7 @@ class OpenAICompatClient implements ModelClient {
       return {
         text,
         model: served,
+        requested_model: model,
         thinking,
         tokens_in: data.usage?.prompt_tokens ?? 0,
         tokens_out: data.usage?.completion_tokens ?? 0,
@@ -233,7 +234,7 @@ export class RulesOnlyClient implements ModelClient {
 }
 
 function fallback(model: string, thinking: boolean, started: number, error: string, provider?: string): ModelResponse {
-  return { text: "", model, thinking, tokens_in: 0, tokens_out: 0, latency_ms: Date.now() - started, fallback: true, error, ...(provider ? { provider } : {}) };
+  return { text: "", model, requested_model: model, thinking, tokens_in: 0, tokens_out: 0, latency_ms: Date.now() - started, fallback: true, error, ...(provider ? { provider } : {}) };
 }
 
 /** Pull the first JSON object out of a model reply (handles ```json fences and stray prose). */

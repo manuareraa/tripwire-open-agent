@@ -51,6 +51,10 @@ export interface RunState {
 /** Every model call goes through here so the trace records model, thinking, tokens, latency and fallbacks. */
 export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Promise<ModelResponse> {
   const res = await deps.model.complete(req);
+  const via = res.provider === "meterless-nightshift" ? "Meterless Nightshift" : "NVIDIA direct (backup)";
+  // When the provider served a different model than the one asked for, say so rather than claim the requested one.
+  const swapped = res.requested_model && res.requested_model !== res.model ? ` (asked for ${res.requested_model})` : "";
+  const replay = res.replayed_from ? ` [replay of a live call recorded ${res.replayed_from.slice(0, 16).replace("T", " ")} UTC]` : "";
   deps.tracer.emit({
     decision_id: s.decision_id,
     agent_name: req.agent_name,
@@ -60,11 +64,12 @@ export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Pro
     status: res.fallback ? "fallback" : "success",
     output_summary: res.fallback
       ? `rule-based path (${res.error})`
-      : `${res.model} via ${res.provider === "meterless-nightshift" ? "Meterless Nightshift" : "NVIDIA direct (backup)"}` +
-        `${res.thinking ? " (thinking on)" : ""}${res.receipt?.receipt_id ? `, receipt ${res.receipt.receipt_id}` : ""}`,
+      : `${res.model}${swapped} via ${via}` +
+        `${res.thinking ? " (thinking on)" : ""}${res.receipt?.receipt_id ? `, receipt ${res.receipt.receipt_id}` : ""}${replay}`,
     data: {
-      model: res.model, provider: res.provider, tier: req.tier, thinking: res.thinking, tokens_in: res.tokens_in, tokens_out: res.tokens_out,
-      latency_ms: res.latency_ms, reasoning_excerpt: res.reasoning_excerpt, receipt: res.receipt,
+      model: res.model, requested_model: res.requested_model, provider: res.provider, tier: req.tier, thinking: res.thinking,
+      tokens_in: res.tokens_in, tokens_out: res.tokens_out, latency_ms: res.latency_ms, reasoning_excerpt: res.reasoning_excerpt,
+      receipt: res.receipt, replayed_from: res.replayed_from,
     },
   });
   return res;

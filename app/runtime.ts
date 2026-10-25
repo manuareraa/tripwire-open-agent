@@ -3,6 +3,7 @@
 import { join } from "node:path";
 import { config } from "./config.js";
 import { FallbackModelClient, NemotronClient, NightshiftClient, RulesOnlyClient } from "./adapters/model.js";
+import { RecordingModelClient, ReplayModelClient } from "./adapters/recording.js";
 import { SampleDataGateway } from "./adapters/sample_data.js";
 import { LocalMemory } from "./adapters/local_memory.js";
 import { DecisionStore } from "./store.js";
@@ -47,6 +48,7 @@ export async function buildRuntime(): Promise<Runtime> {
   // Nightshift is the primary provider. Direct NVIDIA is a labelled backup for calls Nightshift cannot answer.
   let model: ModelClient = new RulesOnlyClient();
   let modelMode = "rules";
+  let replay: ReplayModelClient | undefined;
   const direct = config.useNvidiaDirect ? new NemotronClient() : undefined;
   if (config.useNightshift) {
     const ns = new NightshiftClient();
@@ -65,7 +67,15 @@ export async function buildRuntime(): Promise<Runtime> {
     model = direct;
     modelMode = "nvidia-direct";
     notes.push("No METERLESS_RUNTIME_TOKEN: Nemotron is called on build.nvidia.com directly, not through Nightshift");
+  } else if (config.modelReplay && (replay = new ReplayModelClient(config.modelReplayFile)).size > 0) {
+    model = replay;
+    modelMode = "replay";
+    notes.push(`No live model: replaying ${replay.size} recorded live Nemotron answers from ${config.modelReplayFile}; prompts with no recording use rule-based fallbacks`);
   } else notes.push("No model provider (or SAMPLE_MODE=true); agents use rule-based fallbacks");
+  if (config.modelRecordFile && model.enabled) {
+    model = new RecordingModelClient(model, config.modelRecordFile);
+    notes.push(`Recording every model call to ${config.modelRecordFile}`);
+  }
 
   // H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback.
   let memory: MemoryStore | undefined;

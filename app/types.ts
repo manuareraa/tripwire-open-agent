@@ -196,6 +196,10 @@ export interface ModelResponse {
   provider?: string;
   /** Route facts the provider reported (Nightshift's `meterless` receipt object and meterless-* headers). */
   receipt?: Record<string, string>;
+  /** The model id Tripwire asked for. Shown next to `model` when the provider served a different one. */
+  requested_model?: string;
+  /** Set when this answer is a replay of a recorded live call: the time it was recorded. */
+  replayed_from?: string;
 }
 
 export interface ModelClient {
