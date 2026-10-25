@@ -241,14 +241,15 @@ export class SampleDataGateway implements DataGateway {
   }
 
   /** Change files bundled for the demo, e.g. ["01_new_quarter.json", ...]. */
-  /** Supplier directory for the UI: id, company name, ticker and category from the bundled tables. */
-  suppliers(): { supplier_id: string; name: string; ticker: string; category: string; spend_share: number }[] {
+  /** Supplier directory for the UI: id, company name, ticker, category, SEC company number and lead time from the bundled tables. */
+  suppliers(): { supplier_id: string; name: string; ticker: string; category: string; spend_share: number; cik: string; lead_time_weeks: number }[] {
     const fin = new Map(this.tables[TABLES.financials].map((r) => [String(r.cik), r]));
     return this.tables[TABLES.spend].map((r) => {
       const f = fin.get(String(r.cik));
       return {
         supplier_id: String(r.supplier_id), name: String(f?.name ?? r.supplier_id), ticker: String(f?.ticker ?? ""),
         category: String(r.category), spend_share: Number(r.spend_share),
+        cik: String(r.cik), lead_time_weeks: Number(r.lead_time_weeks),
       };
     });
   }

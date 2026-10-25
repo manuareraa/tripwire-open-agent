@@ -25,6 +25,16 @@ const TIP = {
   escalated: "Risky or low-confidence decisions go to a senior buyer. Approving one needs a written reason.",
   status: "proposed → approved or rejected by a human. A reopened decision marks the old one superseded.",
 };
+// What each key number means, for the tooltips on the number tiles and tripwires.
+const METRIC_TIP = {
+  current_ratio: "Current assets divided by current liabilities, from the latest SEC filing. Below 1 means the bills due within a year are bigger than what the company can quickly turn into cash.",
+  debt_to_equity: "Total liabilities divided by shareholders' equity, from the latest SEC filing. Above 3 means the company is funded mostly by what it owes.",
+  gross_margin: "Gross profit divided by revenue: how much of each sale is left after the direct cost of making it. Below 10% leaves little cushion for shocks.",
+  revenue_change_pct: "How much revenue changed from the oldest to the newest reported period we hold. A fall of more than 10% is a warning sign.",
+  spend_share: "Of everything we spend in this category, the share that goes to this supplier. 25% or more counts as heavy dependence.",
+  lead_time_weeks: "Weeks from placing an order to delivery. 12 weeks or more makes switching or recovering slow.",
+  category_alternatives: "How many other suppliers we already buy this category from. Zero means there is nowhere to move the work.",
+};
 const SVG = (d, w = 2) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const IC = {
   check: SVG('<path d="M20 6 9 17l-5-5"/>', 3),
@@ -53,14 +63,14 @@ const titleCase = (s) => String(s || "").toLowerCase()
   .replace(/(^|[\s.\-&/])([a-z])/g, (m, a, b) => a + b.toUpperCase())
   .replace(/[\s,]+(incorporated|inc|corporation|corp|company|co|ltd|plc|llc|n\.v|holdings?)\.?$/i, "").trim();
 const sup = (id) => suppliers.find((s) => s.supplier_id === id);
-const supName = (id) => sup(id)?.short ?? id;
+const supName = (id) => sup(id)?.short || id;
 const initials = (id) => (supName(id) || id).replace(/[^A-Za-z0-9 ]/g, "").split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "?";
 const pct = (v) => `${(v * 100).toFixed(v * 100 < 10 ? 1 : 0)}%`;
 function fmtMetric(metric, v) {
   if (typeof v !== "number") return esc(v ?? "");
   const u = METRIC[metric]?.[1];
   if (u === "share") return pct(v);
-  if (u === "pct") return `${v.toFixed(1)}%`;
+  if (u === "pct") return `${+v.toFixed(1)}%`;
   if (u === "weeks") return `${v} wk`;
   return Math.abs(v) >= 1e5 ? v.toLocaleString() : String(+v.toFixed(2));
 }
@@ -78,6 +88,204 @@ const empty = (text) => `<div class="none">${IC.empty}${text}</div>`;
 const swap = (el, html) => { el.innerHTML = html; el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); };
 const ring = (v, cls = "ring") => `<svg viewBox="0 0 36 36"><circle class="t" cx="18" cy="18" r="15.9" pathLength="100"/><circle class="v" cx="18" cy="18" r="15.9" pathLength="100" stroke-dasharray="${v} 100"/></svg>`;
 const rid = () => Array.from(crypto.getRandomValues(new Uint8Array(10)), (b) => "abcdefghijklmnopqrstuvwxyz0123456789"[b % 36]).join("");
+
+// ---------- Plain English: codes from the data and the agents, turned into words ----------
+const TEMPLATE = {
+  supplier_spend_row: "our spend record",
+  supplier_financials_latest: "latest SEC financials",
+  supplier_financials_history: "financial history",
+  category_concentration: "category spend split",
+  decisions_for_supplier: "past decisions",
+};
+const TABLE = { supplier_spend: "spend table", supplier_financials: "financials table", tripwire_decisions: "decision ledger" };
+const tplName = (t) => TEMPLATE[t] ?? String(t || "").replace(/_/g, " ");
+const metricName = (m) => METRIC[m]?.[0] ?? String(m || "").replace(/_/g, " ");
+const verdictName = (v) => LABEL[v] ?? String(v || "").replace(/_/g, " ");
+const cap = (s) => String(s || "").replace(/^./, (c) => c.toUpperCase());
+const plural = (n, one, many = `${one}s`) => `${n} ${Number(n) === 1 ? one : many}`;
+const supByCik = (k) => suppliers.find((s) => s.cik != null && String(s.cik) === String(k));
+/** DEC-SUP-06-jozqki → "Kemet's decision". */
+function decName(id) { const m = String(id || "").match(/^DEC-(SUP-\d+)-/); return m ? `${supName(m[1])}'s decision` : String(id || ""); }
+/** One data row in words: supplier_financials:898293 → "Jabil's SEC filings". */
+function rowName(table, key) {
+  if (table === "supplier_financials") { const s = supByCik(key); return s ? `${s.short}'s SEC filings` : `SEC filings of company ${key}`; }
+  if (table === "supplier_spend") return `${supName(key)}'s spend record`;
+  if (table === "tripwire_decisions") return decName(key);
+  return `${String(table).replace(/_/g, " ")} row ${key}`;
+}
+const rowTip = (table, key) => table === "supplier_financials" ? `SEC company ID (CIK) ${key}, in the ${TABLE[table]}` : `Row ${key} in the ${TABLE[table] ?? table}`;
+
+// Risk flags exactly as the Risk Officer writes them (app/agents/risk.ts), with the rule and what it means.
+const FLAG = [
+  [/^current ratio (\S+) < 1$/, "current_ratio", "should be at least 1", "Its short-term assets don't cover the bills due within a year."],
+  [/^liabilities\/equity (\S+) > 3$/, "debt_to_equity", "should be 3 or less", "It owes a lot compared with what its owners have put in."],
+  [/^gross margin (\S+) < 0\.1$/, "gross_margin", "should be at least 10%", "It keeps very little from each sale, so it has little cushion for shocks."],
+  [/^revenue change (\S+)% < -10%$/, "revenue_change_pct", "shouldn't fall by more than 10%", "Its sales are shrinking fast."],
+  [/^spend share (\S+) ≥ 0\.25$/, "spend_share", "should stay under 25%", "A large slice of this category's spend rides on this one supplier."],
+  [/^lead time (\S+) weeks ≥ 12$/, "lead_time_weeks", "should be under 12 weeks", "Replacing or restocking them would take a quarter or more."],
+];
+const FIXED = {
+  "no alternative supplier in category": ["No other supplier in this category", "If this supplier fails, there is nowhere to move the work."],
+  "prior decision relied on data that has since changed": ["Earlier decision used data that has since changed", "What we knew before is out of date, so this needs a fresh look."],
+  "guard model flagged the rationale": ["Safety check flagged the reasoning", "A separate guard model objected to the written rationale."],
+  "exit decisions always go to a senior buyer": ["Exit always needs a senior buyer", "Dropping a supplier is a policy decision, whatever the numbers say."],
+};
+/** One risk flag or escalation reason → { name, value, rule, meaning, group }. */
+function readFlag(raw) {
+  const r = String(raw).trim().replace(/^high risk: /, "");
+  for (const [re, metric, rule, meaning] of FLAG) {
+    const m = r.match(re);
+    if (m) return { name: metricName(metric), value: fmtMetric(metric, Number(m[1])), rule, meaning, metric, group: /spend|lead/.test(metric) ? "exposure" : "health" };
+  }
+  const low = r.match(/^low confidence (\S+)$/);
+  if (low) return { name: "Low confidence", value: pct(Number(low[1])), rule: "should be at least 60%", meaning: "The agents were not sure enough for a routine sign-off.", group: "policy" };
+  const f = FIXED[r];
+  return f ? { name: f[0], meaning: f[1], group: /supplier in|data/.test(r) ? "exposure" : "policy" } : { name: cap(r), group: "policy" };
+}
+/** escalation_reasons → one readable flag each ("high risk: a; b" becomes a and b). */
+const readReasons = (list) => (list || []).flatMap((r) => String(r).split("; ")).filter(Boolean).map(readFlag);
+const flagText = (f) => `${f.name}${f.value ? ` ${f.value}` : ""}${f.rule ? ` (${f.rule})` : ""}`;
+
+/** Tripwire text from the agents: "debt_to_equity > 5 (now 4.138, was 4.138)" → "Liabilities to equity rises above 5 (now 4.14, was 4.14)". */
+function wireText(s) {
+  return String(s).replace(/\b([a-z_]+) (>=|<=|>|<|==|changed) *(-?[\d.]+(?:e-?\d+)?)? *(?:\(now (\S+?), was (\S+?)\))?/g, (all, m, op, th, now, was) => {
+    if (!METRIC[m]) return all;
+    const f = (x) => x === undefined || x === "undefined" ? "unknown" : fmtMetric(m, Number(x));
+    return `${metricName(m)} ${OP[op] ?? op}${th !== undefined && op !== "changed" ? ` ${f(th)}` : ""}${now !== undefined ? ` (now ${f(now)}, was ${f(was)})` : ""}`.trim();
+  });
+}
+/** Catch-all for any remaining codes inside agent text. */
+function plain(s) {
+  return wireText(String(s ?? ""))
+    .replace(/\b(supplier_financials|supplier_spend|tripwire_decisions):([\w-]+)/g, (_, t, k) => rowName(t, k))
+    .replace(/\bDEC-SUP-\d+-\w+/g, decName)
+    .replace(/\b(dual_source|keep|exit) @ ([\d.]+)/g, (_, v, c) => `${verdictName(v)} at ${pct(Number(c))} confidence`)
+    .replace(/\bdual_source\b/g, "Dual-source")
+    .replace(/\bhash ([0-9a-f]{8,})/g, "result fingerprint $1")
+    .replace(/\b[a-z]+(?:_[a-z]+)+\b/g, (w) => TEMPLATE[w] ?? (METRIC[w] ? metricName(w) : w.replace(/_/g, " ")));
+}
+const numsList = (s) => String(s).split(/,\s*/).filter(Boolean).join(", ");
+/** Why the Critic sent work back, in words. */
+function issueText(s) {
+  return String(s).split(" | ").map((x) => {
+    let m = x.match(/^(?:rationale cites )?numbers not in the evidence: (.+)$/);
+    if (m) return `It quotes numbers that no query produced: ${numsList(m[1])}.`;
+    m = x.match(/^"keep" at ([\d.]+) confidence ignores high-risk flags \((.+)\); justify or lower confidence$/);
+    if (m) return `It says Keep at ${pct(Number(m[1]))} confidence but ignores red flags (${m[2].split("; ").map((f) => flagText(readFlag(f))).join("; ")}).`;
+    return cap(plain(x)) + (/[.!?]$/.test(x) ? "" : ".");
+  }).join(" ");
+}
+const MODEL_TIER = { small: "fast model", reasoning: "reasoning model", guard: "safety guard model" };
+const DATA_SRC = { zetaris: "live data in Zetaris", sample: "the bundled sample data" };
+const GUARD = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };
+const ZETARIS = { health: "Zetaris health check", write_decision: "Zetaris wrote the decision to the ledger", verify_decision: "Zetaris read the ledger back to confirm the write", read_decisions: "Zetaris read the decision ledger" };
+
+/** A trace event in words: { title, detail }. The raw text stays on hover for anyone who wants it. */
+function say(e) {
+  const a = String(e.action || ""), o = String(e.output_summary || ""), fail = e.status === "failed";
+  const [kind, arg] = a.includes(":") ? [a.slice(0, a.indexOf(":")), a.slice(a.indexOf(":") + 1)] : [a, ""];
+  let m;
+  switch (kind) {
+    case "start_decision":
+    case "reopen_decision": {
+      const src = (o.match(/data: (\w+)/) || [])[1], sup2 = (o.match(/supersedes (\S+)/) || [])[1];
+      return { title: kind === "start_decision" ? "Started a new decision" : "Reopened an earlier decision", detail: `Using ${DATA_SRC[src] ?? src ?? "the data layer"}${sup2 ? `. This will replace ${decName(sup2)}.` : "."}` };
+    }
+    case "plan": {
+      const [steps, ...rest] = o.split(" | ");
+      const extra = rest.map((p) => p.replace(/^focus: /, "Focus: ").replace(/^policy added: (.+)/, (_, x) => `Added by policy: ${x.split(", ").map(tplName).join(", ")}`));
+      return { title: "Chose which approved queries to run", detail: [steps.split(" → ").map(tplName).join(" → "), ...extra].join(". ") };
+    }
+    case "drop_unknown_steps": return { title: "Ignored steps that are not approved queries", detail: o.replace(/^ignored: /, "Ignored: ") };
+    case "query":
+      if (fail) return { title: `Couldn't read ${tplName(arg)}${e.retry_count ? `, retrying` : ""}`, detail: o };
+      m = o.match(/^(\d+) rows/);
+      return { title: `Read ${tplName(arg)}`, detail: `${m ? plural(m[1], "row") : "Result"} returned${/sample data/.test(o) ? " from the sample data" : ""}. A fingerprint of the result is kept so the number can be re-checked later.` };
+    case "template": return { title: `Zetaris ran the ${tplName(arg)} query`, detail: o.replace(/(\d+) rows in (\d+) ms/, (_, n, ms) => `${plural(n, "row")} in ${Number(ms).toLocaleString()} ms`) };
+    case "verify":
+      return e.status === "success"
+        ? { title: `Double-checked ${tplName(arg)}`, detail: "Re-ran the query and got exactly the same result, so the numbers stand." }
+        : { title: `Double-checked ${tplName(arg)}: unstable`, detail: "The result was different on a re-run." };
+    case "reject_evidence": return { title: "Sent the analysis back: the data changed mid-run", detail: `Re-running ${tplName((o.match(/^REJECT (\S+):/) || [])[1])} gave a different result, so the Analyst starts again on fresh data.` };
+    case "review_memory": {
+      if (e.status === "success") return { title: "Checked what memory recalled", detail: cap(o.replace(/(\d+) recalled claims still match today's evidence/, (_, n) => `${plural(n, "remembered claim")} still match today's data.`)) };
+      const claims = [...o.matchAll(/"([^"]+)" \(from ([^)]+?), hash \w+\)/g)].map((x) => `“${x[1]}” (from ${plain(x[2])})`);
+      m = o.match(/^REJECT (\d+)/);
+      return { title: `Refused ${m ? plural(m[1], "remembered claim") : "remembered claims"} as evidence`, detail: `${claims.join("; ")}${claims.length ? " no longer match the data." : ""}` };
+    }
+    case "check_summary":
+      return o.startsWith("REJECT")
+        ? { title: "Sent the summary back to the Analyst", detail: issueText(o.replace(/^REJECT: /, "")) }
+        : { title: "Checked the Analyst's summary", detail: "Every number in it traces back to a query result." };
+    case "recall": {
+      if (e.status !== "success") return { title: "Memory unavailable", detail: o.replace(/^memory unavailable: /, "") };
+      m = o.match(/^(\d+) prior claims; (\d+) stale/);
+      const ex = (o.match(/e\.g\. "([^"]+)"/) || [])[1];
+      return { title: "Recalled what we knew before", detail: m ? `${plural(m[1], "earlier claim")}, ${m[2]} out of date${ex ? `, for example “${ex}”` : ""}.` : plain(o) };
+    }
+    case "drop_stale": m = o.match(/^(\d+)/); return { title: "Set aside out-of-date claims", detail: `${m ? plural(m[1], "claim") : "Claims"} whose data has changed go to the Decider marked “changed since”, not as facts.` };
+    case "assess_risk": {
+      m = o.match(/^risk (\w+)(?:: (.+?))?; reasoning budget: thinking (\w+)/);
+      if (!m) return { title: "Graded the risk", detail: plain(o) };
+      const flags = m[2] ? m[2].split("; ").map((f) => flagText(readFlag(f))) : [];
+      return { title: `Graded the risk: ${m[1]}`, detail: `${flags.length ? `Red flags: ${flags.join("; ")}.` : "No red flags."} ${m[3] === "ON" ? "Deep thinking is on for the Decider." : "Deep thinking is not needed."}` };
+    }
+    case "propose_decision": {
+      m = o.match(/^(\w+) @ ([\d.]+); tripwires: (.*)$/);
+      return m ? { title: `Proposed ${verdictName(m[1])} at ${pct(Number(m[2]))} confidence`, detail: m[3] ? `Reopen if: ${m[3].split(", ").map(wireText).join("; ")}.` : "No tripwires." } : { title: "Proposed a decision", detail: plain(o) };
+    }
+    case "review_decision": {
+      m = o.match(/^APPROVE (\w+) @ ([\d.]+)/);
+      if (m) return { title: "Passed the draft decision", detail: `${verdictName(m[1])} at ${pct(Number(m[2]))} confidence holds up against the evidence.` };
+      m = o.match(/^REJECT round (\d+): (.+)$/);
+      return m ? { title: `Sent the draft back to the Decider (round ${m[1]})`, detail: issueText(m[2]) } : { title: "Reviewed the draft decision", detail: plain(o) };
+    }
+    case "round_limit": return { title: "Switched to the rule-based policy", detail: "The draft failed review too many times, so a simple labelled rule decides instead." };
+    case "final_check": {
+      m = o.match(/^guard: (\w+); (?:ESCALATED: (.+)|standard approval)$/);
+      if (!m) return { title: "Ran the final check", detail: plain(o) };
+      const why = m[2] ? readReasons([m[2]]).map((f) => f.name) : [];
+      return { title: m[2] ? "Escalated to a senior buyer" : "Ran the final check: routine sign-off", detail: `${GUARD[m[1]] ?? ""} ${why.length ? `Reasons: ${why.join("; ")}.` : "No escalation needed."}`.trim() };
+    }
+    case "remember":
+      if (fail) return { title: "Couldn't save to memory", detail: o };
+      m = o.match(/^(\d+) claims stored with lineage(?:, (\d+) superseding)?/);
+      return { title: "Saved the claims with where each came from", detail: m ? `${plural(m[1], "claim")} stored, each linked to the data row it came from${m[2] ? `. ${m[2]} replace the old decision's claims` : ""}.` : plain(o) };
+    case "decision_proposed": {
+      m = o.match(/^(\w+) @ ([\d.]+), (\d+) tripwires, (\w+) approval/);
+      return { title: "Ready for a person to review", detail: m ? `${verdictName(m[1])} at ${pct(Number(m[2]))} confidence with ${plural(m[3], "tripwire")}. ${m[4] === "escalated" ? "Needs a senior buyer's sign-off." : "Routine sign-off."}` : plain(o) };
+    }
+    case "lineage_lookup": {
+      if (e.status !== "success") return { title: "Memory unavailable, checking every decision", detail: plain(o) };
+      m = o.match(/^(\d+) of (\d+) active decisions depend on this row: (.*)$/);
+      return { title: "Looked up which decisions read the changed row", detail: m ? `${m[1]} of ${plural(m[2], "active decision")} ${Number(m[1]) === 1 ? "depends" : "depend"} on it${m[3] !== "none" ? `: ${m[3].split(", ").map(decName).join(", ")}` : ""}.` : plain(o) };
+    }
+    case "check_tripwires":
+      if (o.startsWith("FIRED")) return { title: "A tripwire fired, so the decision reopens", detail: `${cap(wireText(o.replace(/^FIRED: /, "").replace(/ → reopening$/, "")))}.` };
+      m = o.match(/^no tripwire fired \((.*)\); decision stands$/);
+      return { title: "No tripwire fired: the decision stands", detail: m ? `Checked: ${wireText(m[1])}.` : plain(o) };
+    case "reopen_summary":
+      m = o.match(/^reopened (\d+) of (\d+); (\d+) decisions not re-run/);
+      return { title: m ? `Reopened ${m[1]} of ${plural(m[2], "decision")}` : "Finished checking", detail: m ? `${plural(m[3], "decision")} did not need re-running.` : plain(o) };
+    case "model_unavailable": return { title: "No model available: used the rule-based path", detail: cap(o.replace(/^rule-based path \((.+)\)$/, "$1")) };
+    case "approve":
+      return { title: "Approved by a person", detail: /^written via/.test(o) ? "Written to the decision ledger in Zetaris." : cap(o.replace(/^approved but NOT written: /, "Approved, but not written to the ledger: ")) };
+    case "run_failed": return { title: "The run failed", detail: o };
+    case "read_table": return { title: `Zetaris read the ${TABLE[arg] ?? arg}`, detail: plain(o) };
+    case "apply_change": return { title: `Zetaris wrote the change into the ${TABLE[arg] ?? arg}`, detail: plain(o) };
+    case "changes_since": return { title: "Zetaris checked for new data", detail: plain(o) };
+  }
+  m = a.match(/^model_call_(\w+)$/);
+  if (m) return { title: `Asked the ${MODEL_TIER[m[1]] ?? `${m[1]} model`}`, detail: o.replace(/^nvidia\//, "NVIDIA ").replace(/ \(thinking on\)$/, ", with deep thinking on") };
+  if (ZETARIS[a]) return { title: ZETARIS[a], detail: plain(o) };
+  return { title: cap(plain(a)), detail: plain(o) };
+}
+/** Write result from the approve call, in words. */
+function writeText(w) {
+  if (!w) return "";
+  if (w.written) { const n = (String(w.detail).match(/read back (\d+) row/) || [])[1]; return `Saved to the decision ledger in Zetaris${n ? ` and read back to confirm (${plural(n, "row")})` : ""}.`; }
+  return cap(String(w.detail || "The ledger write did not happen."));
+}
 
 async function api(path, opts = {}) {
   const r = await fetch(path, { headers: { "content-type": "application/json" }, ...opts });
@@ -123,12 +331,17 @@ function supMeta(animate) {
   const id = $("supplier").value, x = sup(id);
   const prior = decisionsCache.find((d) => d.subject_id === id && d.status !== "superseded" && d.status !== "rejected");
   const el = $("sup-meta");
+  const cat = x?.category ? String(x.category).replace(/_/g, " ") : "";
   el.innerHTML = `
-    <span class="avatar">${esc(initials(id))}</span>
-    <span class="nm">${esc(x?.short || id)}</span>
-    <span class="mt"><span class="mono">${esc(id)}</span>${x?.ticker ? `<span>· ${esc(x.ticker)}</span>` : ""}${x?.category ? `<span class="cat">${esc(String(x.category).replace(/_/g, " "))}</span>` : ""}</span>
-    ${typeof x?.spend_share === "number" ? `<div class="share"><span class="term" tabindex="0" data-tip="Share of what we spend in this category that goes to this supplier (synthetic data).">Share of category spend</span><b>${pct(x.spend_share)}</b><span class="bar"><i></i></span></div>` : ""}
-    ${prior ? `<div class="prior">Already decided: <span class="verdict ${esc(prior.decision)}">${LABEL[prior.decision] ?? esc(prior.decision)}</span><span class="st ${esc(prior.status)}">${esc(prior.status)}</span></div>` : ""}`;
+    <div class="sc-head">
+      <span class="avatar">${esc(initials(id))}</span>
+      <div class="sc-id"><span class="nm">${esc(x?.short || id)}</span><span class="mt"><span class="mono">${esc(id)}</span>${x?.ticker ? `<span class="dotsep"></span><span tabindex="0" data-tip="Stock ticker">${esc(x.ticker)}</span>` : ""}</span>${cat ? `<span class="cat" tabindex="0" data-tip="Purchase category this supplier sells us">${esc(cat)}</span>` : ""}</div>
+    </div>
+    ${typeof x?.spend_share === "number" ? `<div class="sc-stats">
+      <div class="stat share"><span class="k term" tabindex="0" data-tip="Of everything we spend in this category, how much goes to this supplier (synthetic data). Above 25% counts as heavy dependence.">Share of category spend</span><b>${pct(x.spend_share)}</b><span class="bar"><i></i><em style="left:25%" title="25%: heavy-dependence line"></em></span></div>
+      ${typeof x.lead_time_weeks === "number" ? `<div class="stat"><span class="k term" tabindex="0" data-tip="Weeks from placing an order to delivery. 12 weeks or more makes switching slow.">Lead time</span><b>${x.lead_time_weeks} wk</b></div>` : ""}
+    </div>` : ""}
+    ${prior ? `<div class="prior"><span>Already decided</span><span class="verdict ${esc(prior.decision)}">${LABEL[prior.decision] ?? esc(prior.decision)}</span><span class="st ${esc(prior.status)}">${esc(prior.status)}</span></div>` : ""}`;
   if (animate) { el.classList.remove("swap"); void el.offsetWidth; el.classList.add("swap"); }
   requestAnimationFrame(() => { const i = el.querySelector(".share i"); if (i) i.style.width = `${Math.min(100, x.spend_share * 100)}%`; });
 }
@@ -168,7 +381,7 @@ async function loadChanges() {
     return `<div class="ccard enter" style="--i:${i}" data-card="${esc(c.file)}">
       <span class="cc-ico">${ico}</span>
       <div class="cc-t">${esc(name.charAt(0).toUpperCase() + name.slice(1))}<span class="tg ${c.synthetic ? "synthetic" : "real"}" data-tip="${c.synthetic ? "A made-up change to synthetic spend data, to show the mechanism." : "Based on a real SEC filing."}" tabindex="0">${c.synthetic ? "synthetic" : "real filing"}</span></div>
-      <div class="cc-who">${who ? `<b>${esc(supName(who))}</b><span class="mono">${esc(who)}</span>` : ""}${c.table ? `<span class="watch" data-tip="The exact data row this change rewrites. Only decisions that read this row are checked." tabindex="0">${IC.db}${esc(c.table.replace("supplier_", ""))} row</span>` : ""}</div>
+      <div class="cc-who">${who ? `<b>${esc(supName(who))}</b><span class="mono">${esc(who)}</span>` : ""}${c.table ? `<span class="watch" data-tip="${esc(`The exact data row this change rewrites (${rowTip(c.table, c.key)}). Only decisions that read this row are checked.`)}" tabindex="0">${IC.db}${esc(rowName(c.table, c.key))}</span>` : ""}</div>
       ${fields.length ? `<div class="deltas">${fields.map((f) => `<div class="delta"><span class="l">${esc(FIELD[f.field] ?? f.field.replace(/_/g, " "))}</span><s>${esc(fmtField(f.field, f.before))}</s><span class="arr">→</span><b>${esc(fmtField(f.field, f.after))}</b></div>`).join("")}</div>` : ""}
       <div class="cc-foot"><details><summary>Details</summary></details><button class="btn sm primary" data-f="${esc(c.file)}" type="button" ${i === 0 ? 'id="first-change"' : ""}>Apply</button></div>
       <p class="cc-about" hidden>${esc(about)}</p>
@@ -180,6 +393,7 @@ async function loadChanges() {
 
 // ---------- Centre: start ----------
 function renderStart() {
+  actionBar(null);
   selected = null;
   swap($("detail"), `
     <div class="start">
@@ -235,9 +449,10 @@ const TIPS = [
   "A <b>tripwire</b> is a condition on a specific row. Change that row and only its decisions are re-checked.",
   "If a model is unavailable, a labelled <b>rule-based fallback</b> decides. It is never passed off as a model answer.",
 ];
-const nowText = (e) => NOW[e.action] ?? (String(e.action || "").startsWith("query:") ? `Analyst is running the approved query ${e.action.slice(6).replace(/_/g, " ")}` : String(e.action || "").startsWith("verify:") ? "Evidence Critic is re-running a query to confirm its hash" : `${pretty(e.agent_name)}: ${String(e.action || "").replace(/_/g, " ")}`);
+const nowText = (e) => NOW[e.action] ?? (String(e.action || "").startsWith("query:") ? `Analyst is reading ${tplName(e.action.slice(6))}` : String(e.action || "").startsWith("verify:") ? `Evidence Critic is re-running ${tplName(e.action.slice(7))} to make sure it gives the same result` : `${pretty(e.agent_name)}: ${say(e).title}`);
 
 function renderRun(title, sub, kind = "decide") {
+  actionBar(null);
   const stages = kind === "decide" ? STAGES : [["Watcher", "Wa", "Finds dependent decisions"], ["Planner", "Pl", "Re-plans reopened ones"], ["Analyst", "An", "Re-runs queries"], ["EvidenceCritic", "Cr", "Re-checks numbers"], ["RiskOfficer", "Ri", "Re-grades risk"], ["Decider", "De", "Proposes again"]];
   swap($("detail"), `
     <div class="run" data-kind="${kind}">
@@ -287,7 +502,7 @@ function watchRun(run_id) {
       }
       const feed = $("feed");
       if (feed && e.agent_name !== "Orchestrator") {
-        feed.insertAdjacentHTML("afterbegin", `<div class="fe ${e.status === "needs_revision" ? "push" : ""}"><b>${esc(pretty(e.agent_name))}</b><span>${esc(e.output_summary || String(e.action || "").replace(/_/g, " "))}</span></div>`);
+        feed.insertAdjacentHTML("afterbegin", `<div class="fe ${e.status === "needs_revision" ? "push" : ""}"><b>${esc(pretty(e.agent_name))}</b><span>${esc(say(e).title)}</span></div>`);
         while (feed.children.length > 4) feed.lastElementChild.remove();
       }
     }
@@ -302,7 +517,7 @@ function watchRun(run_id) {
       relay.querySelector(".fill").style.width = `${x - 8.33}%`;
     }
     const now = $("now");
-    if (now) now.innerHTML = `<span class="spin"></span><div class="tx">${esc(nowText(last))}${last.output_summary ? `<small>${esc(last.output_summary)}</small>` : ""}${next && next.dataset.a !== last.agent_name ? `<small>Handed to the <b>${esc(pretty(last.target_agent))}</b>, which is working on it now${last.target_agent === "Decider" ? ". With thinking on, a model call can take a minute." : "."}</small>` : ""}</div>`;
+    if (now) now.innerHTML = `<span class="spin"></span><div class="tx">${esc(nowText(last))}${say(last).detail ? `<small>${esc(say(last).detail)}</small>` : ""}${next && next.dataset.a !== last.agent_name ? `<small>Handed to the <b>${esc(pretty(last.target_agent))}</b>, which is working on it now${last.target_agent === "Decider" ? ". With thinking on, a model call can take a minute." : "."}</small>` : ""}</div>`;
     bump("c-q", counts.q); bump("c-ok", counts.ok); bump("c-push", counts.push); bump("c-ev", lastTrace.length);
   };
   const poll = async () => {
@@ -336,8 +551,26 @@ function gauge(t, d) {
     const dist = Math.abs(cur - th);
     gap = `${fmtMetric(t.metric, dist).replace(/^-/, "")} away`;
   } else if (f) gap = `now ${fmtMetric(t.metric, f.value)}`;
-  return `<div class="gauge"><div class="g-t">${IC.wire}<span>${cond}</span><span class="gap">${esc(gap)}</span></div>${track}
-    <div class="rows">watches ${esc((t.depends_on || []).map((r) => `${r.table}:${r.key}`).join(", ") || "its source rows")}</div></div>`;
+  const rows = (t.depends_on || []).map((r) => rowName(r.table, r.key)).join(" or ") || "its source data";
+  const tip = `If ${rows} changes and ${METRIC[t.metric]?.[0]?.toLowerCase() ?? "this value"} ${OP[t.op] ?? t.op}${t.threshold != null && t.op !== "changed" ? ` ${fmtMetric(t.metric, t.threshold)}` : ""}, the Watcher reopens this decision.${f ? ` It is ${fmtMetric(t.metric, f.value)} now.` : ""} ${METRIC_TIP[t.metric] ?? ""}`;
+  return `<div class="gauge"><div class="g-t">${IC.wire}<span class="term-ish" tabindex="0" data-tip="${esc(tip.trim())}">${cond}</span><span class="gap" tabindex="0" data-tip="How far the current value is from the line that fires this tripwire.">${esc(gap)}</span></div>${track}
+    <div class="rows">${IC.db}Watches ${(t.depends_on || []).map((r) => `<span tabindex="0" data-tip="${esc(rowTip(r.table, r.key))}">${esc(rowName(r.table, r.key))}</span>`).join(", ") || "its source rows"}</div></div>`;
+}
+
+const GROUP = { health: "Financial health", exposure: "How much we depend on them", policy: "Policy" };
+/** The escalation reasons as readable rows: what was measured, its value, the policy line and what it means. */
+function escPanel(d) {
+  const flags = readReasons(d.escalation_reasons);
+  const groups = Object.keys(GROUP).map((g) => [g, flags.filter((f) => f.group === g)]).filter(([, l]) => l.length);
+  return `<section class="esc-panel enter" aria-label="Why this was escalated">
+    <div class="esc-h"><span class="esc-ic">${IC.warn}</span><div><b>Escalated: a senior buyer must sign off</b> ${info("escalated")}
+      <p>${flags.length ? `The Risk Officer found ${plural(flags.length, "reason")} in code. Each value is compared with a fixed policy line.` : "This decision needs a senior buyer's sign-off."}</p></div></div>
+    ${groups.map(([g, list]) => `<div class="esc-g"><div class="esc-gh">${GROUP[g]}</div>${list.map((f) => `
+      <div class="flag">
+        <div class="f-l"><b>${esc(f.name)}</b>${f.meaning ? `<span>${esc(f.meaning)}</span>` : ""}</div>
+        ${f.value ? `<div class="f-r"><b>${esc(f.value)}</b>${f.rule ? `<span>${esc(cap(f.rule))}</span>` : ""}</div>` : ""}
+      </div>`).join("")}</div>`).join("")}
+  </section>`;
 }
 
 function renderDecision(d) {
@@ -359,17 +592,17 @@ function renderDecision(d) {
         <div class="hc-verb">${esc(VERB[d.decision] ?? "")}</div>
       </div>
       <div class="hc-side">
-        <div class="ring" tabindex="0" data-tip="${esc(TIP.confidence)}">${ring(conf)}<div class="lbl"><b data-count="${conf}">${conf}%</b><span>confident</span></div></div>
+        <div class="gstat" tabindex="0" data-tip="${esc(TIP.confidence)}"><div class="ring">${ring(conf)}<div class="lbl"><b data-count="${conf}">${conf}%</b></div></div><span class="cap">Confidence</span></div>
         <div class="riskm ${esc(risk)}" tabindex="0" data-tip="${esc(TIP.risk)}"><span>Risk</span><b>${esc(risk || "?")}</b><span class="segs">${[0, 1, 2].map((i) => `<i class="${i < segs ? "f" : ""}" style="--i:${i}"></i>`).join("")}</span></div>
       </div>
       <div class="hc-meta">
         <span class="st ${esc(d.status)}" tabindex="0" data-tip="${esc(TIP.status)}">${esc(d.status)}</span>
         ${fallback ? `<span class="pill fallback" tabindex="0" data-tip="No model was available for this run, so a simple rule-based policy decided. It is labelled, never passed off as a model answer."><span class="dot"></span>rule-based fallback</span>` : ""}
-        ${d.supersedes ? `<span class="pill" tabindex="0" data-tip="This decision was reopened by a tripwire and replaces an earlier one.">replaces <code>${esc(d.supersedes)}</code></span>` : ""}
-        <span class="id">${esc(d.decision_id)}</span>
+        ${d.supersedes ? `<span class="pill" tabindex="0" data-tip="${esc(`This decision was reopened by a tripwire and replaces an earlier one (${d.supersedes}).`)}">replaces ${esc(decName(d.supersedes))}</span>` : ""}
+        <span class="id" tabindex="0" data-tip="Decision ID, as stored in the ledger.">${esc(d.decision_id)}</span>
       </div>
     </div>
-    ${d.escalated ? `<div class="banner esc">${IC.warn}<div><b>Escalated to a senior buyer</b> ${info("escalated")}<div class="reasons">${(d.escalation_reasons || []).map((r) => `<span>${esc(r)}</span>`).join("")}</div></div></div>` : ""}
+    ${d.escalated ? escPanel(d) : ""}
 
     <div class="sec"><div class="sec-h"><h3>Why</h3><span class="line"></span></div>
       <p class="why">${whyHtml}</p>
@@ -377,7 +610,7 @@ function renderDecision(d) {
     </div>
 
     ${nums.length ? `<div class="sec"><div class="sec-h"><h3>Key numbers</h3>${info("evidence")}<span class="line"></span></div>
-      <div class="nums">${nums.map(({ f, i }, k) => `<button class="num enter" style="--i:${k}" type="button" data-ev="${i}">${watched.has(f.metric) ? `<span class="w" title="A tripwire watches this">${IC.wire}</span>` : ""}<span class="v">${fmtMetric(f.metric, f.value)}</span><span class="l">${esc(METRIC[f.metric]?.[0] ?? f.metric.replace(/_/g, " "))}</span><span class="src">${esc(f.evidence?.template_id || "")} · show proof</span></button>`).join("")}</div>
+      <div class="nums">${nums.map(({ f, i }, k) => `<button class="num enter" style="--i:${k}" type="button" data-ev="${i}" data-tip="${esc(`${METRIC_TIP[f.metric] ?? f.claim}${watched.has(f.metric) ? " A tripwire watches this number." : ""} Click to see the query and its exact result.`)}">${watched.has(f.metric) ? `<span class="w">${IC.wire}</span>` : ""}<span class="v">${fmtMetric(f.metric, f.value)}</span><span class="l">${esc(METRIC[f.metric]?.[0] ?? f.metric.replace(/_/g, " "))}</span><span class="src">From ${esc(tplName(f.evidence?.template_id || ""))} · show proof</span></button>`).join("")}</div>
     </div>` : ""}
 
     <div class="sec"><div class="sec-h"><h3>Tripwires: reopen if…</h3>${info("tripwire")}<span class="line"></span></div>
@@ -385,27 +618,19 @@ function renderDecision(d) {
     </div>
 
     <div class="sec">
-      <details class="ev" id="ev"><summary>${IC.chev}Evidence behind every number<span class="muted">${(d.findings || []).length} findings, each with its SQL and result hash</span></summary>
+      <details class="ev" id="ev"><summary>${IC.chev}Evidence behind every number<span class="muted">${plural((d.findings || []).length, "finding")}, each with its SQL query and result fingerprint</span></summary>
         <div class="ev-list">${(d.findings || []).map((f, i) => `
-          <details class="ev-row" id="ev-${i}"><summary><span>${esc(f.claim)}</span><span class="q">${esc(f.evidence?.template_id)}</span></summary>
+          <details class="ev-row" id="ev-${i}"><summary><span>${esc(f.claim)}</span><span class="q">${esc(cap(tplName(f.evidence?.template_id)))}</span></summary>
             <div class="body">
               <pre>${esc(f.evidence?.sql)}</pre>
-              <div class="muted">Result hash <code>${esc((f.evidence?.result_hash || "").slice(0, 16))}</code>${(f.evidence?.depends_on || []).length ? ` · rows ${f.evidence.depends_on.map((r) => `<code>${esc(r.table)}:${esc(r.key)}</code>`).join(" ")}` : ""}</div>
+              <div class="ev-meta"><span tabindex="0" data-tip="A fingerprint (SHA-256 hash) of the exact query result. Re-running the query on unchanged data gives the same fingerprint; any change to the data gives a different one.">Result fingerprint <code>${esc((f.evidence?.result_hash || "").slice(0, 12))}</code></span>${(f.evidence?.depends_on || []).length ? `<span>Reads ${f.evidence.depends_on.map((r) => `<b tabindex="0" data-tip="${esc(rowTip(r.table, r.key))}">${esc(rowName(r.table, r.key))}</b>`).join(", ")}</span>` : ""}</div>
             </div></details>`).join("") || empty("No findings recorded.")}</div>
       </details>
     </div>
 
     ${(d.limitations || []).length ? `<div class="sec"><div class="sec-h"><h3>Limitations</h3><span class="line"></span></div><ul class="lim">${d.limitations.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></div>` : ""}
 
-    ${d.status === "proposed" ? `
-      <div class="approve" id="approval-box">
-        <div class="ah">${IC.person}<h3>Your call</h3></div>
-        <p>Nothing is final until a person approves it. Approving writes the decision to the ledger${d.escalated ? ". This one is escalated, so a reason is required" : ""}.</p>
-        <label class="field" for="reason">Reason ${d.escalated ? "(required)" : "(optional)"}</label>
-        <textarea class="input" id="reason" rows="2" placeholder="${d.escalated ? "e.g. Reviewed the financials, agree to start moving volume" : "Optional note for the record"}"></textarea>
-        <div class="row"><button class="btn primary" id="approve" type="button">${IC.check}Approve and write to ledger</button><button class="btn ghost" id="reject" type="button">Reject</button></div>
-        <div class="err" id="writeres"></div>
-      </div>` : d.status === "approved" ? `<div class="banner ok done-anim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><div><b>Approved.</b> ${esc(d.approved_by_reason || "")}</div></div>` : ""}
+    ${d.status === "proposed" ? `<div class="await" tabindex="0" data-tip="Approve or reject in the bar fixed to the bottom of the screen.">${IC.person}<span><b>Waiting for your call.</b> Approve or reject it in the bar at the bottom.</span></div>` : d.status === "approved" ? `<div class="banner ok done-anim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><div><b>Approved.</b> ${esc(d.approved_by_reason || "")}</div></div>` : ""}
     <div id="write-result"></div>`);
 
   for (const b of $("detail").querySelectorAll(".num[data-ev]")) b.onclick = () => {
@@ -416,28 +641,90 @@ function renderDecision(d) {
   };
   TW.countUp($("detail").querySelector("[data-count]"), conf, { ms: 1000, fmt: (v) => `${Math.round(v)}%` });
 
-  const a = $("approve");
-  if (a) {
-    a.onclick = async () => {
-      const reason = $("reason").value.trim();
-      if (d.escalated && !reason) { const e = $("writeres"); e.textContent = ""; void e.offsetWidth; e.textContent = "Escalated decisions need a reason before they can be approved."; $("reason").focus(); return; }
-      a.disabled = true; $("reject").disabled = true; a.innerHTML = `<span class="spin"></span>Writing to the ledger…`;
-      try {
-        const r = await api(`/decisions/${d.decision_id}/approve`, { method: "POST", body: JSON.stringify({ reason }) });
-        renderDecision(r.decision);
-        $("write-result").innerHTML = `<div class="banner ${r.write?.written ? "ok" : "bad"} enter">${r.write?.written ? IC.db : IC.warn}<div><b>${r.write?.written ? "Written to the ledger." : "Not written."}</b> ${esc(r.write?.detail || "")}</div></div>`;
-        await loadTrace(r.run_id, true);
-        markDone("step-review"); setStep(3);
-        toast(`<b>Approved.</b> Now try step 3: apply a data change and see which decisions reopen.`);
-      } catch (e) { $("writeres").textContent = e.message; a.disabled = false; $("reject").disabled = false; a.innerHTML = `${IC.check}Approve and write to ledger`; }
-      loadDecisions();
-    };
-    $("reject").onclick = async () => {
-      const r = $("reject"); r.disabled = true; a.disabled = true; r.innerHTML = `<span class="spin"></span>Rejecting…`;
-      await api(`/decisions/${d.decision_id}/reject`, { method: "POST" }).catch((e) => toast(esc(e.message)));
-      openDecision(d.decision_id);
-    };
-  }
+  actionBar(d.status === "proposed" ? d : null);
+}
+
+// ---------- Bottom action bar: shown only while a decision waits for a person ----------
+/** A reason the reviewer can accept, edit or replace. It is assembled in the browser from what the agents
+ *  already produced (verdict, risk flags, tripwires, the Decider's rationale); no extra model call is made. */
+function suggestReason(d) {
+  const v = verdictName(d.decision), c = pct(d.confidence ?? 0);
+  // Numbered flags first: they say the most in the fewest words.
+  const flags = readReasons(d.escalation_reasons).sort((a, b) => !a.value - !b.value);
+  const tw = (d.tripwires || []).slice(0, 2).map((t) => `${metricName(t.metric).toLowerCase()} ${OP[t.op] ?? t.op}${t.threshold != null && t.op !== "changed" ? ` ${fmtMetric(t.metric, t.threshold)}` : ""}`);
+  const first = (String(d.rationale || "").match(/^(.+?[.!?])(\s|$)/) || [])[1];
+  const why = flags.length
+    ? `${flags.slice(0, 3).map((f) => f.value ? `${f.name.toLowerCase()} is ${f.value} (${f.rule})` : f.name.toLowerCase()).join(", ")}.`
+    : first && first.length < 220 && !/^Rule-based/i.test(first) ? first : `Risk is ${d.risk || "not graded"} and the evidence checks out.`;
+  return `${d.escalated ? "Reviewed the escalation and agree" : "Agree"} with ${v} at ${c} confidence: ${why.charAt(0).toLowerCase() + why.slice(1)}${tw.length ? ` Reopen if ${tw.join(" or ")}.` : ""}`;
+}
+let barFor = null;
+function actionBar(d) {
+  const bar = $("actionbar");
+  if (!d) { if (!bar.hidden) { bar.classList.remove("in"); bar.hidden = true; barFor = null; document.body.style.removeProperty("--ab-h"); } return; }
+  if (barFor === d.decision_id && !bar.hidden) return;
+  barFor = d.decision_id;
+  const tip = suggestReason(d);
+  bar.innerHTML = `
+    <div class="ab-in">
+      <div class="ab-top">
+        <div class="ab-sum"><span class="ab-dot"></span><div><div class="eyebrow">Needs your decision</div>
+          <b>${esc(supName(d.subject_id))}: <span class="verdict ${esc(d.decision)}">${LABEL[d.decision] ?? esc(d.decision)}</span> at ${pct(d.confidence ?? 0)}</b>${d.escalated ? `<span class="st esc" tabindex="0" data-tip="${esc(TIP.escalated)}">escalated<span class="ab-req"> · reason required</span></span>` : ""}</div></div>
+        <button class="ab-toggle" id="ab-toggle" type="button" aria-expanded="true" aria-controls="ab-body">Reason${IC.chev}</button>
+        <div class="ab-act"><button class="btn ghost" id="reject" type="button">Reject</button><button class="btn primary" id="approve" type="button">${IC.check}Approve and write to ledger</button></div>
+      </div>
+      <div class="ab-body" id="ab-body">
+        <div class="ab-sug" id="ab-sug">
+          <div class="ab-sug-h">${IC.bulb}<span>Suggested reason</span><span class="info" tabindex="0" data-tip="Drafted in your browser from what the agents found: the verdict, the risk flags and the tripwires. No extra model call. Use it, edit it or write your own.">i</span></div>
+          <p>${esc(tip)}</p>
+          <div class="row"><button class="btn sm primary" id="ab-use" type="button">${IC.check}Use this reason</button><button class="btn sm ghost" id="ab-own" type="button">Write my own</button></div>
+        </div>
+        <div class="ab-write" id="ab-write" hidden>
+          <label class="field" for="reason"><span id="ab-src">Your reason</span> ${d.escalated ? "(required)" : "(optional)"}</label>
+          <textarea class="input" id="reason" rows="2" placeholder="${d.escalated ? "Why you agree, in a sentence. It goes on the record." : "Optional note for the record"}"></textarea>
+          <button class="linkbtn" id="ab-back" type="button">Show the suggestion again</button>
+        </div>
+        <div class="err" id="writeres" role="alert"></div>
+      </div>
+    </div>`;
+  bar.hidden = false;
+  requestAnimationFrame(() => bar.classList.add("in"));
+  const fit = () => document.body.style.setProperty("--ab-h", `${bar.offsetHeight}px`);
+  fit(); (bar._ro ??= new ResizeObserver(fit)).observe(bar);
+
+  const reason = $("reason"), sug = $("ab-sug"), write = $("ab-write"), src = $("ab-src");
+  const toggle = $("ab-toggle"), body = $("ab-body");
+  const setOpen = (open) => { body.hidden = !open; toggle.setAttribute("aria-expanded", String(open)); toggle.classList.toggle("open", open); };
+  // Open on wide screens; on phones it starts folded so the page stays readable (Approve unfolds it if a reason is missing).
+  setOpen(innerWidth > 720);
+  toggle.onclick = () => setOpen(body.hidden);
+  const showWrite = (text, from) => { $("writeres").textContent = ""; sug.hidden = true; write.hidden = false; reason.value = text; src.textContent = from; reason.focus(); reason.setSelectionRange(text.length, text.length); };
+  $("ab-use").onclick = () => showWrite(tip, "Suggested reason, yours to edit");
+  $("ab-own").onclick = () => showWrite("", "Your reason");
+  $("ab-back").onclick = () => { sug.hidden = false; write.hidden = true; reason.value = ""; };
+  reason.oninput = () => { if (src.textContent.startsWith("Suggested") && reason.value !== tip) src.textContent = "Suggested reason, edited by you"; };
+
+  const a = $("approve"), rj = $("reject"), err = $("writeres");
+  const fail = (msg) => { err.textContent = ""; void err.offsetWidth; err.textContent = msg; };
+  a.onclick = async () => {
+    const r0 = write.hidden ? "" : reason.value.trim();
+    if (d.escalated && !r0) { setOpen(true); fail("Escalated decisions need a reason. Use the suggestion or write your own."); (write.hidden ? $("ab-use") : reason).focus(); return; }
+    a.disabled = rj.disabled = true; a.innerHTML = `<span class="spin"></span>Writing to the ledger…`;
+    try {
+      const r = await api(`/decisions/${d.decision_id}/approve`, { method: "POST", body: JSON.stringify({ reason: r0 }) });
+      renderDecision(r.decision);
+      $("write-result").innerHTML = `<div class="banner ${r.write?.written ? "ok" : "bad"} enter">${r.write?.written ? IC.db : IC.warn}<div><b>${r.write?.written ? "Written to the ledger." : "Not written."}</b> <span title="${esc(r.write?.detail || "")}">${esc(writeText(r.write))}</span></div></div>`;
+      await loadTrace(r.run_id, true);
+      markDone("step-review"); setStep(3);
+      toast(`<b>Approved.</b> Now try step 3: apply a data change and see which decisions reopen.`);
+    } catch (e) { fail(e.message); a.disabled = rj.disabled = false; a.innerHTML = `${IC.check}Approve and write to ledger`; }
+    loadDecisions();
+  };
+  rj.onclick = async () => {
+    rj.disabled = a.disabled = true; rj.innerHTML = `<span class="spin"></span>Rejecting…`;
+    await api(`/decisions/${d.decision_id}/reject`, { method: "POST" }).catch((e) => toast(esc(e.message)));
+    openDecision(d.decision_id);
+  };
 }
 
 function renderDecisionSkeleton() {
@@ -459,9 +746,9 @@ const tev = (e, fresh) => `
     <div class="tev ${fresh ? "new" : ""} ${esc(e.event)} ${esc(e.status)}">
       <span class="av">${esc(AGENT[e.agent_name] ?? String(e.agent_name || "?").slice(0, 2))}</span>
       <div>
-        <div class="h"><b>${esc(pretty(e.agent_name))}</b>${e.target_agent ? `<span class="a">→ ${esc(pretty(e.target_agent))}</span>` : ""}<span class="a">${esc(String(e.action || "").replace(/_/g, " "))}</span>
+        <div class="h"><b>${esc(pretty(e.agent_name))}</b>${e.target_agent ? `<span class="a">→ ${esc(pretty(e.target_agent))}</span>` : ""}<span class="a">${esc(say(e).title)}</span>
           ${e.sponsor ? `<span class="bd">${esc(e.sponsor)}</span>` : ""}${e.event === "fallback" ? `<span class="bd">fallback</span>` : ""}${e.status === "needs_revision" ? `<span class="bd">sent back</span>` : ""}${e.retry_count ? `<span class="bd">retry ${e.retry_count}</span>` : ""}</div>
-        ${e.output_summary ? `<div class="o">${esc(e.output_summary)}</div>` : ""}
+        ${say(e).detail ? `<div class="o" title="${esc(`As logged: ${e.action}${e.output_summary ? ` · ${e.output_summary}` : ""}`)}">${esc(say(e).detail)}</div>` : ""}
       </div>
     </div>`;
 function renderTrace(events, append = false) {
@@ -499,7 +786,7 @@ async function decide(thenChange = false) {
       const card = document.querySelector('[data-card="02_spend_share_jump.json"]');
       card?.scrollIntoView({ block: "center", behavior: TW.reduced() ? "auto" : "smooth" }); card?.classList.add("suggest", "pulse-once");
     } else {
-      toast(`<b>Decision proposed.</b> Read the reasoning and evidence, then approve or reject it at the bottom.`);
+      toast(`<b>Decision proposed.</b> Read the reasoning and evidence, then approve or reject it in the bar at the bottom of the screen.`);
     }
   } catch (e) {
     await stop();
@@ -536,17 +823,17 @@ async function applyChange(file, btn) {
       const fired = new Set(x.reopened.map((o) => o.old));
       const dots = decisionsCache.filter((d) => d.status !== "superseded" && d.status !== "rejected" || fired.has(d.decision_id));
       const n = Math.max(x.active, dots.length);
-      const cells = Array.from({ length: n }, (_, i) => { const d = dots[i]; const id = d?.decision_id; return `<span style="--i:${i}" class="${id && fired.has(id) ? "fire" : id && dep.has(id) ? "dep" : ""}" title="${esc(id ? `${supName(d.subject_id)} · ${id}` : "decision")}"></span>`; });
+      const cells = Array.from({ length: n }, (_, i) => { const d = dots[i]; const id = d?.decision_id; return `<span style="--i:${i}" class="${id && fired.has(id) ? "fire" : id && dep.has(id) ? "dep" : ""}" title="${esc(id ? `${supName(d.subject_id)}'s decision (${LABEL[d.decision] ?? d.decision})` : "decision")}"></span>`; });
       return `<div class="wr">
-        <div class="wr-h">${IC.db}<span>Changed row <code>${esc(x.changed.table)}:${esc(x.changed.key)}</code></span></div>
+        <div class="wr-h">${IC.db}<span>Changed: <b tabindex="0" data-tip="${esc(rowTip(x.changed.table, x.changed.key))}">${esc(rowName(x.changed.table, x.changed.key))}</b></span></div>
         ${n ? `<div class="dots">${cells.join("")}</div><div class="dots-legend"><span><i></i>left alone</span><span><i class="dep"></i>depends, still holds</span><span><i class="fire"></i>tripwire fired</span></div>` : ""}
         <div class="tiles">
-          <div class="tile" data-tip="Active decisions that read the changed row." tabindex="0"><b data-n="${x.dependents.length}">0</b><span>of ${x.active} depend on it</span></div>
+          <div class="tile" data-tip="Active decisions that read the changed row." tabindex="0"><b data-n="${x.dependents.length}">0</b><span>of ${x.active} ${x.dependents.length === 1 ? "depends" : "depend"} on it</span></div>
           <div class="tile ${x.reopened.length ? "hot" : ""}" data-tip="Dependent decisions whose tripwire fired." tabindex="0"><b data-n="${x.reopened.length}">0</b><span>reopened</span></div>
           <div class="tile" data-tip="Active decisions not re-run because the change could not affect them, or no tripwire fired." tabindex="0"><b data-n="${x.work_saved}">0</b><span>left alone</span></div>
         </div>
-        ${x.reopened.map((o) => `<div class="rline fired"><b>Tripwire fired.</b> <code>${esc(o.old)}</code> reopened → <a href="#" data-id="${esc(o.new.decision_id)}">new decision: ${LABEL[o.new.decision] ?? esc(o.new.decision)}</a><ul>${o.fired.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></div>`).join("")}
-        ${x.still_valid.map((v) => `<div class="rline"><b>Still holds.</b> <code>${esc(v.decision_id)}</code> depends on this row, but no tripwire fired.${(v.checked || []).length ? `<ul>${v.checked.map((c) => `<li>${esc(typeof c === "string" ? c : JSON.stringify(c))}</li>`).join("")}</ul>` : ""}</div>`).join("")}
+        ${x.reopened.map((o) => `<div class="rline fired"><b>Tripwire fired.</b> ${esc(decName(o.old))} reopened → <a href="#" data-id="${esc(o.new.decision_id)}">new decision: ${LABEL[o.new.decision] ?? esc(o.new.decision)}</a><ul>${o.fired.map((f) => `<li>${esc(cap(wireText(f)))}</li>`).join("")}</ul></div>`).join("")}
+        ${x.still_valid.map((v) => `<div class="rline"><b>Still holds.</b> ${esc(decName(v.decision_id))} depends on this row, but no tripwire fired.${(v.checked || []).length ? `<ul>${v.checked.map((c) => `<li>${esc(typeof c === "string" ? cap(wireText(c)) : JSON.stringify(c))}</li>`).join("")}</ul>` : ""}</div>`).join("")}
         ${!x.dependents.length ? `<div class="rline">No active decision depends on this row, so nothing was re-run.${x.active ? "" : " Make a decision first to see the Watcher at work."}</div>` : ""}
       </div>`;
     }).join("") || empty("No rows changed.");
@@ -585,10 +872,10 @@ const TOUR = [
   { el: "#step-review", title: "Step 2: review and approve", body: "Every decision starts as a proposal. A human approves or rejects it. Risky ones are <b>escalated</b> and need a written reason. Approval writes the decision to the ledger." },
   { el: "#step-change", title: "Step 3: change the data", body: "Each card shows the value before and after. Apply one and the Watcher asks memory which decisions read that row, checks only their tripwires, and reopens only the ones that fire." },
   { el: "#trace-panel", title: "See the agents think", body: "Every step of each run streams in here as it happens: queries, handoffs, where the Critic sent work back, and any fallback. Nothing is hidden." },
-  { el: "#theme-picker", title: "Make it yours", body: "Switch between 12 colour themes and 6 font pairings at any time. Your choice is remembered." },
   { el: "#tour-btn", title: "You're ready", body: "Try the <b>Tripwire test</b> shortcut first: it decides on SUP-06, then you apply the spend share jump. You can replay this tour from here." },
 ];
-function startTour() { TW.tour(TOUR, { key: "tw.tourDone", finishLabel: "Start using it" }); }
+// Shown on every load on purpose (nothing is stored), so each visitor gets the walkthrough.
+function startTour() { TW.tour(TOUR, { finishLabel: "Start using it" }); }
 $("tour-btn").onclick = startTour;
 
 // ---------- Boot ----------
@@ -601,5 +888,5 @@ $("tour-btn").onclick = startTour;
   if (list.length) setStep(list.some((d) => d.status === "approved") ? 3 : 2);
   const q = new URLSearchParams(location.search);
   if (q.get("run") === "1") decide(q.get("supplier") === "SUP-06");
-  else if (q.get("tour") === "1" || !TW.store.get("tw.tourDone")) startTour();
+  else startTour();
 })();

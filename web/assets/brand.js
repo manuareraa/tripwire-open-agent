@@ -1,5 +1,5 @@
-// Tripwire brand runtime: theme and font pickers, the shared nav, live-mode pills and the guided tour.
-// Loaded in <head> without defer so the saved theme applies before first paint.
+// Tripwire brand runtime: the locked look (Deep Sea + Sora), the shared nav, live-mode pills and the guided tour.
+// Loaded in <head> without defer so the theme applies before first paint.
 (function () {
   const THEMES = [
     { group: "Light", items: [
@@ -30,20 +30,19 @@
     if (!allThemes.includes(id)) id = prefersDark ? "nightwatch" : "signal";
     if (animate) { root.classList.add("theming"); clearTimeout(themingT); themingT = setTimeout(() => root.classList.remove("theming"), 420); }
     root.dataset.theme = id;
-    store.set("tw.theme", id);
   }
   function setFont(id) {
     const f = FONTS.find((x) => x[0] === id) || FONTS[0];
     root.dataset.font = f[0];
-    store.set("tw.font", f[0]);
     if (!document.getElementById(`gf-${f[0]}`)) {
       const l = document.createElement("link");
       l.id = `gf-${f[0]}`; l.rel = "stylesheet"; l.href = GF + f[2];
       document.head.appendChild(l);
     }
   }
-  setTheme(store.get("tw.theme"));
-  setFont(store.get("tw.font"));
+  // The look is fixed: Deep Sea colours with the Sora / DM Sans / DM Mono pairing. No picker, nothing stored.
+  setTheme("deepsea");
+  setFont("modern");
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -61,14 +60,6 @@
     help: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>`,
   };
 
-  function pickers() {
-    const themeOpts = THEMES.map((g) => `<optgroup label="${g.group}">${g.items.map(([id, name]) => `<option value="${id}">${name}</option>`).join("")}</optgroup>`).join("");
-    const fontOpts = FONTS.map(([id, name]) => `<option value="${id}">${name}</option>`).join("");
-    return `
-      <label class="picker" id="theme-picker" title="Colour theme">${ICON.palette}<select id="theme-select" aria-label="Colour theme">${themeOpts}</select></label>
-      <label class="picker" id="font-picker" title="Font pairing">${ICON.type}<select id="font-select" aria-label="Font pairing">${fontOpts}</select></label>`;
-  }
-
   /** Render the shared top nav into <header id="nav">. page: "home" | "console". */
   function mountNav(page) {
     const el = document.getElementById("nav");
@@ -84,15 +75,10 @@
         ${link("/app.html", "Console", "console")}
       </nav>
       <div class="nav-tools">
-        ${pickers()}
         ${page === "console"
           ? `<button class="btn sm" id="tour-btn" type="button">${ICON.help}<span class="btn-label">Tour</span></button>`
           : `<a class="btn sm primary cta" href="/app.html?tour=1">${ICON.play}<span class="btn-label">Start demo</span></a>`}
       </div>`;
-    const ts = document.getElementById("theme-select"), fs = document.getElementById("font-select");
-    ts.value = root.dataset.theme; fs.value = root.dataset.font;
-    ts.onchange = () => setTheme(ts.value, true);
-    fs.onchange = () => setFont(fs.value);
   }
 
   let healthP;
@@ -175,7 +161,6 @@
     function end() {
       blocker.remove(); spot.remove(); pop.remove();
       removeEventListener("resize", place); removeEventListener("scroll", place, true); removeEventListener("keydown", key);
-      if (opts.key) store.set(opts.key, "1");
       opts.onEnd?.();
     }
     function go(d) { const j = i + d; if (j < 0) return; if (j >= steps.length) return end(); i = j; show(); }
@@ -252,6 +237,35 @@
       <path d="M19.8 20.5H29" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".35"/>
       <path class="w" d="M3 20.5h9.2L16 10.5l3.8 10H29" fill="none" stroke="var(--wire)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
       <circle class="k" cx="16" cy="10.5" r="2.4" fill="var(--wire)"/></svg></span>`;
+
+  /** One floating tooltip for every [data-tip] element. It lives on <body> with fixed position, so scroll
+   *  areas and overflow-hidden cards can't clip it, and it is kept inside the viewport. */
+  function tips() {
+    const tip = Object.assign(document.createElement("div"), { className: "tw-tip", role: "tooltip", id: "tw-tip" });
+    document.body.appendChild(tip);
+    let cur = null;
+    const show = (el) => {
+      const text = el.getAttribute("data-tip");
+      if (!text) return;
+      cur = el; tip.textContent = text; tip.style.left = "0px"; el.setAttribute("aria-describedby", "tw-tip");
+      tip.classList.add("on");
+      const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect(), m = 8;
+      let top = r.top - t.height - m;
+      const below = top < m;
+      if (below) top = r.bottom + m;
+      const left = Math.max(m, Math.min(innerWidth - t.width - m, r.left + r.width / 2 - t.width / 2));
+      tip.style.top = `${Math.round(top)}px`; tip.style.left = `${Math.round(left)}px`;
+      tip.classList.toggle("below", below);
+    };
+    const hide = () => { if (cur) cur.removeAttribute("aria-describedby"); cur = null; tip.classList.remove("on"); };
+    const find = (e) => e.target instanceof Element ? e.target.closest("[data-tip]") : null;
+    document.addEventListener("pointerover", (e) => { const el = find(e); if (el && el !== cur) show(el); else if (!el && cur) hide(); });
+    document.addEventListener("focusin", (e) => { const el = find(e); if (el) show(el); });
+    document.addEventListener("focusout", hide);
+    document.addEventListener("scroll", hide, true);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
+  }
+  if (document.body) tips(); else document.addEventListener("DOMContentLoaded", tips);
 
   window.TW = { THEMES, FONTS, setTheme, setFont, mountNav, health, modes, renderModes, tour, esc, store, ICON, busy, reveal, countUp, reduced, LOADER };
 })();
