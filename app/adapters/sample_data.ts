@@ -241,6 +241,27 @@ export class SampleDataGateway implements DataGateway {
   }
 
   /** Change files bundled for the demo, e.g. ["01_new_quarter.json", ...]. */
+  /** Supplier directory for the UI: id, company name, ticker and category from the bundled tables. */
+  suppliers(): { supplier_id: string; name: string; ticker: string; category: string; spend_share: number }[] {
+    const fin = new Map(this.tables[TABLES.financials].map((r) => [String(r.cik), r]));
+    return this.tables[TABLES.spend].map((r) => {
+      const f = fin.get(String(r.cik));
+      return {
+        supplier_id: String(r.supplier_id), name: String(f?.name ?? r.supplier_id), ticker: String(f?.ticker ?? ""),
+        category: String(r.category), spend_share: Number(r.spend_share),
+      };
+    });
+  }
+
+  /** Change files with their description, for the UI. */
+  changeCatalog(): { file: string; description: string; synthetic: boolean; table: string; key: string }[] {
+    return this.listChangeFiles().map((file) => {
+      const raw = JSON.parse(readFileSync(join(this.sampleDir, "changes", file), "utf8")) as ChangeFile | ChangeFile[];
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      return { file, description: first.description ?? file, synthetic: first.synthetic ?? false, table: first.table, key: String(first.key) };
+    });
+  }
+
   listChangeFiles(): string[] {
     const dir = join(this.sampleDir, "changes");
     if (!existsSync(dir)) return [];

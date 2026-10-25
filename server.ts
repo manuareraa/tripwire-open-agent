@@ -128,6 +128,8 @@ app.post("/decisions/:id/reject", (c) => {
 
 // Demo change feed: apply a bundled change file to the live data layer, then the Watcher decides what to reopen.
 app.get("/changes", (c) => c.json(rt.sample.listChangeFiles()));
+app.get("/changes/catalog", (c) => c.json(rt.sample.changeCatalog()));
+app.get("/suppliers", (c) => c.json(rt.sample.suppliers()));
 app.post("/changes/:file/apply", async (c) => {
   const file = c.req.param("file");
   if (!rt.sample.listChangeFiles().includes(file)) return c.json({ error: "not_found" }, 404);

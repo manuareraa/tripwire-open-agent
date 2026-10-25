@@ -65,7 +65,7 @@ docker build -t tripwire .
 docker run -p 8000:8000 -e SAMPLE_MODE=true tripwire
 ```
 
-Open `http://localhost:8000` for the UI, or call the API:
+Open `http://localhost:8000` for the landing page and `http://localhost:8000/app.html` for the console (a guided tour starts on the first visit), or call the API:
 
 ```bash
 curl -s -X POST localhost:8000/run -H 'content-type: application/json' --data @input_examples/02_decide_risky.json
@@ -100,6 +100,7 @@ Each sponsor is used live when its credentials are present and it answers a heal
 | `GET /decisions`, `GET /decisions/:id` | Decision ledger |
 | `POST /decisions/:id/approve` | Human approval, body `{"reason":"..."}` (required for escalated decisions). Writes to the Zetaris ledger in live mode. |
 | `POST /decisions/:id/reject` | Reject a proposed decision |
+| `GET /suppliers`, `GET /changes/catalog` | Supplier names and the change files with descriptions, for the UI |
 | `GET /changes`, `POST /changes/:file/apply` | Demo change feed: applies a bundled change file (to the sample files, or to the Zetaris tables in live mode), then runs the Watcher |
 | `GET /trace/:run_id` | Trace events of a recent run |
 
@@ -168,5 +169,5 @@ app/adapters/             Zetaris, Meterless H-MEM, Nemotron, sample data, local
 app/sql/                  Approved SQL templates and Zetaris table definitions
 scripts/                  EDGAR fetch, Zetaris setup, smoke run
 vendor/hmem/              Meterless H-MEM (vendored)
-web/                      Single-page UI
+web/                      Landing page (index.html), console (app.html), shared theme and tour (assets/)
 ```

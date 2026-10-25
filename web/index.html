@@ -3,239 +3,331 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tripwire</title>
+<title>Tripwire · decisions that know when to reopen themselves</title>
+<meta name="description" content="Tripwire is a team of AI agents that makes supplier decisions, records the exact data each one relies on, and reopens only the decisions whose tripwire fires when that data changes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231d3b5a'/%3E%3Cpath d='M5 20.5h7.2M19.8 20.5H27' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'/%3E%3Cpath d='M12.2 20.5 16 10.5l3.8 10' fill='none' stroke='%23d97a12' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='10.5' r='2.4' fill='%23d97a12'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/brand.css">
+<script src="/assets/brand.js"></script>
 <style>
-  :root {
-    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1c1a; --muted: #6b6860; --line: #e4e1d8;
-    --keep: #2f7d4f; --dual: #b26b00; --exit: #b3261e; --accent: #2b59c3; --soft: #f0eee7;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  section.block { padding: 72px 0; }
+  section.block + section.block { border-top: 1px solid var(--line); }
+  .sec-head { max-width: 680px; margin-bottom: 36px; }
+  .sec-head h2 { font-size: clamp(26px, 3.2vw, 36px); margin-top: 8px; }
+  .sec-head p { color: var(--muted); font-size: 17px; margin: 12px 0 0; }
+
+  /* Hero */
+  .hero { padding: 64px 0 56px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(36px, 5.4vw, 60px); margin: 14px 0 18px; }
+  .hero h1 .wire-text { white-space: nowrap; }
+  .hero .lead { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 0 28px; }
+  .hero .lead b { color: var(--ink); font-weight: 600; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .hero .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .tagline { display: inline-flex; gap: 8px; align-items: center; }
+  .tagline .pill { font-weight: 600; }
+
+  /* Hero illustration: one decision, its tripwire, and a data change tripping it */
+  .demo-card { padding: 22px; position: relative; overflow: hidden; }
+  .demo-card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .demo-card .sup { font-size: 13px; color: var(--muted); }
+  .demo-card .sup b { color: var(--ink); font-size: 15px; }
+  .demo-card .verdict { font-size: 26px; margin: 6px 0 2px; }
+  .meter { height: 6px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+  .meter i { display: block; height: 100%; background: var(--primary); }
+  .demo-card .k { font-size: 12px; color: var(--muted); margin: 16px 0 6px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+  .wire-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line); font-size: 14px; }
+  .wire-row .ico { width: 22px; height: 22px; flex-shrink: 0; color: var(--wire); }
+  .wire-row.fired { border-color: var(--wire); background: color-mix(in srgb, var(--wire) 10%, var(--surface)); }
+  .wire-row .state { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--wire-ink, var(--wire)); }
+  .change { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .change .from { text-decoration: line-through; color: var(--muted); }
+  .change .to { font-weight: 700; color: var(--ink); }
+  .demo-foot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+  .stat { padding: 10px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line); text-align: center; }
+  .stat b { display: block; font-family: var(--font-display); font-size: 22px; }
+  .stat span { font-size: 11.5px; color: var(--muted); }
+  .demo-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .wire-line { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--wire), transparent); background-size: 200% 100%; animation: wire 3.2s linear infinite; }
+  @keyframes wire { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+  /* Problem / answer */
+  .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .trio .card { padding: 22px; }
+  .trio h3 { font-size: 18px; margin: 10px 0 8px; }
+  .trio p { margin: 0; color: var(--muted); }
+  .num-badge { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; font-family: var(--font-display); font-weight: 700; background: color-mix(in srgb, var(--primary) 12%, var(--surface)); color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--line)); }
+  [data-theme="ink"] .num-badge, [data-theme="nightwatch"] .num-badge { color: var(--ink); }
+
+  /* How it works */
+  .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; position: relative; }
+  .flow .card { padding: 20px; position: relative; }
+  .flow .card h3 { font-size: 17px; margin: 12px 0 8px; }
+  .flow .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .flow .card .eg { margin-top: 12px; font-size: 12.5px; font-family: var(--font-mono); color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; }
+  .flow .card:not(:last-child)::after { content: ""; position: absolute; right: -13px; top: 34px; width: 10px; height: 10px; border-top: 2px solid var(--wire); border-right: 2px solid var(--wire); transform: rotate(45deg); }
+  .human { margin-top: 16px; padding: 14px 18px; display: flex; gap: 12px; align-items: center; }
+  .human svg { width: 22px; height: 22px; color: var(--primary); flex-shrink: 0; }
+  [data-theme="nightwatch"] .human svg { color: var(--wire); }
+
+  /* Try it */
+  .try { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .try .card { padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .try .card h3 { font-size: 18px; }
+  .try .card p { margin: 0; color: var(--muted); flex: 1; }
+  .try .expect { font-size: 13px; padding: 8px 10px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line); }
+  .try .expect b { color: var(--ink); }
+
+  /* Agents */
+  .agents { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .agent { padding: 18px; }
+  .agent .top { display: flex; align-items: center; gap: 10px; }
+  .agent .av { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--primary) 12%, var(--surface)); color: var(--primary); font-weight: 700; font-family: var(--font-display); border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--line)); }
+  [data-theme="ink"] .agent .av, [data-theme="nightwatch"] .agent .av { color: var(--ink); }
+  .agent h3 { font-size: 16px; }
+  .agent p { margin: 10px 0 10px; color: var(--muted); font-size: 14px; }
+  .agent .by { font-size: 12px; font-family: var(--font-mono); color: var(--muted); }
+
+  /* Built on */
+  .stack { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .stack .card { padding: 18px; }
+  .stack h3 { font-size: 16px; margin-bottom: 6px; }
+  .stack p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+
+  /* Honesty + guide */
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .facts { padding: 22px; }
+  .facts ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+  .facts li { display: grid; grid-template-columns: 74px 1fr; gap: 12px; font-size: 14.5px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 0; border-radius: 6px; text-align: center; height: fit-content; border: 1px solid var(--line); }
+  .tag.real { color: var(--keep); border-color: color-mix(in srgb, var(--keep) 40%, var(--line)); }
+  .tag.synthetic { color: var(--dual); border-color: color-mix(in srgb, var(--dual) 40%, var(--line)); }
+  .tag.named { color: var(--info); border-color: color-mix(in srgb, var(--info) 40%, var(--line)); }
+  dl.glossary { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+  dl.glossary div { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  dl.glossary dt { font-weight: 700; font-family: var(--font-display); margin-bottom: 4px; }
+  dl.glossary dd { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+  .final { text-align: center; padding: 72px 0 80px; }
+  .final h2 { font-size: clamp(26px, 3.4vw, 38px); margin-bottom: 12px; }
+  .final p { color: var(--muted); margin: 0 0 24px; font-size: 17px; }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding-top: 40px; gap: 32px; }
+    .flow, .stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .flow .card::after { display: none; }
+    .trio, .try { grid-template-columns: 1fr; }
+    .two { grid-template-columns: 1fr; }
   }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #151513; --panel: #1e1e1b; --ink: #ecebe6; --muted: #9d9a90; --line: #33322d; --soft: #262622;
-      --keep: #5fbf85; --dual: #e3a03a; --exit: #ef6a5f; --accent: #7aa2ff; }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 16px; }
+    section.block { padding: 52px 0; }
+    .flow, .stack { grid-template-columns: 1fr; }
+    dl.glossary { grid-template-columns: 1fr; }
+    .hero h1 .wire-text { white-space: normal; }
   }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--line); }
-  header h1 { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
-  header .tag { color: var(--muted); }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
-  .chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); white-space: nowrap; }
-  .chip.live { border-color: var(--keep); color: var(--keep); }
-  .chip.fallback { border-color: var(--dual); color: var(--dual); }
-  main { display: grid; grid-template-columns: 260px minmax(0, 1fr) minmax(0, 420px); gap: 16px; padding: 16px 20px; }
-  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
-  section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 10px; }
-  h3 { font-size: 13px; margin: 14px 0 6px; color: var(--muted); }
-  button { font: inherit; border: 1px solid var(--line); background: var(--soft); color: var(--ink); border-radius: 7px; padding: 6px 10px; cursor: pointer; }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  button:disabled { opacity: 0.5; cursor: progress; }
-  select, input, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 6px 8px; width: 100%; }
-  .row { display: flex; gap: 8px; align-items: center; }
-  .list { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; max-height: 46vh; overflow: auto; }
-  .item { display: flex; justify-content: space-between; gap: 6px; padding: 6px 8px; border-radius: 7px; cursor: pointer; border: 1px solid transparent; }
-  .item:hover, .item.sel { background: var(--soft); border-color: var(--line); }
-  .item .sub { color: var(--muted); font-size: 12px; }
-  .k { font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.04em; }
-  .k.keep { color: var(--keep); } .k.dual_source { color: var(--dual); } .k.exit { color: var(--exit); }
-  .status { font-size: 11px; color: var(--muted); }
-  .status.superseded, .status.rejected { text-decoration: line-through; }
-  .big { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
-  .meta { color: var(--muted); font-size: 13px; }
-  .warn { border-left: 3px solid var(--dual); padding: 6px 10px; background: var(--soft); border-radius: 0 7px 7px 0; margin: 8px 0; }
-  .warn.red { border-color: var(--exit); }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  td, th { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { color: var(--muted); font-weight: 500; }
-  code, .mono { font-family: var(--mono); font-size: 12px; }
-  details summary { cursor: pointer; color: var(--accent); font-size: 12px; }
-  pre { white-space: pre-wrap; word-break: break-word; background: var(--soft); padding: 8px; border-radius: 7px; font-family: var(--mono); font-size: 11.5px; margin: 6px 0; }
-  .trace { display: flex; flex-direction: column; gap: 6px; max-height: 70vh; overflow: auto; }
-  .ev { border-left: 3px solid var(--line); padding: 4px 8px; font-size: 12.5px; }
-  .ev .who { font-weight: 600; } .ev .what { color: var(--muted); }
-  .ev.sponsor_call { border-color: var(--accent); }
-  .ev.critique.needs_revision, .ev.retry { border-color: var(--exit); }
-  .ev.critique.success { border-color: var(--keep); }
-  .ev.fallback, .ev.escalation { border-color: var(--dual); }
-  .ev.decision { border-color: var(--ink); }
-  .badge { font-size: 10.5px; padding: 0 6px; border-radius: 999px; background: var(--soft); border: 1px solid var(--line); margin-left: 4px; }
-  .report { margin-top: 10px; font-size: 13px; }
-  .report .num { font-size: 22px; font-weight: 700; }
-  .empty { color: var(--muted); padding: 20px 0; }
-  .spin { display: inline-block; width: 10px; height: 10px; border: 2px solid var(--muted); border-top-color: transparent; border-radius: 50%; animation: s 0.8s linear infinite; margin-right: 6px; }
-  @keyframes s { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
-<header>
-  <h1>Tripwire</h1>
-  <span class="tag">Supplier decisions that know when to reopen themselves</span>
-  <div class="chips" id="modes"></div>
-</header>
+<header id="nav"></header>
+
 <main>
-  <section>
-    <h2>Ask</h2>
-    <div class="row">
-      <select id="supplier" aria-label="Supplier"></select>
-      <button class="primary" id="decide">Decide</button>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <div class="tagline"><span class="eyebrow">Supplier risk agent</span><span class="pill">Open Agent Hackathon 2026 · Track 03</span></div>
+        <h1>Decisions that know when to <span class="wire-text">reopen&nbsp;themselves.</span></h1>
+        <p class="lead">Tripwire is a team of AI agents that decides whether to <b>keep</b>, <b>dual-source</b> or <b>exit</b> a supplier. It writes down exactly which data each decision relied on, and sets <b>tripwires</b>: the conditions that should make us look again. When the data changes, only the decisions whose tripwire fires are reopened.</p>
+        <div class="cta-row">
+          <a class="btn primary lg" href="/app.html?tour=1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.2-6.5a1 1 0 0 0 0-1.7L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg>Start the guided demo</a>
+          <a class="btn lg" href="/app.html">Open the console</a>
+          <a class="btn ghost lg" href="#how">How it works</a>
+        </div>
+        <div class="modes" id="hero-modes" aria-label="What is running live right now"></div>
+      </div>
+
+      <div class="card demo-card" aria-label="Example: one decision and the change that reopens it">
+        <div class="wire-line"></div>
+        <div class="row"><div class="sup"><b>Celanese</b> · SUP-06 · chemicals</div><span class="pill">proposed</span></div>
+        <div class="verdict dual_source">Dual-source</div>
+        <div class="row" style="font-size:13px;color:var(--muted)"><span>Confidence</span><span>85%</span></div>
+        <div class="meter"><i style="width:85%"></i></div>
+
+        <div class="k">Tripwire set by the Decider</div>
+        <div class="wire-row fired">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16h6l4-9 4 9h6"/><circle cx="12" cy="7" r="1.6" fill="currentColor"/></svg>
+          <span>Reopen if <b>spend share &gt; 45%</b></span><span class="state">FIRED</span>
+        </div>
+
+        <div class="k">Data change</div>
+        <div class="change"><span class="mono" style="font-size:12.5px">supplier_spend · SUP-06</span><span class="from">35%</span>→<span class="to">58%</span></div>
+
+        <div class="demo-foot">
+          <div class="stat"><b>20</b><span>decisions on file</span></div>
+          <div class="stat"><b class="wire-text">1</b><span>reopened</span></div>
+          <div class="stat"><b>19</b><span>left alone</span></div>
+        </div>
+        <div class="demo-note">Illustration of the repo demo: decide on all 20 suppliers, then apply change 02. Spend figures are synthetic; company financials are real SEC filings.</div>
+      </div>
+    </section>
+  </div>
+
+  <section class="block" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The idea in one minute</div>
+        <h2>Most decisions go stale quietly.</h2>
+        <p>A buyer decides to keep a supplier based on this quarter's numbers. Next quarter the numbers move, and nobody knows which past decisions were built on them.</p>
+      </div>
+      <div class="trio">
+        <div class="card"><span class="num-badge">1</span><h3>The problem</h3><p>Re-checking every decision whenever any data changes is slow and expensive. Not re-checking means acting on stale reasoning.</p></div>
+        <div class="card"><span class="num-badge">2</span><h3>What Tripwire does</h3><p>Every decision is saved with the exact rows and query results it used, plus a few tripwires. A data change re-checks only the decisions that depend on that row.</p></div>
+        <div class="card"><span class="num-badge">3</span><h3>What you get</h3><p>Decisions you can audit down to the SQL query, a human sign-off on risky calls, and work saved on every change that doesn't matter.</p></div>
+      </div>
     </div>
-    <h3>Decisions</h3>
-    <div class="list" id="decisions"></div>
-    <h3>Something changed</h3>
-    <div class="meta">Apply a change to the source data. The Watcher checks only the decisions that depend on the changed row.</div>
-    <div class="list" id="changes"></div>
-    <div class="report" id="report"></div>
   </section>
 
-  <section id="detail"><div class="empty">Pick a supplier and press Decide, or open a decision.</div></section>
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">How it works</div>
+        <h2>Four steps, every one traced.</h2>
+        <p>Every step the agents take is written to a trace you can read in the console, so you can see why a decision came out the way it did.</p>
+      </div>
+      <div class="flow">
+        <div class="card"><span class="num-badge">1</span><h3>Decide</h3><p>The agents plan which approved SQL queries to run, analyse the results and draft a decision. An Evidence Critic checks every number and sends weak work back.</p><div class="eg">keep · dual_source · exit</div></div>
+        <div class="card"><span class="num-badge">2</span><h3>Record lineage</h3><p>Each claim is stored in memory with the row it came from and a fingerprint (hash) of the query result. Recalled claims whose data has changed are thrown out.</p><div class="eg">supplier_spend:SUP-06 · b8099b…</div></div>
+        <div class="card"><span class="num-badge">3</span><h3>Set tripwires</h3><p>The Decider proposes 2–4 conditions that would change its mind. Code checks they are valid; a model never judges its own tripwire.</p><div class="eg">spend_share &gt; 0.45</div></div>
+        <div class="card"><span class="num-badge">4</span><h3>Watch and reopen</h3><p>When a row changes, the Watcher finds the decisions built on it, evaluates their tripwires in code, and reopens only those that fire.</p><div class="eg">1 reopened · 19 work saved</div></div>
+      </div>
+      <div class="card human">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <div><b>A person stays in charge.</b> <span class="muted">Decisions are only proposals. Risky ones are escalated and need a written reason to approve. Only an approval writes back to the data layer.</span></div>
+      </div>
+    </div>
+  </section>
 
-  <section>
-    <h2>Agent trace</h2>
-    <div class="trace" id="trace"><div class="empty">Every handoff, tool call, critique and fallback shows here.</div></div>
+  <section class="block" style="background:var(--bg-2)" id="try">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Try it</div>
+        <h2>See it work in three runs.</h2>
+        <p>Each button opens the console with the supplier already picked. A run takes a few seconds, or up to a minute when the live reasoning model thinks hard.</p>
+      </div>
+      <div class="try">
+        <div class="card"><span class="num-badge">1</span><h3>A healthy supplier</h3><p>Amphenol (SUP-17) has solid financials. Watch the agents agree quickly.</p><div class="expect">Expect: <b>keep</b>, not escalated.</div><a class="btn" href="/app.html?supplier=SUP-17&amp;run=1">Run SUP-17</a></div>
+        <div class="card"><span class="num-badge">2</span><h3>A risky supplier</h3><p>Jabil (SUP-18) shows several financial distress signals. The Risk Officer escalates it to a human.</p><div class="expect">Expect: <b>dual-source or exit</b>, escalated for approval.</div><a class="btn" href="/app.html?supplier=SUP-18&amp;run=1">Run SUP-18</a></div>
+        <div class="card"><span class="num-badge">3</span><h3>Data changes</h3><p>Decide on Celanese (SUP-06), then apply the "spend share jump" change and see what the Watcher reopens.</p><div class="expect">Expect: only decisions on SUP-06 are checked. It reopens only if a tripwire fires.</div><a class="btn" href="/app.html?supplier=SUP-06&amp;run=1">Run SUP-06</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="agents">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The agent team</div>
+        <h2>Six agents and a watcher, each with one job.</h2>
+        <p>The agents hand work to each other and can push back. The Evidence Critic can send work back up to three times before a decision is final.</p>
+      </div>
+      <div class="agents">
+        <div class="card agent"><div class="top"><span class="av">P</span><h3>Planner</h3></div><p>Picks which approved SQL queries to run for the question.</p><div class="by">Nemotron 3.5 Lightning 30B</div></div>
+        <div class="card agent"><div class="top"><span class="av">A</span><h3>Analyst</h3></div><p>Runs the queries, computes the metrics and writes a findings summary.</p><div class="by">Nemotron 3.5 Lightning 30B</div></div>
+        <div class="card agent"><div class="top"><span class="av">C</span><h3>Evidence Critic</h3></div><p>Checks every finding against its query result. Rejects stale memory. Sends work back.</p><div class="by">Deterministic code rules</div></div>
+        <div class="card agent"><div class="top"><span class="av">M</span><h3>Memory Keeper</h3></div><p>Recalls past claims about the supplier, drops stale ones, and records the new decision's lineage.</p><div class="by">Meterless H-MEM</div></div>
+        <div class="card agent"><div class="top"><span class="av">R</span><h3>Risk Officer</h3></div><p>Grades the risk, decides how hard the Decider should think, escalates, and runs a safety check.</p><div class="by">Nemotron 3.5 Content Safety</div></div>
+        <div class="card agent"><div class="top"><span class="av">D</span><h3>Decider</h3></div><p>Chooses keep, dual-source or exit, gives a confidence and drafts the tripwires.</p><div class="by">Nemotron 3 Ultra 550B, thinking on</div></div>
+        <div class="card agent"><div class="top"><span class="av">W</span><h3>Watcher</h3></div><p>On a data change: finds dependent decisions, checks their tripwires, reopens only the ones that fire.</p><div class="by">Code, not a model</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Built on</div>
+        <h2>What each technology does here.</h2>
+        <p>The status below is read live from this server. When a service isn't configured, Tripwire uses a fallback and says so.</p>
+      </div>
+      <div class="stack" id="stack">
+        <div class="card"><h3>Zetaris</h3><p>The data layer. Every number is read with Zetaris SQL. Approved decisions are appended to a Parquet ledger through Zetaris RUN EXPORT and read back with Zetaris SQL.</p><span class="pill" data-mode="data"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>NVIDIA Nemotron</h3><p>The reasoning. Three Nemotron models plan, analyse, decide and check safety, each with a timeout, retry and logged fallback.</p><span class="pill" data-mode="model"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>Meterless H-MEM</h3><p>The memory. Each claim is a record with its source row and result hash, plus supersession and an audit ledger.</p><span class="pill" data-mode="memory"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>Cursor</h3><p>The build tool. The project was built in Cursor, with project rules in <span class="mono">.cursor/rules</span>.</p><span class="pill"><span class="dot"></span>development</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="guide">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Guide</div>
+        <h2>What's real, and what the words mean.</h2>
+      </div>
+      <div class="two">
+        <div class="card facts">
+          <h3 style="font-size:17px;margin-bottom:14px">Honest about the data</h3>
+          <ul>
+            <li><span class="tag real">Real</span><span>Quarterly financials for 20 US-listed companies, from SEC EDGAR filings (public domain).</span></li>
+            <li><span class="tag synthetic">Synthetic</span><span>The buyer, its spend with each supplier, and two of the three demo changes. Picking a company says nothing about it as a real supplier.</span></li>
+            <li><span class="tag named">Named</span><span>When a model or service is unavailable, the fallback is named in the trace and the rationale ("Rule-based policy: …"). It is never shown as a model answer.</span></li>
+            <li><span class="tag named">Labelled</span><span>"Liabilities to equity" is total liabilities ÷ equity, not interest-bearing debt only.</span></li>
+          </ul>
+        </div>
+        <div class="card facts">
+          <h3 style="font-size:17px;margin-bottom:6px">Using the console</h3>
+          <ul style="gap:10px;margin-top:12px">
+            <li><span class="tag">Step 1</span><span>Pick a supplier and press <b>Decide</b>. The agents run and the decision appears in the middle.</span></li>
+            <li><span class="tag">Step 2</span><span>Read why, check the evidence, then <b>Approve</b> or <b>Reject</b>. Escalated decisions need a reason.</span></li>
+            <li><span class="tag">Step 3</span><span>Apply a <b>data change</b>. The Watcher reports what it checked, what it reopened and what it left alone.</span></li>
+            <li><span class="tag">Anytime</span><span>The <b>agent trace</b> on the right shows every handoff, query, critique and fallback. Press <b>Tour</b> to replay the walkthrough.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size:20px;margin:40px 0 4px">Glossary</h3>
+      <dl class="glossary">
+        <div><dt>Decision</dt><dd>Keep the supplier, dual-source (add a second supplier for the same parts), or exit (move the spend elsewhere).</dd></div>
+        <div><dt>Tripwire</dt><dd>A condition attached to a decision, like "spend share above 45%". If the data crosses it, the decision is reopened.</dd></div>
+        <div><dt>Lineage</dt><dd>The exact table rows a decision read. It lets the Watcher find which decisions a change affects.</dd></div>
+        <div><dt>Result hash</dt><dd>A fingerprint of a query's result. If the data changes, the fingerprint changes, so stale evidence is easy to spot.</dd></div>
+        <div><dt>Confidence</dt><dd>How sure the Decider is, from 0 to 100%. It is lowered when evidence is missing or was rejected.</dd></div>
+        <div><dt>Escalated</dt><dd>Flagged by the Risk Officer as high-stakes. A person must give a written reason to approve it.</dd></div>
+        <div><dt>Superseded</dt><dd>Replaced by a newer decision on the same supplier, usually after a reopen. The old one is kept for audit.</dd></div>
+        <div><dt>Work saved</dt><dd>Decisions that depended on the changed row but whose tripwires didn't fire, so they weren't re-run.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="final" style="background:var(--bg-2);border-top:1px solid var(--line)">
+    <div class="wrap">
+      <h2>See it for yourself.</h2>
+      <p>The guided demo walks through the console in about a minute.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn primary lg" href="/app.html?tour=1">Start the guided demo</a>
+        <a class="btn lg" href="/app.html">Open the console</a>
+      </div>
+    </div>
   </section>
 </main>
 
+<footer class="footer">
+  <span><b>Tripwire</b> · Open Agent Hackathon 2026 · Track 03: Reasoning Architecture · solo entry</span>
+  <span>Supplier spend is synthetic. Financials are real SEC EDGAR data.</span>
+</footer>
+
 <script>
-const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const LABEL = { keep: "Keep", dual_source: "Dual-source", exit: "Exit" };
-let selected = null;
-
-async function api(path, opts = {}) {
-  const r = await fetch(path, { headers: { "content-type": "application/json" }, ...opts });
-  const body = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(body.detail || body.error || r.statusText), { body });
-  return body;
-}
-
-async function loadHealth() {
-  const h = await api("/health");
-  const m = h.modes;
-  const chip = (label, val, live) => `<span class="chip ${live ? "live" : "fallback"}" title="${esc(live ? "live" : "fallback")}">${label}: ${esc(val)}</span>`;
-  $("modes").innerHTML =
-    chip("data", m.data === "zetaris" ? "Zetaris" : "bundled sample", m.data === "zetaris") +
-    chip("models", m.model === "nemotron" ? "NVIDIA Nemotron" : "rules only", m.model === "nemotron") +
-    chip("memory", m.memory === "meterless-hmem" ? "H-MEM" : "local lineage", m.memory === "meterless-hmem");
-  $("modes").title = m.notes.join("\n");
-}
-
-function fillSuppliers() {
-  const s = $("supplier");
-  for (let i = 1; i <= 20; i++) { const id = `SUP-${String(i).padStart(2, "0")}`; s.add(new Option(id, id)); }
-  s.value = "SUP-18";
-}
-
-async function loadDecisions() {
-  const list = await api("/decisions");
-  $("decisions").innerHTML = list.length ? list.map((d) => `
-    <div class="item ${d.decision_id === selected ? "sel" : ""}" data-id="${esc(d.decision_id)}">
-      <div><div>${esc(d.subject_id)} <span class="k ${d.decision}">${LABEL[d.decision]}</span></div>
-      <div class="sub mono">${esc(d.decision_id)}</div></div>
-      <div class="status ${d.status}">${esc(d.status)}${d.escalated ? " ⚑" : ""}</div>
-    </div>`).join("") : `<div class="meta">None yet.</div>`;
-  for (const el of $("decisions").querySelectorAll(".item")) el.onclick = () => openDecision(el.dataset.id);
-}
-
-async function loadChanges() {
-  const files = await api("/changes").catch(() => []);
-  $("changes").innerHTML = files.map((f) => `<button data-f="${esc(f)}">${esc(f.replace(/\.json$/, "").replace(/^\d+_/, "").replace(/_/g, " "))}</button>`).join("");
-  for (const b of $("changes").querySelectorAll("button")) b.onclick = () => applyChange(b.dataset.f, b);
-}
-
-function fmt(v) { return typeof v === "number" ? (Math.abs(v) >= 1e5 ? v.toLocaleString() : String(v)) : esc(v); }
-
-function renderDecision(d) {
-  selected = d.decision_id;
-  const conf = Math.round((d.confidence ?? 0) * 100);
-  $("detail").innerHTML = `
-    <h2>${esc(d.subject_id)} · <span class="mono">${esc(d.decision_id)}</span></h2>
-    <div class="row" style="justify-content:space-between;align-items:flex-end">
-      <div><div class="big k ${d.decision}" style="font-size:28px">${LABEL[d.decision]}</div>
-      <div class="meta">confidence ${conf}% · risk ${esc(d.risk ?? "?")} · status <b>${esc(d.status)}</b>${d.supersedes ? ` · supersedes <span class="mono">${esc(d.supersedes)}</span>` : ""}</div></div>
-    </div>
-    ${d.escalated ? `<div class="warn red"><b>Escalated to a senior buyer.</b> ${esc((d.escalation_reasons || []).join("; "))}</div>` : ""}
-    <h3>Why</h3><div>${esc(d.rationale || "")}</div>
-    ${d.summary ? `<details><summary>Analyst summary</summary><div class="meta" style="margin-top:6px">${esc(d.summary)}</div></details>` : ""}
-    <h3>Evidence (every number traces to a query)</h3>
-    <table><tr><th>Finding</th><th>Query</th><th>Result hash</th></tr>
-      ${(d.findings || []).map((f) => `<tr><td>${esc(f.claim)}</td><td><details><summary class="mono">${esc(f.evidence.template_id)}</summary><pre>${esc(f.evidence.sql)}</pre></details></td><td class="mono">${esc(f.evidence.result_hash.slice(0, 12))}</td></tr>`).join("")}
-    </table>
-    <h3>Tripwires: reopen this decision if…</h3>
-    <table><tr><th>Condition</th><th>Watches rows</th></tr>
-      ${(d.tripwires || []).map((t) => `<tr><td><b>${esc(t.metric)}</b> ${esc(t.op)} ${esc(t.threshold ?? "")}</td><td class="mono">${esc(t.depends_on.map((r) => `${r.table}:${r.key}`).join(", "))}</td></tr>`).join("")}
-    </table>
-    ${(d.limitations || []).length ? `<h3>Limitations</h3><ul class="meta">${d.limitations.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}
-    ${d.status === "proposed" ? `
-      <h3>Human approval</h3>
-      <textarea id="reason" rows="2" placeholder="${d.escalated ? "Reason required for an escalated decision" : "Optional note"}"></textarea>
-      <div class="row" style="margin-top:8px"><button class="primary" id="approve">Approve and write back</button><button id="reject">Reject</button></div>
-      <div id="writeres" class="meta"></div>` : d.approved_by_reason ? `<div class="meta">Approved: ${esc(d.approved_by_reason)}</div>` : ""}
-  `;
-  const a = $("approve");
-  if (a) {
-    a.onclick = async () => {
-      a.disabled = true;
-      try {
-        const r = await api(`/decisions/${d.decision_id}/approve`, { method: "POST", body: JSON.stringify({ reason: $("reason").value }) });
-        renderDecision(r.decision);
-        $("detail").insertAdjacentHTML("beforeend", `<div class="warn ${r.write.written ? "" : "red"}">${r.write.written ? "Written" : "NOT written"}: ${esc(r.write.detail)}</div>`);
-        await loadTrace(r.run_id, true);
-      } catch (e) { $("writeres").textContent = e.message; a.disabled = false; }
-      loadDecisions();
-    };
-    $("reject").onclick = async () => { await api(`/decisions/${d.decision_id}/reject`, { method: "POST" }); openDecision(d.decision_id); loadDecisions(); };
-  }
-}
-
-async function openDecision(id) { renderDecision(await api(`/decisions/${id}`)); loadDecisions(); }
-
-function renderTrace(events, append = false) {
-  const html = events.map((e) => `
-    <div class="ev ${e.event} ${e.status}">
-      <span class="who">${esc(e.agent_name)}</span>${e.target_agent ? ` → ${esc(e.target_agent)}` : ""}
-      <span class="what">· ${esc(e.action)}</span>${e.sponsor ? `<span class="badge">${esc(e.sponsor)}</span>` : ""}${e.event === "fallback" ? `<span class="badge">fallback</span>` : ""}
-      ${e.output_summary ? `<div>${esc(e.output_summary)}</div>` : ""}
-    </div>`).join("");
-  $("trace").innerHTML = append ? $("trace").innerHTML + html : html || `<div class="empty">No events.</div>`;
-}
-async function loadTrace(run_id, append) { renderTrace(await api(`/trace/${run_id}`), append); }
-
-async function decide() {
-  const b = $("decide"); b.disabled = true;
-  const sup = $("supplier").value;
-  $("detail").innerHTML = `<div class="empty"><span class="spin"></span>Planner, Analyst, Critic, Memory Keeper, Risk Officer and Decider are working on ${esc(sup)}… (the reasoning model can take up to a minute)</div>`;
-  try {
-    const r = await api("/run", { method: "POST", body: JSON.stringify({ mode: "decide", subject_id: sup }) });
-    await openDecision(r.decision_id);
-    await loadTrace(r.run_id);
-  } catch (e) { $("detail").innerHTML = `<div class="warn red">${esc(e.message)}</div>`; }
-  b.disabled = false;
-}
-
-async function applyChange(file, btn) {
-  btn.disabled = true;
-  $("report").innerHTML = `<span class="spin"></span>Applying ${esc(file)}…`;
-  try {
-    const r = await api(`/changes/${encodeURIComponent(file)}/apply`, { method: "POST" });
-    $("report").innerHTML = r.reports.map((x) => `
-      <div class="warn">
-        <div><span class="mono">${esc(x.changed.table)}:${esc(x.changed.key)}</span> changed</div>
-        <div><span class="num">${x.dependents.length}</span> of ${x.active} active decisions depend on it ·
-             <span class="num">${x.reopened.length}</span> reopened ·
-             <span class="num">${x.work_saved}</span> not re-run</div>
-        ${x.reopened.map((o) => `<div>Reopened <a href="#" data-id="${esc(o.new.decision_id)}">${esc(o.old)} → ${LABEL[o.new.decision]}</a>: ${esc(o.fired.join("; "))}</div>`).join("")}
-        ${x.still_valid.map((v) => `<div class="meta">${esc(v.decision_id)} still holds: no tripwire fired</div>`).join("")}
-      </div>`).join("") || `<div class="meta">No rows changed.</div>`;
-    for (const a of $("report").querySelectorAll("a[data-id]")) a.onclick = (ev) => { ev.preventDefault(); openDecision(a.dataset.id); };
-    await loadTrace(r.run_id);
-    loadDecisions();
-  } catch (e) { $("report").innerHTML = `<div class="warn red">${esc(e.message)}</div>`; btn.disabled = false; }
-}
-
-$("decide").onclick = decide;
-fillSuppliers();
-loadHealth(); loadDecisions(); loadChanges();
+  TW.mountNav("home");
+  TW.renderModes(document.getElementById("hero-modes"));
+  TW.modes().then((list) => {
+    for (const m of list) {
+      const el = document.querySelector(`[data-mode="${m.key}"]`);
+      if (!el) continue;
+      el.className = `pill ${m.live ? "live" : "fallback"}`;
+      el.setAttribute("data-tip", m.tip); el.tabIndex = 0;
+      el.innerHTML = `<span class="dot"></span>${m.live ? "live on this server" : "fallback on this server"}`;
+    }
+  });
 </script>
 </body>
 </html>
