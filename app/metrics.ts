@@ -20,8 +20,15 @@ export const METRICS: MetricDef[] = [
   { name: "category_alternatives", label: "Other suppliers in the category", template: "category_concentration", worseWhen: "lower", unit: "count" },
 ];
 
+/** The backup supplier's numbers. Kept apart from METRICS: the Risk Officer and the Decider never see them. */
+export const BACKUP_METRICS: MetricDef[] = [
+  { name: "backup_current_ratio", label: "Backup supplier's current ratio", template: "supplier_financials_latest", worseWhen: "lower", unit: "ratio" },
+  { name: "backup_debt_to_equity", label: "Backup supplier's liabilities to equity", template: "supplier_financials_latest", worseWhen: "higher", unit: "ratio" },
+  { name: "backup_lead_time_weeks", label: "Backup supplier's lead time", template: "supplier_spend_row", worseWhen: "higher", unit: "weeks" },
+];
+
 export const METRIC_NAMES = METRICS.map((m) => m.name);
-export const metricDef = (name: string) => METRICS.find((m) => m.name === name);
+export const metricDef = (name: string) => METRICS.find((m) => m.name === name) ?? BACKUP_METRICS.find((m) => m.name === name);
 
 export interface MetricValue {
   metric: string;

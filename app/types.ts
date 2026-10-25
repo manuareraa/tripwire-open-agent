@@ -37,6 +37,17 @@ export interface Finding {
   evidence: Evidence;
 }
 
+/** The supplier a dual_source or exit decision names to take the work, picked in code. */
+export interface Backup {
+  supplier_id: string;
+  name?: string;
+  /** Passes the financial health lines (current ratio >= 1, liabilities/equity <= 3). */
+  healthy: boolean;
+  reason: string;
+  /** The backup's own numbers (metrics named backup_*), each with its evidence. */
+  findings: Finding[];
+}
+
 export interface Decision {
   decision_id: string;
   subject_id: string;
@@ -48,6 +59,7 @@ export interface Decision {
   tripwires: Tripwire[];
   limitations: string[];
   supersedes?: string;
+  backup?: Backup;
   escalated: boolean;
   escalation_reasons?: string[];
   risk?: "low" | "medium" | "high";

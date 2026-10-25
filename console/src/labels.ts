@@ -12,6 +12,9 @@ export const METRIC: Record<string, [string, "ratio" | "share" | "pct" | "weeks"
   spend_share: ["Share of our category spend", "share"],
   lead_time_weeks: ["Lead time", "weeks"],
   category_alternatives: ["Other suppliers in the category", "count"],
+  backup_current_ratio: ["Backup's current ratio", "ratio"],
+  backup_debt_to_equity: ["Backup's liabilities to equity", "ratio"],
+  backup_lead_time_weeks: ["Backup's lead time", "weeks"],
 };
 export const FIELD: Dict = { spend_share: "Spend share", open_po_value: "Open orders", lead_time_weeks: "Lead time", annual_spend: "Annual spend", revenue: "Revenue", current_assets: "Current assets", current_liabilities: "Current liabilities", total_liabilities: "Total liabilities", equity: "Equity", gross_profit: "Gross profit", contract_end: "Contract end", gross_margin: "Gross margin", current_ratio: "Current ratio", debt_to_equity: "Debt to equity" };
 export const OP: Dict = { ">": "rises above", ">=": "reaches", "<": "falls below", "<=": "falls to", "==": "equals", changed: "changes at all" };
@@ -32,6 +35,9 @@ export const METRIC_TIP: Dict = {
   spend_share: "Of everything we spend in this category, the share that goes to this supplier. 25% or more counts as heavy dependence.",
   lead_time_weeks: "Weeks from placing an order to delivery. 12 weeks or more makes switching or recovering slow.",
   category_alternatives: "How many other suppliers we already buy this category from. Zero means there is nowhere to move the work.",
+  backup_current_ratio: "The backup supplier's current assets divided by current liabilities, from its latest SEC filing. Below 1, the backup is no longer a safe place to move work.",
+  backup_debt_to_equity: "The backup supplier's total liabilities divided by equity, from its latest SEC filing. Above 3, the backup is no longer a safe place to move work.",
+  backup_lead_time_weeks: "Weeks from order to delivery at the backup supplier: how fast it could take on the work.",
 };
 
 export const TEMPLATE: Dict = {
@@ -47,7 +53,7 @@ export const DATA_SRC: Dict = { zetaris: "live data in Zetaris", sample: "the bu
 export const GUARD: Dict = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };
 export const ZETARIS: Dict = { health: "Zetaris health check", write_decision: "Zetaris wrote the decision to the ledger", verify_decision: "Zetaris read the ledger back to confirm the write", read_decisions: "Zetaris read the decision ledger" };
 export const GROUP: Dict = { health: "Financial health", exposure: "How much we depend on them", policy: "Policy" };
-export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", Human: "Hu", Server: "Da" };
+export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", BackupPicker: "Ba", Human: "Hu", Server: "Da" };
 
 // ---------- Live run view ----------
 export type Stage = [agent: string, short: string, does: string];
@@ -76,6 +82,7 @@ export const NOW: Dict = {
   assess_risk: "Risk Officer is grading risk from the metrics",
   propose_decision: "Decider is choosing keep, dual-source or exit, and drafting tripwires",
   review_decision: "Evidence Critic is reviewing the draft decision",
+  pick_backup: "Backup Picker is choosing which other supplier should take the work",
   final_check: "Risk Officer is running the final guard and escalation check",
   remember: "Memory Keeper is saving claims with their data lineage",
   decision_proposed: "Done. Loading the decision…",

@@ -50,7 +50,8 @@ export async function record(deps: Deps, s: RunState, decision: Decision): Promi
   let written = 0;
   let superseded = 0;
   try {
-    for (const f of decision.findings) {
+    // The backup's numbers are stored too, so a change to the backup's rows also finds this decision.
+    for (const f of [...decision.findings, ...(decision.backup?.findings ?? [])]) {
       const claim = {
         subject_id: s.subject_id,
         text: f.claim,

@@ -1,6 +1,7 @@
 // Watcher (code, not a model): when a source row changes, ask memory which decisions derive from it,
 // re-check only those decisions' tripwires, and reopen only the ones that fire.
 import { gather } from "./agents/analyst.js";
+import { loadCandidate } from "./agents/backup.js";
 import { newState, runDecide } from "./orchestration/graph.js";
 import type { Deps } from "./orchestration/state.js";
 import type { DecisionStore } from "./store.js";
@@ -46,7 +47,14 @@ export async function reopenFor(deps: Deps, store: DecisionStore, changed: RowRe
     s.plan = ["supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration"];
     await gather(deps, s);
     const now = new Map(s.metrics.map((m) => [m.metric, m.value]));
-    const before = new Map(old.findings.map((f) => [f.metric, Number(f.value)]));
+    if (old.backup && old.tripwires.some((tw) => tw.metric.startsWith("backup_"))) {
+      try {
+        for (const m of (await loadCandidate(deps, s, old.backup.supplier_id)).metrics) now.set(m.metric, m.value);
+      } catch (e) {
+        t.emit({ decision_id: id, agent_name: AGENT, action: "check_backup", event: "error", status: "failed", output_summary: `backup ${old.backup.supplier_id} could not be read: ${(e as Error).message}` });
+      }
+    }
+    const before = new Map([...old.findings, ...(old.backup?.findings ?? [])].map((f) => [f.metric, Number(f.value)]));
     const fired: string[] = [];
     const checked: string[] = [];
     for (const tw of old.tripwires) {

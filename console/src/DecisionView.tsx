@@ -9,7 +9,7 @@ import { decName, initials, rowName, rowTip, supName, tplName } from "./names";
 import { readReasons, writeText } from "./plain";
 import type { Decision, Tripwire, WriteResult } from "./types";
 
-const evidenceFor = (d: Decision, metric: string) => (d.findings || []).find((f) => f.metric === metric && typeof f.value === "number");
+const evidenceFor = (d: Decision, metric: string) => [...(d.findings || []), ...(d.backup?.findings || [])].find((f) => f.metric === metric && typeof f.value === "number");
 
 function Gauge({ t, d }: { t: Tripwire; d: Decision }) {
   const name = METRIC[t.metric]?.[0] ?? t.metric.replace(/_/g, " ");
@@ -60,6 +60,24 @@ function EscPanel({ d }: { d: Decision }) {
   );
 }
 
+/** The supplier a dual-source or exit decision names to take the work. Picked in code, not by a model. */
+function BackupCard({ b, watched }: { b: NonNullable<Decision["backup"]>; watched: Set<string> }) {
+  const nums = (b.findings || []).filter((f) => typeof f.value === "number" && f.metric);
+  const name = supName(b.supplier_id) !== b.supplier_id ? supName(b.supplier_id) : b.name || b.supplier_id;
+  return (
+    <div className="sec"><div className="sec-h"><h3>Backup supplier</h3><span className="info" tabIndex={0} data-tip="Picked in code from the other suppliers in this category: healthy finances first (current ratio at least 1, liabilities to equity at most 3), then the shorter lead time. Its numbers have their own tripwires, so the decision reopens if the backup weakens.">i</span><span className="line" /></div>
+      <div className={`backup ${b.healthy ? "ok" : "warn"}`}>
+        <div className="bk-h"><span className="avatar">{initials(b.supplier_id)}</span><b>{name}</b><span className="mono">{b.supplier_id}</span>
+          <span className={`pill ${b.healthy ? "" : "fallback"}`}>{b.healthy ? "passes the health lines" : "no healthy option"}</span></div>
+        {b.reason && <p>{cap(b.reason)}</p>}
+        {nums.length > 0 && <div className="bk-nums">{nums.map((f, i) => (
+          <span key={i} className="bk-num" tabIndex={0} data-tip={`${METRIC_TIP[f.metric!] ?? f.claim}${watched.has(f.metric!) ? " A tripwire watches this number." : ""}`}>
+            {watched.has(f.metric!) && <Ic n="wire" />}<b>{fmtMetric(f.metric, f.value)}</b>{(METRIC[f.metric!]?.[0] ?? f.metric!).replace(/^Backup's /, "")}</span>))}</div>}
+      </div>
+    </div>
+  );
+}
+
 export const DoneMark = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m7 12.5 3.2 3.2L17 9" /></svg>;
 
 export function DecisionView({ d, write }: { d: Decision; write?: WriteResult }) {
@@ -106,6 +124,8 @@ export function DecisionView({ d, write }: { d: Decision; write?: WriteResult })
         <p className="why">{m && m[1].length < 180 ? <><b>{m[1]}</b>{why.slice(m[1].length)}</> : why}</p>
         {d.summary && <details className="more"><summary>Read the Analyst's summary</summary><p>{d.summary}</p></details>}
       </div>
+
+      {d.backup && <BackupCard b={d.backup} watched={watched} />}
 
       {nums.length > 0 && <div className="sec"><div className="sec-h"><h3>Key numbers</h3><Info k="evidence" /><span className="line" /></div>
         <div className="nums">{nums.map(({ f, i }, k) => (

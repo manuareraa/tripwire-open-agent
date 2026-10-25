@@ -71,11 +71,15 @@ describe("decision graph (rule-based path, no keys)", () => {
 
     // SUP-01's supplier publishes a bad new quarter.
     gateway.tables.fin.push({ cik: "100", ticker: "T100", name: "Co 100", sic: "3674", period_end: "2026-09-30", revenue: 950, gross_margin: 0.3, current_ratio: 0.7, debt_to_equity: 0.9, source_url: "x" });
+    // SUP-01's own decision, and SUP-03's dual-source decision, which names SUP-01 as its backup.
+    const sup03 = store.list().find((x) => x.subject_id === "SUP-03")!;
     const report = await reopenFor(d, store, { table: "supplier_financials", key: "100" });
-    expect(report.dependents).toHaveLength(1);
-    expect(report.reopened).toHaveLength(1);
-    expect(report.reopened[0].new.supersedes).toBe(report.reopened[0].old);
-    expect(report.work_saved).toBe(4);
+    expect(sup03.backup?.supplier_id).toBe("SUP-01");
+    expect(report.dependents).toHaveLength(2);
+    expect(report.reopened).toHaveLength(2);
+    expect(report.reopened.find((r) => r.old === sup03.decision_id)?.fired.join(" ")).toMatch(/backup_current_ratio < 1/);
+    expect(report.reopened.every((r) => r.new.supersedes === r.old)).toBe(true);
+    expect(report.work_saved).toBe(3);
     expect(store.active()).toHaveLength(5);
     expect(store.get(report.reopened[0].old)!.status).toBe("superseded");
     // The Critic caught the remembered claims built on the old filing and sent them back to the Memory Keeper.

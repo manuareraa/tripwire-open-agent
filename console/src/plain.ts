@@ -1,7 +1,7 @@
 // Plain English: codes from the data and the agents, turned into words.
 import { cap, fmtMetric, pct, plural, pretty } from "./format";
 import { DATA_SRC, GUARD, METRIC, MODEL_TIER, NOW, OP, TABLE, TEMPLATE, ZETARIS } from "./labels";
-import { decName, metricName, rowName, tplName, verdictName } from "./names";
+import { decName, metricName, rowName, supName, tplName, verdictName } from "./names";
 import type { Decision, TraceEvent, WriteResult } from "./types";
 
 export interface Flag { name: string; value?: string; rule?: string; meaning?: string; metric?: string; group: "health" | "exposure" | "policy" }
@@ -130,6 +130,15 @@ export function say(e: TraceEvent): { title: string; detail: string } {
       m = o.match(/^REJECT round (\d+): (.+)$/);
       return m ? { title: `Sent the draft back to the Decider (round ${m[1]})`, detail: issueText(m[2]) } : { title: "Reviewed the draft decision", detail: plain(o) };
     }
+    case "pick_backup": {
+      m = o.match(/^backup (SUP-\d+)(?: \((.+?)\))?, (healthy|not healthy); ranked (\d+) candidates?: (.+)$/);
+      if (!m) return { title: "Looked for a backup supplier", detail: cap(o) };
+      return {
+        title: `Named ${supName(m[1])} as the backup`,
+        detail: `Ranked ${plural(m[4], "other supplier")} in the category in code: healthy finances first, then the shorter lead time. ${m[3] === "healthy" ? "It passes the financial health lines." : "None passes the financial health lines, so check it before moving volume."}`,
+      };
+    }
+    case "check_backup": return { title: "Couldn't re-check the backup supplier", detail: o };
     case "round_limit": return { title: "Switched to the rule-based policy", detail: "The draft failed review too many times, so a simple labelled rule decides instead." };
     case "final_check": {
       m = o.match(/^guard: (\w+); (?:ESCALATED: (.+)|standard approval)$/);

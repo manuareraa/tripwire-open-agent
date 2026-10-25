@@ -483,3 +483,14 @@ body { padding-bottom: var(--ab-h, 0px); }
 .toast button { background: none; border: 0; color: inherit; opacity: .7; cursor: pointer; font-size: 16px; line-height: 1; padding: 0 0 0 6px; }
 .pulse-once { animation: ring 1.4s ease-out 3; }
 @keyframes ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 60%, transparent); } 100% { box-shadow: 0 0 0 14px transparent; } }
+
+/* Backup supplier on a dual-source or exit decision */
+.backup { padding: 12px 14px; border-radius: var(--radius-sm); background: var(--surface-2); border-left: 3px solid var(--keep); }
+.backup.warn { border-left-color: var(--exit); }
+.backup p { margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.bk-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.bk-h .avatar { width: 26px; height: 26px; font-size: 11px; }
+.bk-nums { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.bk-num { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--surface); font-size: 12.5px; color: var(--muted); }
+.bk-num b { color: var(--ink); font-weight: 650; }
+.bk-num svg { width: 12px; height: 12px; }

@@ -21,6 +21,7 @@ export async function decide(deps: Deps, s: RunState, feedback: string[]): Promi
       "You decide what a buyer should do with a supplier: keep, dual_source (add a second supplier) or exit. " +
       "Base it only on the metrics given. Then set 2-4 tripwires: future conditions that should reopen this decision. " +
       "A tripwire must NOT already be true today. Use only metric names from the list. " +
+      "For dual_source or exit, code then names the backup supplier from the category; do not name one yourself. " +
       'Reply only with JSON: {"decision": "keep|dual_source|exit", "confidence": 0-1, "rationale": "2-3 sentences, quoting only given numbers", ' +
       '"tripwires": [{"metric": "...", "op": "<" or ">", "threshold": number}], "limitations": ["..."]}',
     user:

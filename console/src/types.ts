@@ -27,6 +27,8 @@ export interface Tripwire {
   depends_on?: RowRef[];
 }
 
+export interface Backup { supplier_id: string; name?: string; healthy?: boolean; reason?: string; findings?: Finding[] }
+
 export interface Decision {
   decision_id: string;
   subject_id: string;
@@ -39,6 +41,7 @@ export interface Decision {
   rationale?: string;
   summary?: string;
   supersedes?: string | null;
+  backup?: Backup;
   findings?: Finding[];
   tripwires?: Tripwire[];
   limitations?: string[];

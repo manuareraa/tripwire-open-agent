@@ -1,5 +1,5 @@
 // The decision graph: Planner → Analyst → Critic (evidence) → Memory Keeper (recall) ⇄ Critic (stale memory) → Analyst summary ⇄ Critic
-// → Risk Officer → Decider ⇄ Critic (max 3 rounds) → Risk Officer final check → Memory Keeper (record).
+// → Risk Officer → Decider ⇄ Critic (max 3 rounds) → Backup Picker (dual_source / exit) → Risk Officer final check → Memory Keeper (record).
 import { config } from "../config.js";
 import { compileTripwires } from "../tripwires.js";
 import { plan } from "../agents/planner.js";
@@ -8,6 +8,7 @@ import { reviewDecision, reviewMemory, reviewSummary, verifyEvidence } from "../
 import { dropStale, recallPrior, record } from "../agents/memory_keeper.js";
 import { assess, finalCheck } from "../agents/risk.js";
 import { decide, rulesDecision } from "../agents/decider.js";
+import { pickBackup } from "../agents/backup.js";
 import type { DecisionDraft, Deps, RunState } from "./state.js";
 import type { Decision, Evidence } from "../types.js";
 
@@ -70,9 +71,12 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     t.emit({ decision_id: s.decision_id, agent_name: "Orchestrator", action: "round_limit", event: "fallback", status: "fallback", output_summary: "switched to rule-based policy after failed review rounds" });
   }
 
+  // A second source or an exit needs somewhere for the work to go: name it in code, with its own evidence and tripwires.
+  const backup = draft.decision === "keep" ? undefined : await pickBackup(deps, s);
+
   await finalCheck(deps, s, draft);
 
-  const evidence = uniqueEvidence(s.findings.map((f) => f.evidence));
+  const evidence = uniqueEvidence([...s.findings, ...(backup?.backup.findings ?? [])].map((f) => f.evidence));
   const decision: Decision = {
     decision_id: s.decision_id,
     subject_id,
@@ -81,9 +85,10 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     status: "proposed",
     findings: s.findings,
     evidence,
-    tripwires: compileTripwires(s.decision_id, draft.tripwires, s.metrics),
+    tripwires: compileTripwires(s.decision_id, [...draft.tripwires, ...(backup?.tripwires ?? [])], [...s.metrics, ...(backup?.metrics ?? [])]),
     limitations: [...new Set([...s.limitations, ...draft.limitations])],
     supersedes: supersedes?.decision_id,
+    ...(backup ? { backup: backup.backup } : {}),
     escalated: s.escalated,
     escalation_reasons: s.escalationReasons,
     risk: s.risk.level,
