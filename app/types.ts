@@ -65,6 +65,8 @@ export interface RunRequest {
   changed?: RowRef;
   /** SAMPLE_MODE only: a file in data/sample/changes/ to apply before the reopen check. */
   change_file?: string;
+  /** Optional client-chosen run id, so the UI can poll GET /trace/:run_id while the run is in progress. */
+  run_id?: string;
 }
 
 export interface RunResponse {

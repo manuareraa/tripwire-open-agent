@@ -10,6 +10,8 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --display-weight: 700;
   --display-tracking: -0.02em;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 
 /* ---------- Light themes ---------- */
@@ -175,17 +177,18 @@ code, .mono, pre { font-family: var(--font-mono); }
   font: inherit; font-size: 14px; font-weight: 600; line-height: 1;
   padding: 10px 16px; border-radius: var(--radius-sm); cursor: pointer; text-decoration: none;
   border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-  transition: background .15s, border-color .15s, transform .05s;
+  transition: background .18s, border-color .18s, color .18s, transform .18s var(--ease-out), box-shadow .18s;
 }
-.btn:hover { background: var(--surface-2); border-color: color-mix(in srgb, var(--ink) 25%, var(--line)); }
-.btn:active { transform: translateY(1px); }
+.btn:hover { background: var(--surface-2); border-color: color-mix(in srgb, var(--ink) 25%, var(--line)); transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(.98); transition-duration: .06s; }
+.btn.primary:hover { box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--primary) 70%, transparent); }
 .btn.primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
 .btn.primary:hover { background: color-mix(in srgb, var(--primary) 88%, var(--ink)); }
 .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
 .btn.ghost:hover { color: var(--ink); background: var(--surface-2); }
 .btn.sm { padding: 7px 11px; font-size: 13px; }
 .btn.lg { padding: 14px 22px; font-size: 16px; }
-.btn:disabled { opacity: .55; cursor: progress; }
+.btn:disabled { opacity: .7; cursor: progress; transform: none; box-shadow: none; }
 .btn svg { width: 16px; height: 16px; }
 
 .pill {
@@ -222,7 +225,9 @@ code, .mono, pre { font-family: var(--font-mono); }
   width: max-content; max-width: 260px; white-space: normal; text-align: left; text-transform: none; letter-spacing: 0;
   font: 500 12.5px/1.45 var(--font-body); color: var(--surface); background: var(--ink);
   padding: 8px 10px; border-radius: 8px; box-shadow: var(--shadow); pointer-events: none;
+  animation: tw-tip .16s var(--ease-out) both;
 }
+@keyframes tw-tip { from { opacity: 0; transform: translate(-50%, 4px); } }
 
 /* ---------- Guided tour ---------- */
 .tour-spot {
@@ -235,7 +240,11 @@ code, .mono, pre { font-family: var(--font-mono); }
   position: fixed; z-index: 91; width: min(360px, calc(100vw - 32px));
   background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 14px;
   box-shadow: 0 20px 50px -12px rgb(0 0 0 / .45); padding: 18px 18px 14px;
+  transition: top .3s var(--ease-out), left .3s var(--ease-out);
 }
+.tour-pop.enter { animation: tw-pop .32s var(--ease-spring) both; }
+@keyframes tw-pop { from { opacity: 0; transform: translateY(8px) scale(.96); } }
+.tour-spot { animation: tw-fade .25s ease both; }
 .tour-pop .tour-step { font-size: 12px; font-weight: 600; color: var(--wire-ink, var(--wire)); letter-spacing: .06em; text-transform: uppercase; }
 .tour-pop h3 { font-size: 18px; margin: 6px 0 6px; }
 .tour-pop p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
@@ -250,4 +259,38 @@ code, .mono, pre { font-family: var(--font-mono); }
 
 .spin { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: tw-spin .8s linear infinite; vertical-align: -2px; }
 @keyframes tw-spin { to { transform: rotate(360deg); } }
+/* ---------- Motion: page entry, page exit, scroll reveal, loading ---------- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: tw-out .18s ease both; }
+::view-transition-new(root) { animation: tw-in .32s var(--ease-out) both; }
+@keyframes tw-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes tw-in { from { opacity: 0; transform: translateY(10px); } }
+@keyframes tw-fade { from { opacity: 0; } }
+@keyframes tw-rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes tw-pop-in { from { opacity: 0; transform: scale(.94); } }
+.enter { animation: tw-rise .5s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
+body.leaving main, body.leaving .statusbar, body.leaving footer { opacity: 0; transform: translateY(-6px); transition: opacity .16s, transform .16s; }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
+.reveal.in { opacity: 1; transform: none; }
+html.theming, html.theming *, html.theming *::before, html.theming *::after { transition: background-color .35s ease, border-color .35s ease, color .35s ease, fill .35s ease, box-shadow .35s ease !important; }
+
+/* Thin progress bar under the nav while any request is in flight */
+.tw-progress { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: 3px; pointer-events: none; opacity: 0; transition: opacity .3s; overflow: hidden; }
+.tw-progress.on { opacity: 1; }
+.tw-progress i { position: absolute; top: 0; bottom: 0; width: 40%; background: linear-gradient(90deg, transparent, var(--wire), transparent); animation: tw-slide 1.1s ease-in-out infinite; }
+@keyframes tw-slide { from { left: -40%; } to { left: 100%; } }
+
+/* Skeleton placeholders */
+.skel { position: relative; overflow: hidden; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--line); }
+.skel::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ink) 7%, transparent), transparent); animation: tw-shimmer 1.3s infinite; }
+@keyframes tw-shimmer { to { transform: translateX(100%); } }
+
+/* Branded loader: the tripwire mark with its wire drawing on a loop */
+.tw-loader { display: inline-grid; place-items: center; }
+.tw-loader svg { width: 56px; height: 56px; overflow: visible; }
+.tw-loader .w { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tw-draw 1.6s var(--ease-out) infinite; }
+.tw-loader .k { animation: tw-bob 1.6s ease-in-out infinite; transform-origin: 16px 10.5px; }
+@keyframes tw-draw { 40%, 70% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
+@keyframes tw-bob { 40%, 70% { transform: scale(1.35); } }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

@@ -253,12 +253,31 @@ export class SampleDataGateway implements DataGateway {
     });
   }
 
-  /** Change files with their description, for the UI. */
-  changeCatalog(): { file: string; description: string; synthetic: boolean; table: string; key: string }[] {
+  /** Change files with their description, the supplier they touch and the numbers that move (base sample → change), for the UI. */
+  changeCatalog(): {
+    file: string; description: string; synthetic: boolean; table: string; key: string;
+    supplier_id?: string; fields: { field: string; before: number | null; after: number }[];
+  }[] {
+    const spend = this.tables[TABLES.spend];
     return this.listChangeFiles().map((file) => {
       const raw = JSON.parse(readFileSync(join(this.sampleDir, "changes", file), "utf8")) as ChangeFile | ChangeFile[];
       const first = Array.isArray(raw) ? raw[0] : raw;
-      return { file, description: first.description ?? file, synthetic: first.synthetic ?? false, table: first.table, key: String(first.key) };
+      const key = String(first.key);
+      const isSpend = first.table === TABLES.spend;
+      const supplier_id = isSpend ? key : spend.find((r) => String(r.cik) === key)?.supplier_id;
+      // The row this change replaces: the same spend row, or the latest earlier quarter for a financials filing.
+      const base = isSpend
+        ? spend.find((r) => String(r.supplier_id) === key)
+        : this.tables[TABLES.financials]
+            .filter((r) => String(r.cik) === key && String(r.period_end) < String(first.row.period_end))
+            .sort((a, b) => String(b.period_end).localeCompare(String(a.period_end)))[0];
+      const fields = [...(NUMERIC[first.table] ?? [])]
+        .filter((f) => typeof first.row[f] === "number" && Number(base?.[f]) !== first.row[f])
+        .map((f) => ({ field: f, before: base?.[f] == null ? null : Number(base[f]), after: Number(first.row[f]) }));
+      return {
+        file, description: first.description ?? file, synthetic: first.synthetic ?? false, table: first.table, key,
+        supplier_id: supplier_id == null ? undefined : String(supplier_id), fields,
+      };
     });
   }
 

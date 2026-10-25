@@ -18,6 +18,14 @@ function remember(t: Tracer) {
   traces.set(t.run_id, [...t.all()]);
   while (traces.size > 50) traces.delete(traces.keys().next().value!);
 }
+/** A tracer whose events are readable at GET /trace/:id while the run is still going, so the UI can show live progress.
+ *  The client may pick the run id (short, alphanumeric) so it can poll before the response arrives. */
+function liveTracer(wanted?: unknown) {
+  const id = typeof wanted === "string" && /^[a-z0-9]{6,24}$/i.test(wanted) && !traces.has(wanted) ? wanted : undefined;
+  const t = new Tracer(id);
+  traces.set(t.run_id, t.all() as TraceEvent[]);
+  return t;
+}
 const depsFor = (tracer: Tracer): Deps => ({ gateway: rt.gateway, model: rt.model, memory: rt.memory, tracer });
 
 /** Apply a bundled change file to whichever data layer is live (sample files or Zetaris tables). */
@@ -55,7 +63,7 @@ app.post("/run", async (c) => {
   if (!["decide", "reopen"].includes(body?.mode) || !/^SUP-\d{2,3}$/.test(body?.subject_id ?? "")) {
     return c.json({ error: "invalid_input", detail: 'mode must be "decide" or "reopen"; subject_id like "SUP-01"' }, 400);
   }
-  const tracer = new Tracer();
+  const tracer = liveTracer(body.run_id);
   const deps = depsFor(tracer);
   try {
     if (body.mode === "decide") {
@@ -133,7 +141,7 @@ app.get("/suppliers", (c) => c.json(rt.sample.suppliers()));
 app.post("/changes/:file/apply", async (c) => {
   const file = c.req.param("file");
   if (!rt.sample.listChangeFiles().includes(file)) return c.json({ error: "not_found" }, 404);
-  const tracer = new Tracer();
+  const tracer = liveTracer(c.req.query("run_id"));
   const deps = depsFor(tracer);
   try {
     const rows = await applyChangeFile(file);

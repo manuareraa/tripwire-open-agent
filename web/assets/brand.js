@@ -25,8 +25,10 @@
   const prefersDark = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
   const allThemes = THEMES.flatMap((g) => g.items.map((i) => i[0]));
 
-  function setTheme(id) {
+  let themingT;
+  function setTheme(id, animate) {
     if (!allThemes.includes(id)) id = prefersDark ? "nightwatch" : "signal";
+    if (animate) { root.classList.add("theming"); clearTimeout(themingT); themingT = setTimeout(() => root.classList.remove("theming"), 420); }
     root.dataset.theme = id;
     store.set("tw.theme", id);
   }
@@ -89,7 +91,7 @@
       </div>`;
     const ts = document.getElementById("theme-select"), fs = document.getElementById("font-select");
     ts.value = root.dataset.theme; fs.value = root.dataset.font;
-    ts.onchange = () => setTheme(ts.value);
+    ts.onchange = () => setTheme(ts.value, true);
     fs.onchange = () => setFont(fs.value);
   }
 
@@ -165,6 +167,7 @@
           <button class="btn primary sm" data-a="next" type="button">${i === n - 1 ? (opts.finishLabel || "Start using it") : "Next"}</button>
         </div>`;
       pop.setAttribute("aria-label", s.title);
+      pop.classList.remove("enter"); void pop.offsetWidth; pop.classList.add("enter");
       const t = target();
       if (t) t.scrollIntoView({ block: "center" });
       requestAnimationFrame(() => { place(); pop.querySelector('[data-a="next"]').focus(); });
@@ -182,5 +185,73 @@
     show();
   }
 
-  window.TW = { THEMES, FONTS, setTheme, setFont, mountNav, health, modes, renderModes, tour, esc, store, ICON };
+  // ---------- Motion helpers ----------
+  const reduced = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // A thin bar under the nav whenever a same-origin request is in flight, so every action shows it is working.
+  let inflight = 0, barT;
+  function bar() {
+    let el = document.querySelector(".tw-progress");
+    if (!el && document.body) { el = Object.assign(document.createElement("div"), { className: "tw-progress", innerHTML: "<i></i>" }); document.body.appendChild(el); }
+    return el;
+  }
+  function busy(d) {
+    inflight = Math.max(0, inflight + d);
+    clearTimeout(barT);
+    if (inflight) barT = setTimeout(() => bar()?.classList.add("on"), 120);
+    else bar()?.classList.remove("on");
+  }
+  const nativeFetch = window.fetch.bind(window);
+  window.fetch = (input, init) => {
+    const url = typeof input === "string" ? input : input?.url ?? "";
+    const mine = url.startsWith("/") || url.startsWith(location.origin);
+    if (!mine) return nativeFetch(input, init);
+    busy(1);
+    return nativeFetch(input, init).finally(() => busy(-1));
+  };
+
+  // Fade the page out before following an internal link, where the browser has no cross-page view transitions.
+  const hasViewTransitions = "onpagereveal" in window;
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest?.("a[href]");
+    if (!a || hasViewTransitions || reduced() || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+    const u = new URL(a.href, location.href);
+    if (u.origin !== location.origin || (u.pathname === location.pathname && u.hash)) return;
+    e.preventDefault();
+    document.body.classList.add("leaving");
+    setTimeout(() => { location.href = u.href; }, 160);
+  });
+  addEventListener("pageshow", () => document.body?.classList.remove("leaving"));
+
+  /** Fade elements with .reveal in as they scroll into view. */
+  function reveal(scope = document) {
+    const els = [...scope.querySelectorAll(".reveal:not(.in)")];
+    if (!("IntersectionObserver" in window) || reduced()) { els.forEach((el) => el.classList.add("in")); return; }
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    els.forEach((el) => io.observe(el));
+  }
+
+  /** Count a number up (from 0 unless given) inside el. fmt turns the running value into text. */
+  function countUp(el, to, { from = 0, ms = 700, fmt = (v) => String(Math.round(v)) } = {}) {
+    if (!el) return;
+    if (reduced() || !Number.isFinite(to)) { el.textContent = fmt(to); return; }
+    const t0 = performance.now();
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * e);
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /** The brand mark with its wire drawing on a loop: the shared loading animation. */
+  const LOADER = `<span class="tw-loader" aria-hidden="true"><svg viewBox="0 0 32 32">
+      <path d="M3 20.5h9.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".35"/>
+      <path d="M19.8 20.5H29" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".35"/>
+      <path class="w" d="M3 20.5h9.2L16 10.5l3.8 10H29" fill="none" stroke="var(--wire)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="k" cx="16" cy="10.5" r="2.4" fill="var(--wire)"/></svg></span>`;
+
+  window.TW = { THEMES, FONTS, setTheme, setFont, mountNav, health, modes, renderModes, tour, esc, store, ICON, busy, reveal, countUp, reduced, LOADER };
 })();
