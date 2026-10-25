@@ -1,0 +1,3368 @@
+{
+  "generated_at": "2026-10-25T13:47:18.055Z",
+  "cases": [
+    "SUP-08",
+    "SUP-17",
+    "SUP-18",
+    "SUP-04",
+    "SUP-06",
+    "SUP-01",
+    "SUP-02",
+    "SUP-03",
+    "SUP-05",
+    "SUP-07",
+    "SUP-09",
+    "SUP-10",
+    "SUP-11",
+    "SUP-12",
+    "SUP-13",
+    "SUP-14",
+    "SUP-15",
+    "SUP-16",
+    "SUP-19",
+    "SUP-20",
+    "SUP-08+sanctions",
+    "SUP-05+8-K",
+    "SUP-06+spend"
+  ],
+  "summary": [
+    {
+      "arm": "rules",
+      "mode": "rules",
+      "cases": 23,
+      "label": {
+        "passed": 8,
+        "of": 8
+      },
+      "valid": {
+        "passed": 23,
+        "of": 23
+      },
+      "grounded": {
+        "passed": 23,
+        "of": 23
+      },
+      "tripwires": {
+        "passed": 23,
+        "of": 23
+      },
+      "stale_named": {
+        "passed": 6,
+        "of": 6
+      },
+      "escalated": {
+        "passed": 1,
+        "of": 1
+      },
+      "rule_based_decisions": 23,
+      "calls": 92,
+      "fallbacks": 92,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_s": 0,
+      "wall_s": 0,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "ultra_alone",
+      "mode": "live",
+      "cases": 23,
+      "label": {
+        "passed": 8,
+        "of": 8
+      },
+      "valid": {
+        "passed": 23,
+        "of": 23
+      },
+      "grounded": {
+        "passed": 22,
+        "of": 23
+      },
+      "tripwires": {
+        "passed": 22,
+        "of": 23
+      },
+      "stale_named": {
+        "passed": 6,
+        "of": 6
+      },
+      "escalated": {
+        "passed": 1,
+        "of": 1
+      },
+      "rule_based_decisions": 0,
+      "calls": 23,
+      "fallbacks": 0,
+      "tokens_in": 12711,
+      "tokens_out": 5733,
+      "model_s": 185,
+      "wall_s": 185,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "mode": "live",
+      "cases": 23,
+      "label": {
+        "passed": 7,
+        "of": 8
+      },
+      "valid": {
+        "passed": 23,
+        "of": 23
+      },
+      "grounded": {
+        "passed": 23,
+        "of": 23
+      },
+      "tripwires": {
+        "passed": 23,
+        "of": 23
+      },
+      "stale_named": {
+        "passed": 6,
+        "of": 6
+      },
+      "escalated": {
+        "passed": 1,
+        "of": 1
+      },
+      "rule_based_decisions": 9,
+      "calls": 100,
+      "fallbacks": 6,
+      "tokens_in": 37625,
+      "tokens_out": 34892,
+      "model_s": 420,
+      "wall_s": 772,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "mode": "live",
+      "cases": 23,
+      "label": {
+        "passed": 8,
+        "of": 8
+      },
+      "valid": {
+        "passed": 23,
+        "of": 23
+      },
+      "grounded": {
+        "passed": 23,
+        "of": 23
+      },
+      "tripwires": {
+        "passed": 23,
+        "of": 23
+      },
+      "stale_named": {
+        "passed": 6,
+        "of": 6
+      },
+      "escalated": {
+        "passed": 1,
+        "of": 1
+      },
+      "rule_based_decisions": 1,
+      "calls": 92,
+      "fallbacks": 1,
+      "tokens_in": 36033,
+      "tokens_out": 18339,
+      "model_s": 418,
+      "wall_s": 478,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "mode": "live",
+      "cases": 23,
+      "label": {
+        "passed": 7,
+        "of": 8
+      },
+      "valid": {
+        "passed": 23,
+        "of": 23
+      },
+      "grounded": {
+        "passed": 23,
+        "of": 23
+      },
+      "tripwires": {
+        "passed": 23,
+        "of": 23
+      },
+      "stale_named": {
+        "passed": 6,
+        "of": 6
+      },
+      "escalated": {
+        "passed": 1,
+        "of": 1
+      },
+      "rule_based_decisions": 1,
+      "calls": 92,
+      "fallbacks": 2,
+      "tokens_in": 35416,
+      "tokens_out": 27487,
+      "model_s": 662,
+      "wall_s": 723,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "arm": "rules",
+      "case": "SUP-08",
+      "decision": "keep",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 16,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-17",
+      "decision": "keep",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 5,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-18",
+      "decision": "exit",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 6,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-04",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-06",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-01",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-02",
+      "decision": "keep",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-03",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-05",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 5,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-07",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-09",
+      "decision": "dual_source",
+      "confidence": 0.83,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-10",
+      "decision": "keep",
+      "confidence": 0.78,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-11",
+      "decision": "dual_source",
+      "confidence": 0.73,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-12",
+      "decision": "dual_source",
+      "confidence": 0.73,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-13",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-14",
+      "decision": "keep",
+      "confidence": 0.78,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-15",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-16",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-19",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-20",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 3,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-08+sanctions",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": true,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-05+8-K",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 4,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "rules",
+      "case": "SUP-06+spend",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 4,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "model_ms": 0,
+      "wall_ms": 2,
+      "served": [],
+      "providers": []
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-08",
+      "decision": "keep",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 554,
+      "tokens_out": 256,
+      "model_ms": 8490,
+      "wall_ms": 8492,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-17",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 234,
+      "model_ms": 5323,
+      "wall_ms": 5324,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-18",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 558,
+      "tokens_out": 237,
+      "model_ms": 8005,
+      "wall_ms": 8008,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-04",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 556,
+      "tokens_out": 317,
+      "model_ms": 5777,
+      "wall_ms": 5781,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-06",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 244,
+      "model_ms": 8641,
+      "wall_ms": 8644,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-01",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 259,
+      "model_ms": 6355,
+      "wall_ms": 6359,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-02",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 557,
+      "tokens_out": 234,
+      "model_ms": 4803,
+      "wall_ms": 4806,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-03",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 252,
+      "model_ms": 5260,
+      "wall_ms": 5263,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-05",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 553,
+      "tokens_out": 256,
+      "model_ms": 18958,
+      "wall_ms": 18960,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-07",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": false,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 284,
+      "model_ms": 5516,
+      "wall_ms": 5519,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-09",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 543,
+      "tokens_out": 262,
+      "model_ms": 7890,
+      "wall_ms": 7894,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-10",
+      "decision": "keep",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 544,
+      "tokens_out": 228,
+      "model_ms": 6579,
+      "wall_ms": 6580,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-11",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 544,
+      "tokens_out": 240,
+      "model_ms": 4445,
+      "wall_ms": 4447,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-12",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 544,
+      "tokens_out": 245,
+      "model_ms": 6171,
+      "wall_ms": 6173,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-13",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 232,
+      "model_ms": 6327,
+      "wall_ms": 6329,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-14",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 545,
+      "tokens_out": 241,
+      "model_ms": 29714,
+      "wall_ms": 29717,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-15",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 554,
+      "tokens_out": 259,
+      "model_ms": 8921,
+      "wall_ms": 8924,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-16",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 556,
+      "tokens_out": 222,
+      "model_ms": 6145,
+      "wall_ms": 6148,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-19",
+      "decision": "keep",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 556,
+      "tokens_out": 250,
+      "model_ms": 10676,
+      "wall_ms": 10680,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-20",
+      "decision": "keep",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 271,
+      "model_ms": 4559,
+      "wall_ms": 4560,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-08+sanctions",
+      "decision": "exit",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": false,
+        "stale_named": null,
+        "escalated": true,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 554,
+      "tokens_out": 203,
+      "model_ms": 10637,
+      "wall_ms": 10641,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-05+8-K",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 553,
+      "tokens_out": 262,
+      "model_ms": 3281,
+      "wall_ms": 3283,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "ultra_alone",
+      "case": "SUP-06+spend",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 1,
+      "fallbacks": 0,
+      "tokens_in": 555,
+      "tokens_out": 245,
+      "model_ms": 2613,
+      "wall_ms": 2617,
+      "served": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-08",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": false
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1568,
+      "tokens_out": 491,
+      "model_ms": 5766,
+      "wall_ms": 5772,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-17",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1574,
+      "tokens_out": 439,
+      "model_ms": 8305,
+      "wall_ms": 8309,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-18",
+      "decision": "exit",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 957,
+      "tokens_out": 160,
+      "model_ms": 2262,
+      "wall_ms": 55714,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-04",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 945,
+      "tokens_out": 138,
+      "model_ms": 3129,
+      "wall_ms": 63139,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-06",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1588,
+      "tokens_out": 5971,
+      "model_ms": 58521,
+      "wall_ms": 58527,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-01",
+      "decision": "keep",
+      "confidence": 0.95,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1572,
+      "tokens_out": 458,
+      "model_ms": 7771,
+      "wall_ms": 7779,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-02",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 6,
+      "fallbacks": 0,
+      "tokens_in": 2829,
+      "tokens_out": 1030,
+      "model_ms": 14520,
+      "wall_ms": 14525,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-03",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1635,
+      "tokens_out": 5709,
+      "model_ms": 57946,
+      "wall_ms": 57953,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-05",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 942,
+      "tokens_out": 164,
+      "model_ms": 2822,
+      "wall_ms": 61499,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-07",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1675,
+      "tokens_out": 505,
+      "model_ms": 5791,
+      "wall_ms": 5796,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-09",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1580,
+      "tokens_out": 4841,
+      "model_ms": 63207,
+      "wall_ms": 63212,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-10",
+      "decision": "keep",
+      "confidence": 0.78,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 6,
+      "fallbacks": 0,
+      "tokens_in": 2726,
+      "tokens_out": 1073,
+      "model_ms": 12983,
+      "wall_ms": 12989,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-11",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1548,
+      "tokens_out": 473,
+      "model_ms": 7275,
+      "wall_ms": 7281,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-12",
+      "decision": "dual_source",
+      "confidence": 0.73,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 6,
+      "fallbacks": 0,
+      "tokens_in": 2660,
+      "tokens_out": 1018,
+      "model_ms": 24222,
+      "wall_ms": 24226,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-13",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1567,
+      "tokens_out": 5257,
+      "model_ms": 58873,
+      "wall_ms": 58880,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-14",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1518,
+      "tokens_out": 467,
+      "model_ms": 5458,
+      "wall_ms": 5463,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-15",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 942,
+      "tokens_out": 164,
+      "model_ms": 2768,
+      "wall_ms": 61722,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-16",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1556,
+      "tokens_out": 481,
+      "model_ms": 9832,
+      "wall_ms": 9837,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-19",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1591,
+      "tokens_out": 483,
+      "model_ms": 6201,
+      "wall_ms": 6206,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-20",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": true,
+      "calls": 6,
+      "fallbacks": 0,
+      "tokens_in": 3125,
+      "tokens_out": 1088,
+      "model_ms": 13187,
+      "wall_ms": 13197,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-08+sanctions",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": true,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 925,
+      "tokens_out": 145,
+      "model_ms": 2307,
+      "wall_ms": 62313,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-05+8-K",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1657,
+      "tokens_out": 4174,
+      "model_ms": 37798,
+      "wall_ms": 37803,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "lightning_only",
+      "case": "SUP-06+spend",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 945,
+      "tokens_out": 163,
+      "model_ms": 9405,
+      "wall_ms": 69413,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-08",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1544,
+      "tokens_out": 392,
+      "model_ms": 6897,
+      "wall_ms": 6903,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-17",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1568,
+      "tokens_out": 427,
+      "model_ms": 10333,
+      "wall_ms": 10342,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-18",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1649,
+      "tokens_out": 1346,
+      "model_ms": 17680,
+      "wall_ms": 17690,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-04",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1674,
+      "tokens_out": 1333,
+      "model_ms": 21851,
+      "wall_ms": 21863,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-06",
+      "decision": "exit",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 945,
+      "tokens_out": 157,
+      "model_ms": 2780,
+      "wall_ms": 62786,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-01",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1599,
+      "tokens_out": 442,
+      "model_ms": 6960,
+      "wall_ms": 6968,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-02",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1576,
+      "tokens_out": 425,
+      "model_ms": 12420,
+      "wall_ms": 12425,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-03",
+      "decision": "dual_source",
+      "confidence": 0.7,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1656,
+      "tokens_out": 1353,
+      "model_ms": 20409,
+      "wall_ms": 20414,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-05",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1697,
+      "tokens_out": 1239,
+      "model_ms": 27697,
+      "wall_ms": 27703,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-07",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1655,
+      "tokens_out": 464,
+      "model_ms": 20027,
+      "wall_ms": 20034,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-09",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1570,
+      "tokens_out": 1361,
+      "model_ms": 28708,
+      "wall_ms": 28715,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-10",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1535,
+      "tokens_out": 407,
+      "model_ms": 24667,
+      "wall_ms": 24671,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-11",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1541,
+      "tokens_out": 393,
+      "model_ms": 18592,
+      "wall_ms": 18599,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-12",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1504,
+      "tokens_out": 357,
+      "model_ms": 10513,
+      "wall_ms": 10518,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-13",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1602,
+      "tokens_out": 1253,
+      "model_ms": 19378,
+      "wall_ms": 19384,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-14",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1540,
+      "tokens_out": 400,
+      "model_ms": 11546,
+      "wall_ms": 11553,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-15",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1613,
+      "tokens_out": 1313,
+      "model_ms": 31320,
+      "wall_ms": 31327,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-16",
+      "decision": "keep",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1550,
+      "tokens_out": 366,
+      "model_ms": 9506,
+      "wall_ms": 9512,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-19",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1572,
+      "tokens_out": 391,
+      "model_ms": 6756,
+      "wall_ms": 6761,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-20",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1609,
+      "tokens_out": 452,
+      "model_ms": 5980,
+      "wall_ms": 5986,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-08+sanctions",
+      "decision": "exit",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": true,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1529,
+      "tokens_out": 1187,
+      "model_ms": 18690,
+      "wall_ms": 18702,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-05+8-K",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1669,
+      "tokens_out": 1383,
+      "model_ms": 39426,
+      "wall_ms": 39434,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "tripwire",
+      "case": "SUP-06+spend",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1636,
+      "tokens_out": 1498,
+      "model_ms": 45632,
+      "wall_ms": 45640,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-08",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1536,
+      "tokens_out": 1008,
+      "model_ms": 14760,
+      "wall_ms": 14765,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-17",
+      "decision": "dual_source",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": false
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1569,
+      "tokens_out": 989,
+      "model_ms": 38351,
+      "wall_ms": 38355,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-18",
+      "decision": "exit",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": true,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 957,
+      "tokens_out": 191,
+      "model_ms": 2735,
+      "wall_ms": 62742,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-04",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1644,
+      "tokens_out": 1014,
+      "model_ms": 16277,
+      "wall_ms": 16283,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-06",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1591,
+      "tokens_out": 1230,
+      "model_ms": 17181,
+      "wall_ms": 17186,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-01",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 1,
+      "tokens_in": 1005,
+      "tokens_out": 1129,
+      "model_ms": 27240,
+      "wall_ms": 27383,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-02",
+      "decision": "keep",
+      "confidence": 0.85,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1575,
+      "tokens_out": 1297,
+      "model_ms": 14555,
+      "wall_ms": 14565,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-03",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1590,
+      "tokens_out": 1408,
+      "model_ms": 20160,
+      "wall_ms": 20167,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-05",
+      "decision": "exit",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1675,
+      "tokens_out": 1638,
+      "model_ms": 38552,
+      "wall_ms": 38559,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-07",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1638,
+      "tokens_out": 1428,
+      "model_ms": 44025,
+      "wall_ms": 44032,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-09",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1541,
+      "tokens_out": 1105,
+      "model_ms": 40502,
+      "wall_ms": 40507,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-10",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1527,
+      "tokens_out": 1123,
+      "model_ms": 23493,
+      "wall_ms": 23498,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-11",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1565,
+      "tokens_out": 1257,
+      "model_ms": 51516,
+      "wall_ms": 51522,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-12",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1538,
+      "tokens_out": 1684,
+      "model_ms": 48820,
+      "wall_ms": 48828,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-13",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1592,
+      "tokens_out": 1181,
+      "model_ms": 23710,
+      "wall_ms": 23716,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-14",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1564,
+      "tokens_out": 1546,
+      "model_ms": 52254,
+      "wall_ms": 52263,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-15",
+      "decision": "dual_source",
+      "confidence": 0.75,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1646,
+      "tokens_out": 1093,
+      "model_ms": 18337,
+      "wall_ms": 18343,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-16",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1596,
+      "tokens_out": 1356,
+      "model_ms": 16611,
+      "wall_ms": 16617,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-19",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1599,
+      "tokens_out": 1099,
+      "model_ms": 35661,
+      "wall_ms": 35667,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-20",
+      "decision": "dual_source",
+      "confidence": 0.7,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": null
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1642,
+      "tokens_out": 1002,
+      "model_ms": 21427,
+      "wall_ms": 21434,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-08+sanctions",
+      "decision": "exit",
+      "confidence": 0.9,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": true,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1515,
+      "tokens_out": 1139,
+      "model_ms": 20145,
+      "wall_ms": 20150,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-05+8-K",
+      "decision": "dual_source",
+      "confidence": 0.7,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": true,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1681,
+      "tokens_out": 1212,
+      "model_ms": 47231,
+      "wall_ms": 47238,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    },
+    {
+      "arm": "thinking_always",
+      "case": "SUP-06+spend",
+      "decision": "dual_source",
+      "confidence": 0.8,
+      "checks": {
+        "valid": true,
+        "grounded": true,
+        "tripwires": true,
+        "stale_named": null,
+        "escalated": null,
+        "label": true
+      },
+      "rule_based_decision": false,
+      "calls": 4,
+      "fallbacks": 0,
+      "tokens_in": 1630,
+      "tokens_out": 1358,
+      "model_ms": 28748,
+      "wall_ms": 28753,
+      "served": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "providers": [
+        "nvidia"
+      ]
+    }
+  ]
+}

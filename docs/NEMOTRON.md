@@ -60,23 +60,52 @@ it shows the model understands a buyer's wording where keyword matching does not
 corpus. Rerank is off by default in the app and turned on with `RERANK=nvidia`; it reorders findings and never drops
 one.
 
-### Lightning and Ultra: the five-arm comparison
+### Lightning and Ultra: the agent graph against one big model call
 
-`scripts/eval_arms.ts` runs 23 decision cases through five set-ups (rules only, one Ultra call on its own, the full
-agent graph on Lightning only, the graph as shipped, and the graph with thinking always on) and scores every answer
-in code on the same checks. Its results are recorded through Nightshift, which we run on a separate Windows or Mac
-machine; until that run is committed as `eval/RESULTS.md` this section has no numbers. See
-[NIGHTSHIFT.md](NIGHTSHIFT.md) §7.
+[eval/RESULTS.md](../eval/RESULTS.md) · cases in [eval/cases.json](../eval/cases.json)
+
+`scripts/eval_arms.ts` runs 23 decision cases (the 20 suppliers plus three data changes: a sanctions hit, a new 8-K
+filing and a spend shift) through five set-ups and scores every answer in code on the same checks: the expected label
+where the case is clear-cut (8 of 23), a valid answer, every number traceable to the data, valid tripwires, stale
+sources named, and escalation when the policy requires it.
+
+| Set-up | Right label | Numbers grounded | Tripwires valid | Fell back to rules | Model calls | Output tokens | Model time |
+|---|---|---|---|---|---|---|---|
+| Rules only (no model) | 8/8 | 23/23 | 23/23 | 23/23 | 0 | 0 | 0 s |
+| One Ultra call, no agents | 8/8 | 22/23 | 22/23 | 0/23 | 23 | 5,733 | 185 s |
+| Agent graph, Lightning only | 7/8 | 23/23 | 23/23 | 9/23 | 100 | 34,892 | 420 s |
+| **Agent graph as shipped** | **8/8** | **23/23** | **23/23** | **1/23** | 92 | 18,339 | 418 s |
+| Agent graph, thinking always on | 7/8 | 23/23 | 23/23 | 1/23 | 92 | 27,487 | 662 s |
+
+Recorded live on 2026-10-25 against build.nvidia.com (`--direct`), because the Nightshift machine was not set up yet;
+every answer came from the three Nemotron models named above. What it shows:
+
+- **The graph as shipped is the only model set-up that passed every check on every case.** Ultra on its own got every
+  clear-cut label right and is cheaper, but on SUP-07 it wrote a number that is not in the data, and on the sanctions
+  case it wrote a tripwire that cannot be evaluated. Nothing in a single call checks for either; in the graph, the
+  Evidence Critic sends such drafts back.
+- **Ultra is needed for the decision.** With Lightning deciding, 9 of 23 cases ended on the rule-based path: 6 because
+  a call timed out or came back empty, 3 because its drafts were never accepted (not valid JSON, or rejected by the
+  critic three times). It also missed one label.
+- **Thinking only when the case is risky beats thinking always.** Thinking on every step used 50% more output tokens
+  and 58% more model time, and missed a label (SUP-17) that the shipped graph got right.
+
+Limits: 23 cases is a small set, and most checks pass for most set-ups, so the differences are a handful of cases.
+The rules-only row passes by construction (the expected labels were written from the same policy); it is there as the
+floor, not as a competitor. The one rule-based case in the shipped graph was a 60-second timeout, not a bad answer;
+the direct client's timeout is 60 s, Nightshift's 180 s. Once the run is repeated through Nightshift, the report will
+name Nightshift as the provider and carry its receipts ([NIGHTSHIFT.md](NIGHTSHIFT.md) §7).
 
 ## Run it yourself
 
 With no key, every script replays the committed recordings and says "replay of a live run recorded …":
 
 ```bash
+npx tsx scripts/eval_arms.ts
 npx tsx scripts/safety_probes.ts
 SAMPLE_MODE=true npx tsx scripts/eval_rerank.ts
 ```
 
 To record new live runs, set `NVIDIA_API_KEY` in the terminal (never in a file) and pass `--direct --overwrite` to
-the safety script, or remove `eval/recordings/rerank.jsonl` before the rerank one. Add `--write` to regenerate the
+the comparison or the safety script, or remove `eval/recordings/rerank.jsonl` before the rerank one. Add `--write` to regenerate the
 reports. The scripts refuse `--write` when no model answered, so a report can only come from real model output.

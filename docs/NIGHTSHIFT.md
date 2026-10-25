@@ -127,7 +127,7 @@ tripwires valid, stale sources named, escalation when required) and counts token
 It records each set-up's calls to `eval/recordings/<name>.jsonl` and writes `eval/results.json` and
 `eval/RESULTS.md`. Commit all of them. Later runs with no live model replay those recordings, and the report says
 "replay of a live run recorded …". If recordings already exist it stops; pass `--overwrite` to keep the old ones as
-`.bak` and record again. Check the "Rule-based decisions" column: a set-up that fell back to rules on many cases says
+`.bak` and record again. Without Nightshift, `--direct` records the same run against build.nvidia.com (needs `NVIDIA_API_KEY`), and the report names that provider. Check the "Rule-based decisions" column: a set-up that fell back to rules on many cases says
 little about the model, and the reasons are in the per-case rows.
 
 ## 8. Measure the guard check

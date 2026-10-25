@@ -7,9 +7,9 @@
 //   thinking_always  the full graph with thinking on for every reasoning step
 //
 // Cases and their expected labels are in eval/cases.json, written from the policy before any run.
-// Live (Nightshift answering): every arm's calls are recorded to eval/recordings/<arm>.jsonl.
+// Live (Nightshift answering, or build.nvidia.com with --direct): every arm's calls are recorded to eval/recordings/<arm>.jsonl.
 // No live model: an arm with a recording is replayed from it (and the report says so); an arm without one is skipped.
-// Usage: npx tsx scripts/eval_arms.ts [--arms rules,tripwire] [--cases SUP-08,SUP-18] [--recordings dir] [--overwrite] [--write]
+// Usage: npx tsx scripts/eval_arms.ts [--direct] [--arms rules,tripwire] [--cases SUP-08,SUP-18] [--recordings dir] [--overwrite] [--write]
 //   --write saves eval/results.json and eval/RESULTS.md; without it the table is only printed.
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -71,6 +71,11 @@ if (config.useNightshift) {
   const d = await ns.discover();
   if (d.status === "online") live = process.argv.includes("--allow-backup") && config.useNvidiaDirect ? new FallbackModelClient(ns, new NemotronClient()) : ns;
   else console.log(`Nightshift ${d.status} (${d.detail}); arms with a recording are replayed, the rest skipped`);
+}
+// --direct: build.nvidia.com with NVIDIA_API_KEY, for when Nightshift is not available. The report names the provider.
+if (!live && process.argv.includes("--direct")) {
+  if (config.nvidia.apiKey) live = new NemotronClient();
+  else console.log("--direct needs NVIDIA_API_KEY in the environment");
 }
 mkdirSync(recDir, { recursive: true });
 
@@ -175,7 +180,7 @@ for (const arm of arms) {
     config.nvidia.reasoningModel = config.nvidia.smallModel || DEFAULT_MODELS.small;
   }
   const started = Date.now();
-  const rows: { checks: Record<string, boolean | null>; rule_based_decision: boolean; calls: number; fallbacks: number; tokens_in: number; tokens_out: number; model_ms: number; served: string[] }[] = [];
+  const rows: { checks: Record<string, boolean | null>; rule_based_decision: boolean; calls: number; fallbacks: number; tokens_in: number; tokens_out: number; model_ms: number; served: string[]; providers: string[] }[] = [];
   try {
     for (const c of cases) {
       const t0 = Date.now();
@@ -188,6 +193,7 @@ for (const arm of arms) {
         tokens_in: answered.reduce((n, x) => n + x.tokens_in, 0), tokens_out: answered.reduce((n, x) => n + x.tokens_out, 0),
         model_ms: answered.reduce((n, x) => n + x.latency_ms, 0), wall_ms: Date.now() - t0,
         served: [...new Set(answered.map((x) => x.model))],
+        providers: [...new Set(answered.map((x) => x.provider ?? "unknown"))],
       };
       rows.push(row);
       results.push(row);
@@ -210,6 +216,7 @@ for (const arm of arms) {
     tokens_in: rows.reduce((n, r) => n + r.tokens_in, 0), tokens_out: rows.reduce((n, r) => n + r.tokens_out, 0),
     model_s: Math.round(rows.reduce((n, r) => n + r.model_ms, 0) / 1000), wall_s: Math.round((Date.now() - started) / 1000),
     served: [...new Set(rows.flatMap((r) => r.served))],
+    providers: [...new Set(rows.flatMap((r) => r.providers))],
   });
 }
 
@@ -222,16 +229,16 @@ const lines = [
     : `| ${s.arm} | ${s.mode} | ${frac(s.label)} | ${frac(s.valid)} | ${frac(s.grounded)} | ${frac(s.tripwires)} | ${frac(s.stale_named)} | ${frac(s.escalated)} | ${s.rule_based_decisions}/${s.cases} | ${s.calls} (${s.fallbacks}) | ${s.tokens_in.toLocaleString()} / ${s.tokens_out.toLocaleString()} | ${s.model_s} s |`),
 ];
 console.log("\n" + lines.join("\n"));
-for (const s of summary as any[]) if (s.served?.length) console.log(`${s.arm} served by: ${s.served.join(", ")}`);
+for (const s of summary as any[]) if (s.served?.length) console.log(`${s.arm} served by: ${s.served.join(", ")} (provider: ${s.providers.join(", ")})`);
 
 if (process.argv.includes("--write")) {
   writeFileSync(join(ROOT, "eval/results.json"), JSON.stringify({ generated_at: new Date().toISOString(), cases: cases.map((c) => c.id), summary, results }, null, 2) + "\n");
   writeFileSync(join(ROOT, "eval/RESULTS.md"), [
     "# Measured comparison", "",
     `Generated ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC by \`npx tsx scripts/eval_arms.ts --write\` over ${cases.length} cases from [cases.json](cases.json).`,
-    "Each arm's \"Run\" column says whether it ran live through Meterless Nightshift, was replayed from a recorded live run, or used no model.", "",
+    "Each arm's \"Run\" column says whether it ran live, was replayed from a recorded live run, or used no model; the list under the table names the models and the provider that answered (nightshift = Meterless Nightshift, nvidia = build.nvidia.com directly).", "",
     ...lines, "",
-    ...(summary as any[]).filter((s) => s.served?.length).map((s) => `- **${s.arm}** was answered by: ${s.served.join(", ")}`), "",
+    ...(summary as any[]).filter((s) => s.served?.length).map((s) => `- **${s.arm}** was answered by: ${s.served.join(", ")} (provider: ${s.providers.join(", ")})`), "",
     "How to read it: expected labels exist only for clear-cut cases. The other columns are checks any good decision should pass, applied by code to every arm alike. " +
     "\"Rule-based decisions\" counts cases where the graph fell back to the rule-based policy; those pass the checks by construction, so a model arm with many of them says little about the model.",
     "Per-case rows are in [results.json](results.json).", "",
