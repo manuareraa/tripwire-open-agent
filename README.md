@@ -83,7 +83,7 @@ npm start               # or: docker run -p 8000:8000 --env-file .env tripwire
 
 Each sponsor is used live when its credentials are present and it answers a health check. Otherwise Tripwire uses the bundled fallback and says so at startup (`GET /health` shows the active modes).
 
-- **Nightshift (primary):** run Nightshift, add your NVIDIA key in Nightshift > Setup > Providers, then set `METERLESS_BASE_URL` and `METERLESS_RUNTIME_TOKEN` (or `METERLESS_TOKEN_FILE`) from Nightshift > Console. Model ids per tier: `METERLESS_REASONING_MODEL`, `METERLESS_SMALL_MODEL`, `METERLESS_GUARD_MODEL` (Nemotron ids by default).
+- **Nightshift (primary):** run Nightshift, add your NVIDIA key in Nightshift > Setup > Providers, then set `METERLESS_BASE_URL` and `METERLESS_RUNTIME_TOKEN` (or `METERLESS_TOKEN_FILE`) from Nightshift > Console. Model ids per tier: `METERLESS_REASONING_MODEL`, `METERLESS_SMALL_MODEL`, `METERLESS_GUARD_MODEL` (Nemotron ids by default). To record a live run for the hosted replay, see [docs/NIGHTSHIFT.md](docs/NIGHTSHIFT.md).
 - **Direct NVIDIA (backup only):** `NVIDIA_API_KEY` from build.nvidia.com. `LLM_PROVIDER=nightshift` turns the backup off; `LLM_PROVIDER=nvidia` skips Nightshift.
 - **Zetaris:** run the local Zetaris platform (Docker, `http://localhost:3000`), set `ZETARIS_USERNAME` and `ZETARIS_PASSWORD` (or `ZETARIS_API_KEY` and `ZETARIS_ORG_ID`), then load the tables once:
 

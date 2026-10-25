@@ -96,6 +96,13 @@ describe("record and replay of live model calls", () => {
     expect(t2.all().some((e) => /no recorded live answer/.test(e.output_summary ?? ""))).toBe(true);
   });
 
+  it("never writes credential-like receipt fields to a recording", async () => {
+    const file = join(tmp("tw-rec-"), "r.jsonl");
+    const inner: ModelClient = { enabled: true, complete: async () => ({ text: "ok", model: "m", thinking: false, tokens_in: 1, tokens_out: 1, latency_ms: 1, fallback: false, receipt: { receipt_id: "r1", runtime_token: "t0p", "header.meterless-auth": "Bearer x", note: "nvapi-abc" } }) };
+    await new RecordingModelClient(inner, file).complete({ tier: "small", agent_name: "Planner", system: "", user: "" });
+    expect(readRecordings(file)[0].response.receipt).toEqual({ receipt_id: "r1" });
+  });
+
   it("skips calls the live provider could not answer", () => {
     const file = join(tmp("tw-rec-"), "r.jsonl");
     const rec = (fallback: boolean) => JSON.stringify({ v: 1, key: "k", recorded_at: "2026-10-25T00:00:00Z", agent_name: "Planner", tier: "small", thinking: false, system: "", user: "", response: { text: "", model: "m", thinking: false, tokens_in: 0, tokens_out: 0, latency_ms: 0, fallback } });

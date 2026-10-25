@@ -1,0 +1,118 @@
+# Recording a live Nemotron run through Meterless Nightshift
+
+Tripwire asks Nemotron for help at seven points in each decision (Planner, Analyst, Decider, the safety check and so on).
+Every one of those calls goes through **Meterless Nightshift**, a small program that runs on your own machine,
+holds your NVIDIA key, and forwards each request to a Nemotron model. Nightshift sends back a **receipt** with each
+answer: an id, plus the name of the model that really answered. Tripwire shows both in the trace and in the console
+("Which model handled each step").
+
+This guide records one full live run and saves it, so the hosted demo can **replay** those exact answers later with
+no keys and no network. Replayed answers are always labelled as replays, with the date they were recorded.
+
+Nightshift has Windows, Mac and DGX editions, and **no Linux edition**, so this run happens on a Windows PC or a Mac.
+
+## 1. Set up Nightshift (once)
+
+1. Install and start Nightshift.
+2. Open **Setup > Providers** and paste your NVIDIA key (it starts with `nvapi-`). The key lives only inside Nightshift.
+   Tripwire never sees it, and it must never go into the project or a `.env` file.
+3. Open **Console**. It shows two things you need:
+   - the **runtime URL** (usually `http://127.0.0.1:8088/v1`);
+   - the **runtime token** (a long string that lets apps use Nightshift). Treat it like a password.
+
+## 2. Get Tripwire on the same machine
+
+You need Git and Node.js 22 or newer.
+
+```bash
+git clone https://github.com/manuareraa/tripwire-open-agent.git
+```
+
+```bash
+cd tripwire-open-agent && npm install
+```
+
+## 3. Point Tripwire at Nightshift
+
+Set two environment variables in the terminal you will run the script from. They last only for that terminal window,
+so nothing is written to disk.
+
+macOS (Terminal):
+
+```bash
+export METERLESS_BASE_URL="http://127.0.0.1:8088/v1"
+```
+
+```bash
+export METERLESS_RUNTIME_TOKEN="paste-the-token-from-Nightshift-Console"
+```
+
+Windows (PowerShell):
+
+```powershell
+$env:METERLESS_BASE_URL = "http://127.0.0.1:8088/v1"
+$env:METERLESS_RUNTIME_TOKEN = "paste-the-token-from-Nightshift-Console"
+```
+
+Instead of the token itself you can set `METERLESS_TOKEN_FILE` to the `proxy-token` file Nightshift writes in its
+state folder.
+
+## 4. Record
+
+Start with a short run of two suppliers to check everything answers:
+
+```bash
+npx tsx scripts/record_live.ts --suppliers SUP-01,SUP-05 --no-changes --out data/recordings/check.jsonl
+```
+
+Then the full run (all 20 suppliers, then each bundled change, then back to the original data):
+
+```bash
+npx tsx scripts/record_live.ts
+```
+
+What the script does:
+
+- It checks that Nightshift answers before making any model call. If it doesn't, it stops and records nothing.
+- It uses the bundled sample data in a throwaway folder. It never touches Zetaris or your own decision ledger.
+- It uses Nightshift only. The direct build.nvidia.com backup is off unless you add `--allow-backup`.
+- It appends every call to `data/recordings/nightshift.jsonl`, with the prompt, the answer, the tokens, the time and the
+  receipt. Receipt fields whose names look like credentials are dropped before anything is written.
+
+At the end it prints an honest summary, for example:
+
+```text
+recorded 84 calls to data/recordings/nightshift.jsonl in 412 s
+  answered by a model: 84; fell back to rules: 0
+  with a Nightshift receipt: 84
+  nvidia/nemotron-3.5-lightning-30b-a3b: 42
+  ...
+```
+
+(The numbers above are only an illustration of the format, not a real run.)
+
+## 5. Check what you got
+
+- **Which models really answered.** Nightshift can serve a different model from the one Tripwire asked for (other teams
+  have seen Ultra requests served by another model). Tripwire always shows the model that answered, and writes
+  "asked for …" beside it when the two differ. Nothing to fix: just note it.
+- **Fallbacks.** If a step says "fell back to rules", the script prints the first few reasons. A common one is a model
+  Nightshift cannot serve, such as the safety model. You can choose another model for that step with
+  `METERLESS_GUARD_MODEL` (or `METERLESS_REASONING_MODEL`, `METERLESS_SMALL_MODEL`) and record again.
+- **No secrets.** Search the file for your token and for `nvapi-` before you share it. Neither should appear.
+
+## 6. Use the recording
+
+Copy `data/recordings/nightshift.jsonl` back into the repo (or commit it from that machine). From then on, any copy of
+Tripwire with no live model replays it automatically: the console says "replay of a live call recorded …" on every step
+that came from it. A step whose prompt was never recorded (for example a what-if you didn't run live) uses the
+rule-based path and says so. It is never guessed.
+
+To record again, delete the old file first (or pass a new `--out`), so the replay holds one coherent run.
+Set `MODEL_REPLAY=false` to turn replay off.
+
+## Running Tripwire on Linux against Nightshift on another machine
+
+This only works if Nightshift accepts connections from other machines (its Console shows an address other than
+`127.0.0.1`). If it does, set `METERLESS_BASE_URL` on the Linux machine to that address and run the same script there.
+If Console shows only `127.0.0.1`, run Tripwire on the Nightshift machine as above.

@@ -26,6 +26,11 @@ export function recordingKey(req: ModelRequest): string {
   return createHash("sha256").update(JSON.stringify([req.agent_name, req.tier, !!req.thinking, !!req.json, normalise(req.system), normalise(req.user)])).digest("hex");
 }
 
+/** Receipt fields that could carry a credential are never written to a recording (the file is meant to be committed). */
+const SECRET = /token|secret|auth|password|api[_-]?key|cookie/i;
+const scrub = (res: ModelResponse): ModelResponse =>
+  res.receipt ? { ...res, receipt: Object.fromEntries(Object.entries(res.receipt).filter(([k, v]) => !SECRET.test(k) && !/^(nvapi-|Bearer )/.test(String(v)))) } : res;
+
 /** Wraps a live client and appends every call it makes, answered or not, to `file`. */
 export class RecordingModelClient implements ModelClient {
   constructor(private inner: ModelClient, readonly file: string, private now = () => new Date()) {
@@ -40,7 +45,7 @@ export class RecordingModelClient implements ModelClient {
     const res = await this.inner.complete(req);
     const rec: Recording = {
       v: 1, key: recordingKey(req), recorded_at: this.now().toISOString(), agent_name: req.agent_name, tier: req.tier,
-      thinking: !!req.thinking, system: req.system, user: req.user, response: res,
+      thinking: !!req.thinking, system: req.system, user: req.user, response: scrub(res),
     };
     appendFileSync(this.file, JSON.stringify(rec) + "\n");
     return res;
