@@ -68,6 +68,9 @@ export function issueText(s: unknown) {
 }
 
 /** A trace event in words: { title, detail }. The raw text stays on hover for anyone who wants it. */
+/** "supplier_spend SUP-06" (as the server logs a row) in words. */
+const rowText = (s: string) => { const i = s.indexOf(" "); return i > 0 ? rowName(s.slice(0, i), s.slice(i + 1)) : s; };
+
 export function say(e: TraceEvent): { title: string; detail: string } {
   const a = String(e.action || ""), o = String(e.output_summary || ""), fail = e.status === "failed";
   const [kind, arg] = a.includes(":") ? [a.slice(0, a.indexOf(":")), a.slice(a.indexOf(":") + 1)] : [a, ""];
@@ -161,6 +164,16 @@ export function say(e: TraceEvent): { title: string; detail: string } {
     case "read_table": return { title: `Zetaris read the ${TABLE[arg] ?? arg}`, detail: plain(o) };
     case "apply_change": return { title: `Zetaris wrote the change into the ${TABLE[arg] ?? arg}`, detail: plain(o) };
     case "changes_since": return { title: "Zetaris checked for new data", detail: plain(o) };
+    case "restore": return { title: `Zetaris restored the ${TABLE[arg] ?? arg}`, detail: plain(o) };
+    case "write_change":
+    case "write_whatif":
+    case "restore_data": {
+      m = o.match(/^(.+) in the (\w+) data: (.*)$/);
+      const where = m ? DATA_SRC[m[2]] ?? m[2] : "the data layer";
+      const rows = m && m[3] !== "no rows differed" ? m[3].split(", ").map(rowText) : [];
+      const title = kind === "restore_data" ? "Put the bundled data back" : kind === "write_whatif" ? `Wrote the what-if: ${m?.[1] ?? "a change"}` : "Wrote the change";
+      return { title, detail: rows.length ? `Changed in ${where}: ${rows.join(", ")}. The Watcher checks only decisions that read ${rows.length === 1 ? "this row" : "these rows"}.` : `Nothing in ${where} differed, so no decision needs re-checking.` };
+    }
   }
   m = a.match(/^model_call_(\w+)$/);
   if (m) return { title: `Asked the ${MODEL_TIER[m[1]] ?? `${m[1]} model`}`, detail: o.replace(/^nvidia\//, "NVIDIA ").replace(/ \(thinking on\)$/, ", with deep thinking on") };

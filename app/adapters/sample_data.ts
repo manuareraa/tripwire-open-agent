@@ -5,25 +5,11 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROW_KEY, TABLES, TEMPLATES, getTemplate, renderTemplate } from "../sql/templates.js";
 import type { DataGateway, Decision, Evidence, QueryResult, RowRef, TemplateSpec } from "../types.js";
-
-type Row = Record<string, unknown>;
+import { IDENTITY, NUMERIC, diffTables, normaliseRow, readChangeFile, validateChange, type ChangeFile, type Row } from "../changes.js";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
-/** Numeric columns per table; everything else stays a string. Empty cells become null. */
-const NUMERIC: Record<string, Set<string>> = {
-  [TABLES.financials]: new Set(["revenue", "gross_margin", "current_ratio", "debt_to_equity"]),
-  [TABLES.spend]: new Set(["spend_share", "lead_time_weeks", "open_po_value"]),
-};
-
-/** A scripted row change, as stored in data/sample/changes/*.json. */
-export interface ChangeFile {
-  description?: string;
-  synthetic?: boolean;
-  table: string;
-  key: string;
-  row: Row;
-}
+export type { ChangeFile };
 
 interface AppliedChange extends ChangeFile {
   seq: number;
@@ -78,6 +64,14 @@ function loadTable(path: string, table: string): Row[] {
   });
 }
 
+/** The bundled base tables (no changes applied), keyed by table name. */
+export function loadBaseTables(sampleDir: string): Record<string, Row[]> {
+  return {
+    [TABLES.financials]: loadTable(join(sampleDir, `${TABLES.financials}.csv`), TABLES.financials),
+    [TABLES.spend]: loadTable(join(sampleDir, `${TABLES.spend}.csv`), TABLES.spend),
+  };
+}
+
 // ---------- helpers mirroring the SQL ----------
 
 const project = (rows: Row[], cols: string[]) =>
@@ -130,10 +124,7 @@ export class SampleDataGateway implements DataGateway {
 
   /** Base CSVs plus every change in the applied-changes log, replayed in order. */
   reload(): void {
-    this.tables = {
-      [TABLES.financials]: loadTable(join(this.sampleDir, `${TABLES.financials}.csv`), TABLES.financials),
-      [TABLES.spend]: loadTable(join(this.sampleDir, `${TABLES.spend}.csv`), TABLES.spend),
-    };
+    this.tables = loadBaseTables(this.sampleDir);
     for (const c of this.appliedChanges()) this.upsert(c);
   }
 
@@ -240,7 +231,6 @@ export class SampleDataGateway implements DataGateway {
       .map((l) => JSON.parse(l) as AppliedChange);
   }
 
-  /** Change files bundled for the demo, e.g. ["01_new_quarter.json", ...]. */
   /** Supplier directory for the UI: id, company name, ticker, category, SEC company number and lead time from the bundled tables. */
   suppliers(): { supplier_id: string; name: string; ticker: string; category: string; spend_share: number; cik: string; lead_time_weeks: number }[] {
     const fin = new Map(this.tables[TABLES.financials].map((r) => [String(r.cik), r]));
@@ -254,34 +244,17 @@ export class SampleDataGateway implements DataGateway {
     });
   }
 
-  /** Change files with their description, the supplier they touch and the numbers that move (base sample → change), for the UI. */
-  changeCatalog(): {
-    file: string; description: string; synthetic: boolean; table: string; key: string;
-    supplier_id?: string; fields: { field: string; before: number | null; after: number }[];
-  }[] {
-    const spend = this.tables[TABLES.spend];
-    return this.listChangeFiles().map((file) => {
-      const raw = JSON.parse(readFileSync(join(this.sampleDir, "changes", file), "utf8")) as ChangeFile | ChangeFile[];
-      const first = Array.isArray(raw) ? raw[0] : raw;
-      const key = String(first.key);
-      const isSpend = first.table === TABLES.spend;
-      const supplier_id = isSpend ? key : spend.find((r) => String(r.cik) === key)?.supplier_id;
-      // The row this change replaces: the same spend row, or the latest earlier quarter for a financials filing.
-      const base = isSpend
-        ? spend.find((r) => String(r.supplier_id) === key)
-        : this.tables[TABLES.financials]
-            .filter((r) => String(r.cik) === key && String(r.period_end) < String(first.row.period_end))
-            .sort((a, b) => String(b.period_end).localeCompare(String(a.period_end)))[0];
-      const fields = [...(NUMERIC[first.table] ?? [])]
-        .filter((f) => typeof first.row[f] === "number" && Number(base?.[f]) !== first.row[f])
-        .map((f) => ({ field: f, before: base?.[f] == null ? null : Number(base[f]), after: Number(first.row[f]) }));
-      return {
-        file, description: first.description ?? file, synthetic: first.synthetic ?? false, table: first.table, key,
-        supplier_id: supplier_id == null ? undefined : String(supplier_id), fields,
-      };
-    });
+  /** A copy of the current tables (base CSVs plus applied changes). */
+  snapshot(): Record<string, Row[]> {
+    return Object.fromEntries(Object.entries(this.tables).map(([t, rows]) => [t, rows.map((r) => ({ ...r }))]));
   }
 
+  /** Every bundled change file, parsed and validated. */
+  changeFiles(): { file: string; changes: ChangeFile[] }[] {
+    return this.listChangeFiles().map((file) => ({ file, changes: readChangeFile(join(this.sampleDir, "changes", file)) }));
+  }
+
+  /** Change files bundled for the demo, e.g. ["01_new_quarter.json", ...]. */
   listChangeFiles(): string[] {
     const dir = join(this.sampleDir, "changes");
     if (!existsSync(dir)) return [];
@@ -294,19 +267,22 @@ export class SampleDataGateway implements DataGateway {
    */
   async applyChange(file: string): Promise<RowRef[]> {
     const path = existsSync(file) ? file : join(this.sampleDir, "changes", file);
-    const parsed = JSON.parse(readFileSync(path, "utf8")) as ChangeFile | ChangeFile[];
-    const list = Array.isArray(parsed) ? parsed : [parsed];
+    return this.applyChangeRows(readChangeFile(path), basename(path));
+  }
+
+  /** Apply changes built in code (what-ifs) or read from a file; `source` names them in the applied-changes log. */
+  async applyChangeRows(changes: ChangeFile[], source: string): Promise<RowRef[]> {
+    const list = changes.map(validateChange);
     let seq = this.appliedChanges().reduce((m, c) => Math.max(m, c.seq), 0);
     mkdirSync(this.ledgerDir, { recursive: true });
     const refs: RowRef[] = [];
+    const seen = new Set<string>();
     for (const c of list) {
-      if (!(c.table in NUMERIC)) throw new Error(`change targets unknown table ${c.table}`);
-      const keyCol = ROW_KEY[c.table];
-      if (String(c.row[keyCol]) !== String(c.key)) throw new Error(`change key ${c.key} != row.${keyCol}`);
-      const applied: AppliedChange = { ...c, seq: ++seq, file: basename(path), applied_at: new Date().toISOString() };
+      const applied: AppliedChange = { ...c, seq: ++seq, file: source, applied_at: new Date().toISOString() };
       this.upsert(applied);
       appendFileSync(this.changesLogPath, JSON.stringify(applied) + "\n");
-      refs.push({ table: c.table, key: String(c.key) });
+      const id = `${c.table}\u0000${c.key}`;
+      if (!seen.has(id)) seen.add(id), refs.push({ table: c.table, key: String(c.key) });
     }
     return refs;
   }
@@ -315,6 +291,13 @@ export class SampleDataGateway implements DataGateway {
   resetChanges(): void {
     if (existsSync(this.changesLogPath)) writeFileSync(this.changesLogPath, "");
     this.reload();
+  }
+
+  /** Back to the bundled CSVs, returning the rows that differ from what was live (for the Watcher). */
+  async restoreBase(): Promise<RowRef[]> {
+    const before = this.snapshot();
+    this.resetChanges();
+    return Object.keys(IDENTITY).flatMap((t) => diffTables(t, before[t] ?? [], this.tables[t] ?? []));
   }
 
   /** Marker = sequence number of the last applied change ("0" = none). */
@@ -333,17 +316,10 @@ export class SampleDataGateway implements DataGateway {
 
   /** Spend rows are keyed by supplier_id; financial rows by (cik, period_end) since a CIK has many periods. */
   private upsert(c: ChangeFile): void {
-    const numeric = NUMERIC[c.table];
-    const row: Row = {};
-    for (const [k, v] of Object.entries(c.row)) {
-      row[k] = v === null || v === "" ? null : numeric.has(k) ? Number(v) : String(v);
-    }
+    const row = normaliseRow(c.table, c.row);
+    const ids = IDENTITY[c.table];
     const rows = this.tables[c.table];
-    const same =
-      c.table === TABLES.financials
-        ? (r: Row) => r.cik === row.cik && r.period_end === row.period_end
-        : (r: Row) => r[ROW_KEY[c.table]] === row[ROW_KEY[c.table]];
-    const i = rows.findIndex(same);
+    const i = rows.findIndex((r) => ids.every((k) => r[k] === row[k]));
     if (i >= 0) rows[i] = { ...rows[i], ...row };
     else rows.push(row);
   }

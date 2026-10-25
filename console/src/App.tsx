@@ -10,7 +10,7 @@ import { setSuppliers, supName } from "./names";
 import { RunView } from "./RunView";
 import { ChangeRail, ChangesBoard, changeName, DecisionList, NextSteps, Step, SupplierStep, Toast, watcherStage, type ReportState } from "./Steps";
 import { TracePanel, type TraceState } from "./Trace";
-import type { ChangeCard, ChangeReport, Decision, Supplier, TraceEvent, WriteResult } from "./types";
+import type { ChangeCard, ChangeReport, Decision, Supplier, TraceEvent, WhatIf, WriteResult } from "./types";
 
 type View =
   | { kind: "start" }
@@ -20,6 +20,10 @@ type View =
   | { kind: "error"; msg: string }
   | { kind: "runFailed"; msg: string; thenChange: boolean }
   | { kind: "changes" };
+
+/** What step 3 can run: a bundled change file, a what-if for one supplier, or a reset to the bundled sample. */
+export type ChangeOp = { kind: "file"; file: string } | { kind: "whatif"; w: WhatIf } | { kind: "reset" };
+export const opKey = (op: ChangeOp) => op.kind === "file" ? op.file : op.kind === "whatif" ? op.w.id : "reset";
 
 type StepId = "step-decide" | "step-review" | "step-change";
 const STEPS: StepId[] = ["step-decide", "step-review", "step-change"];
@@ -48,7 +52,7 @@ function StartView({ running, onPick }: { running: boolean; onPick: (id: string,
       <div className="quick">
         {q("risky", 1, "SUP-18", false, "warn", "Risky supplier", "Weak financials. Expect exit or dual-source, escalated.")}
         {q("healthy", 2, "SUP-17", false, "shield", "Healthy supplier", "No red flags. Expect keep.")}
-        {q("wire", 3, "SUP-06", true, "wire", "Test a tripwire", "Decide, then apply the spend share jump.")}
+        {q("wire", 3, "SUP-06", true, "wire", "Test a tripwire", "Decide, then shift more spend to it.")}
       </div>
     </div>
   );
@@ -60,6 +64,7 @@ export function App() {
   const [supSwap, setSupSwap] = useState(0);
   const [decisions, setDecisions] = useState<Decision[] | null>(null);
   const [changes, setChanges] = useState<ChangeCard[] | null>(null);
+  const [whatifs, setWhatifs] = useState<WhatIf[] | null>(null);
   const [active, setActive] = useState(1);
   const [open, setOpen] = useState(1);
   const [done, setDone] = useState<Set<StepId>>(new Set());
@@ -70,7 +75,6 @@ export function App() {
   const [live, setLive] = useState(false);
   const [running, setRunning] = useState(false);
   const [applying, setApplying] = useState<string | null>(null);
-  const [applied, setApplied] = useState<Set<string>>(new Set());
   const [suggest, setSuggest] = useState<string | null>(null);
   const [pulse, setPulse] = useState<Set<string>>(new Set());
   const [report, setReport] = useState<ReportState>(null);
@@ -99,6 +103,23 @@ export function App() {
     goStep(1); setView({ kind: "start" });
     requestAnimationFrame(() => { const el = document.getElementById("supplier"); el?.scrollIntoView({ block: "center", behavior: smooth() }); el?.focus({ preventScroll: true }); });
   };
+
+  const loadSuppliers = async () => {
+    const list = (await api<Supplier[]>("/suppliers").catch(() => [] as Supplier[])).map((s) => ({ ...s, short: titleCase(s.name) || s.supplier_id }));
+    if (list.length) { setSuppliers(list); setSup(list); }
+    return list;
+  };
+  const loadCatalog = async () => {
+    const cat = await api<ChangeCard[]>("/changes/catalog").catch(() => null)
+      ?? (await api<string[]>("/changes").catch(() => [] as string[])).map((f) => ({ file: f, description: f }));
+    setChanges(cat);
+  };
+  /** What-ifs are computed from the live data, so they are fetched again after every change. */
+  const loadWhatIfs = async (id: string) => {
+    const list = await api<WhatIf[]>(`/changes/whatif?supplier=${encodeURIComponent(id)}`).catch(() => [] as WhatIf[]);
+    if (supplierRef.current === id) setWhatifs(list);
+  };
+  useEffect(() => { setWhatifs(null); loadWhatIfs(supplier); }, [supplier]);
 
   const loadDecisions = async () => {
     const list = await api<Decision[]>("/decisions").catch(() => [] as Decision[]);
@@ -153,9 +174,9 @@ export function App() {
       await loadTrace(r.run_id);
       markDone("step-decide"); goStep(thenChange ? 3 : 2);
       if (thenChange) {
-        toast(<><b>Decision made.</b> Now open <b>Spend share jump</b> in step 3, apply it, and see whether this decision reopens.</>, 10000);
-        const file = "02_spend_share_jump.json";
-        setSuggest(file); setPulse((p) => new Set(p).add(file));
+        toast(<><b>Decision made.</b> Now shift more spend to {supName(id)} in step 3 and see whether this decision reopens.</>, 10000);
+        const key = `whatif:${id}:spend_shift`;
+        setSuggest(key); setPulse((p) => new Set(p).add(key));
       } else {
         toast(<><b>Decision proposed.</b> Read the reasoning and evidence, then approve or reject it in the bar at the bottom of the screen.</>);
       }
@@ -167,30 +188,41 @@ export function App() {
   };
   const pick = (id: string, thenChange: boolean) => { setSupplier(id); supplierRef.current = id; setSupSwap((n) => n + 1); decide(thenChange); };
 
-  const applyChange = async (file: string) => {
+  const runChange = async (op: ChangeOp) => {
     if (runningRef.current) return;
-    runningRef.current = true; setRunning(true); setApplying(file);
-    setSuggest(file); goStep(3);
+    const key = opKey(op);
+    runningRef.current = true; setRunning(true); setApplying(key);
+    setSuggest(op.kind === "reset" ? null : key); goStep(3);
     const run_id = rid();
     setReport({ kind: "working" });
-    setView({ kind: "run", title: `Applying “${changeName(file)}”`, sub: "The Watcher checks only decisions that read the changed row", runKind: "change" });
+    const title = op.kind === "file" ? `Applying “${changeName(op.file)}”` : op.kind === "whatif" ? `Applying “${op.w.title}”` : "Resetting the demo data";
+    setView({ kind: "run", title, sub: "The Watcher checks only decisions that read the changed rows", runKind: "change" });
     const stop = watchRun(run_id);
     try {
-      const r = await api<{ run_id: string; reports: ChangeReport[] }>(`/changes/${encodeURIComponent(file)}/apply?run_id=${run_id}`, { method: "POST" });
+      const r = op.kind === "file"
+        ? await api<{ run_id: string; reports: ChangeReport[] }>(`/changes/${encodeURIComponent(op.file)}/apply?run_id=${run_id}`, { method: "POST" })
+        : op.kind === "whatif"
+          ? await api<{ run_id: string; reports: ChangeReport[] }>("/changes/whatif", { method: "POST", body: JSON.stringify({ supplier_id: op.w.supplier_id, kind: op.w.kind, run_id }) })
+          : await api<{ run_id: string; reports: ChangeReport[]; rows: unknown[] }>("/changes/reset", { method: "POST", body: JSON.stringify({ run_id }) });
       await stop();
-      setReport({ kind: "done", reports: r.reports || [], snapshot: decisionsRef.current });
+      const reports = r.reports || [];
+      setReport({ kind: "done", reports, snapshot: decisionsRef.current });
       await loadTrace(r.run_id);
-      const reopened = (r.reports || []).flatMap((x) => x.reopened);
+      const reopened = reports.flatMap((x) => x.reopened);
       if (reopened[0]) { await openDecision(reopened[0].new.decision_id); toast(<><b>A tripwire fired.</b> The reopened decision is open in the middle. The old one is marked superseded.</>); }
-      else { setView({ kind: "changes" }); toast(<><b>Nothing reopened.</b> The change did not cross any tripwire, so no work was redone.</>); }
-      markDone("step-change");
-      loadDecisions();
-      setApplied((s) => new Set(s).add(file));
+      else {
+        setView({ kind: "changes" });
+        toast(op.kind === "reset" && !reports.length ? <><b>Nothing to reset.</b> The data already matches the bundled sample.</>
+          : <><b>Nothing reopened.</b> The change did not cross any tripwire, so no work was redone.</>);
+      }
+      if (op.kind !== "reset") markDone("step-change");
     } catch (e) {
       await stop();
       setReport({ kind: "error", msg: (e as Error).message });
       setView({ kind: "changes" });
     }
+    // The data moved (or may have), so every view of it is read again.
+    await Promise.all([loadDecisions(), loadCatalog(), loadSuppliers(), loadWhatIfs(supplierRef.current)]);
     setApplying(null);
     runningRef.current = false; setRunning(false);
   };
@@ -211,16 +243,13 @@ export function App() {
 
   useEffect(() => {
     (async () => {
-      let list = (await api<Supplier[]>("/suppliers").catch(() => [] as Supplier[])).map((s) => ({ ...s, short: titleCase(s.name) || s.supplier_id }));
-      if (!list.length) list = Array.from({ length: 20 }, (_, i) => ({ supplier_id: `SUP-${String(i + 1).padStart(2, "0")}`, short: "" }));
-      setSuppliers(list); setSup(list);
+      let list = await loadSuppliers();
+      if (!list.length) { list = Array.from({ length: 20 }, (_, i) => ({ supplier_id: `SUP-${String(i + 1).padStart(2, "0")}`, short: "" })); setSuppliers(list); setSup(list); }
       const want = new URLSearchParams(location.search).get("supplier");
       const first = want && list.some((x) => x.supplier_id === want) ? want : "SUP-18";
       setSupplier(first); supplierRef.current = first;
       const decs = await loadDecisions();
-      api<ChangeCard[]>("/changes/catalog").catch(() => null)
-        .then(async (cat) => cat ?? (await api<string[]>("/changes").catch(() => [] as string[])).map((f) => ({ file: f, description: f })))
-        .then(setChanges);
+      loadCatalog();
       if (decs.length) goStep(decs.some((d) => d.status === "approved") ? 3 : 2);
       const q = new URLSearchParams(location.search);
       if (q.get("run") === "1") decide(q.get("supplier") === "SUP-06");
@@ -249,8 +278,9 @@ export function App() {
     case "decision": centre = <><DecisionView d={view.d} write={view.write} />{view.d.status !== "proposed" && next("decision")}</>; break;
     case "error": centre = <div className="banner bad"><Ic n="warn" /><div>{view.msg}</div></div>; break;
     case "runFailed": centre = <div className="banner bad"><Ic n="warn" /><div><b>The run failed.</b> {view.msg}<div style={{ marginTop: 8 }}><button className="btn sm" id="retry" type="button" onClick={() => decide(view.thenChange)}>Try again</button></div></div></div>; break;
-    case "changes": centre = <ChangesBoard changes={changes} report={report} stage={watcherStage(trace.events.map((e) => e.action))} applying={applying} applied={applied}
-      suggest={suggest} pulse={pulse} running={running} next={next("changes")} onApply={applyChange} onOpen={openDecision} />; break;
+    case "changes": centre = <ChangesBoard changes={changes} whatifs={whatifs} suppliers={suppliers} supplier={supplier} report={report} stage={watcherStage(trace.events.map((e) => e.action))} applying={applying}
+      suggest={suggest} pulse={pulse} running={running} next={next("changes")} onRun={runChange} onOpen={openDecision}
+      onSupplier={(id) => { setSupplier(id); supplierRef.current = id; setSupSwap((n) => n + 1); }} />; break;
   }
 
   return (
@@ -264,8 +294,8 @@ export function App() {
           <Step {...step(STEPS[1], 2)} title="Review and approve" count={liveN} summary={dlist.length ? `${liveN} active · ${waiting} waiting for approval` : "No decisions yet"}>
             <DecisionList decisions={decisions} selected={sel} onOpen={openDecision} />
           </Step>
-          <Step {...step(STEPS[2], 3)} title="Change the data" summary={changes ? `${applied.size} of ${changes.length} changes applied` : "Loading changes…"}>
-            <ChangeRail changes={changes} applied={applied} applying={applying} suggest={suggest} report={report} onOpen={(f) => { showChanges(f); toDetail(); }} />
+          <Step {...step(STEPS[2], 3)} title="Change the data" summary={changes ? `${whatifs?.filter((w) => w.available).length ?? 0} what-ifs for ${supName(supplier)} · ${changes.filter((c) => c.in_data).length} of ${changes.length} bundled in the data` : "Loading changes…"}>
+            <ChangeRail changes={changes} whatifs={whatifs} supplier={supplier} applying={applying} suggest={suggest} report={report} onOpen={(f) => { showChanges(f); toDetail(); }} />
           </Step>
         </ol>
         <section className="panel enter" style={{ "--i": 1 } as React.CSSProperties} id="detail" aria-live="polite" key={swapN}>{centre}</section>

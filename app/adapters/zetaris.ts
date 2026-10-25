@@ -23,6 +23,7 @@ import {
   tablePath,
 } from "../sql/zetaris_tables.js";
 import type { Tracer } from "../tracing.js";
+import { IDENTITY, diffTables, mergeRows, readChangeFile, validateChange, type ChangeFile, type Row } from "../changes.js";
 
 export type ZetarisErrorKind = "config" | "network" | "timeout" | "auth" | "http" | "sql";
 
@@ -205,13 +206,10 @@ export interface ZetarisGatewayOptions {
   now?: () => Date;
 }
 
-interface ChangeRow { table: string; key: string; row: Record<string, unknown> }
-
-/** Columns that identify a row when applying a change (financials have one row per filing period). */
-const IDENTITY: Record<string, string[]> = {
-  [TABLES.spend]: ["supplier_id"],
-  [TABLES.financials]: ["cik", "period_end"],
-};
+/** Rows per RUN EXPORT statement when rewriting a table (keeps each statement a sane size). */
+const WRITE_CHUNK = 25;
+/** Row cap when reading a whole table to rewrite it; hitting it means the read may be truncated, so the write stops. */
+const READ_LIMIT = 100000;
 
 export class ZetarisGateway implements DataGateway {
   readonly name = "zetaris" as const;
@@ -227,10 +225,10 @@ export class ZetarisGateway implements DataGateway {
     this.now = opts.now ?? (() => new Date());
   }
 
-  private async run(action: string, sql: string): Promise<SqlResult> {
+  private async run(action: string, sql: string, limit?: number): Promise<SqlResult> {
     const t0 = Date.now();
     try {
-      const res = await this.client.sql(sql);
+      const res = await this.client.sql(sql, limit);
       this.tracer?.emit({
         agent_name: "ZetarisGateway",
         action,
@@ -340,41 +338,83 @@ export class ZetarisGateway implements DataGateway {
   }
 
   /**
+   * Apply a demo change file (a name in data/sample/changes/ or a path) to the Zetaris tables. See applyChangeRows.
+   */
+  async applyChange(file: string, changesDir = "data/sample/changes"): Promise<RowRef[]> {
+    const path = existsSync(file) ? file : join(changesDir, file);
+    return this.applyChangeRows(readChangeFile(path));
+  }
+
+  /**
+   * Apply row changes the same way scripts/zetaris_setup.ts does. Each table is read once; if any change replaces an
+   * existing row (same identity), the table is rewritten with RUN EXPORT and re-registered; if every change is a new
+   * row, the new rows are appended. Returns the changed rows for the Watcher.
+   */
+  async applyChangeRows(input: ChangeFile[]): Promise<RowRef[]> {
+    const refs: RowRef[] = [];
+    const seen = new Set<string>();
+    let changes: ChangeFile[];
+    try { changes = input.map(validateChange); } catch (e) { throw new ZetarisError("config", (e as Error).message); }
+    for (const c of changes) {
+      if (!SCHEMAS[c.table]) throw new ZetarisError("config", `change targets unsupported table ${c.table}`);
+    }
+    for (const table of [...new Set(changes.map((c) => c.table))]) {
+      const current = await this.readTable(table);
+      const merged = mergeRows(table, current, changes);
+      if (merged.replaced) await this.writeTable(table, merged.rows, "apply_change");
+      else {
+        for (let i = 0; i < merged.added.length; i += WRITE_CHUNK) {
+          await this.run(`apply_change:${table}`, exportSql(table, rowsSelect(table, merged.added.slice(i, i + WRITE_CHUNK)), "append"));
+        }
+      }
+    }
+    for (const c of changes) {
+      const id = `${c.table}\u0000${c.key}`;
+      if (!seen.has(id)) seen.add(id), refs.push({ table: c.table, key: String(c.key) });
+    }
+    return refs;
+  }
+
+  /**
+   * Put the supplier tables back to `base` (the bundled CSVs). Only a table that differs is rewritten.
+   * Returns the rows that changed, for the Watcher.
+   */
+  async restoreTables(base: Record<string, Row[]>): Promise<RowRef[]> {
+    const refs: RowRef[] = [];
+    for (const table of Object.keys(IDENTITY)) {
+      const rows = base[table];
+      if (!rows) continue;
+      const diff = diffTables(table, await this.readTable(table), rows);
+      if (diff.length === 0) continue;
+      await this.writeTable(table, rows, "restore");
+      refs.push(...diff);
+    }
+    return refs;
+  }
+
+  /** Every row of a supplier table, typed. Refuses a read that may have been cut off at the row cap. */
+  private async readTable(table: string): Promise<Row[]> {
+    const res = await this.run(`read_table:${table}`, selectAllSql(table), READ_LIMIT);
+    if (res.rows.length >= READ_LIMIT) throw new ZetarisError("sql", `${table} has ${READ_LIMIT}+ rows; refusing to rewrite a possibly truncated read`);
+    return res.rows.map(typeRow);
+  }
+
+  /** Overwrite a table's files with `rows` (chunked), then re-register it so the new files are read. */
+  private async writeTable(table: string, rows: Row[], action: string): Promise<void> {
+    if (rows.length === 0) await this.run(`${action}:${table}`, exportSql(table, rowsSelect(table, []), "overwrite"));
+    for (let i = 0; i < rows.length; i += WRITE_CHUNK) {
+      await this.run(`${action}:${table}`, exportSql(table, rowsSelect(table, rows.slice(i, i + WRITE_CHUNK)), i === 0 ? "overwrite" : "append"));
+    }
+    await this.run(`${action}:${table}`, dropTableSql(table)).catch(() => undefined);
+    await this.run(`${action}:${table}`, registerTableSql(table));
+  }
+
+  /**
    * Rows changed since a marker. The marker is the newest supplier_spend.updated_at seen.
    * An empty marker initialises: no changes, current marker returned.
    * supplier_financials has no updated_at, so new/edited filings are found by comparing a per-CIK
    * hash with the previous call on this gateway instance.
    */
-  /**
-   * Apply a demo change file (a name in data/sample/changes/ or a path) to the Zetaris tables, the same way
-   * scripts/zetaris_setup.ts does: a new row is appended with RUN EXPORT; a row with the same identity is
-   * replaced by rewriting the table and re-registering it. Returns the changed rows for the Watcher.
-   */
-  async applyChange(file: string, changesDir = "data/sample/changes"): Promise<RowRef[]> {
-    const path = existsSync(file) ? file : join(changesDir, file);
-    const parsed = JSON.parse(readFileSync(path, "utf8")) as ChangeRow | ChangeRow[];
-    const refs: RowRef[] = [];
-    for (const c of Array.isArray(parsed) ? parsed : [parsed]) {
-      const ids = IDENTITY[c.table];
-      if (!ids || !SCHEMAS[c.table]) throw new ZetarisError("config", `change targets unsupported table ${c.table}`);
-      if (String(c.row[ROW_KEY[c.table]]) !== String(c.key)) throw new ZetarisError("config", `change key ${c.key} != row.${ROW_KEY[c.table]}`);
-      const current = (await this.run(`read_table:${c.table}`, selectAllSql(c.table))).rows;
-      const same = (r: Record<string, unknown>) => ids.every((k) => String(r[k]) === String(c.row[k]));
-      if (current.some(same)) {
-        const rows = current.map((r) => (same(r) ? c.row : r));
-        for (let i = 0; i < rows.length; i += 25) {
-          await this.run(`apply_change:${c.table}`, exportSql(c.table, rowsSelect(c.table, rows.slice(i, i + 25)), i === 0 ? "overwrite" : "append"));
-        }
-        await this.run(`apply_change:${c.table}`, dropTableSql(c.table)).catch(() => undefined);
-        await this.run(`apply_change:${c.table}`, registerTableSql(c.table));
-      } else {
-        await this.run(`apply_change:${c.table}`, exportSql(c.table, rowsSelect(c.table, [c.row]), "append"));
-      }
-      refs.push({ table: c.table, key: String(c.key) });
-    }
-    return refs;
-  }
-
   async changesSince(marker: string): Promise<{ changes: RowRef[]; marker: string }> {
     const changes: RowRef[] = [];
     let next = marker;

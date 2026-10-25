@@ -461,3 +461,80 @@ describe.skipIf(process.env.ZETARIS_LIVE !== "1")("live zetaris", () => {
     expect(typeof cs.marker).toBe("string");
   });
 });
+
+describe("ZetarisGateway row changes", () => {
+  const SPEND_COLS = ["supplier_id", "cik", "category", "spend_share", "lead_time_weeks", "open_po_value", "contract_end", "updated_at"];
+  const FIN_COLS = ["cik", "ticker", "name", "sic", "period_end", "revenue", "gross_margin", "current_ratio", "debt_to_equity", "source_url"];
+  const spend = (id: string, share: string): (string | null)[] => [id, "1", "chemicals", share, "7", "100000", "2027-06-30", "2026-10-01T09:00:00Z"];
+  const fin = (period: string): (string | null)[] => ["1306830", "CE", "CELANESE", "2820", period, "100", "0.2", "1.4", "4.1", "https://sec.example/"];
+
+  /** A fake Zetaris holding two tables; records every export, drop and register it is sent. */
+  function fakeTables(data: { spend: (string | null)[][]; fin: (string | null)[][] }, readTotal?: number) {
+    const writes: string[] = [];
+    const fetchImpl = createLoginAndSqlFetch((sql) => {
+      if (sql === `SELECT * FROM ${TABLE_PREFIX}${TABLES.spend}`) return sqlTable(SPEND_COLS, data.spend, readTotal);
+      if (sql === `SELECT * FROM ${TABLE_PREFIX}${TABLES.financials}`) return sqlTable(FIN_COLS, data.fin, readTotal);
+      if (/^RUN EXPORT TO STORAGE/i.test(sql)) {
+        const table = /path = '[^']*\/([a-z_]+)'/.exec(sql)?.[1] ?? /path = '([^']*)'/.exec(sql)?.[1];
+        writes.push(`export ${/saveMode = '(\w+)'/.exec(sql)?.[1]} ${table} rows=${(sql.match(/UNION ALL/g)?.length ?? 0) + (/WHERE 1 = 0/.test(sql) ? 0 : 1)}`);
+        return sqlTable(["status"], [["SUCCESS"]]);
+      }
+      if (/^DROP /i.test(sql)) { writes.push("drop"); return sqlTable(["status"], [["SUCCESS"]]); }
+      if (/^CREATE LIGHTNING FILESTORE TABLE/i.test(sql)) { writes.push("register"); return sqlTable(["status"], [["SUCCESS"]]); }
+      return sqlTable(["one"], [["1"]]);
+    });
+    return { writes, ...clientAndGateway(fetchImpl) };
+  }
+
+  it("appends a new filing without rewriting the table", async () => {
+    const { gateway, writes } = fakeTables({ spend: [spend("SUP-06", "0.35")], fin: [fin("2026-06-30")] });
+    const refs = await gateway.applyChangeRows([{ table: TABLES.financials, key: "1306830", row: { cik: "1306830", period_end: "2026-09-30", revenue: 90 } }]);
+    expect(refs).toEqual([{ table: TABLES.financials, key: "1306830" }]);
+    expect(writes).toHaveLength(1);
+    expect(writes[0]).toMatch(/^export append .* rows=1$/);
+  });
+
+  it("rewrites and re-registers a table when a change replaces a row, keeping every other row", async () => {
+    const rows = Array.from({ length: 30 }, (_, i) => spend(`SUP-${String(i + 1).padStart(2, "0")}`, "0.01"));
+    const { gateway, writes } = fakeTables({ spend: rows, fin: [] });
+    const refs = await gateway.applyChangeRows([
+      { table: TABLES.spend, key: "SUP-06", row: { supplier_id: "SUP-06", spend_share: 0.55 } },
+      { table: TABLES.spend, key: "SUP-05", row: { supplier_id: "SUP-05", spend_share: 0.1 } },
+    ]);
+    expect(refs.map((r) => r.key)).toEqual(["SUP-06", "SUP-05"]);
+    // 30 rows in chunks of 25: overwrite the first chunk, append the rest, then drop and register again.
+    expect(writes).toEqual([expect.stringMatching(/^export overwrite .* rows=25$/), expect.stringMatching(/^export append .* rows=5$/), "drop", "register"]);
+  });
+
+  it("rejects an invalid change before sending anything", async () => {
+    const { gateway, writes } = fakeTables({ spend: [spend("SUP-06", "0.35")], fin: [] });
+    await expect(gateway.applyChangeRows([{ table: TABLES.spend, key: "SUP-07", row: { supplier_id: "SUP-06" } }])).rejects.toThrow(/key/);
+    await expect(gateway.applyChangeRows([{ table: TABLES.spend, key: "SUP-06", row: { supplier_id: "SUP-06", hack: "x" } }])).rejects.toThrow(/unknown column/);
+    expect(writes).toEqual([]);
+  });
+
+  it("refuses to rewrite from a read that may have been cut off", async () => {
+    const big = Array.from({ length: 100000 }, (_, i) => spend(`SUP-${i}`, "0"));
+    const { gateway, writes } = fakeTables({ spend: big, fin: [] });
+    await expect(gateway.applyChangeRows([{ table: TABLES.spend, key: "SUP-1", row: { supplier_id: "SUP-1", spend_share: 0.5 } }])).rejects.toThrow(/truncated/);
+    expect(writes).toEqual([]);
+  });
+
+  it("restores only the tables that differ from the base and reports their changed rows", async () => {
+    const base = {
+      [TABLES.spend]: [{ supplier_id: "SUP-06", cik: "1", category: "chemicals", spend_share: 0.35, lead_time_weeks: 7, open_po_value: 100000, contract_end: "2027-06-30", updated_at: "2026-10-01T09:00:00Z" }],
+      [TABLES.financials]: [{ cik: "1306830", ticker: "CE", name: "CELANESE", sic: "2820", period_end: "2026-06-30", revenue: 100, gross_margin: 0.2, current_ratio: 1.4, debt_to_equity: 4.1, source_url: "https://sec.example/" }],
+    };
+    const changed = fakeTables({ spend: [spend("SUP-06", "0.55")], fin: [fin("2026-06-30")] });
+    expect(await changed.gateway.restoreTables(base)).toEqual([{ table: TABLES.spend, key: "SUP-06" }]);
+    expect(changed.writes).toEqual([expect.stringMatching(/^export overwrite .* rows=1$/), "drop", "register"]);
+
+    const same = fakeTables({ spend: [spend("SUP-06", "0.35")], fin: [fin("2026-06-30")] });
+    expect(await same.gateway.restoreTables(base)).toEqual([]);
+    expect(same.writes).toEqual([]);
+
+    const extra = fakeTables({ spend: [spend("SUP-06", "0.35")], fin: [fin("2026-06-30"), fin("2026-09-30")] });
+    expect(await extra.gateway.restoreTables(base)).toEqual([{ table: TABLES.financials, key: "1306830" }]);
+    expect(extra.writes).toEqual([expect.stringMatching(/^export overwrite .* rows=1$/), "drop", "register"]);
+  });
+});

@@ -13,7 +13,7 @@ export const METRIC: Record<string, [string, "ratio" | "share" | "pct" | "weeks"
   lead_time_weeks: ["Lead time", "weeks"],
   category_alternatives: ["Other suppliers in the category", "count"],
 };
-export const FIELD: Dict = { spend_share: "Spend share", open_po_value: "Open orders", lead_time_weeks: "Lead time", annual_spend: "Annual spend", revenue: "Revenue", current_assets: "Current assets", current_liabilities: "Current liabilities", total_liabilities: "Total liabilities", equity: "Equity", gross_profit: "Gross profit" };
+export const FIELD: Dict = { spend_share: "Spend share", open_po_value: "Open orders", lead_time_weeks: "Lead time", annual_spend: "Annual spend", revenue: "Revenue", current_assets: "Current assets", current_liabilities: "Current liabilities", total_liabilities: "Total liabilities", equity: "Equity", gross_profit: "Gross profit", contract_end: "Contract end", gross_margin: "Gross margin", current_ratio: "Current ratio", debt_to_equity: "Debt to equity" };
 export const OP: Dict = { ">": "rises above", ">=": "reaches", "<": "falls below", "<=": "falls to", "==": "equals", changed: "changes at all" };
 export const TIP = {
   confidence: "How sure the Decider is, from 0 to 100%. Low confidence on a risky call is a reason to escalate.",
@@ -47,7 +47,7 @@ export const DATA_SRC: Dict = { zetaris: "live data in Zetaris", sample: "the bu
 export const GUARD: Dict = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };
 export const ZETARIS: Dict = { health: "Zetaris health check", write_decision: "Zetaris wrote the decision to the ledger", verify_decision: "Zetaris read the ledger back to confirm the write", read_decisions: "Zetaris read the decision ledger" };
 export const GROUP: Dict = { health: "Financial health", exposure: "How much we depend on them", policy: "Policy" };
-export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", Human: "Hu" };
+export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", Human: "Hu", Server: "Da" };
 
 // ---------- Live run view ----------
 export type Stage = [agent: string, short: string, does: string];
@@ -82,6 +82,9 @@ export const NOW: Dict = {
   lineage_lookup: "Watcher is asking memory which decisions read the changed row",
   check_tripwires: "Watcher is re-checking the tripwires of dependent decisions",
   reopen_summary: "Watcher is summarising what reopened",
+  write_change: "The change is written. The Watcher is starting",
+  write_whatif: "The what-if is written. The Watcher is starting",
+  restore_data: "The bundled data is back. The Watcher is re-checking affected decisions",
 };
 // Fixed copy with a little markup; rendered as HTML because it is ours, never data.
 export const TIPS = [
@@ -100,7 +103,7 @@ export const TOUR = [
   { el: "#step-decide", title: "Step 1: make a decision", body: "Pick one of 20 suppliers and press <b>Decide</b>. Six agents plan queries, analyse, critique each other and propose <b>keep</b>, <b>dual-source</b> or <b>exit</b>. You watch each agent work live." },
   { el: "#detail", title: "The decision, explained", body: "Here you see the verdict and confidence, why, the key numbers (click one for its SQL and result hash), and the <b>tripwires</b>: how close each one is to firing." },
   { el: "#step-review", title: "Step 2: review and approve", body: "Every decision starts as a proposal. A human approves or rejects it. Risky ones are <b>escalated</b> and need a written reason. Approval writes the decision to the ledger." },
-  { el: "#step-change", title: "Step 3: change the data", body: "Pick a change here and it opens in the middle, with the value before and after. Apply it and the Watcher asks memory which decisions read that row, checks only their tripwires, and reopens only the ones that fire. Click any step title to open or fold it." },
+  { el: "#step-change", title: "Step 3: change the data", body: "Pick a change here and it opens in the middle, with the values before and after. What-ifs are computed for the supplier you picked; the bundled changes are fixed edits. Apply one and the Watcher asks memory which decisions read the changed rows, checks only their tripwires, and reopens only the ones that fire. Reset demo data puts the tables back. Click any step title to open or fold it." },
   { el: "#trace-panel", title: "See the agents think", body: "Every step of each run streams in here as it happens: queries, handoffs, where the Critic sent work back, and any fallback. Nothing is hidden." },
   { el: "#tour-btn", title: "You're ready", body: "Try the <b>Tripwire test</b> shortcut first: it decides on SUP-06, then you apply the spend share jump. You can replay this tour from here." },
 ];

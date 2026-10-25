@@ -67,7 +67,22 @@ export interface ChangeCard {
   table?: string;
   key?: string;
   synthetic?: boolean;
+  supplier_name?: string;
+  /** Already in the live data, so applying it again would change nothing. */
+  in_data?: boolean;
   fields?: ChangeField[];
+}
+
+/** A change computed for one supplier from its current data (GET /changes/whatif). */
+export interface WhatIf {
+  id: string;
+  kind: string;
+  supplier_id: string;
+  title: string;
+  description: string;
+  available: boolean;
+  reason?: string;
+  fields: (ChangeField & { table: string; key: string; supplier_id: string })[];
 }
 
 export interface ChangeReport {

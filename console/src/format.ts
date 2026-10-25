@@ -13,9 +13,11 @@ export function fmtMetric(metric: string | undefined, v: unknown): string {
 }
 
 export function fmtField(field: string, v: unknown): string {
-  if (v === null || v === undefined) return "none";
+  if (v === null || v === undefined || v === "") return "none";
   const n = Number(v);
-  if (field === "spend_share") return pct(n);
+  if (!Number.isFinite(n)) return String(v);
+  if (field === "spend_share" || field === "gross_margin") return pct(n);
+  if (field === "current_ratio" || field === "debt_to_equity") return n.toFixed(2);
   if (field === "lead_time_weeks") return `${v} wk`;
   if (Math.abs(n) >= 1e9) return `${(n / 1e9).toFixed(2)}B`;
   if (Math.abs(n) >= 1e6) return `${(n / 1e6).toFixed(1)}M`;

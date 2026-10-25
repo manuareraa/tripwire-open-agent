@@ -148,6 +148,18 @@ textarea.input { resize: vertical; min-height: 64px; }
 .board .wr { padding: 14px 16px; }
 .board-sub { margin: 4px 0 10px; }
 .board .clist { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.board .clist + .board-sub { margin-top: 22px; }
+.board-sub-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 4px; }
+.board-sub-row .board-sub { margin: 0; }
+.board-sub-row select.input { width: auto; max-width: 100%; padding: 6px 9px; font-size: 13px; }
+.board .small { font-size: 12.5px; margin: 6px 0 10px; }
+.ccard.off { opacity: .7; }
+.cc-off { grid-column: 2; font-size: 12.5px; margin: 0; }
+.delta small { font-weight: 500; color: var(--muted); }
+.crail-h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 6px 0 0; }
+.crail-h:first-child { margin-top: 0; }
+.reset { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.reset > span { flex: 1 1 260px; }
 
 /* What next: shown under every result so a finished step never looks like the end */
 .next { margin: 4px 0 22px; padding: 14px; border-radius: var(--radius); border: 1px dashed color-mix(in srgb, var(--primary) 45%, var(--line)); background: color-mix(in srgb, var(--primary) 4%, var(--surface)); }
