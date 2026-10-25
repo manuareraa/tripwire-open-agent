@@ -66,7 +66,7 @@ describe("Nemotron rerank", () => {
       return json({ rankings: [{ index: 2, logit: 1.5 }, { index: 0, logit: -0.2 }, { index: 1, logit: -3 }] });
     }) as unknown as typeof fetch;
     const r = await new NemotronReranker("k", "nvidia/nemotron-3.5-rerank-8b", 1000, fake).rank("q", ["a", "b", "c"]);
-    expect(sent!.url).toBe("https://ai.api.nvidia.com/v1/retrieval/nvidia/nemotron-3_5-rerank-8b/reranking");
+    expect(sent!.url).toBe("https://ai.api.nvidia.com/v1/retrieval/nvidia/nemotron-3.5-rerank-8b/reranking");
     expect(sent!.body).toEqual({ model: "nvidia/nemotron-3.5-rerank-8b", query: { text: "q" }, passages: [{ text: "a" }, { text: "b" }, { text: "c" }], truncate: "END" });
     expect(r).toMatchObject({ order: [2, 0, 1], fallback: false, provider: "nvidia" });
     expect(rerankUrl("nvidia/llama-nemotron-rerank-1b-v2")).toContain("/nvidia/llama-nemotron-rerank-1b-v2/reranking");

@@ -29,8 +29,8 @@ const identity = (n: number) => [...Array(n).keys()];
 const unranked = (n: number, model: string, provider: string, started: number, error: string): RerankResult =>
   ({ order: identity(n), scores: Array(n).fill(0), model, provider, latency_ms: Date.now() - started, fallback: true, error });
 
-/** Hosted reranking endpoint for a model id (dots become underscores in the path, as NVIDIA names them); NVIDIA_RERANK_URL overrides it. */
-export const rerankUrl = (model: string) => config.nvidia.rerankUrl || `https://ai.api.nvidia.com/v1/retrieval/${model.replace(/\./g, "_")}/reranking`;
+/** Hosted reranking endpoint for a model id (the id goes into the path as is, dots included; checked live 2026-10-25). NVIDIA_RERANK_URL overrides it. */
+export const rerankUrl = (model: string) => config.nvidia.rerankUrl || `https://ai.api.nvidia.com/v1/retrieval/${model}/reranking`;
 
 export class NemotronReranker implements Reranker {
   constructor(

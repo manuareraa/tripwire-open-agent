@@ -1,0 +1,968 @@
+{
+  "generated_at": "2026-10-25T12:51:48.433Z",
+  "summary": {
+    "mode": "replay of a live run of nvidia/nemotron-3.5-rerank-8b recorded 2026-10-25",
+    "questions": 17,
+    "suppliers": [
+      "SUP-05",
+      "SUP-08"
+    ],
+    "pool_size": [
+      9,
+      9
+    ],
+    "keyword": {
+      "n": 34,
+      "hit_at_1": 0.235,
+      "recall_at_3": 0.353,
+      "mrr": 0.438
+    },
+    "model": {
+      "n": 34,
+      "hit_at_1": 1,
+      "recall_at_3": 0.971,
+      "mrr": 1
+    },
+    "unanswered": 0
+  },
+  "rows": [
+    {
+      "question": "q01",
+      "subject": "SUP-05",
+      "relevant": [
+        "current_ratio"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "risk_events_12m",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "current_ratio",
+          "debt_to_equity",
+          "revenue_change_pct"
+        ]
+      }
+    },
+    {
+      "question": "q01",
+      "subject": "SUP-08",
+      "relevant": [
+        "current_ratio"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "risk_events_12m",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "current_ratio",
+          "debt_to_equity",
+          "gross_margin"
+        ]
+      }
+    },
+    {
+      "question": "q02",
+      "subject": "SUP-05",
+      "relevant": [
+        "debt_to_equity"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "debt_to_equity",
+          "current_ratio",
+          "gross_margin"
+        ]
+      }
+    },
+    {
+      "question": "q02",
+      "subject": "SUP-08",
+      "relevant": [
+        "debt_to_equity"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "debt_to_equity",
+          "current_ratio",
+          "gross_margin"
+        ]
+      }
+    },
+    {
+      "question": "q03",
+      "subject": "SUP-05",
+      "relevant": [
+        "gross_margin"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.2,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "gross_margin",
+          "revenue_change_pct",
+          "category_alternatives"
+        ]
+      }
+    },
+    {
+      "question": "q03",
+      "subject": "SUP-08",
+      "relevant": [
+        "gross_margin"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.2,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "gross_margin",
+          "revenue_change_pct",
+          "category_alternatives"
+        ]
+      }
+    },
+    {
+      "question": "q04",
+      "subject": "SUP-05",
+      "relevant": [
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.16666666666666666,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "gross_margin",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q04",
+      "subject": "SUP-08",
+      "relevant": [
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.16666666666666666,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "gross_margin",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q05",
+      "subject": "SUP-05",
+      "relevant": [
+        "spend_share",
+        "category_alternatives"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 0.5,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q05",
+      "subject": "SUP-08",
+      "relevant": [
+        "spend_share",
+        "category_alternatives"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 0.5,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q06",
+      "subject": "SUP-05",
+      "relevant": [
+        "category_alternatives",
+        "lead_time_weeks"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.5,
+        "rr": 0.5,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "category_alternatives",
+          "lead_time_weeks",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q06",
+      "subject": "SUP-08",
+      "relevant": [
+        "category_alternatives",
+        "lead_time_weeks"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.5,
+        "rr": 0.5,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "category_alternatives",
+          "lead_time_weeks",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q07",
+      "subject": "SUP-05",
+      "relevant": [
+        "lead_time_weeks"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 1,
+        "rr": 0.5,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "lead_time_weeks",
+          "category_alternatives",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q07",
+      "subject": "SUP-08",
+      "relevant": [
+        "lead_time_weeks"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 1,
+        "rr": 0.5,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "lead_time_weeks",
+          "category_alternatives",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q08",
+      "subject": "SUP-05",
+      "relevant": [
+        "sanctions_matches",
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.14285714285714285,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "risk_events_12m",
+          "revenue_change_pct"
+        ]
+      }
+    },
+    {
+      "question": "q08",
+      "subject": "SUP-08",
+      "relevant": [
+        "sanctions_matches",
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.14285714285714285,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "risk_events_12m",
+          "revenue_change_pct"
+        ]
+      }
+    },
+    {
+      "question": "q09",
+      "subject": "SUP-05",
+      "relevant": [
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "risk_events_12m",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "risk_events_12m",
+          "revenue_change_pct",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q09",
+      "subject": "SUP-08",
+      "relevant": [
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "risk_events_12m",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "risk_events_12m",
+          "revenue_change_pct",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q10",
+      "subject": "SUP-05",
+      "relevant": [
+        "sanctions_matches"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.125,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "category_alternatives",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q10",
+      "subject": "SUP-08",
+      "relevant": [
+        "sanctions_matches"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.125,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "category_alternatives",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q11",
+      "subject": "SUP-05",
+      "relevant": [
+        "current_ratio",
+        "debt_to_equity",
+        "gross_margin",
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "category_alternatives",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 0.6666666666666666,
+        "rr": 1,
+        "top3": [
+          "current_ratio",
+          "category_alternatives",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q11",
+      "subject": "SUP-08",
+      "relevant": [
+        "current_ratio",
+        "debt_to_equity",
+        "gross_margin",
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.25,
+        "top3": [
+          "category_alternatives",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 0.6666666666666666,
+        "rr": 1,
+        "top3": [
+          "current_ratio",
+          "category_alternatives",
+          "debt_to_equity"
+        ]
+      }
+    },
+    {
+      "question": "q12",
+      "subject": "SUP-05",
+      "relevant": [
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "gross_margin",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q12",
+      "subject": "SUP-08",
+      "relevant": [
+        "revenue_change_pct"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "revenue_change_pct",
+          "gross_margin",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q13",
+      "subject": "SUP-05",
+      "relevant": [
+        "category_alternatives"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.1111111111111111,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "category_alternatives",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q13",
+      "subject": "SUP-08",
+      "relevant": [
+        "category_alternatives"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.1111111111111111,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "category_alternatives",
+          "spend_share",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q14",
+      "subject": "SUP-05",
+      "relevant": [
+        "spend_share"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "gross_margin"
+        ]
+      }
+    },
+    {
+      "question": "q14",
+      "subject": "SUP-08",
+      "relevant": [
+        "spend_share"
+      ],
+      "keyword": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "spend_share",
+          "category_alternatives",
+          "gross_margin"
+        ]
+      }
+    },
+    {
+      "question": "q15",
+      "subject": "SUP-05",
+      "relevant": [
+        "current_ratio",
+        "debt_to_equity",
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.3333333333333333,
+        "rr": 0.3333333333333333,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 0.6666666666666666,
+        "rr": 1,
+        "top3": [
+          "debt_to_equity",
+          "current_ratio",
+          "revenue_change_pct"
+        ]
+      }
+    },
+    {
+      "question": "q15",
+      "subject": "SUP-08",
+      "relevant": [
+        "current_ratio",
+        "debt_to_equity",
+        "risk_events_12m"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.3333333333333333,
+        "rr": 0.3333333333333333,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "debt_to_equity",
+          "current_ratio",
+          "risk_events_12m"
+        ]
+      }
+    },
+    {
+      "question": "q16",
+      "subject": "SUP-05",
+      "relevant": [
+        "sanctions_matches"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.125,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q16",
+      "subject": "SUP-08",
+      "relevant": [
+        "sanctions_matches"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0,
+        "rr": 0.125,
+        "top3": [
+          "spend_share",
+          "lead_time_weeks",
+          "current_ratio"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "sanctions_matches",
+          "category_alternatives",
+          "lead_time_weeks"
+        ]
+      }
+    },
+    {
+      "question": "q17",
+      "subject": "SUP-05",
+      "relevant": [
+        "lead_time_weeks",
+        "category_alternatives",
+        "spend_share"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.6666666666666666,
+        "rr": 0.5,
+        "top3": [
+          "risk_events_12m",
+          "category_alternatives",
+          "spend_share"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "lead_time_weeks",
+          "category_alternatives",
+          "spend_share"
+        ]
+      }
+    },
+    {
+      "question": "q17",
+      "subject": "SUP-08",
+      "relevant": [
+        "lead_time_weeks",
+        "category_alternatives",
+        "spend_share"
+      ],
+      "keyword": {
+        "hit1": 0,
+        "recall3": 0.6666666666666666,
+        "rr": 0.5,
+        "top3": [
+          "risk_events_12m",
+          "category_alternatives",
+          "spend_share"
+        ]
+      },
+      "model": {
+        "hit1": 1,
+        "recall3": 1,
+        "rr": 1,
+        "top3": [
+          "category_alternatives",
+          "lead_time_weeks",
+          "spend_share"
+        ]
+      }
+    }
+  ]
+}
