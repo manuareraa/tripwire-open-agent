@@ -95,12 +95,12 @@ Each sponsor is used live when its credentials are present and it answers a heal
 
 | Method and path | What it does |
 |---|---|
-| `POST /run` | Main entry point. Body `{"mode":"decide","subject_id":"SUP-18","question":"..."}` runs a decision. `{"mode":"reopen","subject_id":"SUP-06","change_file":"02_spend_share_jump.json"}` applies a sample change and lets the Watcher decide what to reopen (with live data, pass `changed: {table, key}` instead). |
+| `POST /run` | Main entry point. Body `{"mode":"decide","subject_id":"SUP-18","question":"..."}` runs a decision. `{"mode":"reopen","subject_id":"SUP-06","change_file":"02_spend_share_jump.json"}` applies a bundled change file to the active data layer and lets the Watcher decide what to reopen. With Zetaris, the change is written to the source table with RUN EXPORT. To signal a change made outside Tripwire, pass `changed: {table, key}` instead. |
 | `GET /health` | Active data, model and memory modes |
 | `GET /decisions`, `GET /decisions/:id` | Decision ledger |
 | `POST /decisions/:id/approve` | Human approval, body `{"reason":"..."}` (required for escalated decisions). Writes to the Zetaris ledger in live mode. |
 | `POST /decisions/:id/reject` | Reject a proposed decision |
-| `GET /changes`, `POST /changes/:file/apply` | Sample change feed (SAMPLE_MODE only) |
+| `GET /changes`, `POST /changes/:file/apply` | Demo change feed: applies a bundled change file (to the sample files, or to the Zetaris tables in live mode), then runs the Watcher |
 | `GET /trace/:run_id` | Trace events of a recent run |
 
 The server listens on `0.0.0.0:$PORT` (default 8000). Errors are JSON (`{"error","detail"}`), never stack traces.
@@ -143,7 +143,8 @@ npm run typecheck
 - The supplier spend data is synthetic; only the financials are real.
 - H-MEM's reference engine embeds text with a deterministic hash, not a semantic model. Its value here is lineage, supersession and the audit ledger, not search quality.
 - Zetaris has no row-level writes, so the decision ledger is append-only Parquet; status changes are new rows, not updates.
-- With live data, the Watcher is triggered through `POST /run` with the changed row; there is no change-data-capture feed from Zetaris.
+- There is no change-data-capture feed from Zetaris. The Watcher runs when a change is applied through Tripwire or reported through `POST /run` with the changed row.
+- Applying a change that replaces an existing Zetaris row rewrites that table (Parquet export, then re-register), which is fine for demo-sized tables only.
 - The rule-based fallback policy is simple (fixed thresholds). It exists so the system runs without keys, not as the intended decision maker.
 - This is a hackathon build. It has not been load-tested or security-reviewed for production use.
 

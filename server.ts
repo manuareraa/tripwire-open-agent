@@ -7,7 +7,7 @@ import { buildRuntime } from "./app/runtime.js";
 import { runDecide } from "./app/orchestration/graph.js";
 import { reopenFor } from "./app/watcher.js";
 import type { Deps } from "./app/orchestration/state.js";
-import type { Decision, RunRequest, TraceEvent } from "./app/types.js";
+import type { DataGateway, Decision, RowRef, RunRequest, TraceEvent } from "./app/types.js";
 
 const rt = await buildRuntime();
 const app = new Hono();
@@ -19,6 +19,14 @@ function remember(t: Tracer) {
   while (traces.size > 50) traces.delete(traces.keys().next().value!);
 }
 const depsFor = (tracer: Tracer): Deps => ({ gateway: rt.gateway, model: rt.model, memory: rt.memory, tracer });
+
+/** Apply a bundled change file to whichever data layer is live (sample files or Zetaris tables). */
+async function applyChangeFile(file: string) {
+  if (rt.gateway === rt.sample) return rt.sample.applyChange(file);
+  const live = rt.gateway as DataGateway & { applyChange?: (f: string) => Promise<RowRef[]> };
+  if (!live.applyChange) throw new Error(`data layer ${rt.gateway.name} cannot apply change files`);
+  return live.applyChange(file);
+}
 
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
   return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(new Error(`run exceeded ${ms} ms`)), ms))]);
@@ -59,6 +67,9 @@ app.post("/run", async (c) => {
       remember(tracer);
       return c.json(toResponse(tracer.run_id, decision, { trace_file: tracer.file }));
     }
+    if (body.change_file && !rt.sample.listChangeFiles().includes(body.change_file)) {
+      return c.json({ error: "not_found", detail: `no change file ${body.change_file}` }, 404);
+    }
     // A reopen needs a decision to reopen: on a fresh server, make the baseline decision first (it is traced).
     let baseline: Decision | undefined;
     if (!rt.store.active().some((d) => d.subject_id === body.subject_id)) {
@@ -67,11 +78,7 @@ app.post("/run", async (c) => {
     }
     let changedRows = body.changed ? [body.changed] : [{ table: "supplier_spend", key: body.subject_id }];
     if (body.change_file) {
-      if (rt.gateway !== rt.sample) {
-        return c.json({ error: "live_data", detail: "change_file applies to sample data only; with Zetaris, edit the source table" }, 409);
-      }
-      if (!rt.sample.listChangeFiles().includes(body.change_file)) return c.json({ error: "not_found", detail: `no change file ${body.change_file}` }, 404);
-      const rows = await rt.sample.applyChange(body.change_file);
+      const rows = await applyChangeFile(body.change_file);
       if (!body.changed) changedRows = rows;
     }
     const reports = [];
@@ -119,18 +126,15 @@ app.post("/decisions/:id/reject", (c) => {
   return c.json({ ok: true });
 });
 
-// Demo change feed (bundled sample data): apply a change file, then the Watcher decides what to reopen.
+// Demo change feed: apply a bundled change file to the live data layer, then the Watcher decides what to reopen.
 app.get("/changes", (c) => c.json(rt.sample.listChangeFiles()));
 app.post("/changes/:file/apply", async (c) => {
   const file = c.req.param("file");
   if (!rt.sample.listChangeFiles().includes(file)) return c.json({ error: "not_found" }, 404);
-  if (rt.gateway !== rt.sample) {
-    return c.json({ error: "live_data", detail: "Change files apply to sample data only; with Zetaris, change the source table and the watcher picks it up" }, 409);
-  }
   const tracer = new Tracer();
   const deps = depsFor(tracer);
   try {
-    const rows = await rt.sample.applyChange(file);
+    const rows = await applyChangeFile(file);
     const reports = [];
     for (const r of rows) reports.push(await withTimeout(reopenFor(deps, rt.store, r), config.limits.runTimeoutMs));
     remember(tracer);
