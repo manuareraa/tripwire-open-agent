@@ -64,12 +64,20 @@ function loadTable(path: string, table: string): Row[] {
   });
 }
 
+/** Source tables that a sample folder may leave out (older fixtures have only financials and spend). */
+const OPTIONAL_TABLES: string[] = [TABLES.events, TABLES.sanctions];
+
 /** The bundled base tables (no changes applied), keyed by table name. */
 export function loadBaseTables(sampleDir: string): Record<string, Row[]> {
-  return {
+  const out: Record<string, Row[]> = {
     [TABLES.financials]: loadTable(join(sampleDir, `${TABLES.financials}.csv`), TABLES.financials),
     [TABLES.spend]: loadTable(join(sampleDir, `${TABLES.spend}.csv`), TABLES.spend),
   };
+  for (const t of OPTIONAL_TABLES) {
+    const path = join(sampleDir, `${t}.csv`);
+    out[t] = existsSync(path) ? loadTable(path, t) : [];
+  }
+  return out;
 }
 
 // ---------- helpers mirroring the SQL ----------
@@ -131,7 +139,9 @@ export class SampleDataGateway implements DataGateway {
   async health() {
     const f = this.tables[TABLES.financials].length;
     const s = this.tables[TABLES.spend].length;
-    return { ok: f > 0 && s > 0, detail: `sample data: ${f} financial rows, ${s} spend rows (SAMPLE_MODE, no keys)` };
+    const e = this.tables[TABLES.events].length;
+    const x = this.tables[TABLES.sanctions].length;
+    return { ok: f > 0 && s > 0, detail: `sample data: ${f} financial rows, ${s} spend rows, ${e} SEC 8-K events, ${x} sanctions screens (SAMPLE_MODE, no keys)` };
   }
 
   listTemplates(): TemplateSpec[] {
@@ -158,6 +168,12 @@ export class SampleDataGateway implements DataGateway {
         rows = this.tables[TABLES.spend]
           .filter((r) => r.category === p("category"))
           .sort(byNumDesc("spend_share"));
+        break;
+      case "supplier_events_recent":
+        rows = this.tables[TABLES.events].filter((r) => r.cik === p("cik")).sort(byDesc("filed_date")).slice(0, 25);
+        break;
+      case "sanctions_screen_row":
+        rows = this.tables[TABLES.sanctions].filter((r) => r.cik === p("cik"));
         break;
       case "decisions_for_supplier":
         rows = this.ledgerRows()

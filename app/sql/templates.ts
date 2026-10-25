@@ -6,6 +6,8 @@ import type { TemplateSpec } from "../types.js";
 export const TABLES = {
   financials: "supplier_financials",
   spend: "supplier_spend",
+  events: "supplier_events",
+  sanctions: "sanctions_screen",
   decisions: "tripwire_decisions",
 } as const;
 
@@ -13,6 +15,8 @@ export const TABLES = {
 export const ROW_KEY: Record<string, string> = {
   supplier_financials: "cik",
   supplier_spend: "supplier_id",
+  supplier_events: "cik",
+  sanctions_screen: "cik",
   tripwire_decisions: "decision_id",
 };
 
@@ -44,6 +48,20 @@ export const TEMPLATES: TemplateSpec[] = [
     table: TABLES.spend,
     params: ["category"],
     sql: `SELECT supplier_id, spend_share, lead_time_weeks FROM {{spend}} WHERE category = {{category}} ORDER BY spend_share DESC`,
+  },
+  {
+    id: "supplier_events_recent",
+    description: "Material-event filings (SEC 8-K) for one supplier in the last 12 months, newest first",
+    table: TABLES.events,
+    params: ["cik"],
+    sql: `SELECT cik, filed_date, form, items, accession, url FROM {{events}} WHERE cik = {{cik}} ORDER BY filed_date DESC LIMIT 25`,
+  },
+  {
+    id: "sanctions_screen_row",
+    description: "The supplier's name screened against the US Treasury OFAC sanctions (SDN) list",
+    table: TABLES.sanctions,
+    params: ["cik"],
+    sql: `SELECT cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url FROM {{sanctions}} WHERE cik = {{cik}}`,
   },
   {
     id: "decisions_for_supplier",

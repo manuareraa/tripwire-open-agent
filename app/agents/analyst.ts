@@ -13,6 +13,8 @@ export function paramsFor(templateId: string, s: RunState): Record<string, strin
     case "supplier_financials_latest": return spend?.cik !== undefined ? { cik: String(spend.cik) } : undefined;
     case "supplier_financials_history": return spend?.cik !== undefined ? { cik: String(spend.cik), periods: 5 } : undefined;
     case "category_concentration": return spend?.category ? { category: String(spend.category) } : undefined;
+    case "supplier_events_recent":
+    case "sanctions_screen_row": return spend?.cik !== undefined ? { cik: String(spend.cik) } : undefined;
   }
   return undefined;
 }

@@ -1,5 +1,6 @@
 // Watcher (code, not a model): when a source row changes, ask memory which decisions derive from it,
 // re-check only those decisions' tripwires, and reopen only the ones that fire.
+import { ORDER as PLAN_ORDER } from "./agents/planner.js";
 import { gather } from "./agents/analyst.js";
 import { loadCandidate } from "./agents/backup.js";
 import { newState, runDecide } from "./orchestration/graph.js";
@@ -44,7 +45,7 @@ export async function reopenFor(deps: Deps, store: DecisionStore, changed: RowRe
     const old = store.get(id)!;
     const s = newState(t.run_id, old.subject_id, "tripwire check");
     s.decision_id = old.decision_id;
-    s.plan = ["supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration"];
+    s.plan = [...PLAN_ORDER];
     await gather(deps, s);
     const now = new Map(s.metrics.map((m) => [m.metric, m.value]));
     if (old.backup && old.tripwires.some((tw) => tw.metric.startsWith("backup_"))) {

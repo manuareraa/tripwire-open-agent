@@ -1,0 +1,14 @@
+{
+  "description": "Real SEC 8-K for DOW filed 2026-01-29 (items: 2.05 exit or restructuring costs; 8.01 other events), held back from the base sample so the demo can show it arriving. https://www.sec.gov/Archives/edgar/data/1751788/000175178826000009/dow-20260126.htm",
+  "synthetic": false,
+  "table": "supplier_events",
+  "key": "1751788",
+  "row": {
+    "cik": "1751788",
+    "filed_date": "2026-01-29",
+    "form": "8-K",
+    "items": "2.05 8.01",
+    "accession": "0001751788-26-000009",
+    "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000009/dow-20260126.htm"
+  }
+}

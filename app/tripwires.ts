@@ -44,7 +44,9 @@ export function compileTripwires(decisionId: string, drafts: TripwireDraft[], me
 
 /** Rule-based tripwires: a margin past today's value in the risky direction. Always passes review. */
 export function defaultTripwires(metrics: MetricValue[]): TripwireDraft[] {
-  const prefer = ["current_ratio", "debt_to_equity", "spend_share", "revenue_change_pct", "gross_margin", "category_alternatives"];
+  // One financial line, one per real-time source (8-K events, sanctions), then exposure: each source a decision
+  // reads gets a tripwire, so a change in any one of them can reopen it.
+  const prefer = ["current_ratio", "debt_to_equity", "risk_events_12m", "sanctions_matches", "spend_share", "revenue_change_pct", "gross_margin", "category_alternatives"];
   const out: TripwireDraft[] = [];
   for (const name of prefer) {
     const m = metrics.find((x) => x.metric === name);
@@ -59,10 +61,12 @@ export function defaultTripwires(metrics: MetricValue[]): TripwireDraft[] {
       case "revenue_change_pct": threshold = Math.min(-10, v - 10); break;
       case "gross_margin": threshold = v * 0.8; break;
       case "category_alternatives": if (v < 1) continue; threshold = 1; break;
+      case "risk_events_12m": threshold = v; break;
+      case "sanctions_matches": if (v > 0) continue; threshold = 0; break;
       default: continue;
     }
     out.push({ metric: name, op: def.worseWhen === "lower" ? "<" : ">", threshold: round(threshold) });
-    if (out.length === 3) break;
+    if (out.length === 4) break;
   }
   return out;
 }

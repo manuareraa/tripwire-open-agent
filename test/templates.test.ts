@@ -29,6 +29,16 @@ describe("renderTemplate", () => {
         params: { supplier_id: "SUP-99" },
         expectInSql: ["FROM tripwire_decisions", "supplier_id = 'SUP-99'"],
       },
+      {
+        id: "supplier_events_recent",
+        params: { cik: "1751788" },
+        expectInSql: ["FROM supplier_events", "cik = '1751788'", "ORDER BY filed_date DESC"],
+      },
+      {
+        id: "sanctions_screen_row",
+        params: { cik: "1751788" },
+        expectInSql: ["FROM sanctions_screen", "cik = '1751788'"],
+      },
     ];
 
     expect(cases.map((c) => c.id).sort()).toEqual(TEMPLATES.map((t) => t.id).sort());

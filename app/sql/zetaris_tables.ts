@@ -34,6 +34,25 @@ export const SCHEMAS: Record<string, [string, ColType][]> = {
     ["contract_end", "STRING"],
     ["updated_at", "STRING"],
   ],
+  [TABLES.events]: [
+    ["cik", "STRING"],
+    ["filed_date", "STRING"],
+    ["form", "STRING"],
+    ["items", "STRING"],
+    ["accession", "STRING"],
+    ["url", "STRING"],
+  ],
+  [TABLES.sanctions]: [
+    ["cik", "STRING"],
+    ["name", "STRING"],
+    ["list", "STRING"],
+    ["list_as_of", "STRING"],
+    ["list_entries", "DOUBLE"],
+    ["match_count", "DOUBLE"],
+    ["matches", "STRING"],
+    ["screened_on", "STRING"],
+    ["source_url", "STRING"],
+  ],
   // BUILD-PACK columns, plus `payload` (full Decision JSON) and `written_at` (ledger order).
   [TABLES.decisions]: [
     ["decision_id", "STRING"],

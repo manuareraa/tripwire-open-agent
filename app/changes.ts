@@ -19,18 +19,24 @@ export interface ChangeFile {
 export const IDENTITY: Record<string, string[]> = {
   [TABLES.spend]: ["supplier_id"],
   [TABLES.financials]: ["cik", "period_end"],
+  [TABLES.events]: ["cik", "accession"],
+  [TABLES.sanctions]: ["cik"],
 };
 
 /** Numeric columns per table; everything else is a string. Empty cells are null. */
 export const NUMERIC: Record<string, Set<string>> = {
   [TABLES.financials]: new Set(["revenue", "gross_margin", "current_ratio", "debt_to_equity"]),
   [TABLES.spend]: new Set(["spend_share", "lead_time_weeks", "open_po_value"]),
+  [TABLES.events]: new Set(),
+  [TABLES.sanctions]: new Set(["list_entries", "match_count"]),
 };
 
-/** Every column of the two changeable tables, in table order. */
+/** Every column of each changeable table, in table order. */
 export const COLUMNS: Record<string, string[]> = {
   [TABLES.financials]: ["cik", "ticker", "name", "sic", "period_end", "revenue", "gross_margin", "current_ratio", "debt_to_equity", "source_url"],
   [TABLES.spend]: ["supplier_id", "cik", "category", "spend_share", "lead_time_weeks", "open_po_value", "contract_end", "updated_at"],
+  [TABLES.events]: ["cik", "filed_date", "form", "items", "accession", "url"],
+  [TABLES.sanctions]: ["cik", "name", "list", "list_as_of", "list_entries", "match_count", "matches", "screened_on", "source_url"],
 };
 
 /** Numbers stay numbers, "" and null become null, everything else a string. */
@@ -168,6 +174,10 @@ export async function changeCatalog(
       if (c === first) {
         if (c.table === TABLES.spend) {
           before = in_data ? base[TABLES.spend].find((r) => r.supplier_id === c.key) ?? current : current;
+        } else if (c.table === TABLES.sanctions) {
+          before = in_data ? (base[TABLES.sanctions] ?? []).find((r) => String(r.cik) === c.key) ?? current : current;
+        } else if (c.table === TABLES.events) {
+          before = undefined;
         } else {
           const hist = (await gw.runTemplate("supplier_financials_history", { cik: c.key, periods: 12 })).rows;
           before = hist.find((r) => String(r.period_end) < String(c.row.period_end));
@@ -193,6 +203,10 @@ export async function changeCatalog(
 /** The live row a change would replace, read through the data layer's own templates. */
 async function currentRow(gw: DataGateway, c: ChangeFile): Promise<Row | undefined> {
   if (c.table === TABLES.spend) return (await gw.runTemplate("supplier_spend_row", { supplier_id: c.key })).rows[0];
+  if (c.table === TABLES.sanctions) return (await gw.runTemplate("sanctions_screen_row", { cik: c.key })).rows[0];
+  if (c.table === TABLES.events) {
+    return (await gw.runTemplate("supplier_events_recent", { cik: c.key })).rows.find((r) => String(r.accession) === String(c.row.accession));
+  }
   const hist = (await gw.runTemplate("supplier_financials_history", { cik: c.key, periods: 12 })).rows;
   return hist.find((r) => String(r.period_end) === String(c.row.period_end));
 }

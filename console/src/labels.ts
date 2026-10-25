@@ -12,6 +12,8 @@ export const METRIC: Record<string, [string, "ratio" | "share" | "pct" | "weeks"
   spend_share: ["Share of our category spend", "share"],
   lead_time_weeks: ["Lead time", "weeks"],
   category_alternatives: ["Other suppliers in the category", "count"],
+  risk_events_12m: ["Material-risk 8-K filings, last 12 months", "count"],
+  sanctions_matches: ["Possible OFAC sanctions name matches", "count"],
   backup_current_ratio: ["Backup's current ratio", "ratio"],
   backup_debt_to_equity: ["Backup's liabilities to equity", "ratio"],
   backup_lead_time_weeks: ["Backup's lead time", "weeks"],
@@ -35,6 +37,8 @@ export const METRIC_TIP: Dict = {
   spend_share: "Of everything we spend in this category, the share that goes to this supplier. 25% or more counts as heavy dependence.",
   lead_time_weeks: "Weeks from placing an order to delivery. 12 weeks or more makes switching or recovering slow.",
   category_alternatives: "How many other suppliers we already buy this category from. Zero means there is nowhere to move the work.",
+  risk_events_12m: "Form 8-K filings to the SEC in the last 12 months that report a serious event: restructuring, impairment, debt acceleration, bankruptcy, a cybersecurity incident, an auditor change, delisting or change of control. Read from SEC EDGAR, which updates the same day a company files.",
+  sanctions_matches: "How many names on the US Treasury OFAC sanctions list (SDN list and its aliases) match this supplier's legal name. A match is a candidate for a compliance officer to check, not a finding. Zero means no listed name matches.",
   backup_current_ratio: "The backup supplier's current assets divided by current liabilities, from its latest SEC filing. Below 1, the backup is no longer a safe place to move work.",
   backup_debt_to_equity: "The backup supplier's total liabilities divided by equity, from its latest SEC filing. Above 3, the backup is no longer a safe place to move work.",
   backup_lead_time_weeks: "Weeks from order to delivery at the backup supplier: how fast it could take on the work.",
@@ -45,9 +49,11 @@ export const TEMPLATE: Dict = {
   supplier_financials_latest: "latest SEC financials",
   supplier_financials_history: "financial history",
   category_concentration: "category spend split",
+  supplier_events_recent: "recent SEC 8-K filings",
+  sanctions_screen_row: "OFAC sanctions screen",
   decisions_for_supplier: "past decisions",
 };
-export const TABLE: Dict = { supplier_spend: "spend table", supplier_financials: "financials table", tripwire_decisions: "decision ledger" };
+export const TABLE: Dict = { supplier_spend: "spend table", supplier_financials: "financials table", supplier_events: "SEC 8-K events", sanctions_screen: "OFAC sanctions screen", tripwire_decisions: "decision ledger" };
 export const MODEL_TIER: Dict = { small: "fast model", reasoning: "reasoning model", guard: "safety guard model" };
 export const DATA_SRC: Dict = { zetaris: "live data in Zetaris", sample: "the bundled sample data" };
 export const GUARD: Dict = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };

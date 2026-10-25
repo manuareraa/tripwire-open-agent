@@ -34,6 +34,13 @@ SAMPLE_MODE (no keys) reads these files through `app/adapters/sample_data.ts`. T
 ### Licence
 SEC EDGAR data is US government work and is in the public domain. See the SEC's [website policies](https://www.sec.gov/privacy) and [fair access rules](https://www.sec.gov/os/accessing-edgar-data). No endorsement by the SEC or any company is implied.
 
+## Real data: SEC 8-K events and the OFAC sanctions screen
+Built by `npx tsx scripts/fetch_sources.ts` (add `--refresh` to download again). Raw downloads are cached in `data/cache/`, which is gitignored.
+
+- `supplier_events.csv`: every Form 8-K and 8-K/A each supplier filed in the 365 days before the fetch, from SEC EDGAR's submissions API (`data.sec.gov/submissions/CIK##########.json`). Columns: `cik, filed_date, form, items, accession, url`. `items` holds the 8-K item numbers, separated by spaces. The metric `risk_events_12m` counts filings that carry a serious item: 1.02, 1.03, 1.05, 2.04, 2.05, 2.06, 3.01, 4.01, 4.02 or 5.01 (`RISK_ITEMS` in `app/metrics.ts`). One real filing is held back for the demo (see change file 04).
+- `sanctions_screen.csv`: each supplier's legal name screened against the US Treasury OFAC Specially Designated Nationals list (`sdn.csv`) and its aliases (`alt.csv`). Columns: `cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url`. `list_as_of` is the list file's Last-Modified date. Names are compared after removing punctuation and legal-form words (Inc, Corp, LLC and so on). One-word names need an exact match, so "Dow" does not hit every listed name containing "Dow". **Every supplier currently has 0 matches.** A match would be a candidate for a compliance officer to check, never a finding, and no sanctions hit has been invented for a real company.
+- Licence: SEC EDGAR and OFAC data are US government works, in the public domain. SEC asks automated clients to send a User-Agent with contact details (`SEC_USER_AGENT`) and to stay under 10 requests per second; the script makes at most 5 per second.
+
 ## Synthetic data
 `supplier_spend.csv` and change files 02 and 03 are **made up** for the demo. They describe a fictional buyer's relationship with each company. No real contract, price or purchase order is implied.
 - `spend_share`: the supplier's share of **our spend in its category** (each category sums to 1.00).
@@ -46,7 +53,8 @@ SEC EDGAR data is US government work and is in the public domain. See the SEC's 
   The agents decide; this table does not encode answers.
 
 ## Change files (selective reopen demo)
-Each file is `{description, synthetic, table, key, row}` (or an array of them). `key` is the row key from `ROW_KEY` in `app/sql/templates.ts`: `cik` for financials, `supplier_id` for spend. The adapter's `applyChange(file)` upserts the row and logs it in `ledger/applied_changes.jsonl`. Financial rows match on (cik, period_end), so file 01 adds a quarter. `changesSince(marker)` then reports the changed rows to the Watcher.
+Each file is `{description, synthetic, table, key, row}` (or an array of them). `key` is the row key from `ROW_KEY` in `app/sql/templates.ts`: `cik` for financials, 8-K events and the sanctions screen; `supplier_id` for spend. The adapter's `applyChange(file)` upserts the row and logs it in `ledger/applied_changes.jsonl`. Financial rows match on (cik, period_end), so file 01 adds a quarter. `changesSince(marker)` then reports the changed rows to the Watcher.
 
 - `01_new_quarter.json` is real: Vishay's 10-Q for the quarter ended 2026-07-04. Its current ratio falls from 2.64 to 1.80. In the same filing, noncurrent long-term debt drops by about $750M and current liabilities rise by about $800M.
 - `02` and `03` are synthetic.
+- `04_new_8k.json` is real: Dow Inc.'s 8-K filed 2026-01-29 (item 2.05, exit or restructuring costs). It is held back from `supplier_events.csv` so the demo can show it arriving. Applying it takes Dow's `risk_events_12m` from 0 to 1, which fires that decision's tripwire and reopens only SUP-05; the other 19 decisions are left alone (`test/fragments.test.ts`).

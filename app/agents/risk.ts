@@ -20,17 +20,21 @@ export function assess(deps: Deps, s: RunState): void {
   const share = v.get("spend_share");
   const alts = v.get("category_alternatives");
   const lead = v.get("lead_time_weeks");
+  const events = v.get("risk_events_12m");
+  const sanctions = v.get("sanctions_matches");
   if (cr !== undefined && cr < 1) distress.push(`current ratio ${cr} < 1`);
   if (de !== undefined && de > 3) distress.push(`liabilities/equity ${de} > 3`);
   if (gm !== undefined && gm < 0.1) distress.push(`gross margin ${gm} < 0.1`);
   if (rev !== undefined && rev < -10) distress.push(`revenue change ${rev}% < -10%`);
+  if (events !== undefined && events >= 1) distress.push(`${events} material-risk 8-K filing${events === 1 ? "" : "s"} in 12 months`);
   if (share !== undefined && share >= 0.25) exposure.push(`spend share ${share} ≥ 0.25`);
   if (alts !== undefined && alts === 0) exposure.push(`no alternative supplier in category`);
   if (lead !== undefined && lead >= 12) exposure.push(`lead time ${lead} weeks ≥ 12`);
 
-  const flags = [...distress, ...exposure];
+  const compliance = sanctions !== undefined && sanctions >= 1 ? [`${sanctions} possible OFAC sanctions name match${sanctions === 1 ? "" : "es"}`] : [];
+  const flags = [...compliance, ...distress, ...exposure];
   let level: RiskLevel = "low";
-  if ((distress.length && exposure.length) || distress.length >= 2) level = "high";
+  if (compliance.length || (distress.length && exposure.length) || distress.length >= 2) level = "high";
   else if (flags.length) level = "medium";
   if (s.staleClaims.length && level === "low") {
     level = "medium";
@@ -41,6 +45,7 @@ export function assess(deps: Deps, s: RunState): void {
     s.escalated = true;
     s.escalationReasons.push(`high risk: ${flags.join("; ")}`);
   }
+  if (compliance.length) s.escalationReasons.push("a possible sanctions match must be cleared by a compliance officer before any new order");
   deps.tracer.emit({
     decision_id: s.decision_id, agent_name: AGENT, action: "assess_risk", event: level === "high" ? "escalation" : "handoff",
     target_agent: "Decider", status: "success",

@@ -216,8 +216,11 @@ export class ZetarisGateway implements DataGateway {
   readonly client: ZetarisClient;
   private readonly tracer?: Tracer;
   private readonly now: () => Date;
-  /** Per-CIK hash of financial rows, for detecting new or edited filings (financials have no updated_at). */
-  private finSnapshot: Map<string, string> | null = null;
+  /**
+   * Per-table, per-CIK hash of the source rows, for detecting new or edited rows in sources that have no
+   * updated_at (SEC financials, 8-K events, the sanctions screen).
+   */
+  private snapshots = new Map<string, Map<string, string>>();
 
   constructor(opts: ZetarisGatewayOptions = {}) {
     this.client = opts.client ?? ZetarisClient.fromEnv();
@@ -430,17 +433,31 @@ export class ZetarisGateway implements DataGateway {
     }
 
     const fin = await this.run("changes_since:financials", financialsSnapshotSql());
+    this.diffSnapshot(TABLES.financials, fin.rows, changes);
+    // The 8-K and sanctions fragments are optional: a workspace set up before they existed simply has no such table.
+    for (const table of [TABLES.events, TABLES.sanctions]) {
+      let rows: Record<string, string | null>[];
+      try {
+        rows = (await this.run(`changes_since:${table}`, selectAllSql(table))).rows;
+      } catch {
+        continue;
+      }
+      this.diffSnapshot(table, rows, changes);
+    }
+    return { changes, marker: next };
+  }
+
+  /** Hash rows per CIK; every CIK whose hash differs from the previous call (or is new) is a change. */
+  private diffSnapshot(table: string, rows: Record<string, string | null>[], changes: RowRef[]): void {
     const byCik = new Map<string, Record<string, unknown>[]>();
-    for (const r of fin.rows.map(typeRow)) {
+    for (const r of rows.map(typeRow)) {
       const cik = String(r.cik);
       byCik.set(cik, [...(byCik.get(cik) ?? []), r]);
     }
-    const snap = new Map([...byCik].map(([cik, rows]) => [cik, canonicalHash(rows)]));
-    if (this.finSnapshot) {
-      for (const [cik, h] of snap) if (this.finSnapshot.get(cik) !== h) changes.push({ table: TABLES.financials, key: cik });
-    }
-    this.finSnapshot = snap;
-    return { changes, marker: next };
+    const snap = new Map([...byCik].map(([cik, rs]) => [cik, canonicalHash(rs)]));
+    const prev = this.snapshots.get(table);
+    if (prev) for (const [cik, h] of snap) if (prev.get(cik) !== h) changes.push({ table, key: cik });
+    this.snapshots.set(table, snap);
   }
 }
 

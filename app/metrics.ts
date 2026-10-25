@@ -18,7 +18,20 @@ export const METRICS: MetricDef[] = [
   { name: "spend_share", label: "Share of our category spend", template: "supplier_spend_row", worseWhen: "higher", unit: "share" },
   { name: "lead_time_weeks", label: "Lead time", template: "supplier_spend_row", worseWhen: "higher", unit: "weeks" },
   { name: "category_alternatives", label: "Other suppliers in the category", template: "category_concentration", worseWhen: "lower", unit: "count" },
+  { name: "risk_events_12m", label: "Material-risk 8-K filings in 12 months", template: "supplier_events_recent", worseWhen: "higher", unit: "count" },
+  { name: "sanctions_matches", label: "Name matches on the OFAC sanctions list", template: "sanctions_screen_row", worseWhen: "higher", unit: "count" },
 ];
+
+/**
+ * 8-K items that signal distress or a break in the relationship (SEC Form 8-K item numbers):
+ * 1.02 material agreement terminated, 1.03 bankruptcy, 1.05 cybersecurity incident, 2.04 debt acceleration,
+ * 2.05 exit or restructuring costs, 2.06 material impairment, 3.01 delisting notice, 4.01 auditor change,
+ * 4.02 prior financials unreliable, 5.01 change in control. Routine items (results, votes, officer changes) are not counted.
+ */
+export const RISK_ITEMS = ["1.02", "1.03", "1.05", "2.04", "2.05", "2.06", "3.01", "4.01", "4.02", "5.01"];
+
+/** The risk items in one event row's space-separated `items`. */
+export const riskItemsOf = (items: unknown): string[] => String(items ?? "").split(/[\s,]+/).filter((x) => RISK_ITEMS.includes(x));
 
 /** The backup supplier's numbers. Kept apart from METRICS: the Risk Officer and the Decider never see them. */
 export const BACKUP_METRICS: MetricDef[] = [
@@ -65,6 +78,10 @@ export function computeMetrics(results: Record<string, QueryResult>, subjectId: 
     const oldest = num(sorted[sorted.length - 1].revenue);
     if (latest !== undefined && oldest) push("revenue_change_pct", ((latest - oldest) / Math.abs(oldest)) * 100, hist.evidence);
   }
+  const ev = results.supplier_events_recent;
+  if (ev) push("risk_events_12m", ev.rows.filter((r) => riskItemsOf(r.items).length > 0).length, ev.evidence);
+  const sc = results.sanctions_screen_row;
+  if (sc?.rows[0]) push("sanctions_matches", num(sc.rows[0].match_count), sc.evidence);
   const cat = results.category_concentration;
   if (cat) {
     push("category_alternatives", cat.rows.filter((r) => r.supplier_id !== subjectId).length, cat.evidence);

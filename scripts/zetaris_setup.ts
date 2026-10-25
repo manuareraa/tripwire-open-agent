@@ -7,6 +7,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ZetarisClient, ZetarisError } from "../app/adapters/zetaris.js";
+import { IDENTITY } from "../app/changes.js";
 import { TABLES } from "../app/sql/templates.js";
 import {
   SCHEMAS,
@@ -106,6 +107,13 @@ async function init(dataDir: string, resetLedger: boolean) {
   const dbs = await sql(showDatabasesSql());
   if (!dbs.rows.some((r) => r.name?.toLowerCase() === ZETARIS_DB)) await sql(createDatabaseSql());
   for (const table of [TABLES.financials, TABLES.spend]) await writeTable(table, loadRows(dataDir, table));
+  // Optional real-time fragments (SEC 8-K events, OFAC screen), built by scripts/fetch_sources.ts. No fallback rows:
+  // a missing file means the source is not set up, never invented.
+  for (const table of [TABLES.events, TABLES.sanctions]) {
+    const file = join(dataDir, `${table}.csv`);
+    if (existsSync(file)) await writeTable(table, parseCsv(readFileSync(file, "utf8")));
+    else console.log(`(no ${file}; ${table} not created)`);
+  }
 
   let ledgerOk = false;
   try {
@@ -120,11 +128,6 @@ async function init(dataDir: string, resetLedger: boolean) {
   }
   await status();
 }
-
-const IDENTITY: Record<string, string[]> = {
-  [TABLES.spend]: ["supplier_id"],
-  [TABLES.financials]: ["cik", "period_end"],
-};
 
 /** Apply a change file: a new row is appended; a row with the same identity replaces the old one (table rewritten). */
 async function apply(file: string) {

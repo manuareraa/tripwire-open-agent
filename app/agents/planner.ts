@@ -4,8 +4,12 @@ import { extractJson } from "../adapters/model.js";
 import { callModel, type Deps, type RunState } from "../orchestration/state.js";
 
 const AGENT = "Planner";
-const ORDER = ["supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration"];
-// A keep/dual-source/exit call needs all four views: without history there is no trend, without the category no alternatives.
+export const ORDER = [
+  "supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration",
+  "supplier_events_recent", "sanctions_screen_row",
+];
+// A keep/dual-source/exit call needs every view: without history there is no trend, without the category no
+// alternatives, without the 8-K feed no material events, without the sanctions screen no compliance check.
 const REQUIRED = ORDER;
 
 export async function plan(deps: Deps, s: RunState): Promise<string[]> {
