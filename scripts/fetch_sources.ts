@@ -32,17 +32,18 @@ async function get(url: string): Promise<{ body: string; lastModified?: string }
   return { body: await res.text(), lastModified: res.headers.get("last-modified") ?? undefined };
 }
 
-async function cached(name: string, url: string): Promise<{ body: string; lastModified?: string }> {
+async function cached(name: string, url: string): Promise<{ body: string; lastModified?: string; fetchedAt?: string }> {
   const path = join(CACHE, name);
   const meta = `${path}.meta.json`;
   if (!REFRESH && existsSync(path)) {
     const m = existsSync(meta) ? JSON.parse(await readFile(meta, "utf8")) : {};
-    return { body: await readFile(path, "utf8"), lastModified: m.lastModified };
+    return { body: await readFile(path, "utf8"), lastModified: m.lastModified, fetchedAt: m.fetchedAt };
   }
   const r = await get(url);
+  const fetchedAt = new Date().toISOString();
   await writeFile(path, r.body);
-  await writeFile(meta, JSON.stringify({ url, lastModified: r.lastModified, fetchedAt: new Date().toISOString() }));
-  return r;
+  await writeFile(meta, JSON.stringify({ url, lastModified: r.lastModified, fetchedAt }));
+  return { ...r, fetchedAt };
 }
 
 // ---------- CSV ----------
@@ -75,6 +76,24 @@ const csvCell = (v: unknown) => {
 };
 const toCsv = (cols: string[], rows: Record<string, unknown>[]) =>
   [cols.join(","), ...rows.map((r) => cols.map((c) => csvCell(r[c])).join(","))].join("\n") + "\n";
+
+// ---------- source status ----------
+
+export interface SourceStatusRow { source: string; system: string; fetched_on: string; as_of: string; row_count: number; url: string }
+const STATUS_COLS = ["source", "system", "fetched_on", "as_of", "row_count", "url"];
+
+/** Record when each source was fetched and what date its contents are current to, merging by source. */
+export async function writeSourceStatus(rows: SourceStatusRow[], dir = OUT): Promise<void> {
+  const file = join(dir, "source_status.csv");
+  const merged = new Map<string, Record<string, unknown>>();
+  if (existsSync(file)) {
+    const [h, ...body] = parseCsv(await readFile(file, "utf8"));
+    for (const r of body) merged.set(r[h.indexOf("source")], Object.fromEntries(h.map((c, i) => [c, r[i]])));
+  }
+  for (const r of rows) merged.set(r.source, { ...r });
+  const sorted = [...merged.values()].sort((a, b) => String(a.source).localeCompare(String(b.source)));
+  await writeFile(file, toCsv(STATUS_COLS, sorted));
+}
 
 // ---------- name screening ----------
 
@@ -125,9 +144,12 @@ async function main() {
 
   // SEC 8-K events
   const events: Record<string, unknown>[] = [];
+  const pulls: string[] = [];
   for (const cik of ciks) {
     const cik10 = cik.padStart(10, "0");
-    const sub = JSON.parse((await cached(`submissions_${cik10}.json`, `https://data.sec.gov/submissions/CIK${cik10}.json`)).body) as {
+    const got = await cached(`submissions_${cik10}.json`, `https://data.sec.gov/submissions/CIK${cik10}.json`);
+    if (got.fetchedAt) pulls.push(got.fetchedAt.slice(0, 10));
+    const sub = JSON.parse(got.body) as {
       filings: { recent: { form: string[]; filingDate: string[]; items: string[]; accessionNumber: string[]; primaryDocument: string[] } };
     };
     const r = sub.filings.recent;
@@ -141,6 +163,8 @@ async function main() {
       });
     }
   }
+  // The feed is only as current as its oldest per-company pull.
+  const eventsFetchedOn = pulls.sort()[0] ?? fetchedOn;
   events.sort((a, b) => String(a.cik).localeCompare(String(b.cik)) || String(b.filed_date).localeCompare(String(a.filed_date)));
 
   let held: Record<string, unknown> | undefined;
@@ -168,17 +192,23 @@ async function main() {
   for (const r of parseCsv(sdn.body)) if (r[1]) listed.push(r[1]);
   for (const r of parseCsv(alt.body)) if (r[3]) listed.push(r[3]);
   const entries = parseCsv(sdn.body).length;
+  const sdnFetchedOn = sdn.fetchedAt?.slice(0, 10) ?? fetchedOn;
   const asOf = sdn.lastModified ? new Date(sdn.lastModified).toISOString().slice(0, 10) : fetchedOn;
   const screen = ciks.map((cik) => {
     const name = names.get(cik)?.name ?? "";
     const hits = [...new Set(listed.filter((l) => namesMatch(name, l)))];
     return {
       cik, name, list: "OFAC SDN", list_as_of: asOf, list_entries: entries, match_count: hits.length,
-      matches: hits.slice(0, 5).join("; "), screened_on: fetchedOn, source_url: SDN_URL,
+      matches: hits.slice(0, 5).join("; "), screened_on: sdnFetchedOn, source_url: SDN_URL,
     };
   });
   const SCREEN_COLS = ["cik", "name", "list", "list_as_of", "list_entries", "match_count", "matches", "screened_on", "source_url"];
   await writeFile(join(OUT, "sanctions_screen.csv"), toCsv(SCREEN_COLS, screen));
+
+  await writeSourceStatus([
+    { source: "supplier_events", system: "SEC EDGAR 8-K filings (submissions API)", fetched_on: eventsFetchedOn, as_of: eventsFetchedOn, row_count: events.length, url: "https://data.sec.gov/submissions/" },
+    { source: "sanctions_screen", system: "US Treasury OFAC SDN list", fetched_on: sdnFetchedOn, as_of: asOf, row_count: entries, url: SDN_URL },
+  ]);
 
   console.log(`${events.length} 8-K events since ${since} for ${ciks.length} suppliers${held ? ` (+1 held back: ${held.accession} ${held.filed_date})` : ""}`);
   console.log(`OFAC SDN as of ${asOf}: ${entries} entries + aliases; ${screen.filter((s) => s.match_count > 0).length} suppliers with a name match`);

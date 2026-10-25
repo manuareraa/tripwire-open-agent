@@ -107,9 +107,9 @@ async function init(dataDir: string, resetLedger: boolean) {
   const dbs = await sql(showDatabasesSql());
   if (!dbs.rows.some((r) => r.name?.toLowerCase() === ZETARIS_DB)) await sql(createDatabaseSql());
   for (const table of [TABLES.financials, TABLES.spend]) await writeTable(table, loadRows(dataDir, table));
-  // Optional real-time fragments (SEC 8-K events, OFAC screen), built by scripts/fetch_sources.ts. No fallback rows:
-  // a missing file means the source is not set up, never invented.
-  for (const table of [TABLES.events, TABLES.sanctions]) {
+  // Optional real-time fragments (SEC 8-K events, OFAC screen) and the per-source fetch log, built by
+  // scripts/fetch_sources.ts. No fallback rows: a missing file means the source is not set up, never invented.
+  for (const table of [TABLES.events, TABLES.sanctions, TABLES.status]) {
     const file = join(dataDir, `${table}.csv`);
     if (existsSync(file)) await writeTable(table, parseCsv(readFileSync(file, "utf8")));
     else console.log(`(no ${file}; ${table} not created)`);

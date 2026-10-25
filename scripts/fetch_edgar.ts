@@ -4,6 +4,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { writeSourceStatus } from "./fetch_sources.js";
 
 const UA = process.env.SEC_USER_AGENT || "Tripwire hackathon demo manuareraa@gmail.com";
 const ROOT = new URL("..", import.meta.url).pathname;
@@ -230,6 +231,11 @@ async function main() {
     };
     await writeFile(join(OUT, "changes", "01_new_quarter.json"), JSON.stringify(change, null, 2) + "\n");
   }
+  const latestEnd = all.map((r) => r.period_end).sort().at(-1) ?? "";
+  await writeSourceStatus([{
+    source: "supplier_financials", system: "SEC EDGAR XBRL company facts", fetched_on: new Date().toISOString().slice(0, 10),
+    as_of: latestEnd, row_count: all.length, url: "https://data.sec.gov/api/xbrl/companyfacts/",
+  }]);
   console.log(`wrote ${all.length} rows (fetched ${new Date().toISOString()}, User-Agent "${UA}")`);
 }
 

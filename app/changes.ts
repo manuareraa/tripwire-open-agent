@@ -21,6 +21,7 @@ export const IDENTITY: Record<string, string[]> = {
   [TABLES.financials]: ["cik", "period_end"],
   [TABLES.events]: ["cik", "accession"],
   [TABLES.sanctions]: ["cik"],
+  [TABLES.status]: ["source"],
 };
 
 /** Numeric columns per table; everything else is a string. Empty cells are null. */
@@ -29,6 +30,7 @@ export const NUMERIC: Record<string, Set<string>> = {
   [TABLES.spend]: new Set(["spend_share", "lead_time_weeks", "open_po_value"]),
   [TABLES.events]: new Set(),
   [TABLES.sanctions]: new Set(["list_entries", "match_count"]),
+  [TABLES.status]: new Set(["row_count"]),
 };
 
 /** Every column of each changeable table, in table order. */
@@ -37,6 +39,7 @@ export const COLUMNS: Record<string, string[]> = {
   [TABLES.spend]: ["supplier_id", "cik", "category", "spend_share", "lead_time_weeks", "open_po_value", "contract_end", "updated_at"],
   [TABLES.events]: ["cik", "filed_date", "form", "items", "accession", "url"],
   [TABLES.sanctions]: ["cik", "name", "list", "list_as_of", "list_entries", "match_count", "matches", "screened_on", "source_url"],
+  [TABLES.status]: ["source", "system", "fetched_on", "as_of", "row_count", "url"],
 };
 
 /** Numbers stay numbers, "" and null become null, everything else a string. */

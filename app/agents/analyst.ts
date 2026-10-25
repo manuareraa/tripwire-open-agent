@@ -15,6 +15,7 @@ export function paramsFor(templateId: string, s: RunState): Record<string, strin
     case "category_concentration": return spend?.category ? { category: String(spend.category) } : undefined;
     case "supplier_events_recent":
     case "sanctions_screen_row": return spend?.cik !== undefined ? { cik: String(spend.cik) } : undefined;
+    case "source_status": return {};
   }
   return undefined;
 }

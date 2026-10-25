@@ -434,8 +434,8 @@ export class ZetarisGateway implements DataGateway {
 
     const fin = await this.run("changes_since:financials", financialsSnapshotSql());
     this.diffSnapshot(TABLES.financials, fin.rows, changes);
-    // The 8-K and sanctions fragments are optional: a workspace set up before they existed simply has no such table.
-    for (const table of [TABLES.events, TABLES.sanctions]) {
+    // The 8-K, sanctions and source-status tables are optional: a workspace set up before they existed has none.
+    for (const table of [TABLES.events, TABLES.sanctions, TABLES.status]) {
       let rows: Record<string, string | null>[];
       try {
         rows = (await this.run(`changes_since:${table}`, selectAllSql(table))).rows;
@@ -447,16 +447,17 @@ export class ZetarisGateway implements DataGateway {
     return { changes, marker: next };
   }
 
-  /** Hash rows per CIK; every CIK whose hash differs from the previous call (or is new) is a change. */
+  /** Hash rows per row key (CIK, or source name); every key whose hash differs from the previous call (or is new) is a change. */
   private diffSnapshot(table: string, rows: Record<string, string | null>[], changes: RowRef[]): void {
-    const byCik = new Map<string, Record<string, unknown>[]>();
+    const col = ROW_KEY[table] ?? "cik";
+    const byKey = new Map<string, Record<string, unknown>[]>();
     for (const r of rows.map(typeRow)) {
-      const cik = String(r.cik);
-      byCik.set(cik, [...(byCik.get(cik) ?? []), r]);
+      const key = String(r[col]);
+      byKey.set(key, [...(byKey.get(key) ?? []), r]);
     }
-    const snap = new Map([...byCik].map(([cik, rs]) => [cik, canonicalHash(rs)]));
+    const snap = new Map([...byKey].map(([key, rs]) => [key, canonicalHash(rs)]));
     const prev = this.snapshots.get(table);
-    if (prev) for (const [cik, h] of snap) if (prev.get(cik) !== h) changes.push({ table, key: cik });
+    if (prev) for (const [key, h] of snap) if (prev.get(key) !== h) changes.push({ table, key });
     this.snapshots.set(table, snap);
   }
 }

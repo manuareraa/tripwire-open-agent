@@ -41,6 +41,20 @@ Built by `npx tsx scripts/fetch_sources.ts` (add `--refresh` to download again).
 - `sanctions_screen.csv`: each supplier's legal name screened against the US Treasury OFAC Specially Designated Nationals list (`sdn.csv`) and its aliases (`alt.csv`). Columns: `cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url`. `list_as_of` is the list file's Last-Modified date. Names are compared after removing punctuation and legal-form words (Inc, Corp, LLC and so on). One-word names need an exact match, so "Dow" does not hit every listed name containing "Dow". **Every supplier currently has 0 matches.** A match would be a candidate for a compliance officer to check, never a finding, and no sanctions hit has been invented for a real company.
 - Licence: SEC EDGAR and OFAC data are US government works, in the public domain. SEC asks automated clients to send a User-Agent with contact details (`SEC_USER_AGENT`) and to stay under 10 requests per second; the script makes at most 5 per second.
 
+## Source fetch log and freshness (`source_status.csv`)
+One row per real source: `source` (table), `system`, `fetched_on` (when Tripwire last pulled it), `as_of` (the date the contents are current to), `row_count` and `url`. `scripts/fetch_sources.ts` writes the 8-K and OFAC rows, and `scripts/fetch_edgar.ts` writes the financials row (rows are merged by `source`). The financials row was written once by hand from the committed CSV, because these figures were fetched on 2026-10-22, before the log existed.
+
+The Critic checks each fragment of every decision against its own policy line (`app/freshness.ts`):
+
+| Source | Policy line | Age measured from |
+|---|---|---|
+| Spend (ERP, synthetic) | 30 days | the row's `updated_at` |
+| SEC financials | 151 days | the end of the latest quarter on file (a 91-day quarter plus the 60-day 10-K filing window) |
+| SEC 8-K events | 7 days | `fetched_on` of the feed |
+| OFAC screen | 7 days | `screened_on` (the list date is shown alongside) |
+
+In sample mode the clock is the newest `fetched_on` in the log (override with `SAMPLE_CLOCK`), so results don't drift as real days pass; live mode uses the current date. On the sample clock (2026-10-25), five suppliers' latest quarter in the data is past the line: DOW, HUN, SON, WOLF (quarters ending late March 2026) and VSH (2026-04-04; its newer quarter is held back in change file 01). Those decisions carry a "Source freshness: STALE" limitation. A missing source is reported as missing, never filled in.
+
 ## Synthetic data
 `supplier_spend.csv` and change files 02 and 03 are **made up** for the demo. They describe a fictional buyer's relationship with each company. No real contract, price or purchase order is implied.
 - `spend_share`: the supplier's share of **our spend in its category** (each category sums to 1.00).
@@ -53,7 +67,7 @@ Built by `npx tsx scripts/fetch_sources.ts` (add `--refresh` to download again).
   The agents decide; this table does not encode answers.
 
 ## Change files (selective reopen demo)
-Each file is `{description, synthetic, table, key, row}` (or an array of them). `key` is the row key from `ROW_KEY` in `app/sql/templates.ts`: `cik` for financials, 8-K events and the sanctions screen; `supplier_id` for spend. The adapter's `applyChange(file)` upserts the row and logs it in `ledger/applied_changes.jsonl`. Financial rows match on (cik, period_end), so file 01 adds a quarter. `changesSince(marker)` then reports the changed rows to the Watcher.
+Each file is `{description, synthetic, table, key, row}` (or an array of them). `key` is the row key from `ROW_KEY` in `app/sql/templates.ts`: `cik` for financials, 8-K events and the sanctions screen; `supplier_id` for spend; `source` for the fetch log. The adapter's `applyChange(file)` upserts the row and logs it in `ledger/applied_changes.jsonl`. Financial rows match on (cik, period_end), so file 01 adds a quarter. `changesSince(marker)` then reports the changed rows to the Watcher.
 
 - `01_new_quarter.json` is real: Vishay's 10-Q for the quarter ended 2026-07-04. Its current ratio falls from 2.64 to 1.80. In the same filing, noncurrent long-term debt drops by about $750M and current liabilities rise by about $800M.
 - `02` and `03` are synthetic.

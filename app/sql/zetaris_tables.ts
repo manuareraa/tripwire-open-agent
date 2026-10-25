@@ -53,6 +53,14 @@ export const SCHEMAS: Record<string, [string, ColType][]> = {
     ["screened_on", "STRING"],
     ["source_url", "STRING"],
   ],
+  [TABLES.status]: [
+    ["source", "STRING"],
+    ["system", "STRING"],
+    ["fetched_on", "STRING"],
+    ["as_of", "STRING"],
+    ["row_count", "DOUBLE"],
+    ["url", "STRING"],
+  ],
   // BUILD-PACK columns, plus `payload` (full Decision JSON) and `written_at` (ledger order).
   [TABLES.decisions]: [
     ["decision_id", "STRING"],

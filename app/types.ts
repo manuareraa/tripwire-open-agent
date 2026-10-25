@@ -1,4 +1,5 @@
 // Shared contracts. Every stream codes against these; change them only on the scaffold/integration branch.
+import type { SourceFreshness } from "./freshness.js";
 
 export type DecisionKind = "keep" | "dual_source" | "exit";
 export type DecisionStatus = "proposed" | "approved" | "rejected" | "superseded";
@@ -58,6 +59,8 @@ export interface Decision {
   evidence: Evidence[];
   tripwires: Tripwire[];
   limitations: string[];
+  /** Freshness of each source fragment when the decision was made. */
+  sources?: SourceFreshness[];
   supersedes?: string;
   backup?: Backup;
   escalated: boolean;
@@ -147,6 +150,11 @@ export interface DataGateway {
   readDecisions(): Promise<Decision[]>;
   /** Rows changed since a marker, for the Watcher. */
   changesSince(marker: string): Promise<{ changes: RowRef[]; marker: string }>;
+  /**
+   * The date source ages are measured from. Live data: now. Bundled sample data: the day it was fetched, so a
+   * snapshot does not go stale just because it is read later. Absent = now.
+   */
+  clock?(): Date;
 }
 
 export interface TemplateSpec {

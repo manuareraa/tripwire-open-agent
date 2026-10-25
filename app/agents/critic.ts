@@ -1,6 +1,7 @@
 // Evidence Critic: "prove it". Re-runs every query and compares hashes, and rejects any number in
 // agent prose that does not trace back to a finding.
 import { config } from "../config.js";
+import { assessFreshness } from "../freshness.js";
 import { reviewTripwires } from "../tripwires.js";
 import type { MetricValue } from "../metrics.js";
 import { metricDef } from "../metrics.js";
@@ -45,6 +46,22 @@ export async function verifyEvidence(deps: Deps, s: RunState): Promise<void> {
 }
 
 /** Stale-memory catch: re-check each recalled H-MEM claim against today's evidence hashes; reject reuse of stale ones. */
+/** Measure each source fragment against its freshness policy; stale or missing fragments become limitations. */
+export function reviewFreshness(deps: Deps, s: RunState): string[] {
+  const now = deps.gateway.clock?.() ?? new Date();
+  s.freshness = assessFreshness(s.results, now);
+  const issues = s.freshness.filter((f) => f.status !== "fresh").map((f) => `${f.status.toUpperCase()} ${f.note}`);
+  for (const f of s.freshness) {
+    deps.tracer.emit({
+      decision_id: s.decision_id, agent_name: AGENT, action: `review_freshness:${f.table}`, event: "critique",
+      status: f.status === "fresh" ? "success" : "needs_revision",
+      output_summary: `${f.status}: ${f.note} (clock ${now.toISOString().slice(0, 10)})`,
+    });
+  }
+  for (const i of issues) s.limitations.push(`Source freshness: ${i}`);
+  return issues;
+}
+
 export function reviewMemory(deps: Deps, s: RunState): string[] {
   if (!s.priorClaims.length) return [];
   const issues = s.staleClaims.map((c) => {

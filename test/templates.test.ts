@@ -39,6 +39,11 @@ describe("renderTemplate", () => {
         params: { cik: "1751788" },
         expectInSql: ["FROM sanctions_screen", "cik = '1751788'"],
       },
+      {
+        id: "source_status",
+        params: {},
+        expectInSql: ["FROM source_status", "ORDER BY source"],
+      },
     ];
 
     expect(cases.map((c) => c.id).sort()).toEqual(TEMPLATES.map((t) => t.id).sort());

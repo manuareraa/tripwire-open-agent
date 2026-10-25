@@ -1,6 +1,7 @@
 import type { Tracer } from "../tracing.js";
 import type { MetricValue } from "../metrics.js";
 import type { TripwireDraft } from "../tripwires.js";
+import type { SourceFreshness } from "../freshness.js";
 import type {
   DataGateway, Decision, DecisionKind, Finding, MemoryClaim, MemoryStore, ModelClient, ModelRequest, ModelResponse, QueryResult,
 } from "../types.js";
@@ -32,6 +33,8 @@ export interface RunState {
   supersedes?: Decision;
   plan: string[];
   results: Record<string, QueryResult>;
+  /** How current each source fragment is, measured against its policy line. */
+  freshness: SourceFreshness[];
   metrics: MetricValue[];
   findings: Finding[];
   summary: string;

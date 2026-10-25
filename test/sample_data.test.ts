@@ -18,6 +18,7 @@ const templateParams: Record<string, Record<string, string | number>> = {
   decisions_for_supplier: { supplier_id: "SUP-18" },
   supplier_events_recent: { cik: "898293" },
   sanctions_screen_row: { cik: "898293" },
+  source_status: {},
 };
 
 function makeDecision(partial: Partial<Decision> & Pick<Decision, "decision_id" | "subject_id">): Decision {

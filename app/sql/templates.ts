@@ -8,6 +8,7 @@ export const TABLES = {
   spend: "supplier_spend",
   events: "supplier_events",
   sanctions: "sanctions_screen",
+  status: "source_status",
   decisions: "tripwire_decisions",
 } as const;
 
@@ -17,6 +18,7 @@ export const ROW_KEY: Record<string, string> = {
   supplier_spend: "supplier_id",
   supplier_events: "cik",
   sanctions_screen: "cik",
+  source_status: "source",
   tripwire_decisions: "decision_id",
 };
 
@@ -62,6 +64,13 @@ export const TEMPLATES: TemplateSpec[] = [
     table: TABLES.sanctions,
     params: ["cik"],
     sql: `SELECT cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url FROM {{sanctions}} WHERE cik = {{cik}}`,
+  },
+  {
+    id: "source_status",
+    description: "When each external source was last fetched, and the date its contents are current to",
+    table: TABLES.status,
+    params: [],
+    sql: `SELECT source, system, fetched_on, as_of, row_count, url FROM {{status}} ORDER BY source`,
   },
   {
     id: "decisions_for_supplier",

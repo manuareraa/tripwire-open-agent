@@ -65,7 +65,7 @@ function loadTable(path: string, table: string): Row[] {
 }
 
 /** Source tables that a sample folder may leave out (older fixtures have only financials and spend). */
-const OPTIONAL_TABLES: string[] = [TABLES.events, TABLES.sanctions];
+const OPTIONAL_TABLES: string[] = [TABLES.events, TABLES.sanctions, TABLES.status];
 
 /** The bundled base tables (no changes applied), keyed by table name. */
 export function loadBaseTables(sampleDir: string): Record<string, Row[]> {
@@ -136,6 +136,14 @@ export class SampleDataGateway implements DataGateway {
     for (const c of this.appliedChanges()) this.upsert(c);
   }
 
+  /** The sample is a snapshot: ages are measured from the day it was fetched (SAMPLE_CLOCK overrides). */
+  clock(): Date {
+    const override = process.env.SAMPLE_CLOCK;
+    if (override && !Number.isNaN(Date.parse(override))) return new Date(override);
+    const fetched = this.tables[TABLES.status].map((r) => String(r.fetched_on ?? "")).filter(Boolean).sort().at(-1);
+    return fetched ? new Date(`${fetched}T23:59:59Z`) : new Date();
+  }
+
   async health() {
     const f = this.tables[TABLES.financials].length;
     const s = this.tables[TABLES.spend].length;
@@ -174,6 +182,9 @@ export class SampleDataGateway implements DataGateway {
         break;
       case "sanctions_screen_row":
         rows = this.tables[TABLES.sanctions].filter((r) => r.cik === p("cik"));
+        break;
+      case "source_status":
+        rows = [...this.tables[TABLES.status]].sort((a, b) => String(a.source).localeCompare(String(b.source)));
         break;
       case "decisions_for_supplier":
         rows = this.ledgerRows()

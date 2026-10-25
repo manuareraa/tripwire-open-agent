@@ -6,7 +6,7 @@ import { callModel, type Deps, type RunState } from "../orchestration/state.js";
 const AGENT = "Planner";
 export const ORDER = [
   "supplier_spend_row", "supplier_financials_latest", "supplier_financials_history", "category_concentration",
-  "supplier_events_recent", "sanctions_screen_row",
+  "supplier_events_recent", "sanctions_screen_row", "source_status",
 ];
 // A keep/dual-source/exit call needs every view: without history there is no trend, without the category no
 // alternatives, without the 8-K feed no material events, without the sanctions screen no compliance check.

@@ -51,9 +51,10 @@ export const TEMPLATE: Dict = {
   category_concentration: "category spend split",
   supplier_events_recent: "recent SEC 8-K filings",
   sanctions_screen_row: "OFAC sanctions screen",
+  source_status: "source fetch log",
   decisions_for_supplier: "past decisions",
 };
-export const TABLE: Dict = { supplier_spend: "spend table", supplier_financials: "financials table", supplier_events: "SEC 8-K events", sanctions_screen: "OFAC sanctions screen", tripwire_decisions: "decision ledger" };
+export const TABLE: Dict = { supplier_spend: "spend table", supplier_financials: "financials table", supplier_events: "SEC 8-K events", sanctions_screen: "OFAC sanctions screen", source_status: "source fetch log", tripwire_decisions: "decision ledger" };
 export const MODEL_TIER: Dict = { small: "fast model", reasoning: "reasoning model", guard: "safety guard model" };
 export const DATA_SRC: Dict = { zetaris: "live data in Zetaris", sample: "the bundled sample data" };
 export const GUARD: Dict = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };

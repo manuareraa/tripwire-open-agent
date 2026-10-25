@@ -1,0 +1,4 @@
+source,system,fetched_on,as_of,row_count,url
+sanctions_screen,US Treasury OFAC SDN list,2026-10-25,2026-10-21,19472,https://www.treasury.gov/ofac/downloads/sdn.csv
+supplier_events,SEC EDGAR 8-K filings (submissions API),2026-10-25,2026-10-25,235,https://data.sec.gov/submissions/
+supplier_financials,SEC EDGAR XBRL company facts,2026-10-22,2026-07-03,119,https://data.sec.gov/api/xbrl/companyfacts/
