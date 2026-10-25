@@ -53,12 +53,15 @@ export async function callModel(deps: Deps, s: RunState, req: ModelRequest): Pro
     agent_name: req.agent_name,
     action: res.fallback ? "model_unavailable" : `model_call_${req.tier}`,
     event: res.fallback ? "fallback" : "sponsor_call",
-    sponsor: res.fallback ? undefined : "nvidia",
+    sponsor: res.fallback ? undefined : res.provider ?? "nvidia",
     status: res.fallback ? "fallback" : "success",
-    output_summary: res.fallback ? `rule-based path (${res.error})` : `${res.model}${res.thinking ? " (thinking on)" : ""}`,
+    output_summary: res.fallback
+      ? `rule-based path (${res.error})`
+      : `${res.model} via ${res.provider === "meterless-nightshift" ? "Meterless Nightshift" : "NVIDIA direct (backup)"}` +
+        `${res.thinking ? " (thinking on)" : ""}${res.receipt?.receipt_id ? `, receipt ${res.receipt.receipt_id}` : ""}`,
     data: {
-      model: res.model, tier: req.tier, thinking: res.thinking, tokens_in: res.tokens_in, tokens_out: res.tokens_out,
-      latency_ms: res.latency_ms, reasoning_excerpt: res.reasoning_excerpt,
+      model: res.model, provider: res.provider, tier: req.tier, thinking: res.thinking, tokens_in: res.tokens_in, tokens_out: res.tokens_out,
+      latency_ms: res.latency_ms, reasoning_excerpt: res.reasoning_excerpt, receipt: res.receipt,
     },
   });
   return res;

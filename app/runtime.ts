@@ -2,7 +2,7 @@
 // fallback is used and the choice is reported (never silently claimed as live).
 import { join } from "node:path";
 import { config } from "./config.js";
-import { NemotronClient, RulesOnlyClient } from "./adapters/model.js";
+import { FallbackModelClient, NemotronClient, NightshiftClient, RulesOnlyClient } from "./adapters/model.js";
 import { SampleDataGateway } from "./adapters/sample_data.js";
 import { LocalMemory } from "./adapters/local_memory.js";
 import { DecisionStore } from "./store.js";
@@ -44,8 +44,28 @@ export async function buildRuntime(): Promise<Runtime> {
     }
   }
 
-  const model: ModelClient = config.useNemotron ? new NemotronClient() : new RulesOnlyClient();
-  if (!config.useNemotron) notes.push("No NVIDIA_API_KEY (or SAMPLE_MODE=true); agents use rule-based fallbacks");
+  // Nightshift is the primary provider. Direct NVIDIA is a labelled backup for calls Nightshift cannot answer.
+  let model: ModelClient = new RulesOnlyClient();
+  let modelMode = "rules";
+  const direct = config.useNvidiaDirect ? new NemotronClient() : undefined;
+  if (config.useNightshift) {
+    const ns = new NightshiftClient();
+    const d = await ns.discover();
+    if (d.status === "online") {
+      model = direct ? new FallbackModelClient(ns, direct) : ns;
+      modelMode = direct ? "nightshift+nvidia-backup" : "nightshift";
+    } else {
+      notes.push(`Meterless Nightshift ${d.status} (${d.detail})${direct ? "; using NVIDIA direct as backup" : "; agents use rule-based fallbacks"}`);
+      if (direct) {
+        model = new FallbackModelClient(ns, direct);
+        modelMode = "nvidia-backup";
+      }
+    }
+  } else if (direct) {
+    model = direct;
+    modelMode = "nvidia-direct";
+    notes.push("No METERLESS_RUNTIME_TOKEN: Nemotron is called on build.nvidia.com directly, not through Nightshift");
+  } else notes.push("No model provider (or SAMPLE_MODE=true); agents use rule-based fallbacks");
 
   // H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback.
   let memory: MemoryStore | undefined;
@@ -62,6 +82,6 @@ export async function buildRuntime(): Promise<Runtime> {
   return {
     gateway, sample, model, memory,
     store: new DecisionStore(join(ledgerDir, "decisions_state.json")),
-    modes: { data: gateway.name, model: config.useNemotron ? "nemotron" : "rules", memory: memory.name ?? "memory", notes },
+    modes: { data: gateway.name, model: modelMode, memory: memory.name ?? "memory", notes },
   };
 }

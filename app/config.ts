@@ -3,11 +3,16 @@
 
 const env = process.env;
 const forcedSample = env.SAMPLE_MODE === "true";
+/** auto (Nightshift first, NVIDIA direct as backup) | nightshift | nvidia. */
+const provider = (env.LLM_PROVIDER ?? "auto").toLowerCase();
+const hasNightshift = !!(env.METERLESS_RUNTIME_TOKEN || env.METERLESS_TOKEN_FILE);
 
 export const config = {
-  sampleMode: forcedSample || (!env.ZETARIS_API_KEY && !env.ZETARIS_PASSWORD && !env.NVIDIA_API_KEY),
+  sampleMode: forcedSample || (!env.ZETARIS_API_KEY && !env.ZETARIS_PASSWORD && !env.NVIDIA_API_KEY && !hasNightshift),
   useZetaris: !forcedSample && !!(env.ZETARIS_API_KEY || env.ZETARIS_PASSWORD),
-  useNemotron: !forcedSample && !!env.NVIDIA_API_KEY,
+  /** Nightshift is the primary model provider; direct NVIDIA is only a labelled backup. */
+  useNightshift: !forcedSample && hasNightshift && provider !== "nvidia",
+  useNvidiaDirect: !forcedSample && !!env.NVIDIA_API_KEY && provider !== "nightshift",
   dataDir: env.DATA_DIR ?? "data",
   port: Number(env.PORT ?? 8000),
   zetaris: {
@@ -17,6 +22,17 @@ export const config = {
     username: env.ZETARIS_USERNAME ?? "",
     storageRoot: env.ZETARIS_STORAGE_ROOT ?? "",
     timeoutMs: Number(env.ZETARIS_TIMEOUT_MS ?? 30000),
+  },
+  nightshift: {
+    baseUrl: env.METERLESS_BASE_URL ?? "http://127.0.0.1:8088/v1",
+    token: env.METERLESS_RUNTIME_TOKEN ?? "",
+    /** <stateDir>/proxy-token written by the Nightshift runtime; read when no token is set. */
+    tokenFile: env.METERLESS_TOKEN_FILE ?? "",
+    appId: env.METERLESS_APP_ID ?? "tripwire",
+    reasoningModel: env.METERLESS_REASONING_MODEL ?? "",
+    smallModel: env.METERLESS_SMALL_MODEL ?? "",
+    guardModel: env.METERLESS_GUARD_MODEL ?? "",
+    timeoutMs: Number(env.METERLESS_TIMEOUT_MS ?? 180000),
   },
   nvidia: {
     baseUrl: env.NVIDIA_BASE_URL ?? "https://integrate.api.nvidia.com/v1",

@@ -40,13 +40,14 @@ Planner → Analyst → Evidence Critic ─(needs_revision)→ Analyst
 
 Tripwires are proposed by the Decider but validated and evaluated in code (`app/tripwires.ts`), so a model never decides whether its own tripwire fired.
 
-Without an NVIDIA key every model step falls back to a rule-based policy. The fallback is named in the trace (`model_unavailable`) and in the rationale ("Rule-based policy: …"). It is never presented as a model answer.
+Every model call goes through **Meterless Nightshift**, the primary provider. If Nightshift cannot answer a call, Tripwire tries build.nvidia.com directly as a backup, and the trace says which provider and which model served each request (with Nightshift's receipt id when it sends one). With no provider at all, every model step falls back to a rule-based policy. The fallback is named in the trace (`model_unavailable`) and in the rationale ("Rule-based policy: …"). It is never presented as a model answer.
 
 ## Sponsor technology
 
 - **Zetaris** (data layer). All source data is read with Zetaris SQL through its REST API (`app/adapters/zetaris.ts`), using a fixed set of parameterised SQL templates (`app/sql/templates.ts`). Every result is hashed, and that hash is the lineage stored with each claim. Zetaris has no row-level INSERT or UPDATE, so approved decisions are appended to a Parquet ledger through Zetaris RUN EXPORT and read back with Zetaris SQL. `scripts/zetaris_setup.ts` loads the sample tables into a local Zetaris the same way.
 - **Meterless H-MEM** (memory). The Meterless H-MEM reference engine is vendored in `vendor/hmem/` (Apache-2.0) and runs in-process (`app/adapters/hmem.ts`). Each claim is an H-MEM record whose `derivedFrom` field holds the source row and result hash. H-MEM provides recall, supersession (a reopened decision supersedes the old claims) and its audit ledger (`data/ledger/memory/ledger.jsonl`). It is used in every mode, including SAMPLE_MODE.
-- **NVIDIA Nemotron** via `build.nvidia.com` (`app/adapters/model.ts`): the three models in the table above, each with a timeout, retry and logged fallback.
+- **Meterless Nightshift** (model runtime, `app/adapters/model.ts`): an OpenAI-compatible client that follows the Meterless Runtime contract: the URL is normalised to `<host>/v1`, the bearer token is sent with the `meterless-app` and `meterless-scope` headers, `GET /v1/models` decides whether it is online, unauthorized or offline, and the timeout is 180 s. The served model and the `meterless` receipt fields go into the trace.
+- **NVIDIA Nemotron** through Nightshift: the three models in the table above, each with a timeout, retry and logged fallback. Direct `build.nvidia.com` is used only as a labelled backup.
 - **Cursor.** The project was built in Cursor. `.cursor/rules/tripwire.mdc` holds the project rules, and several test files were first written by the Cursor CLI agent and then reviewed (noted in `docs/log/`).
 
 ## Quick start (no keys needed)
@@ -82,7 +83,8 @@ npm start               # or: docker run -p 8000:8000 --env-file .env tripwire
 
 Each sponsor is used live when its credentials are present and it answers a health check. Otherwise Tripwire uses the bundled fallback and says so at startup (`GET /health` shows the active modes).
 
-- **Nemotron:** set `NVIDIA_API_KEY` (from build.nvidia.com). Model ids can be overridden with `NVIDIA_REASONING_MODEL`, `NVIDIA_SMALL_MODEL` and `NVIDIA_GUARD_MODEL`.
+- **Nightshift (primary):** run Nightshift, add your NVIDIA key in Nightshift > Setup > Providers, then set `METERLESS_BASE_URL` and `METERLESS_RUNTIME_TOKEN` (or `METERLESS_TOKEN_FILE`) from Nightshift > Console. Model ids per tier: `METERLESS_REASONING_MODEL`, `METERLESS_SMALL_MODEL`, `METERLESS_GUARD_MODEL` (Nemotron ids by default).
+- **Direct NVIDIA (backup only):** `NVIDIA_API_KEY` from build.nvidia.com. `LLM_PROVIDER=nightshift` turns the backup off; `LLM_PROVIDER=nvidia` skips Nightshift.
 - **Zetaris:** run the local Zetaris platform (Docker, `http://localhost:3000`), set `ZETARIS_USERNAME` and `ZETARIS_PASSWORD` (or `ZETARIS_API_KEY` and `ZETARIS_ORG_ID`), then load the tables once:
 
   ```bash

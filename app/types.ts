@@ -122,7 +122,7 @@ export interface TraceEvent {
   confidence?: number;
   retry_count?: number;
   status: TraceStatus;
-  /** Which sponsor, when event = sponsor_call: "zetaris" | "meterless-hmem" | "nvidia". */
+  /** Which sponsor, when event = sponsor_call: "zetaris" | "meterless-hmem" | "meterless-nightshift" | "nvidia". */
   sponsor?: string;
   data?: unknown;
 }
@@ -184,6 +184,10 @@ export interface ModelResponse {
   error?: string;
   /** Short excerpt of the model's reasoning trace, when thinking was on. */
   reasoning_excerpt?: string;
+  /** Who served the call: "meterless-nightshift" (primary) or "nvidia" (direct backup). */
+  provider?: string;
+  /** Route facts the provider reported (Nightshift's `meterless` receipt object and meterless-* headers). */
+  receipt?: Record<string, string>;
 }
 
 export interface ModelClient {

@@ -2,7 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   DEFAULT_MODELS,
   extractJson,
+  FallbackModelClient,
   NemotronClient,
+  NightshiftClient,
+  normaliseRuntimeUrl,
 } from "../app/adapters/model.js";
 
 const API_KEY = "test-nvidia-key";
@@ -160,5 +163,80 @@ Thanks.`;
       score: 42,
       label: "keep",
     });
+  });
+});
+
+describe("NightshiftClient", () => {
+  const req = { tier: "small" as const, agent_name: "planner", system: "sys", user: "hi" };
+
+  it("normalises pasted runtime URLs to <host>/v1 and never /v1/v1", () => {
+    for (const raw of ["127.0.0.1:8088", "http://127.0.0.1:8088/", "http://127.0.0.1:8088/v1", "http://127.0.0.1:8088/v1/chat/completions", "http://127.0.0.1:8088/v1/models", "http://127.0.0.1:8088/healthz"]) {
+      expect(normaliseRuntimeUrl(raw)).toBe("http://127.0.0.1:8088/v1");
+    }
+  });
+
+  it("sends the bearer token, app and scope headers, and records the served model and receipt", async () => {
+    let url = "";
+    let headers: Record<string, string> = {};
+    let body: Record<string, unknown> = {};
+    const fetchMock = vi.fn(async (u: string, init?: RequestInit) => {
+      url = u;
+      headers = init?.headers as Record<string, string>;
+      body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      return new Response(JSON.stringify({
+        model: "nvidia/nemotron-3.5-lightning-30b-a3b",
+        choices: [{ message: { content: "ok" } }],
+        usage: { prompt_tokens: 7, completion_tokens: 2 },
+        meterless: { receipt_id: "rcpt_1", routed_model: "nvidia/nemotron-3.5-lightning-30b-a3b", winning_route: { provider: "nvidia", kind: "cloud" } },
+      }), { status: 200, headers: { "content-type": "application/json", "meterless-route": "nvidia" } });
+    });
+    const client = new NightshiftClient({ baseUrl: "127.0.0.1:8088/v1/", token: "rt-test", appId: "Tripwire" }, fetchMock as unknown as typeof fetch);
+    const res = await client.complete(req);
+
+    expect(url).toBe("http://127.0.0.1:8088/v1/chat/completions");
+    expect(headers.Authorization).toBe("Bearer rt-test");
+    expect(headers["meterless-app"]).toBe("tripwire");
+    expect(headers["meterless-scope"]).toBe("user");
+    expect(body.model).toBe(DEFAULT_MODELS.small);
+    expect(res).toMatchObject({ fallback: false, text: "ok", provider: "meterless-nightshift", model: "nvidia/nemotron-3.5-lightning-30b-a3b", tokens_in: 7 });
+    expect(res.receipt).toMatchObject({ receipt_id: "rcpt_1", "winning_route.provider": "nvidia", "header.meterless-route": "nvidia" });
+  });
+
+  it("reports a wrong token as unauthorized, not offline", async () => {
+    const fetchMock = vi.fn(async () => new Response("no", { status: 401 }));
+    const client = new NightshiftClient({ token: "bad", baseUrl: "http://127.0.0.1:8088" }, fetchMock as unknown as typeof fetch);
+    expect((await client.discover()).status).toBe("unauthorized");
+    expect(await client.complete(req)).toMatchObject({ fallback: true, error: "unauthorized (HTTP 401)" });
+  });
+
+  it("discovers an online runtime from GET /v1/models and an absent one as offline", async () => {
+    const online = vi.fn(async () => new Response(JSON.stringify({ data: [{ id: "meterless/fast" }, { id: "meterless/deep" }] }), { status: 200 }));
+    expect(await new NightshiftClient({ token: "t", baseUrl: "http://x:1" }, online as unknown as typeof fetch).discover())
+      .toMatchObject({ status: "online", models: ["meterless/fast", "meterless/deep"] });
+    const down = vi.fn(async () => { throw new Error("ECONNREFUSED"); });
+    expect((await new NightshiftClient({ token: "t", baseUrl: "http://x:1" }, down as unknown as typeof fetch).discover()).status).toBe("offline");
+  });
+});
+
+describe("FallbackModelClient", () => {
+  const req = { tier: "small" as const, agent_name: "planner", system: "sys", user: "hi" };
+  const answer = (provider: string) => ({ text: "a", model: "m", thinking: false, tokens_in: 1, tokens_out: 1, latency_ms: 1, fallback: false, provider });
+  const miss = (provider: string, error: string) => ({ text: "", model: "m", thinking: false, tokens_in: 0, tokens_out: 0, latency_ms: 1, fallback: true, provider, error });
+
+  it("uses the primary when it answers and never calls the backup", async () => {
+    const backup = { complete: vi.fn() };
+    const res = await new FallbackModelClient({ complete: async () => answer("meterless-nightshift") }, backup).complete(req);
+    expect(res.provider).toBe("meterless-nightshift");
+    expect(backup.complete).not.toHaveBeenCalled();
+  });
+
+  it("falls back to the backup and keeps the primary's failure reason", async () => {
+    const res = await new FallbackModelClient({ complete: async () => miss("meterless-nightshift", "timeout") }, { complete: async () => answer("nvidia") }).complete(req);
+    expect(res).toMatchObject({ fallback: false, provider: "nvidia", receipt: { primary_failed: "meterless-nightshift: timeout" } });
+  });
+
+  it("reports both failures when neither answers", async () => {
+    const res = await new FallbackModelClient({ complete: async () => miss("meterless-nightshift", "offline") }, { complete: async () => miss("nvidia", "HTTP 500") }).complete(req);
+    expect(res).toMatchObject({ fallback: true, error: "meterless-nightshift: offline; nvidia: HTTP 500" });
   });
 });
