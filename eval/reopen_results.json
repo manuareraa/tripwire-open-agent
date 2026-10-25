@@ -1,0 +1,166 @@
+{
+  "generated_at": "2026-10-25T14:04:46.048Z",
+  "summary": {
+    "scenarios": 5,
+    "decisions_each": 20,
+    "reruns": {
+      "full": 100,
+      "table_level": 100,
+      "tripwire": 3
+    },
+    "dependents_checked": 11,
+    "outcome_changed": 2,
+    "missed": 0,
+    "disagree_with_full_redecide": 0,
+    "live_cost_per_decision": {
+      "recorded": "2026-10-25",
+      "calls": 4,
+      "tokens": 2364,
+      "model_s": 18.17391304347826,
+      "providers": [
+        "nvidia"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "scenario": "new-quarter",
+      "what": "Vishay's next quarterly financials arrive (SEC)",
+      "real": true,
+      "changed_rows": [
+        {
+          "table": "supplier_financials",
+          "key": "103730"
+        }
+      ],
+      "decisions": 20,
+      "table_level_reruns": 20,
+      "dependents": 1,
+      "reopened": 1,
+      "reopened_detail": [
+        {
+          "subject": "SUP-20",
+          "was": "dual_source",
+          "now": "dual_source",
+          "fired": [
+            "supplier_financials as-of date changed? (now 2026-07-04, was 2026-04-04)"
+          ]
+        }
+      ],
+      "outcome_changed": [],
+      "missed": [],
+      "disagree_with_full_redecide": [],
+      "not_rerun": 19
+    },
+    {
+      "scenario": "new-8k",
+      "what": "Dow files an 8-K: item 2.05, restructuring (SEC)",
+      "real": true,
+      "changed_rows": [
+        {
+          "table": "supplier_events",
+          "key": "1751788"
+        }
+      ],
+      "decisions": 20,
+      "table_level_reruns": 20,
+      "dependents": 1,
+      "reopened": 1,
+      "reopened_detail": [
+        {
+          "subject": "SUP-05",
+          "was": "dual_source (escalated)",
+          "now": "exit (escalated)",
+          "fired": [
+            "risk_events_12m > 0 (now 1, was 0)"
+          ]
+        }
+      ],
+      "outcome_changed": [
+        {
+          "subject": "SUP-05",
+          "was": "dual_source (escalated)",
+          "now": "exit (escalated)"
+        }
+      ],
+      "missed": [],
+      "disagree_with_full_redecide": [],
+      "not_rerun": 19
+    },
+    {
+      "scenario": "sanctions-match",
+      "what": "OFAC screen returns a possible match for Eastman",
+      "real": false,
+      "changed_rows": [
+        {
+          "table": "sanctions_screen",
+          "key": "915389"
+        }
+      ],
+      "decisions": 20,
+      "table_level_reruns": 20,
+      "dependents": 1,
+      "reopened": 1,
+      "reopened_detail": [
+        {
+          "subject": "SUP-08",
+          "was": "keep",
+          "now": "exit (escalated)",
+          "fired": [
+            "sanctions_matches > 0 (now 1, was 0)"
+          ]
+        }
+      ],
+      "outcome_changed": [
+        {
+          "subject": "SUP-08",
+          "was": "keep",
+          "now": "exit (escalated)"
+        }
+      ],
+      "missed": [],
+      "disagree_with_full_redecide": [],
+      "not_rerun": 19
+    },
+    {
+      "scenario": "spend-jump",
+      "what": "ERP: Celanese's share of chemicals spend 35% → 58%",
+      "real": false,
+      "changed_rows": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-06"
+        }
+      ],
+      "decisions": 20,
+      "table_level_reruns": 20,
+      "dependents": 4,
+      "reopened": 0,
+      "reopened_detail": [],
+      "outcome_changed": [],
+      "missed": [],
+      "disagree_with_full_redecide": [],
+      "not_rerun": 20
+    },
+    {
+      "scenario": "lead-time-slip",
+      "what": "ERP: XPO's quoted lead time 3 → 9 weeks",
+      "real": false,
+      "changed_rows": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-12"
+        }
+      ],
+      "decisions": 20,
+      "table_level_reruns": 20,
+      "dependents": 4,
+      "reopened": 0,
+      "reopened_detail": [],
+      "outcome_changed": [],
+      "missed": [],
+      "disagree_with_full_redecide": [],
+      "not_rerun": 20
+    }
+  ]
+}

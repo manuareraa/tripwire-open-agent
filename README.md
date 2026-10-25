@@ -1,6 +1,6 @@
 # Tripwire
 
-**Track 03: Reasoning Architecture** · Open Agent Hackathon 2026 · solo entry
+**Track 01: Fragmented Intelligence** · Open Agent Hackathon 2026 · solo entry
 
 Tripwire is a team of agents that makes a business decision, writes down exactly which data rows the decision depends on, and sets "tripwires": the conditions under which the decision should be looked at again. When a source row changes later, Tripwire does not re-run everything. It asks memory which decisions were built on that row, checks only their tripwires, and reopens only the ones that fire.
 
@@ -10,7 +10,28 @@ Demo video: _link added before submission_
 
 ---
 
-## Why this is a reasoning architecture
+## Why this is a fragmented-data problem
+
+A supplier decision is built from systems that have nothing to do with each other and change at different speeds:
+
+| Fragment | System | Changes |
+|---|---|---|
+| Quarterly financials | SEC EDGAR XBRL company facts (real) | once a quarter |
+| Material events | SEC EDGAR 8-K filings (real) | any day |
+| Sanctions screen | US Treasury OFAC SDN list (real), matched by company name | any day |
+| Spend, lead time, open orders | the buyer's ERP (synthetic) | every week |
+
+They share no key: the ERP knows a supplier id, SEC knows a CIK, OFAC knows only a name. Tripwire joins them per decision, and that is where the hard part starts. A decision made today goes stale the moment *any one* of those fragments moves, and nobody re-reads four systems for every supplier every day.
+
+So Tripwire keeps the joins it made:
+
+- **Per-source freshness.** Every decision records how current each fragment was, against a policy line per source (`app/freshness.ts`): 151 days for SEC financials, 30 for the ERP spend row, 7 for the 8-K feed and the OFAC screen. The Evidence Critic sends a decision back for a re-read when a source is past its line, caps the confidence if it is still out of date, and names it in the decision's limitations.
+- **Cross-source lineage.** Memory stores which rows of which system each decision read.
+- **Selective reopen.** When a fragment changes, memory names the decisions that read that row, code checks only their tripwires (including "reopen when this source publishes a newer as-of date"), and only those that fire are re-decided.
+
+Measured in [eval/REOPEN.md](eval/REOPEN.md): over five source changes (a real new quarter, a real 8-K, a synthetic OFAC match and two synthetic ERP shifts) on a portfolio of 20 decisions, Tripwire re-ran **3 decisions where re-deciding everything takes 100**, and missed **none** of the decisions whose outcome actually changed when all 20 were re-decided from scratch. At the live run's measured cost per decision that is about 390 model calls and 230,000 tokens not spent.
+
+## How the agents reason
 
 - **Agents branch on each other's output.** The Evidence Critic can send work back to the Analyst, the Memory Keeper or the Decider (`needs_revision`), and the run takes a different path because of it. Every run is capped (3 critique rounds per decision, 2 retries per query).
 - **Memory is checked, not trusted.** Claims recalled from earlier decisions carry the hash of the query result they came from. If the data has changed since, the Critic rejects the claim as evidence and the Memory Keeper withholds it. Example 3 below shows this in a real trace.
@@ -131,6 +152,7 @@ Every agent step is one JSON line in `logs/trace-<run_id>.jsonl` and on stdout (
 ## Data
 
 - `data/sample/supplier_financials.csv`: **real** quarterly financials for 20 US-listed companies, from SEC EDGAR (public domain), fetched on 2026-10-22 by `scripts/fetch_edgar.ts`.
+- `data/sample/supplier_events.csv`: **real** SEC 8-K filings for the same companies, and `data/sample/sanctions_screen.csv`: a **real** name screen against the US Treasury OFAC SDN list, both fetched on 2026-10-25 by `scripts/fetch_sources.ts`. When each source was fetched and how current it is: `data/sample/source_status.csv`.
 - `data/sample/supplier_spend.csv` and change files 02 and 03: **synthetic**. The buyer and its spend are fictional; picking a company implies nothing about it as a supplier.
 - "Liabilities to equity" is total liabilities ÷ equity, not interest-bearing debt only. Details in `data/README.md`.
 

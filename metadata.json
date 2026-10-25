@@ -2,7 +2,7 @@
   "name": "Tripwire",
   "tagline": "Agents that make business decisions, record exactly which data each one depends on, and reopen only the affected decisions when that data changes.",
   "hackathon": "Open Agent Hackathon 2026",
-  "track": "Track 03: Reasoning Architecture",
+  "track": "Track 01: Fragmented Intelligence",
   "team": "solo",
   "entry_point": { "method": "POST", "path": "/run", "host": "0.0.0.0", "port": 8000, "format": "JSON in, JSON out" },
   "run": {
@@ -39,7 +39,7 @@
   },
   "examples": { "inputs": "input_examples/", "outputs": "output_examples/" },
   "logs": "logs/trace-<run_id>.jsonl and stdout",
-  "data": { "real": "SEC EDGAR quarterly financials (public domain)", "synthetic": "supplier spend and change files 02, 03" },
+  "data": { "real": "SEC EDGAR quarterly financials and 8-K filings (public domain); US Treasury OFAC SDN name screen", "synthetic": "supplier spend, change files 02 and 03, and the OFAC match in eval/cases.json" },
   "pre_existing_components": ["vendor/hmem (Meterless H-MEM, Apache-2.0)", "open-source npm libraries", "planning notes (no code)"],
   "demo_video": null,
   "license": {"project": "not yet chosen", "vendor/hmem": "Apache-2.0"}
