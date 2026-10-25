@@ -65,7 +65,7 @@ docker build -t tripwire .
 docker run -p 8000:8000 -e SAMPLE_MODE=true tripwire
 ```
 
-Open `http://localhost:8000` for the landing page and `http://localhost:8000/app.html` for the console (a guided tour starts on the first visit). `npm start` builds the console first; for hot reload while editing it, run `npm run dev:web` next to the server and open `http://localhost:5173/app.html`. Or call the API:
+Open `http://localhost:8000` for the landing page and `http://localhost:8000/console` for the console (a guided tour starts on the first visit). `npm start` builds the console first; for hot reload while editing it, run `npm run dev:web` next to the server and open `http://localhost:5173/console`. Or call the API:
 
 ```bash
 curl -s -X POST localhost:8000/run -H 'content-type: application/json' --data @input_examples/02_decide_risky.json

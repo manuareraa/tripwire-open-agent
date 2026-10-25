@@ -11,11 +11,18 @@ export default defineConfig({
   root,
   base: "/",
   publicDir: `${root}../web`,
-  plugins: [react()],
+  plugins: [
+    react(),
+    // The console lives at /console; in dev, map that to app.html the way server.ts does.
+    { name: "console-route", configureServer: (s) => void s.middlewares.use((req, _res, next) => {
+      if (req.url === "/console" || req.url?.startsWith("/console?")) req.url = `/app.html${req.url.slice(8)}`;
+      next();
+    }) },
+  ],
   build: {
     outDir: `${root}../web-dist`,
     emptyOutDir: true,
-    assetsDir: "console",
+    assetsDir: "assets/console",
     rollupOptions: { input: { app: `${root}app.html` } },
   },
   // `npm run dev:web`: Vite on 5173 with hot reload, API calls passed through to the Hono server.

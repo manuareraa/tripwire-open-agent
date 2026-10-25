@@ -72,12 +72,12 @@
         ${link("/#how", "How it works", "how")}
         ${link("/#agents", "Agents", "agents")}
         ${link("/#guide", "Guide", "guide")}
-        ${link("/app.html", "Console", "console")}
+        ${link("/console", "Console", "console")}
       </nav>
       <div class="nav-tools">
         ${page === "console"
           ? `<button class="btn sm" id="tour-btn" type="button">${ICON.help}<span class="btn-label">Tour</span></button>`
-          : `<a class="btn sm primary cta" href="/app.html?tour=1">${ICON.play}<span class="btn-label">Start demo</span></a>`}
+          : `<a class="btn sm primary cta" href="/console?tour=1">${ICON.play}<span class="btn-label">Start demo</span></a>`}
       </div>`;
   }
 

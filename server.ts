@@ -160,10 +160,12 @@ app.get("/trace/:run_id", (c) => {
   return t ? c.json(t) : c.json({ error: "not_found" }, 404);
 });
 
-// The console is a React build in web-dist/ (`npm run build:web`); web/ stays as the fallback for the other pages.
+// The console is a React build in web-dist/ (`npm run build:web`), served at /console; web/ stays as the fallback for the other pages.
+app.get("/app.html", (c) => c.redirect(`/console${new URL(c.req.url).search}`, 301));
+app.get("/console", serveStatic({ path: "./web-dist/app.html" }));
+app.get("/console", (c) => c.text("Console not built. Run npm run build:web", 503));
 app.use("/*", serveStatic({ root: "./web-dist" }));
 app.use("/*", serveStatic({ root: "./web" }));
-app.get("/app.html", (c) => c.text("Console not built. Run npm run build:web", 503));
 
 serve({ fetch: app.fetch, port: config.port, hostname: "0.0.0.0" });
 console.log(`tripwire listening on 0.0.0.0:${config.port} | data=${rt.modes.data} model=${rt.modes.model} memory=${rt.modes.memory}`);
