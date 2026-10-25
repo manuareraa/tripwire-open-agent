@@ -16,3 +16,4 @@ data/ledger/
 
 # H-MEM persistence (app/adapters/hmem.ts)
 data/memory/
+web-dist/

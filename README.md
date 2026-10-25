@@ -65,7 +65,7 @@ docker build -t tripwire .
 docker run -p 8000:8000 -e SAMPLE_MODE=true tripwire
 ```
 
-Open `http://localhost:8000` for the landing page and `http://localhost:8000/app.html` for the console (a guided tour starts on the first visit), or call the API:
+Open `http://localhost:8000` for the landing page and `http://localhost:8000/app.html` for the console (a guided tour starts on the first visit). `npm start` builds the console first; for hot reload while editing it, run `npm run dev:web` next to the server and open `http://localhost:5173/app.html`. Or call the API:
 
 ```bash
 curl -s -X POST localhost:8000/run -H 'content-type: application/json' --data @input_examples/02_decide_risky.json
@@ -169,5 +169,6 @@ app/adapters/             Zetaris, Meterless H-MEM, Nemotron, sample data, local
 app/sql/                  Approved SQL templates and Zetaris table definitions
 scripts/                  EDGAR fetch, Zetaris setup, smoke run
 vendor/hmem/              Meterless H-MEM (vendored)
-web/                      Landing page (index.html), console (app.html), shared theme and tour (assets/)
+console/                  The console: React + Vite (src/), built into web-dist/ by `npm run build:web`
+web/                      Landing page (index.html), shared theme and tour (assets/); copied into the console build
 ```
