@@ -93,7 +93,8 @@ function allowedForms(metrics: MetricValue[], extra: number[]): number[] {
 /** Numbers in `text` that match no finding (or tripwire threshold). Small counts and years are allowed. */
 export function unsupportedNumbers(text: string, metrics: MetricValue[], extra: number[] = []): string[] {
   const allowed = allowedForms(metrics, extra);
-  const found = text.replace(/SUP-\d+/g, "").match(/-?\d+(?:,\d{3})*(?:\.\d+)?/g) ?? [];
+  // Supplier ids and SEC form names ("8-K", "10-Q") are labels, not figures.
+  const found = text.replace(/SUP-\d+|\b\d{1,2}-[KQ]\b/g, "").match(/-?\d+(?:,\d{3})*(?:\.\d+)?/g) ?? [];
   const bad: string[] = [];
   for (const raw of found) {
     const n = Number(raw.replace(/,/g, ""));

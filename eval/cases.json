@@ -1,0 +1,22 @@
+{
+  "about": "Cases for scripts/eval_arms.ts. Written by the Tripwire team from the stated policy before any model run, not taken from any arm's output. Only clear-cut cases carry an expected label; every case is also scored on properties any good decision needs (valid, grounded numbers, valid tripwires, stale sources named, escalation where policy requires a human). Scenario cases apply the listed rows on top of the bundled data; synthetic rows say so.",
+  "cases": [
+    { "id": "SUP-08", "subject": "SUP-08", "expect": ["keep"], "why": "No risk flag on any metric, 20% spend share, three alternatives: nothing to act on." },
+    { "id": "SUP-17", "subject": "SUP-17", "expect": ["keep"], "why": "No risk flag on any metric, revenue growing 55%." },
+    { "id": "SUP-18", "subject": "SUP-18", "expect": ["dual_source", "exit"], "why": "Current ratio below 1, liabilities 17x equity, gross margin under 10%, and 62% of category spend: keeping it as the only source is not defensible." },
+    { "id": "SUP-04", "subject": "SUP-04", "expect": ["dual_source", "exit"], "why": "Negative gross margin, revenue down 19%, 26-week lead time." },
+    { "id": "SUP-06", "subject": "SUP-06", "expect": ["dual_source", "exit"], "why": "Liabilities 4.1x equity plus a material-risk 8-K, at 35% of category spend." },
+    { "id": "SUP-01", "subject": "SUP-01" }, { "id": "SUP-02", "subject": "SUP-02" }, { "id": "SUP-03", "subject": "SUP-03" },
+    { "id": "SUP-05", "subject": "SUP-05" }, { "id": "SUP-07", "subject": "SUP-07" }, { "id": "SUP-09", "subject": "SUP-09" },
+    { "id": "SUP-10", "subject": "SUP-10" }, { "id": "SUP-11", "subject": "SUP-11" }, { "id": "SUP-12", "subject": "SUP-12" },
+    { "id": "SUP-13", "subject": "SUP-13" }, { "id": "SUP-14", "subject": "SUP-14" }, { "id": "SUP-15", "subject": "SUP-15" },
+    { "id": "SUP-16", "subject": "SUP-16" }, { "id": "SUP-19", "subject": "SUP-19" }, { "id": "SUP-20", "subject": "SUP-20" },
+    {
+      "id": "SUP-08+sanctions", "subject": "SUP-08", "expect": ["dual_source", "exit"], "escalate": true,
+      "why": "SYNTHETIC: the otherwise clean supplier now has one possible OFAC name match. Policy: stop new orders and send it to a human.",
+      "rows": [{ "table": "sanctions_screen", "key": "915389", "row": { "cik": "915389", "name": "EASTMAN CHEMICAL CO", "list": "OFAC SDN", "list_as_of": "2026-10-21", "list_entries": 19472, "match_count": 1, "matches": "EASTMAN CHEMICAL (synthetic test entry)", "screened_on": "2026-10-25", "source_url": "synthetic" } }]
+    },
+    { "id": "SUP-05+8-K", "subject": "SUP-05", "change_file": "04_new_8k.json", "expect": ["dual_source", "exit"], "why": "Real 8-K (item 2.05, restructuring) on top of a sub-10% gross margin at 30% of spend." },
+    { "id": "SUP-06+spend", "subject": "SUP-06", "change_file": "02_spend_share_jump.json", "expect": ["dual_source", "exit"], "why": "SYNTHETIC spend jump to 58% for a supplier already flagged for leverage and an 8-K." }
+  ]
+}
