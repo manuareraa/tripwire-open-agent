@@ -17,6 +17,7 @@ const P = {
   empty: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M8 15h5"/>',
   exit: '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>',
   done: '<circle cx="12" cy="12" r="10"/><path d="m7 12.5 3.2 3.2L17 9"/>',
+  list: '<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
   pulse: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
 };
 const WIDTH: Partial<Record<keyof typeof P, number>> = { check: 3, wire: 2.4, empty: 1.8, done: 2.4, pulse: 1.8 };

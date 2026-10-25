@@ -1,4 +1,4 @@
-// Left column: the three steps (pick a supplier, review decisions, change the data) and the Watcher report.
+// The three steps (pick a supplier, review decisions, change the data): rail pieces on the left, the change board in the middle.
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CountUp, Empty, Ring, Spin } from "./bits";
 import { cap, fmtField, pct } from "./format";
@@ -12,13 +12,19 @@ const live = (d: Decision) => d.status !== "superseded" && d.status !== "rejecte
 
 const Check = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>;
 
-export function Step({ id, n, title, active, done, count, children }: { id: string; n: number; title: string; active: boolean; done: boolean; count?: number; children: ReactNode }) {
+/** One step of the rail. Only open steps show their body; closed ones fold to a one-line summary, so the rail stays short. */
+export function Step({ id, n, title, active, done, open, summary, count, onToggle, children }: {
+  id: string; n: number; title: string; active: boolean; done: boolean; open: boolean; summary: ReactNode; count?: number; onToggle: () => void; children: ReactNode;
+}) {
   return (
-    <li className={`step${active ? " active" : ""}${done ? " done" : ""}`} id={id}>
+    <li className={`step${active ? " active" : ""}${done ? " done" : ""}${open ? " open" : ""}`} id={id}>
       <span className="node"><span>{n}</span><Check /></span>
       <section className="step-card enter" style={{ "--i": n - 1 } as React.CSSProperties} aria-labelledby={`h${n}`}>
-        <div className="step-h"><h2 id={`h${n}`}>{title}</h2>{count != null && <span className="count" id="dcount">{count}</span>}<span className="chip" data-chip>{active ? "Now" : done ? "Done" : "Next"}</span></div>
-        {children}
+        <button className="step-h" type="button" aria-expanded={open} aria-controls={`b${n}`} onClick={onToggle}>
+          <h2 id={`h${n}`}>{title}</h2>{count != null && <span className="count" id="dcount">{count}</span>}
+          <span className="chip" data-chip>{active ? "Now" : done ? "Done" : "Next"}</span><Ic n="chev" />
+        </button>
+        {open ? <div className="step-b" id={`b${n}`}>{children}</div> : <div className="step-sum">{summary}</div>}
       </section>
     </li>
   );
@@ -96,10 +102,9 @@ function ChangeItem({ c, i, state, suggest, pulse, disabled, onApply }: { c: Cha
   const about = cap(String(c.description).replace(/^SYNTHETIC:\s*/i, "").replace(/\s*Figures from (https?:\S+)/, ""));
   const who = c.supplier_id || (c.table === "supplier_spend" ? c.key : null);
   const fields = (c.fields || []).filter((f) => f.before !== f.after).slice(0, 3);
-  const ico: IconName = c.table === "supplier_financials" ? "file" : /lead/.test(c.file) ? "clock" : "trend";
   return (
     <div className={`ccard enter${suggest ? " suggest" : ""}${pulse ? " pulse-once" : ""}`} style={{ "--i": i } as React.CSSProperties} data-card={c.file}>
-      <span className="cc-ico"><Ic n={ico} /></span>
+      <span className="cc-ico"><Ic n={changeIcon(c)} /></span>
       <div className="cc-t">{cap(name)}<span className={`tg ${c.synthetic ? "synthetic" : "real"}`} data-tip={c.synthetic ? "A made-up change to synthetic spend data, to show the mechanism." : "Based on a real SEC filing."} tabIndex={0}>{c.synthetic ? "synthetic" : "real filing"}</span></div>
       <div className="cc-who">{who && <><b>{supName(who)}</b><span className="mono">{who}</span></>}{c.table && <span className="watch" data-tip={`The exact data row this change rewrites (${rowTip(c.table, c.key!)}). Only decisions that read this row are checked.`} tabIndex={0}><Ic n="db" />{rowName(c.table, c.key!)}</span>}</div>
       {fields.length > 0 && <div className="deltas">{fields.map((f, j) => <div className="delta" key={j}><span className="l">{FIELD[f.field] ?? f.field.replace(/_/g, " ")}</span><s>{fmtField(f.field, f.before)}</s><span className="arr">→</span><b>{fmtField(f.field, f.after)}</b></div>)}</div>}
@@ -140,24 +145,74 @@ function ReportCard({ x, snapshot, onOpen }: { x: ChangeReport; snapshot: Decisi
   );
 }
 
-export function ChangeList({ changes, report, stage, applying, applied, suggest, pulse, running, onApply, onOpen }: {
-  changes: ChangeCard[] | null; report: ReportState; stage: number; applying: string | null; applied: Set<string>; suggest: string | null; pulse: Set<string>; running: boolean;
-  onApply: (file: string) => void; onOpen: (id: string) => void;
+const changeIcon = (c: ChangeCard): IconName => c.table === "supplier_financials" ? "file" : /lead/.test(c.file) ? "clock" : "trend";
+
+/** Step 3 in the rail: one short row per change. The cards themselves open in the middle. */
+export function ChangeRail({ changes, applied, applying, suggest, report, onOpen }: {
+  changes: ChangeCard[] | null; applied: Set<string>; applying: string | null; suggest: string | null; report: ReportState; onOpen: (file?: string) => void;
 }) {
+  const last = report?.kind === "done" ? report.reports.reduce((n, x) => n + x.reopened.length, 0) : null;
   return (
     <>
-      <p className="hint">Apply a change. Only decisions that read that row are checked.</p>
-      <div className="clist" id="changes">
+      <p className="hint">Change one data row. Only decisions that read it are checked.</p>
+      <div className="crail" id="changes">
+        {!changes ? <><div className="skel" style={{ height: 36 }} /><div className="skel" style={{ height: 36 }} /></>
+          : changes.length ? changes.map((c) => {
+            const who = c.supplier_id || (c.table === "supplier_spend" ? c.key : null);
+            return (
+              <button key={c.file} type="button" className={`crow${suggest === c.file ? " suggest" : ""}`} data-card={c.file} onClick={() => onOpen(c.file)}>
+                <Ic n={changeIcon(c)} /><span className="cr-t">{cap(changeName(c.file))}{who && <small>{supName(who)}</small>}</span>
+                {applying === c.file ? <Spin /> : applied.has(c.file) ? <span className="cr-ok"><Ic n="check" />Applied</span> : <Ic n="chev" className="cr-go" />}
+              </button>
+            );
+          }) : <Empty>No change files found.</Empty>}
+      </div>
+      {last != null && <button type="button" className="linkish" onClick={() => onOpen()}>Last result: {last ? `${last} reopened` : "nothing reopened"}. See the report</button>}
+    </>
+  );
+}
+
+/** What the person can do after a result, so a finished step never looks like a dead end. */
+export function NextSteps({ title = "What next", items }: { title?: string; items: { icon: IconName; label: string; sub: string; on: () => void; id?: string }[] }) {
+  return (
+    <div className="next" id="next-steps">
+      <div className="eyebrow">{title}</div>
+      <div className="next-grid">
+        {items.map((x) => <button key={x.label} type="button" className="next-card" id={x.id} onClick={x.on}><span className="qi"><Ic n={x.icon} /></span><b>{x.label}</b><span>{x.sub}</span><Ic n="arrow" className="go" /></button>)}
+      </div>
+    </div>
+  );
+}
+
+/** The middle view for step 3: the latest Watcher report first, then every change as a card. */
+export function ChangesBoard({ changes, report, stage, applying, applied, suggest, pulse, running, next, onApply, onOpen }: {
+  changes: ChangeCard[] | null; report: ReportState; stage: number; applying: string | null; applied: Set<string>; suggest: string | null; pulse: Set<string>; running: boolean;
+  next: ReactNode; onApply: (file: string) => void; onOpen: (id: string) => void;
+}) {
+  const done = report?.kind === "done" ? report : null;
+  const reopened = done ? done.reports.reduce((n, x) => n + x.reopened.length, 0) : 0;
+  const checked = done ? done.reports.reduce((n, x) => n + x.active, 0) : 0;
+  const left = (changes ?? []).filter((c) => !applied.has(c.file)).length;
+  return (
+    <div className="board">
+      <div className="eyebrow">Step 3 · Change the data</div>
+      <h2>{done ? (reopened ? `${reopened} decision${reopened === 1 ? "" : "s"} reopened` : "Nothing reopened") : "Pick a change to apply"}</h2>
+      <p className="muted lead">{done
+        ? reopened ? "A tripwire fired, so only the affected decision was re-run. The old one is marked superseded." : checked ? `The change was checked against ${checked} active decision${checked === 1 ? "" : "s"} and crossed no tripwire, so no work was redone.` : "No decision exists yet, so there was nothing to check. Make a decision first."
+        : "Each card rewrites one data row. The Watcher then asks memory which decisions read that row, and re-checks only their tripwires."}</p>
+      <div className="report" id="report" aria-live="polite">
+        {report?.kind === "working" && <div className="wr"><div className="wr-h"><span dangerouslySetInnerHTML={{ __html: window.TW.LOADER.replace("tw-loader", "tw-loader sm") }} style={{ display: "contents" }} /><b>Watcher at work</b></div><div id="wsteps"><WatcherSteps stage={stage} /></div></div>}
+        {done && (done.reports.length ? done.reports.map((x, i) => <ReportCard key={i} x={x} snapshot={done.snapshot} onOpen={onOpen} />) : <Empty>No rows changed.</Empty>)}
+        {report?.kind === "error" && <div className="banner bad"><Ic n="warn" /><div>{report.msg}</div></div>}
+      </div>
+      {done && next}
+      <div className="eyebrow board-sub">{done ? (left ? `Try another change · ${left} left` : "Every change applied") : "Changes you can apply"}</div>
+      <div className="clist">
         {!changes ? <><div className="skel dk" /><div className="skel dk" /><div className="skel dk" /></>
           : changes.length ? changes.map((c, i) => <ChangeItem key={c.file} c={c} i={i} state={applying === c.file ? "applying" : applied.has(c.file) ? "applied" : "idle"} suggest={suggest === c.file} pulse={pulse.has(c.file)} disabled={running || applied.has(c.file)} onApply={() => onApply(c.file)} />)
           : <Empty>No change files found.</Empty>}
       </div>
-      <div className="report" id="report" aria-live="polite">
-        {report?.kind === "working" && <div className="wr"><div className="wr-h"><span dangerouslySetInnerHTML={{ __html: window.TW.LOADER.replace("tw-loader", "tw-loader sm") }} style={{ display: "contents" }} /><b>Watcher at work</b></div><div id="wsteps"><WatcherSteps stage={stage} /></div></div>}
-        {report?.kind === "done" && (report.reports.length ? report.reports.map((x, i) => <ReportCard key={i} x={x} snapshot={report.snapshot} onOpen={onOpen} />) : <Empty>No rows changed.</Empty>)}
-        {report?.kind === "error" && <div className="banner bad"><Ic n="warn" /><div>{report.msg}</div></div>}
-      </div>
-    </>
+    </div>
   );
 }
 

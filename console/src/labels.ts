@@ -100,7 +100,7 @@ export const TOUR = [
   { el: "#step-decide", title: "Step 1: make a decision", body: "Pick one of 20 suppliers and press <b>Decide</b>. Six agents plan queries, analyse, critique each other and propose <b>keep</b>, <b>dual-source</b> or <b>exit</b>. You watch each agent work live." },
   { el: "#detail", title: "The decision, explained", body: "Here you see the verdict and confidence, why, the key numbers (click one for its SQL and result hash), and the <b>tripwires</b>: how close each one is to firing." },
   { el: "#step-review", title: "Step 2: review and approve", body: "Every decision starts as a proposal. A human approves or rejects it. Risky ones are <b>escalated</b> and need a written reason. Approval writes the decision to the ledger." },
-  { el: "#step-change", title: "Step 3: change the data", body: "Each card shows the value before and after. Apply one and the Watcher asks memory which decisions read that row, checks only their tripwires, and reopens only the ones that fire." },
+  { el: "#step-change", title: "Step 3: change the data", body: "Pick a change here and it opens in the middle, with the value before and after. Apply it and the Watcher asks memory which decisions read that row, checks only their tripwires, and reopens only the ones that fire. Click any step title to open or fold it." },
   { el: "#trace-panel", title: "See the agents think", body: "Every step of each run streams in here as it happens: queries, handoffs, where the Critic sent work back, and any fallback. Nothing is hidden." },
   { el: "#tour-btn", title: "You're ready", body: "Try the <b>Tripwire test</b> shortcut first: it decides on SUP-06, then you apply the spend share jump. You can replay this tour from here." },
 ];
