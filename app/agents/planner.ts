@@ -1,5 +1,6 @@
 // Planner: picks which data templates the Analyst should query for this question.
 import { TEMPLATES } from "../sql/templates.js";
+import type { SourceFreshness } from "../freshness.js";
 import { extractJson } from "../adapters/model.js";
 import { callModel, type Deps, type RunState } from "../orchestration/state.js";
 
@@ -50,4 +51,15 @@ export async function plan(deps: Deps, s: RunState): Promise<string[]> {
     status: res.fallback ? "fallback" : "success", input_summary: s.question, output_summary: `${steps.join(" → ")}${focus ? ` | focus: ${focus}` : ""}${added.length && !res.fallback ? ` | policy added: ${added.join(", ")}` : ""}`,
   });
   return steps;
+}
+
+/** The Critic sent back sources past their line: re-read exactly those, in plan order, before anything is decided. */
+export function replan(deps: Deps, s: RunState, notFresh: SourceFreshness[]): string[] {
+  const ids = ORDER.filter((id) => notFresh.some((f) => f.template_id === id));
+  deps.tracer.emit({
+    decision_id: s.decision_id, agent_name: AGENT, action: "replan", event: "handoff", target_agent: "Analyst", status: "success",
+    input_summary: notFresh.map((f) => f.note).join("; "),
+    output_summary: `re-read ${ids.join(", ")} (and source_status) before deciding`,
+  });
+  return ids.includes("source_status") ? ids : [...ids, "source_status"];
 }

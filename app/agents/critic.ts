@@ -1,8 +1,9 @@
 // Evidence Critic: "prove it". Re-runs every query and compares hashes, and rejects any number in
 // agent prose that does not trace back to a finding.
 import { config } from "../config.js";
-import { assessFreshness } from "../freshness.js";
-import { reviewTripwires } from "../tripwires.js";
+import { assessFreshness, freshnessTripwires } from "../freshness.js";
+import { TABLES } from "../sql/templates.js";
+import { reviewTripwires, type TripwireDraft } from "../tripwires.js";
 import type { MetricValue } from "../metrics.js";
 import { metricDef } from "../metrics.js";
 import { refreshFindings, runQuery } from "./analyst.js";
@@ -58,8 +59,40 @@ export function reviewFreshness(deps: Deps, s: RunState): string[] {
       output_summary: `${f.status}: ${f.note} (clock ${now.toISOString().slice(0, 10)})`,
     });
   }
+  // A second review after a re-read replaces the first one's notes rather than adding to them.
+  s.limitations = s.limitations.filter((l) => !l.startsWith("Source freshness: "));
   for (const i of issues) s.limitations.push(`Source freshness: ${i}`);
   return issues;
+}
+
+/** Confidence ceiling for a decision built on a source that is past its line. */
+export const STALE_CONFIDENCE_CAP = 0.75;
+
+/**
+ * After the decision: a source still past its line after the re-read caps the confidence, gets a tripwire that
+ * reopens the decision when the source updates, and, for the sanctions screen, sends the decision to compliance.
+ */
+export function holdForStale(deps: Deps, s: RunState, draft: DecisionDraft): { tripwires: TripwireDraft[]; metrics: MetricValue[] } {
+  const notFresh = s.freshness.filter((f) => f.status !== "fresh");
+  if (!notFresh.length) return { tripwires: [], metrics: [] };
+  const names = notFresh.map((f) => `${f.label} (${f.status})`).join(", ");
+  if (draft.confidence > STALE_CONFIDENCE_CAP) {
+    draft.limitations.push(`Confidence capped at ${STALE_CONFIDENCE_CAP} (was ${draft.confidence}) because ${names} ${notFresh.length === 1 ? "is" : "are"} past the policy line`);
+    draft.confidence = STALE_CONFIDENCE_CAP;
+  }
+  const sanctions = notFresh.find((f) => f.table === TABLES.sanctions);
+  if (sanctions) {
+    s.escalated = true;
+    s.escalationReasons.push(`the sanctions screen is ${sanctions.status}; compliance must re-screen before any new order`);
+  }
+  const { drafts, metrics } = freshnessTripwires(s.freshness, s.results);
+  deps.tracer.emit({
+    decision_id: s.decision_id, agent_name: AGENT, action: "hold_for_stale", event: sanctions ? "escalation" : "critique",
+    target_agent: "RiskOfficer", status: "partial", confidence: draft.confidence,
+    output_summary: `still past the line after re-read: ${names}; confidence ≤ ${STALE_CONFIDENCE_CAP}` +
+      (drafts.length ? `; reopen when ${drafts.map((d) => d.metric.split(":")[1]).join(", ")} updates` : "") + (sanctions ? "; escalated to compliance" : ""),
+  });
+  return { tripwires: drafts, metrics };
 }
 
 export function reviewMemory(deps: Deps, s: RunState): string[] {
@@ -83,8 +116,10 @@ function allowedForms(metrics: MetricValue[], extra: number[]): number[] {
   const out: number[] = [];
   for (const m of metrics) {
     out.push(m.value);
-    const unit = metricDef(m.metric)?.unit;
-    if (unit === "share") out.push(m.value * 100);
+    const def = metricDef(m.metric);
+    if (def?.unit === "share") out.push(m.value * 100);
+    // A number inside the metric's own name ("8-K filings in 12 months") is a label, not a figure.
+    for (const n of def?.label.match(/\d+/g) ?? []) out.push(Number(n));
   }
   for (const x of extra) out.push(x, x * 100);
   return out;

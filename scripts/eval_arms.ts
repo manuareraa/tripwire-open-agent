@@ -32,6 +32,7 @@ const { reviewFreshness, unsupportedNumbers } = await import("../app/agents/crit
 const { RISK_THRESHOLDS } = await import("../app/agents/risk.js");
 const { METRICS } = await import("../app/metrics.js");
 const { reviewTripwires } = await import("../app/tripwires.js");
+const { FRESHNESS_PREFIX } = await import("../app/freshness.js");
 const { Tracer } = await import("../app/tracing.js");
 import type { ModelCall, ModelClient, ModelRequest, ModelResponse } from "../app/types.js";
 import type { SourceFreshness } from "../app/freshness.js";
@@ -104,7 +105,7 @@ async function runGraph(model: ModelClient, c: Case): Promise<Outcome> {
   const metrics = (d.findings ?? []).map((f) => ({ metric: f.metric, value: Number(f.value) })) as MetricValue[];
   return {
     decision: d.decision, confidence: d.confidence, rationale: d.rationale ?? "", limitations: d.limitations, escalated: d.escalated,
-    tripwires: d.tripwires.filter((t) => !t.metric.startsWith("backup_")), metrics, sources: d.sources ?? [], calls: d.model_calls ?? [],
+    tripwires: d.tripwires.filter((t) => !t.metric.startsWith("backup_") && !t.metric.startsWith(FRESHNESS_PREFIX)), metrics, sources: d.sources ?? [], calls: d.model_calls ?? [],
     rules: (d.rationale ?? "").startsWith("Rule-based policy"),
   };
 }

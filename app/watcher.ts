@@ -7,6 +7,7 @@ import { newState, runDecide } from "./orchestration/graph.js";
 import type { Deps } from "./orchestration/state.js";
 import type { DecisionStore } from "./store.js";
 import { isTripped } from "./tripwires.js";
+import { FRESHNESS_PREFIX, asOfDay, assessFreshness } from "./freshness.js";
 import type { Decision, RowRef } from "./types.js";
 
 const AGENT = "Watcher";
@@ -56,12 +57,19 @@ export async function reopenFor(deps: Deps, store: DecisionStore, changed: RowRe
       }
     }
     const before = new Map([...old.findings, ...(old.backup?.findings ?? [])].map((f) => [f.metric, Number(f.value)]));
+    // "Reopen when this source updates": compare each source's as-of date now with the one the decision was made on.
+    const fresh = assessFreshness(s.results, deps.gateway.clock?.() ?? new Date());
+    for (const f of fresh) now.set(`${FRESHNESS_PREFIX}${f.table}`, asOfDay(f));
+    for (const f of old.sources ?? []) before.set(`${FRESHNESS_PREFIX}${f.table}`, asOfDay(f));
     const fired: string[] = [];
     const checked: string[] = [];
     for (const tw of old.tripwires) {
       const v = now.get(tw.metric);
       if (v === undefined) continue;
-      const desc = `${tw.metric} ${tw.op} ${tw.threshold ?? ""} (now ${v}, was ${before.get(tw.metric)})`;
+      const src = tw.metric.startsWith(FRESHNESS_PREFIX) ? tw.metric.slice(FRESHNESS_PREFIX.length) : undefined;
+      const desc = src
+        ? `${src} as-of date changed? (now ${fresh.find((f) => f.table === src)?.as_of ?? "none"}, was ${old.sources?.find((f) => f.table === src)?.as_of ?? "none"})`
+        : `${tw.metric} ${tw.op} ${tw.threshold ?? ""} (now ${v}, was ${before.get(tw.metric)})`;
       checked.push(desc);
       if (isTripped(tw, v, before.get(tw.metric))) fired.push(desc);
     }

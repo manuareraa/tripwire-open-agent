@@ -1,10 +1,10 @@
-// The decision graph: Planner → Analyst → Critic (evidence, source freshness) → Memory Keeper (recall) ⇄ Critic (stale memory) → Analyst summary ⇄ Critic
+// The decision graph: Planner → Analyst → Critic (evidence, source freshness ⇄ Planner re-read) → Memory Keeper (recall) ⇄ Critic (stale memory) → Analyst summary ⇄ Critic
 // → Risk Officer → Decider ⇄ Critic (max 3 rounds) → Backup Picker (dual_source / exit) → Risk Officer final check → Memory Keeper (record).
 import { config } from "../config.js";
 import { compileTripwires } from "../tripwires.js";
-import { plan } from "../agents/planner.js";
-import { gather, rulesSummary, summarize } from "../agents/analyst.js";
-import { reviewDecision, reviewFreshness, reviewMemory, reviewSummary, verifyEvidence } from "../agents/critic.js";
+import { plan, replan } from "../agents/planner.js";
+import { gather, reread, rulesSummary, summarize } from "../agents/analyst.js";
+import { holdForStale, reviewDecision, reviewFreshness, reviewMemory, reviewSummary, verifyEvidence } from "../agents/critic.js";
 import { dropStale, recallPrior, record } from "../agents/memory_keeper.js";
 import { assess, finalCheck } from "../agents/risk.js";
 import { decide, rulesDecision } from "../agents/decider.js";
@@ -36,7 +36,15 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
   s.plan = await plan(deps, s);
   await gather(deps, s);
   await verifyEvidence(deps, s);
-  reviewFreshness(deps, s);
+  // Critic → Planner: a source past its line is re-read once before anything is decided on it.
+  if (reviewFreshness(deps, s).length) {
+    t.emit({
+      decision_id: s.decision_id, agent_name: "EvidenceCritic", action: "send_back_stale", event: "critique", target_agent: "Planner",
+      status: "needs_revision", output_summary: `re-plan: ${s.freshness.filter((f) => f.status !== "fresh").map((f) => f.label).join(", ")} past the policy line`,
+    });
+    await reread(deps, s, replan(deps, s, s.freshness.filter((f) => f.status !== "fresh")));
+    reviewFreshness(deps, s);
+  }
   await recallPrior(deps, s);
   if (reviewMemory(deps, s).length) dropStale(deps, s);
 
@@ -74,6 +82,7 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
 
   // A second source or an exit needs somewhere for the work to go: name it in code, with its own evidence and tripwires.
   const backup = draft.decision === "keep" ? undefined : await pickBackup(deps, s);
+  const stale = holdForStale(deps, s, draft);
 
   await finalCheck(deps, s, draft);
 
@@ -86,7 +95,7 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     status: "proposed",
     findings: s.findings,
     evidence,
-    tripwires: compileTripwires(s.decision_id, [...draft.tripwires, ...(backup?.tripwires ?? [])], [...s.metrics, ...(backup?.metrics ?? [])]),
+    tripwires: compileTripwires(s.decision_id, [...draft.tripwires, ...(backup?.tripwires ?? []), ...stale.tripwires], [...s.metrics, ...(backup?.metrics ?? []), ...stale.metrics]),
     limitations: [...new Set([...s.limitations, ...draft.limitations])],
     sources: s.freshness,
     model_calls: s.modelCalls,

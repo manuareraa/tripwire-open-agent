@@ -2,6 +2,7 @@
 // speed. For each one, work out how old the data is and whether that is still within its policy line.
 // Computed in code from the rows the Analyst already gathered; nothing is estimated.
 import { TABLES } from "./sql/templates.js";
+import type { MetricValue } from "./metrics.js";
 import type { QueryResult } from "./types.js";
 
 export type FreshnessStatus = "fresh" | "stale" | "missing";
@@ -86,4 +87,19 @@ export function assessFreshness(results: Record<string, QueryResult>, now: Date)
     });
   }
   return out;
+}
+
+/** Freshness tripwires ("reopen when this source updates") use these names, kept apart from the data metrics. */
+export const FRESHNESS_PREFIX = "source_as_of:";
+
+/** A source's as-of date as a day number, so "changed" can compare it; 0 when there is none. */
+export const asOfDay = (f?: Pick<SourceFreshness, "as_of">) => (f?.as_of ? Math.floor(Date.parse(`${f.as_of}T00:00:00Z`) / DAY) : 0);
+
+/** For each source still past its line, a tripwire that fires when its as-of date moves, tied to the rows it came from. */
+export function freshnessTripwires(sources: SourceFreshness[], results: Record<string, QueryResult>): { drafts: { metric: string; op: "changed" }[]; metrics: MetricValue[] } {
+  const stale = sources.filter((f) => f.status === "stale" && results[f.template_id]);
+  return {
+    drafts: stale.map((f) => ({ metric: `${FRESHNESS_PREFIX}${f.table}`, op: "changed" as const })),
+    metrics: stale.map((f) => ({ metric: `${FRESHNESS_PREFIX}${f.table}`, value: asOfDay(f), evidence: results[f.template_id].evidence })),
+  };
 }

@@ -24,6 +24,7 @@ export async function decide(deps: Deps, s: RunState, feedback: string[]): Promi
       "You decide what a buyer should do with a supplier: keep, dual_source (add a second supplier) or exit. " +
       "Base it only on the metrics given. Then set 2-4 tripwires: future conditions that should reopen this decision. " +
       "A tripwire must NOT already be true today. Use only metric names from the list. " +
+      "If a source is listed as out of date or missing, name it under limitations. " +
       "For dual_source or exit, code then names the backup supplier from the category; do not name one yourself. " +
       'Reply only with JSON: {"decision": "keep|dual_source|exit", "confidence": 0-1, "rationale": "2-3 sentences, quoting only given numbers", ' +
       '"tripwires": [{"metric": "...", "op": "<" or ">", "threshold": number}], "limitations": ["..."]}',
@@ -32,6 +33,7 @@ export async function decide(deps: Deps, s: RunState, feedback: string[]): Promi
       `Metric meanings: ${METRICS.map((m) => `${m.name} (${m.label}; worse when ${m.worseWhen})`).join("; ")}\n` +
       `Risk Officer: ${s.risk.level}${s.risk.flags.length ? ` (${s.risk.flags.join("; ")})` : ""}\n` +
       `Analyst summary: ${s.summary}\n` +
+      (s.freshness.some((f) => f.status !== "fresh") ? `Sources past their policy line: ${s.freshness.filter((f) => f.status !== "fresh").map((f) => f.note).join("; ")}\n` : "") +
       (s.staleClaims.length ? `Memory: earlier claims now stale: ${s.staleClaims.map((c) => c.text).join("; ")}\n` : "") +
       (s.supersedes ? `This reopens decision ${s.supersedes.decision_id} (was ${s.supersedes.decision}).\n` : "") +
       (feedback.length ? `\nThe evidence critic rejected your last draft: ${feedback.join(" | ")}. Fix every point.` : ""),

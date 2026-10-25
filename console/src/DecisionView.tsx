@@ -13,6 +13,18 @@ import type { Decision, Tripwire, WriteResult } from "./types";
 const evidenceFor = (d: Decision, metric: string) => [...(d.findings || []), ...(d.backup?.findings || [])].find((f) => f.metric === metric && typeof f.value === "number");
 
 function Gauge({ t, d }: { t: Tripwire; d: Decision }) {
+  // "Reopen when this source updates": set by the Critic when a source was still past its line at decision time.
+  if (t.metric.startsWith("source_as_of:")) {
+    const src = (d.sources || []).find((f) => f.table === t.metric.slice("source_as_of:".length));
+    const label = src?.label ?? t.metric.slice("source_as_of:".length).replace(/_/g, " ");
+    const tip = `This decision was made on ${label} current to ${src?.as_of ?? "an unknown date"}, past its ${src?.max_age_days ?? "?"}-day policy line. When newer data arrives, the Watcher reopens it.`;
+    return (
+      <div className="gauge">
+        <div className="g-t"><Ic n="wire" /><span className="term-ish" tabIndex={0} data-tip={tip}><b>{label}</b>: newer data arrives</span><span className="gap">decided on data as of {src?.as_of ?? "?"}</span></div>
+        <div className="rows"><Ic n="db" />Watches {(t.depends_on || []).length ? (t.depends_on || []).map((r, i) => <Fragment key={i}>{i > 0 && ", "}<span tabIndex={0} data-tip={rowTip(r.table, r.key)}>{rowName(r.table, r.key)}</span></Fragment>) : "its source rows"}</div>
+      </div>
+    );
+  }
   const name = METRIC[t.metric]?.[0] ?? t.metric.replace(/_/g, " ");
   const hasTh = t.threshold != null && t.op !== "changed";
   const f = evidenceFor(d, t.metric);

@@ -62,6 +62,20 @@ export async function gather(deps: Deps, s: RunState): Promise<void> {
   refreshFindings(s);
 }
 
+/** Re-read the given templates (the Planner's re-plan after the Critic found a source past its line). */
+export async function reread(deps: Deps, s: RunState, ids: string[]): Promise<void> {
+  for (const id of ids) {
+    const params = paramsFor(id, s);
+    if (!params) continue;
+    try {
+      s.results[id] = await runQuery(deps, s, id, params);
+    } catch (e) {
+      s.limitations.push(`${id} unavailable on re-read: ${(e as Error).message}`);
+    }
+  }
+  refreshFindings(s);
+}
+
 export function refreshFindings(s: RunState): void {
   s.metrics = computeMetrics(s.results, s.subject_id);
   s.findings = s.metrics.map<Finding>((m) => ({
