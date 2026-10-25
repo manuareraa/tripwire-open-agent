@@ -29,7 +29,7 @@ function liveTracer(wanted?: unknown) {
   traces.set(t.run_id, t.all() as TraceEvent[]);
   return t;
 }
-const depsFor = (tracer: Tracer): Deps => ({ gateway: rt.gateway, model: rt.model, memory: rt.memory, tracer });
+const depsFor = (tracer: Tracer): Deps => ({ gateway: rt.gateway, model: rt.model, memory: rt.memory, reranker: rt.reranker, tracer });
 
 /** The bundled CSVs with no changes applied: the "before" of the demo changes and what a reset restores. */
 const BASE = loadBaseTables(rt.sample.sampleDir);

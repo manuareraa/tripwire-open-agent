@@ -40,8 +40,12 @@ export const config = {
     reasoningModel: env.NVIDIA_REASONING_MODEL ?? "",
     smallModel: env.NVIDIA_SMALL_MODEL ?? "",
     guardModel: env.NVIDIA_GUARD_MODEL ?? "",
+    rerankModel: env.NVIDIA_RERANK_MODEL ?? "nvidia/nemotron-3.5-rerank-8b",
+    rerankUrl: env.NVIDIA_RERANK_URL ?? "",
     timeoutMs: Number(env.MODEL_TIMEOUT_MS ?? 60000),
   },
+  /** RERANK=nvidia orders the Analyst's findings with Nemotron rerank (build.nvidia.com, needs NVIDIA_API_KEY). Off by default. */
+  rerank: !forcedSample && (env.RERANK ?? "").toLowerCase() === "nvidia" && !!env.NVIDIA_API_KEY,
   /** Live runs append every model call (with its receipt) here when set. */
   modelRecordFile: env.MODEL_RECORD_FILE ?? "",
   /** With no live model, recorded live answers are replayed from here (labelled as replays). MODEL_REPLAY=false turns it off. */

@@ -1,0 +1,23 @@
+{
+  "about": "Buyer questions, each with the findings that answer it (by metric name). Written from the metric definitions before any model run. Most questions are worded the way a buyer would ask, not with the metric's label, which is what separates a semantic ranking from keyword overlap; a few (q14, q12) share words with a label on purpose.",
+  "suppliers": ["SUP-05", "SUP-08"],
+  "questions": [
+    { "id": "q01", "q": "Can they pay their bills over the next few months?", "relevant": ["current_ratio"] },
+    { "id": "q02", "q": "Are they carrying too much leverage?", "relevant": ["debt_to_equity"] },
+    { "id": "q03", "q": "Do they still make money on each unit they sell?", "relevant": ["gross_margin"] },
+    { "id": "q04", "q": "Is their business shrinking?", "relevant": ["revenue_change_pct"] },
+    { "id": "q05", "q": "How dependent are we on this vendor?", "relevant": ["spend_share", "category_alternatives"] },
+    { "id": "q06", "q": "If they fail, could we switch to someone else quickly?", "relevant": ["category_alternatives", "lead_time_weeks"] },
+    { "id": "q07", "q": "How long do they take to deliver an order?", "relevant": ["lead_time_weeks"] },
+    { "id": "q08", "q": "Are there any compliance or legal red flags?", "relevant": ["sanctions_matches", "risk_events_12m"] },
+    { "id": "q09", "q": "Has anything material happened at the company recently, like a restructuring or an executive leaving?", "relevant": ["risk_events_12m"] },
+    { "id": "q10", "q": "Could buying from them break US Treasury rules?", "relevant": ["sanctions_matches"] },
+    { "id": "q11", "q": "Is this supplier financially healthy?", "relevant": ["current_ratio", "debt_to_equity", "gross_margin", "revenue_change_pct"] },
+    { "id": "q12", "q": "Is their revenue growing?", "relevant": ["revenue_change_pct"] },
+    { "id": "q13", "q": "Is there a backup vendor we could use?", "relevant": ["category_alternatives"] },
+    { "id": "q14", "q": "What share of our category spend goes to them?", "relevant": ["spend_share"] },
+    { "id": "q15", "q": "Could they go bankrupt?", "relevant": ["current_ratio", "debt_to_equity", "risk_events_12m"] },
+    { "id": "q16", "q": "Are they on a government blacklist?", "relevant": ["sanctions_matches"] },
+    { "id": "q17", "q": "Would trouble at this supplier stall our production for months?", "relevant": ["lead_time_weeks", "category_alternatives", "spend_share"] }
+  ]
+}

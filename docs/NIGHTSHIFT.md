@@ -144,6 +144,22 @@ ordinary ones that use the same alarming words. It records to `eval/recordings/s
 it with `--direct` instead (this needs `NVIDIA_API_KEY` set in that terminal, and the report then names
 build.nvidia.com as the provider).
 
+## 9. Measure rerank
+
+Nemotron rerank orders the Analyst's findings by how much they bear on the buyer's question, so the summary leads
+with the right evidence. Nightshift serves chat models only, so this one call goes to build.nvidia.com directly, and
+the trace says so. It needs `NVIDIA_API_KEY` in that terminal (only for this step, never in a file):
+
+```bash
+npx tsx scripts/eval_rerank.ts --write
+```
+
+It ranks the findings of two suppliers for the 17 buyer questions in `eval/rerank_gold.json` with Nemotron rerank
+and with keyword overlap, scores both (hit@1, recall@3, MRR), records to `eval/recordings/rerank.jsonl`, and writes
+`eval/RERANK.md`. If every call fails with HTTP 404, the hosted path differs from the default: copy the URL from the
+model's API page on build.nvidia.com into `NVIDIA_RERANK_URL` and run it again. To use rerank in the app itself, set
+`RERANK=nvidia` as well.
+
 ## Running Tripwire on Linux against Nightshift on another machine
 
 This only works if Nightshift accepts connections from other machines (its Console shows an address other than

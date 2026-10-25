@@ -1,4 +1,5 @@
 import type { Tracer } from "../tracing.js";
+import type { Reranker } from "../adapters/rerank.js";
 import type { MetricValue } from "../metrics.js";
 import type { TripwireDraft } from "../tripwires.js";
 import type { SourceFreshness } from "../freshness.js";
@@ -11,6 +12,8 @@ export interface Deps {
   model: ModelClient;
   memory: MemoryStore;
   tracer: Tracer;
+  /** Optional: orders findings by relevance to the question before the summary (Nemotron rerank). */
+  reranker?: Reranker;
 }
 
 export type RiskLevel = "low" | "medium" | "high";
@@ -42,6 +45,8 @@ export interface RunState {
   summary: string;
   priorClaims: MemoryClaim[];
   staleClaims: MemoryClaim[];
+  /** The rerank order of findings for this question, so a revision does not call rerank again. */
+  rankedFor?: { question: string; n: number; order: number[] };
   risk: { level: RiskLevel; flags: string[]; thinking: boolean };
   draft?: DecisionDraft;
   rounds: number;

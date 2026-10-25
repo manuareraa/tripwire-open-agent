@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { config } from "./config.js";
 import { FallbackModelClient, NemotronClient, NightshiftClient, RulesOnlyClient } from "./adapters/model.js";
 import { RecordingModelClient, ReplayModelClient } from "./adapters/recording.js";
+import { NemotronReranker, type Reranker } from "./adapters/rerank.js";
 import { SampleDataGateway } from "./adapters/sample_data.js";
 import { LocalMemory } from "./adapters/local_memory.js";
 import { DecisionStore } from "./store.js";
@@ -14,6 +15,7 @@ export interface Runtime {
   sample: SampleDataGateway;
   model: ModelClient;
   memory: MemoryStore;
+  reranker?: Reranker;
   store: DecisionStore;
   modes: { data: string; model: string; memory: string; notes: string[] };
 }
@@ -89,8 +91,12 @@ export async function buildRuntime(): Promise<Runtime> {
   } else notes.push("H-MEM adapter not present; using local lineage index");
   memory ??= new LocalMemory(join(ledgerDir, "memory.json"));
 
+  // Opt-in: Nightshift serves chat models only, so rerank is a direct build.nvidia.com call and labelled as one.
+  const reranker = config.rerank ? new NemotronReranker() : undefined;
+  if (reranker) notes.push(`Findings are ordered by ${reranker.model} on build.nvidia.com (direct, not through Nightshift)`);
+
   return {
-    gateway, sample, model, memory,
+    gateway, sample, model, memory, reranker,
     store: new DecisionStore(join(ledgerDir, "decisions_state.json")),
     modes: { data: gateway.name, model: modelMode, memory: memory.name ?? "memory", notes },
   };
