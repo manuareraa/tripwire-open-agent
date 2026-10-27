@@ -144,6 +144,80 @@ Each sponsor is used live when its credentials are present and it answers a heal
 
   From inside a container on Linux, run with `--network host` or set `ZETARIS_BASE_URL=http://host.docker.internal:3000`.
 
+## Recording the Proving Ground live (Windows PC with Nightshift)
+
+The Imagine and Crash-test steps and the backtest's model arms need real Nemotron answers. Nightshift runs only on Windows or Mac, so this is one session on the Windows PC. Everything it records is replayed later by anyone, with no keys. This section is the whole procedure in one place; [docs/NIGHTSHIFT.md](docs/NIGHTSHIFT.md) has the Nightshift set-up in more detail.
+
+**1. Get the code (PowerShell, in the folder where you keep the repo).**
+
+```powershell
+git fetch origin
+git checkout pg-integrate
+git pull
+npm install
+```
+
+**2. Start Nightshift and point Tripwire at it.** Nightshift must be running, with your NVIDIA key added in Nightshift > Setup > Providers (the key stays inside Nightshift). Copy the runtime URL and token from Nightshift > Console. They last only for this PowerShell window and are never written to the repo:
+
+```powershell
+$env:METERLESS_BASE_URL = "http://127.0.0.1:8088/v1"
+$env:METERLESS_RUNTIME_TOKEN = "paste-the-token-from-Nightshift-Console"
+```
+
+Instead of the token you can set `$env:METERLESS_TOKEN_FILE` to Nightshift's `proxy-token` file. If you use a `RUN-ME.bat` that reads a `.env` file, keep that file outside the repo and make sure the bat runs the command in step 3.
+
+**3. Record (one command, about 1 to 1.5 hours).**
+
+```powershell
+npx tsx scripts/record_live.ts; if ($?) { npx tsx scripts/backtest.ts --record --max-cases 40 }
+```
+
+| Part | What it does | Model calls | Time |
+|---|---|---|---|
+| `record_live.ts` | The demo story live: every supplier decided, each bundled change applied, data restored. Now includes the pre-mortem (Ultra) and the crash tests (Lightning) on every decision | about 300 to 400 | about 20 to 30 min |
+| `backtest.ts --record --max-cases 40` | 40 past decisions spread over suppliers and years, each set using only what was filed by its date, for the two model arms of the backtest | about 800 (`npx tsx scripts/backtest.ts --budget` prints the estimate) | about 35 to 50 min |
+
+The second part starts only if the first one finished. Both check that Nightshift answers before making any call; if it does not, they stop and record nothing.
+
+**4. Watch the run number and the log.** Each part prints a line like `run 3: full log in logs/runs/run-0003-record_live.log` at the start. That file holds everything the script printed with times, one line per model call (which agent asked, which model answered, how long it took, and "ok" or the error), any crash with its full details, and how the run ended. Keys and tokens are blanked out, so the file is safe to share for debugging. `logs/` is never committed.
+
+**5. If it stops part-way, resume instead of starting over.** Run only the part that stopped, with `--resume` added:
+
+```powershell
+npx tsx scripts/record_live.ts --resume
+npx tsx scripts/backtest.ts --record --resume --max-cases 40
+```
+
+`--resume` continues the newest numbered run (`--resume 3` picks run 3) and writes to the same log file. Answers that run already got are reused, so only the missing or failed calls go to Nightshift again. If `record_live.ts` stopped, finish it with `--resume`, then run the backtest command without `--resume`.
+
+**6. Check the summary at the end of each part.** It says how many calls a model answered, how many fell back to rules, how many have a Nightshift receipt, and which models really answered. Expected, and not a problem:
+
+- **Safety-check calls fail with 404.** Nightshift 1.2.7 does not serve the Content Safety model. Those calls fall back and leave the decision unchanged.
+- **Scores through Nightshift can be lower than called directly** (6/8 vs 8/8 on the clear-cut cases). Every model set-up scored lower through Nightshift; both results are reported.
+- **"Busy" replies** (HTTP 429, 502, 503, 504) are retried up to twice before a call counts as failed.
+- **Backtest cases whose model call failed** are left out of that model arm, never scored as the model's. The script lists them.
+
+**7. Commit the recordings only.** Search them for your token and for `nvapi-` first; neither should appear.
+
+```powershell
+git add data/recordings/nightshift.jsonl data/backtest/recordings.jsonl
+git commit -m "Live Nightshift recording for the Proving Ground"
+git push origin pg-integrate
+```
+
+Never commit `.env`, `logs/` or the token. The recordings are appended to, not replaced: for each prompt, replay uses the newest record, including a failed one, so an older answer is never mixed in.
+
+**8. Turn the recordings into numbers (any machine, no keys).**
+
+```powershell
+npx tsx scripts/eval_crash.ts --write
+npx tsx scripts/backtest.ts --replay --max-cases 40
+```
+
+These replay the recorded answers and write the measured model-arm results into `eval/` (crash test and backtest). Only then do the "not recorded yet" entries in the Proving Ground table at the top of this README get real numbers.
+
+---
+
 ## API
 
 | Method and path | What it does |
@@ -178,6 +252,8 @@ npx tsx scripts/smoke_hmem.mts
 ## Logs
 
 Every agent step is one JSON line in `logs/trace-<run_id>.jsonl` and on stdout (`TRACE_STDOUT=false` turns stdout off). Fields include `timestamp`, `run_id`, `decision_id`, `agent_name`, `action`, `event` (handoff, critique, retry, sponsor_call, decision, …), `input_summary`, `output_summary`, `target_agent`, `confidence`, `retry_count`, `status` and `sponsor`.
+
+The live-recording scripts (`record_live.ts`, `backtest.ts`) also write one numbered log per run to `logs/runs/run-000N-<script>.log`: timestamped output, one line per model call, crashes and the exit code, with keys blanked out ([recording guide](#recording-the-proving-ground-live-windows-pc-with-nightshift)).
 
 ## Data
 

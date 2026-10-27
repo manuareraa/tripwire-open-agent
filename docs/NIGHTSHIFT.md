@@ -111,7 +111,7 @@ Tripwire with no live model replays it automatically: the console says "replay o
 that came from it. A step whose prompt was never recorded (for example a what-if you didn't run live) uses the
 rule-based path and says so. It is never guessed.
 
-To record again, delete the old file first (or pass a new `--out`), so the replay holds one coherent run.
+To record again, just run it again: for each prompt, replay uses the newest record (a failed one included), so a new run replaces the old answers without mixing them. Each run is numbered and logged to `logs/runs/`, and a run that stopped part-way continues with `--resume` (see "Recording the Proving Ground live" in the README).
 Set `MODEL_REPLAY=false` to turn replay off.
 
 ## 7. Record the measured comparison
