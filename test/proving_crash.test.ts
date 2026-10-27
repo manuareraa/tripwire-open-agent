@@ -74,7 +74,7 @@ describe("crash test", () => {
     const { deps, s, draft } = setup(model, { spend_share: 0.45, current_ratio: 1.6 });
     const kept = await crash.crashTest(deps, s, draft, [tw("spend_share", ">", 0.55), tw("current_ratio", "<", 1, "premortem")]);
     expect(kept.map((k) => k.metric)).toEqual(["current_ratio"]);
-    expect(s.proving.crash).toMatchObject({ tested: 2, verified: 1, decorative: 1, dropped: ["spend share > 0.55 (decorative)"] });
+    expect(s.proving.crash).toMatchObject({ tested: 2, verified: 1, decorative: 1, dropped: ["spend share > 0.55 (decorative): spend_share at 0.56 gives keep."] });
     expect(model.calls).toHaveLength(3);
   });
 

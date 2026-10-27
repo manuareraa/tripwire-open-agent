@@ -522,3 +522,14 @@ body { padding-bottom: var(--ab-h, 0px); }
 .pg-step { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
 .pg-title { font-weight: 600; margin: 4px 0 8px; }
 .pg-note { font-size: 12.5px; }
+/* Proving Ground · crash-test stage (pg-crash stream) */
+.pg-crash-head { font-size: 13px; margin-bottom: 8px; }
+.pg-crash-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pg-crash-rows li.dropped { opacity: .7; }
+.pg-crash-line { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; }
+.pg-crash-tw { font-weight: 600; }
+.pg-crash-origin { font-size: 11px; }
+.pg-crash-badge { --bc: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; color: var(--bc); border: 1px solid color-mix(in srgb, var(--bc) 45%, var(--line)); background: color-mix(in srgb, var(--bc) 10%, transparent); }
+.pg-crash-badge.verified { --bc: var(--keep); }
+.pg-crash-badge.decorative { --bc: var(--dual); }
+.pg-crash-badge.mis_set { --bc: var(--exit); }

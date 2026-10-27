@@ -136,11 +136,11 @@ export async function runCrash(deps: Deps, s: RunState, draft: DecisionDraft, ca
     else if (now === undefined) test = { verdict: "untested", reason: `no value today for ${words(c.metric)}` };
     else if (isTripped(c, now)) {
       dropped.push(`${describe(c)} (already true today at ${now}, so it can never fire)`);
-      emit(`${describe(c)}: already true today (${now}) → dropped`, "needs_revision", { metric: c.metric, origin: c.origin });
+      emit(`${describe(c)}: already true today (${now}) → dropped`, "needs_revision", { tripwire: describe(c), metric: c.metric, origin: c.origin });
       continue;
     } else test = (await probe(c.metric, c.op, c.threshold)).test;
 
-    emit(summary(c, test), test.verdict === "verified" ? "success" : test.verdict === "untested" ? "partial" : "needs_revision", { metric: c.metric, origin: c.origin, ...test });
+    emit(summary(c, test), test.verdict === "verified" ? "success" : test.verdict === "untested" ? "partial" : "needs_revision", { tripwire: describe(c), metric: c.metric, origin: c.origin, ...test });
 
     // One reset for a line set too far out: move it halfway to today's value and test again.
     if (test.verdict === "mis_set" && now !== undefined && c.op !== "changed" && c.threshold !== undefined) {
@@ -150,7 +150,7 @@ export async function runCrash(deps: Deps, s: RunState, draft: DecisionDraft, ca
       if ((moved - now) * (c.threshold - moved) > 0 && !isTripped({ op: c.op, threshold: moved }, now)) {
         const r = { ...c, threshold: moved };
         const again = await probe(c.metric, c.op, moved);
-        emit(`reset ${describe(c)} → ${moved}: ${summary(r, again.test)}`, again.verdict === "verified" ? "success" : "needs_revision", { metric: c.metric, origin: c.origin, reset_from: c.threshold, ...again.test });
+        emit(`reset ${describe(c)} → ${moved}: ${summary(r, again.test)}`, again.verdict === "verified" ? "success" : "needs_revision", { tripwire: describe(r), metric: c.metric, origin: c.origin, reset_from: c.threshold, ...again.test });
         if (again.verdict === "verified") {
           const why = `Line moved from ${c.threshold} to ${moved}: the old line was past the point where the call already changes. ${again.test.why ?? ""}`.trim();
           results.push({ c: { ...r, crash_test: { ...again.test, why } }, test: again.test, keep: true });
@@ -159,7 +159,7 @@ export async function runCrash(deps: Deps, s: RunState, draft: DecisionDraft, ca
       }
     }
     const keep = test.verdict === "verified" || test.verdict === "untested";
-    if (!keep) dropped.push(`${describe(c)} (${test.verdict.replace("_", "-")})`);
+    if (!keep) dropped.push(`${describe(c)} (${test.verdict.replace("_", "-")})${test.why ? `: ${test.why}` : ""}`);
     results.push({ c: { ...c, crash_test: test }, test, keep });
   }
 
