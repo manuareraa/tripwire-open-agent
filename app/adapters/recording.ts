@@ -17,6 +17,17 @@ export interface Recording {
   system: string;
   user: string;
   response: ModelResponse;
+  /** The numbered run that made this call (scripts/runlog.ts). Older recordings have none. */
+  run?: number;
+}
+
+export interface RecordingOptions {
+  /** Tags every new record with this run number. */
+  run?: number;
+  /** Resume run N: a prompt whose newest record is an answer from run N is reused, not asked again. */
+  resumeRun?: number;
+  /** One line per call (agent, model, time, ok or failed) is appended here, for debugging. */
+  log?: string;
 }
 
 /** Decision ids carry a timestamp, so they are blanked out before the prompt is matched. */
@@ -31,10 +42,34 @@ const SECRET = /token|secret|auth|password|api[_-]?key|cookie/i;
 const scrub = (res: ModelResponse): ModelResponse =>
   res.receipt ? { ...res, receipt: Object.fromEntries(Object.entries(res.receipt).filter(([k, v]) => !SECRET.test(k) && !/^(nvapi-|Bearer )/.test(String(v)))) } : res;
 
-/** Wraps a live client and appends every call it makes, answered or not, to `file`. */
+/**
+ * Wraps a live client and appends every call it makes, answered or not, to `file`.
+ * When resuming a run that stopped part-way, calls that run already got an answer for are reused instead of asked
+ * again. Prompts are deterministic, so the reused answers lead back to the same next prompts. A reused answer is
+ * only taken when it is also the newest record for that prompt, so replay later sees exactly what this run saw.
+ */
 export class RecordingModelClient implements ModelClient {
-  constructor(private inner: ModelClient, readonly file: string, private now = () => new Date()) {
+  private reuse = new Map<string, Recording>();
+  private calls = 0;
+  reused = 0;
+
+  constructor(private inner: ModelClient, readonly file: string, private now = () => new Date(), private opts: RecordingOptions = {}) {
     mkdirSync(dirname(file), { recursive: true });
+    if (opts.resumeRun !== undefined) {
+      const newest = new Map<string, Recording>();
+      for (const r of readRecordings(file)) newest.set(r.key, r);
+      for (const [k, r] of newest) if (r.run === opts.resumeRun && !r.response.fallback) this.reuse.set(k, r);
+    }
+    if (opts.log) mkdirSync(dirname(opts.log), { recursive: true });
+  }
+
+  /** Answers from the resumed run that are available for reuse. */
+  get reusable(): number {
+    return this.reuse.size;
+  }
+
+  private note(line: string) {
+    if (this.opts.log) appendFileSync(this.opts.log, `[${this.now().toISOString()}] ${line}\n`);
   }
 
   get enabled(): boolean {
@@ -42,12 +77,22 @@ export class RecordingModelClient implements ModelClient {
   }
 
   async complete(req: ModelRequest): Promise<ModelResponse> {
+    const n = ++this.calls;
+    const key = recordingKey(req);
+    const old = this.reuse.get(key);
+    if (old) {
+      this.reused++;
+      this.note(`call ${n} ${req.agent_name} (${req.tier}): reused answer recorded ${old.recorded_at} in run ${old.run}`);
+      return old.response;
+    }
     const res = await this.inner.complete(req);
     const rec: Recording = {
-      v: 1, key: recordingKey(req), recorded_at: this.now().toISOString(), agent_name: req.agent_name, tier: req.tier,
+      v: 1, key, recorded_at: this.now().toISOString(), agent_name: req.agent_name, tier: req.tier,
       thinking: !!req.thinking, system: req.system, user: req.user, response: scrub(res),
+      ...(this.opts.run !== undefined ? { run: this.opts.run } : {}),
     };
     appendFileSync(this.file, JSON.stringify(rec) + "\n");
+    this.note(`call ${n} ${req.agent_name} (${req.tier}) -> ${res.model}, ${res.latency_ms} ms, ${res.tokens_in}/${res.tokens_out} tokens: ${res.fallback ? `FAILED: ${res.error ?? "fallback"}` : "ok"}`);
     return res;
   }
 }

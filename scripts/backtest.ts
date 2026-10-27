@@ -8,6 +8,7 @@
 //   npx tsx scripts/backtest.ts --refresh       re-download from SEC EDGAR (User-Agent from SEC_USER_AGENT, <= 5 requests/second)
 //   npx tsx scripts/backtest.ts --budget        print the model arms' call budget and a minutes estimate, run nothing
 //   npx tsx scripts/backtest.ts --record [--max-cases N]   model arms live through Nightshift (Windows PC only), recorded
+//   npx tsx scripts/backtest.ts --record --resume [N] [--max-cases N]  continue run N after it stopped part-way
 //   npx tsx scripts/backtest.ts --replay [--max-cases N]   model arms from data/backtest/recordings.jsonl, no keys
 // Raw downloads go to data/backtest/raw/ (gitignored); the derived history (data/backtest/history.json) is committed.
 // Nothing here touches Zetaris.
@@ -15,6 +16,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync,
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { startRunLog } from "./runlog.js";
 import { defaultTripwires, type TripwireDraft } from "../app/tripwires.js";
 import {
   asOfDates, ceoCfoDeparture, qEnd, FOLLOWUP_QUARTERS, metricsAsOf, OFFICER_ITEM, qIndex, qLabel, scoreArm, troubleEvents, WINDOW_QUARTERS,
@@ -264,8 +266,10 @@ async function modelCases(hist: HistoryFile, cases: { supplier_id: string; as_of
   const { Tracer } = await import("../app/tracing.js");
   const { SampleDataGateway } = await import("../app/adapters/sample_data.js");
   const { LocalMemory } = await import("../app/adapters/local_memory.js");
+  const { RecordingModelClient } = await import("../app/adapters/recording.js");
   const rt = await buildRuntime();
   console.log(`model: ${rt.modes.model}`);
+  for (const n of rt.modes.notes) console.log(`  note: ${n}`);
   if (mode === "record" && !rt.modes.model.startsWith("nightshift")) {
     cleanup(work);
     throw new Error("Nightshift is not answering, so nothing was recorded (docs/NIGHTSHIFT.md).");
@@ -301,6 +305,7 @@ async function modelCases(hist: HistoryFile, cases: { supplier_id: string; as_of
   }
   delete process.env.SAMPLE_CLOCK;
   cleanup(work);
+  if (rt.model instanceof RecordingModelClient && rt.model.reused) console.log(`reused from the resumed run (not asked again): ${rt.model.reused} calls`);
   if (skippedCases.length) console.log(`left out of a model arm (${skippedCases.length}):\n  ${skippedCases.join("\n  ")}`);
   return { decider, crashed, modelAnswered, minutes: (Date.now() - started) / 60_000, mode: rt.modes.model };
 }
@@ -395,6 +400,8 @@ function markdown(r: BacktestResults & { fetched_on: string; cases_total: number
 }
 
 async function main() {
+  // Every run except the budget printout is numbered and logged to logs/runs/; only --record tags recordings and can resume.
+  if (!has("--budget")) startRunLog(has("--record") ? "backtest-record" : has("--replay") ? "backtest-replay" : "backtest", ROOT, has("--record") ? RECORDINGS : undefined);
   const hist = await buildHistory();
   const held = heldValues();
   const histories = hist.suppliers;

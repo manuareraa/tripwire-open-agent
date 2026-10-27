@@ -75,8 +75,10 @@ export async function buildRuntime(): Promise<Runtime> {
     notes.push(`No live model: replaying ${replay.size} recorded live Nemotron answers from ${config.modelReplayFile}; prompts with no recording use rule-based fallbacks`);
   } else notes.push("No model provider (or SAMPLE_MODE=true); agents use rule-based fallbacks");
   if (config.modelRecordFile && model.enabled) {
-    model = new RecordingModelClient(model, config.modelRecordFile);
-    notes.push(`Recording every model call to ${config.modelRecordFile}`);
+    const rec = new RecordingModelClient(model, config.modelRecordFile, undefined, { run: config.modelRecordRun, resumeRun: config.modelRecordResume, log: config.runLogFile });
+    model = rec;
+    notes.push(`Recording every model call to ${config.modelRecordFile}${config.modelRecordRun !== undefined ? ` (run ${config.modelRecordRun})` : ""}`);
+    if (config.modelRecordResume !== undefined) notes.push(`Resuming run ${config.modelRecordResume}: ${rec.reusable} answers already recorded will be reused, not asked again`);
   }
 
   // H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback.

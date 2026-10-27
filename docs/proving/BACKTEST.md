@@ -74,6 +74,7 @@ npx tsx scripts/backtest.ts --budget    # model arms' call budget and minutes es
 - **Per decision:** about 20 model calls: about 5 from the current pipeline, 1 Ultra pre-mortem and about 14 Lightning crash tests.
 - **All 200 decisions:** about 4,000 calls, roughly 200 minutes at 3 s a call. Ultra calls run longer, so treat that as a floor.
 - **Suggested run:** `npx tsx scripts/backtest.ts --record --max-cases 40`, an even spread of 40 decisions across suppliers and years. That is about 800 calls and about 40 minutes (`--budget` prints the current estimate). A decision is scored in a model arm only if that arm's model call was answered. The rule arm is also scored on the same 40 decisions, so the comparison is fair.
+- **If it stops part-way:** `npx tsx scripts/backtest.ts --record --resume --max-cases 40` continues the same numbered run, reusing every answer it already got. Each run's log is in `logs/runs/`.
 - **Afterwards:** commit `data/backtest/recordings.jsonl`. Anyone can then run `--replay --max-cases 40` with no keys.
 
 These are cost estimates, not results.

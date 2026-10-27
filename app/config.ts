@@ -48,6 +48,10 @@ export const config = {
   rerank: !forcedSample && (env.RERANK ?? "").toLowerCase() === "nvidia" && !!env.NVIDIA_API_KEY,
   /** Live runs append every model call (with its receipt) here when set. */
   modelRecordFile: env.MODEL_RECORD_FILE ?? "",
+  /** Set by scripts/runlog.ts: the run number new records are tagged with, the run being resumed, and the run's log file. */
+  modelRecordRun: env.MODEL_RECORD_RUN ? Number(env.MODEL_RECORD_RUN) : undefined,
+  modelRecordResume: env.MODEL_RECORD_RESUME ? Number(env.MODEL_RECORD_RESUME) : undefined,
+  runLogFile: env.RUN_LOG_FILE || undefined,
   /** With no live model, recorded live answers are replayed from here (labelled as replays). MODEL_REPLAY=false turns it off. */
   modelReplayFile: env.MODEL_REPLAY_FILE ?? "data/recordings/nightshift.jsonl",
   modelReplay: env.MODEL_REPLAY !== "false",

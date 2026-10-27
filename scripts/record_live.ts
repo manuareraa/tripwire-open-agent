@@ -5,12 +5,15 @@
 //   3. restore the bundled data (the Watcher re-checks again).
 // Every model call is appended, with Nightshift's receipt, to data/recordings/nightshift.jsonl (or --out).
 // Usage (on the machine running Nightshift; see docs/NIGHTSHIFT.md):
-//   npx tsx scripts/record_live.ts [--suppliers SUP-01,SUP-05] [--no-changes] [--out file] [--allow-backup]
+//   npx tsx scripts/record_live.ts [--suppliers SUP-01,SUP-05] [--no-changes] [--out file] [--allow-backup] [--resume [N]]
+// Each run is numbered and logged to logs/runs/ (scripts/runlog.ts). If a run stops part-way, re-run with --resume:
+// answers already recorded in that run are reused, so only the missing calls go to Nightshift again.
 // The run stops before any model call unless Nightshift answers its health check. Nothing here touches Zetaris.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { startRunLog } from "./runlog.js";
 
 // Remove a temp folder; on Windows an antivirus or indexer lock must not fail a run whose results are saved.
 const cleanup = (dir: string) => { try { rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch { console.warn(`could not remove ${dir}; delete it by hand`); } };
@@ -20,6 +23,7 @@ const arg = (name: string) => {
   return i > 0 ? process.argv[i + 1] : undefined;
 };
 const out = resolve(arg("--out") ?? join(ROOT, "data/recordings/nightshift.jsonl"));
+startRunLog("record_live", ROOT, out);
 const work = mkdtempSync(join(tmpdir(), "tripwire-record-"));
 
 // Bundled sample data only, so the prompts match what sample mode will ask when it replays.
@@ -31,7 +35,7 @@ const { buildRuntime } = await import("../app/runtime.js");
 const { runDecide } = await import("../app/orchestration/graph.js");
 const { reopenFor } = await import("../app/watcher.js");
 const { Tracer } = await import("../app/tracing.js");
-const { readRecordings } = await import("../app/adapters/recording.js");
+const { readRecordings, RecordingModelClient } = await import("../app/adapters/recording.js");
 
 const rt = await buildRuntime();
 console.log(`model: ${rt.modes.model}`);
@@ -72,6 +76,7 @@ const served = new Map<string, number>();
 for (const r of answered) served.set(r.response.model, (served.get(r.response.model) ?? 0) + 1);
 console.log(`\nrecorded ${recs.length} calls to ${out} in ${((Date.now() - started) / 1000).toFixed(0)} s`);
 console.log(`  answered by a model: ${answered.length}; fell back to rules: ${recs.length - answered.length}`);
+if (rt.model instanceof RecordingModelClient && rt.model.reused) console.log(`  reused from the resumed run (not asked again): ${rt.model.reused}`);
 console.log(`  with a Nightshift receipt: ${answered.filter((r) => r.response.receipt).length}`);
 console.log(`  tokens in/out: ${answered.reduce((n, r) => n + r.response.tokens_in, 0)} / ${answered.reduce((n, r) => n + r.response.tokens_out, 0)}`);
 for (const [m, n] of served) console.log(`  ${m}: ${n}`);
