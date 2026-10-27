@@ -1,0 +1,25 @@
+{
+  "accession": "0001193125-26-296205",
+  "cik": "1751788",
+  "supplier_id": "SUP-05",
+  "company": "DOW INC.",
+  "filed": "2026-07-06",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000119312526296205/d26391d8ka.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Section 5 – Corporate Governance and Management\n\nItem 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn April 14, 2026, Dow Inc. (\"Dow\" or the \"Company\") filed a Current Report on Form 8-K with the U.S. Securities and Exchange Commission (the \"SEC\") reporting that the Board of Directors of the Company (the \"Board\") appointed Karen S. Carter as Chief Executive Officer of the Company, effective July 1, 2026 (the \"Original Filing\").\n\nThis Form 8-K/A amends and supplements the Original Filing to provide a description of the material changes to Ms. Carter’s compensation in connection with her appointment as Chief Executive Officer, which had not been determined by the Board at the time of the Original Filing.\n\nOn June 30, 2026 and effective as of July 1, 2026, the Board approved (i) an increase to Ms. Carter’s annual base salary from $997,425 to $1,500,000, (ii) an increase to Ms. Carter’s target award under the Company’s annual cash incentive program from 120% to 165% of her annual base salary, and (iii) an increase to Ms. Carter’s aggregate target value for annual long-term incentive compensation awards from $5,319,600 to $14,025,000. Ms. Carter’s annual cash incentive payout for the 2026 program will be calculated to reflect the timing, targets and salary for both of her roles held during 2026 as follows: for the period from January 1, 2026 to June 30, 2026, the calculation will be based on the 120% target of her Chief Operating Officer base salary, and for the period from July 1, 2026 to December 31, 2026, the calculation will be based on the 165% target of her Chief Executive Officer base salary, each subject to Company and individual performance and the Company’s standard terms and conditions for the annual cash incentive program as described in the Company’s Definititive Proxy Statement on Schedule 14A filed with the SEC on February 27, 2026 (the \"Proxy Statement\").\n\nThe Board also approved the grant of a one-time long-term incentive compensation award to Ms. Carter with a grant date of July 1, 2026 and an aggregate grant date award value of $4,350,000, comprised of (i) 65% performance stock units to be earned based on performance over a three-year performance period, (ii) 20% stock options vesting in three equal annual installments beginning on February 12, 2027 and expiring on February 12, 2036, and (iii) 15% restricted stock units vesting on February 12, 2029. This award is consistent with the target award mix for other executives, includes vesting periods aligned to the Company’s annual executive compensation review cycle, and is subject to the Company’s standard terms and conditions for such award as described in the Proxy Statement. The number of shares underlying the award was calculated based on the closing stock price of Dow Inc. common stock on the grant date.\n\nMs. Carter will continue to participate in compensation and benefit arrangements available to other Dow executives, as well as other compensation and benefit arrangements similar to those available to eligible salaried U.S. employees, all of which are described in the Proxy Statement.\n\n**Signature**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDOW INC.\n\nDate: July 6, 2026\n\n/s/ SHANDELL S. MASSEY <br>\nShandell S. Massey<br>\nCorporate Secretary and Assistant General Counsel",
+  "text_hash": "2ebfd074d7c343eb659f9f44bcdaa4b3cdc459c26f092de6c0cc20973dfe9361",
+  "parse_ms": 5810,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Dow Inc. appointed Karen S. Carter as CEO effective July 1, 2026, with significant increases to her base salary, annual cash incentive target, and aggregate long-term incentive award value.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:49:21.510Z"
+}

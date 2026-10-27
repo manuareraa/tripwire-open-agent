@@ -1,0 +1,26 @@
+{
+  "accession": "0000091767-26-000047",
+  "cik": "91767",
+  "supplier_id": "SUP-15",
+  "company": "Sonoco Products Company",
+  "filed": "2026-10-21",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000047/son-20261021.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02 Results of Operations and Financial Condition.\n\nOn October 21, 2026, Sonoco Products Company (the \"Company\") issued a news release reporting its financial results for the quarter ended September 27, 2026. The Company also provided revised guidance for the full year 2026. A copy of that release is attached as an exhibit hereto.\n\nItem 9.01 Financial Statements and Exhibits.\n\n\\begin{tabular}{cc}\nExhibit No. & Description of Exhibit \\\\\n99 & Registrant's Third Quarter 2026 Earnings Release \\\\\n104 & Cover Page Interactive Data File (embedded within the Inline XBRL document) \\\\\n\\end{tabular}\n\n\n(d) Exhibits\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nSONCO PRODUCTS COMPANY\n\nDate: October 21, 2026\n\nBy: /s/ Paul Joachimczyk\n\nPaul Joachimczyk\n\nChief Financial Officer",
+  "text_hash": "d290504889f4cb71b272edacdfc09d3570fa605fb2e81d16606ece83ba2c4b56",
+  "parse_ms": 4291,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sonoco Products issued Q3 2026 earnings release with revised full-year guidance on Oct 21, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:55:27.578Z"
+}

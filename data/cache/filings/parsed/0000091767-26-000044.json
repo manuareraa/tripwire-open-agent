@@ -1,0 +1,27 @@
+{
+  "accession": "0000091767-26-000044",
+  "cik": "91767",
+  "supplier_id": "SUP-15",
+  "company": "Sonoco Products Company",
+  "filed": "2026-09-30",
+  "metadata_items": [
+    "1.01",
+    "2.03",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000044/son-20260925.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 6,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 1.01 Entry into a Material Definitive Agreement\n\nOn September 25, 2026 (the “Closing Date”), Sonoco Products Company (the “Company”) entered into a first amendment (the “First Amendment”) to its Credit Agreement (the “Existing Credit Agreement” and, as amended by the First Amendment, the “Amended Credit Agreement”), dated as of August 7, 2023, by and among the Company, a consortium of Farm Credit System institutions and CoBank, ACB, as administrative agent.\n\nThe First Amendment, among other things, provides for (i) a new $400 million tranche A term loan facility (the “Tranche A Term Loan”) that matures on December 31, 2029 and (ii) a new $400 million tranche B delayed-draw term loan facility (the “Tranche B Term Loan” and, together with the Tranche A Term Loan, the “Term Loans”) that matures December 31, 2031. The Company borrowed $500 million under the Amended Credit Agreement on the Closing Date, including $400 million under Tranche A Term Loan and $100 million of the Tranche B Term Loan. Pursuant to the First Amendment, the Company may borrow the remaining $300 million of the Tranche B Term Loan in no more than three draws of at least $25 million each at any time within the 12 months of the Closing Date.\n\nThe Company used $500 million of the Term Loans funded on the Closing Date to refinance its existing $500 million syndicated term loan under the Existing Credit Agreement, which was scheduled to mature in August 2028. The Company expects to use the remaining $300 million under the Tranche B Term Loan for refinancings of certain of its outstanding indebtedness at a subsequent date.\n\nBorrowings under the Tranche A Term Loan will mature and become payable on December 31, 2029 and bear interest, at the option of the Company, at either the Term SOFR or Daily Simple SOFR (each as defined in the First Amendment, and together, “SOFR”) plus an applicable margin, or the base rate set forth in the Amended Credit Agreement plus an applicable margin. The Company’s applicable margin with respect to the Tranche A Term Loan ranges from 1.575% to 2.075% for all SOFR borrowings and from 0.575% to 1.075% for all base rate borrowings, in each case based on the Company’s senior unsecured long-term debt ratings from S&P and/or Moody’s applicable on a given date. The Tranche A Term Loan does not require scheduled payments before maturity, and the Company may prepay it at any time without premium or penalty.\n\nBorrowings under the Tranche B Term Loan will mature and become payable on December 31, 2031 and bears interest, at the option of the Company, at either SOFR plus an applicable margin or the base rate set forth in the Amended Credit Agreement plus an applicable margin. The Company’s applicable margin with respect to the Tranche B Term Loan ranges from 1.675% to 2.175% for all SOFR borrowings and from 0.675% to 1.175% for all base rate borrowings, in each case based on the Company’s senior unsecured long-term debt ratings from S&P and/or Moody’s applicable on a given date. The Company must also pay a ticking fee on the daily unused amount of the Tranche B Term Loan commitments until the end of the availability period. The ticking fee ranges from 0.100% to 0.225% per year based on the same debt ratings. The Tranche B Term Loan does not require scheduled payments before maturity, and the Company may prepay it at any time without premium or penalty.\n\nThe Term Loans contains various customary representations and warranties and affirmative and negative covenants, as more fully described in the Amended Credit Agreement. The Amended Credit Agreement also contains various customary events of default (subject to grace periods, as applicable) including, among others: nonpayment of principal, interest or fees; breach of covenant; payment default on, or acceleration under, certain other material indebtedness; inaccuracy of the representations or warranties in any material respect; bankruptcy or insolvency; inability to pay debts; certain unsatisfied judgments; certain ERISA-related events; the invalidity or unenforceability of the Amended Credit Agreement or certain other documents executed in connection therewith; and the occurrence of a change of control.\n\nThe foregoing description of the First Amendment does not purport to be complete and is qualified in its entirety by reference to the complete text of the First Amendment, a copy of which is attached hereto as Exhibit 10.1 and is incorporated by reference herein.\n\nItem 2.03 Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant.\n\nThe information in Item 1.01 above is hereby incorporated by reference.\n\n4",
+  "text_hash": "bbb22f39265a7c93af18e05bb0af8924de6be224826c327dcb402faa82c5c23c",
+  "parse_ms": 12553,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sonoco refinanced $500M of debt with new 2029/2031 term loans, including $300M delayed draw option.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:55:41.646Z"
+}

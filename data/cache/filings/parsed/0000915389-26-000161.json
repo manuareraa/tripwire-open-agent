@@ -1,0 +1,27 @@
+{
+  "accession": "0000915389-26-000161",
+  "cik": "915389",
+  "supplier_id": "SUP-08",
+  "company": "EASTMAN CHEMICAL CO",
+  "filed": "2026-10-20",
+  "metadata_items": [
+    "5.03",
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000161/emn-20261016.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.03 Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.\n\nOn October 16, 2026, the Board of Directors (the “Board”) of Eastman Chemical Company (the “Company”) adopted amended and restated bylaws of the Company (as amended and restated, the “Amended and Restated Bylaws”), effective immediately.\n\nAmong other things, the amendments effected by the Amended and Restated Bylaws:\n\n(i) align the Company’s bylaws with developments in Delaware law and current market practice;\n\n(ii) revise procedural mechanics and disclosure requirements applicable to stockholder-requested special meetings;\n\n(iii) update the advance notice provisions regarding procedural mechanics and disclosure requirements applicable to stockholder nominations of director candidates and submissions of proposals regarding other business, including changing the annual meeting notice window to not earlier than 120 days and not later than 90 days before the first anniversary of the prior year’s annual meeting, subject to the alternative timing provisions set forth in the Amended and Restated Bylaws if the date of the annual meeting is changed by more than the specified period;\n\n(iv) revise the scope of information required regarding proposing stockholders, proposed nominees and other related persons;\n\n(v) establish a separate notice window for proxy access nominations of not earlier than 150 days and not later than 120 days prior to the first anniversary of the date (as stated in the Company’s proxy materials) that the definitive proxy statement was first distributed to stockholders, subject to the alternative timing provisions set forth in the Amended and Restated Bylaws if the date of the annual meeting is changed by more than the specified period;\n\n(vi) require director candidates to make themselves available for interviews with the Board or a committee or other subset thereof in connection with such person’s eligibility to serve as a director;\n\n(vii)adopt a plurality voting standard for the election of directors in contested elections;\n\n(viii) clarify that the exclusive forum provision does not apply to claims arising under the Securities Exchange Act of 1934, as amended, or other claims for which federal district courts of the United States of America have exclusive jurisdiction; and\n\n(ix) make certain other ministerial, technical and conforming changes.\n\nThe foregoing description of the revisions to the Amended and Restated Bylaws does not purport to be complete and is qualified in its entirety by reference to the complete text of the Amended and Restated Bylaws, a copy of which is filed hereto as Exhibit 3.1 to this Current Report on Form 8-K, and is incorporated herein by reference.\n\nItem 8.01 Other Events.\n\nUnder the Amended and Restated Bylaws, as discussed under Item 5.03 above, notices of director nominations and/or other business proposals which are submitted for the Company’s 2027 Annual Meeting of Stockholders (including information required under Rule 14a-19 under the Securities Exchange Act of 1934, as amended (the “Exchange Act”)), other than those submitted for inclusion in the Company’s proxy statement and form of proxy (“Proxy Materials”) pursuant to Exchange Act Rule 14a-8 or the proxy access provisions of the Amended and Restated Bylaws, must be delivered to the Corporate Secretary of the Company at its principal executive offices no earlier than January 7, 2027 and no later than February 6, 2027, subject to the alternative timing provisions set forth in the Amended and Restated Bylaws if the date of the 2027 Annual Meeting of Stockholders is changed by more than the specified period. Any such notice must comply with the applicable requirements of the Amended and Restated Bylaws and applicable law.\n\nThe amendments to the bylaws discussed under Item 5.03 above do not affect the deadline for stockholder proposals submitted for inclusion in the Company’s Proxy Materials for the 2027 Annual Meeting of Stockholders pursuant to Exchange Act Rule 14a-8, which remains November 24, 2026, as stated in the proxy statement for the Company’s 2026 Annual Meeting of Stockholders, filed on March 24, 2026. Under the Amended and Restated Bylaws, notices of director nominations submitted for inclusion in the Company’s Proxy<tbc>\n\nMaterials for the 2027 Annual Meeting of Stockholders pursuant to the proxy access provisions of the Amended and Restated Bylaws must be delivered to the Corporate Secretary of the Company at its principal",
+  "text_hash": "b731c4ebcb7ca85e315e7fc57bb00aefd12281fe4e345316e9160b6760e460b5",
+  "parse_ms": 11905,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Eastman Chemical amends bylaws to change director nomination deadlines for 2027 annual meeting",
+  "severity": "low",
+  "read_at": "2026-10-27T09:50:57.802Z"
+}

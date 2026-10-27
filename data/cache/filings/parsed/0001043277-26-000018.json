@@ -1,0 +1,25 @@
+{
+  "accession": "0001043277-26-000018",
+  "cik": "1043277",
+  "supplier_id": "SUP-10",
+  "company": "\"C. H. ROBINSON WORLDWIDE",
+  "filed": "2026-05-11",
+  "metadata_items": [
+    "5.07"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000018/chrw-20260507.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.07 Submission of Matters to a Vote of Security Holders.\n\nPursuant to notice duly given, the Company held its 2026 Annual Meeting of Shareholders virtually on May 7, 2026 at www.virtualshareholdermeeting.com/CHRW2026 (\"2026 Annual Meeting\"). The number of outstanding shares on the record date for the 2026 Annual Meeting was 117,850,413 shares. At the 2026 Annual Meeting, 110,104,789 shares, or approximately 93.4% percent of the outstanding shares, were represented in person or by proxy. At the 2026 Annual Meeting, the shareholders of the Company: (1) elected the ten director nominees set forth below to serve one-year terms, expiring at the Company’s 2027 Annual Meeting of Shareholders; (2) approved, on a non-binding advisory basis, the compensation of the Company’s named executive officers; (3) ratified the appointment of Deloitte & Touche LLP as the Company’s independent registered public accounting firm for the fiscal year ending December 31, 2026; and (4) approved the C.H. Robinson Worldwide, Inc. Amended and Restated 1997 Employee Stock Purchase Plan. The results of the matters voted upon by the shareholders are as follows:\n\n## 1. Election of Directors\n\n### 2. Approval, on a non-binding basis, of the compensation of the Company’s Named Executive Officers\n\n## 3. Ratification of the selection of Deloitte & Touche LLP as the Company’s independent registered public accounting firm for the fiscal year ending December 31, 2026\n\n### 4. Approval of the Company’s Amended and Restated 1997 Employee Stock Purchase Plan\n\n\\begin{tabular}{ccccc}\n & FOR & AGAINST & ABSTAIN & BROKER NON-VOTE \\\\ David P. Bozeman & 100,338,210 & 83,001 & 43,104 & 9,640,474 \\\\ Kermit R. Crawford & 98,908,517 & 1,513,827 & 41,971 & 9,640,474 \\\\ Edward Feitzinger & 100,255,907 & 166,164 & 42,244 & 9,640,474 \\\\ Timothy C. Gokey & 100,038,594 & 383,113 & 42,608 & 9,640,474 \\\\ Mark A. Goodburn & 100,031,653 & 387,724 & 44,938 & 9,640,474 \\\\ Mary J. Steele Guilfoile & 96,647,659 & 3,771,125 & 45,531 & 9,640,474 \\\\ Jodee A. Kozlak & 97,415,183 & 3,003,622 & 45,510 & 9,640,474 \\\\ Michael H. McGarry & 99,872,157 & 548,531 & 43,627 & 9,640,474 \\\\ Paige K. Robbins & 100,246,140 & 174,849 & 43,326 & 9,640,474 \\\\ Paula C. Tolliver & 100,244,292 & 177,143 & 42,880 & 9,640,474 \\\\ \\end{tabular}\n\n\\begin{tabular}{cccc}\nFOR & AGAINST & ABSTAIN & BROKER NON-VOTE\\\\ 96,144,263 & 4,145,670 & 174,382 & 9,640,474\\\\ \\end{tabular}\n\n\\begin{tabular}{ccc}\nFOR & AGAINST & ABSTAIN \\\\ 104,781,578 & 5,293,541 & 29,670 \\\\ \\end{tabular}\n\n\\begin{tabular}{cccc}\nFOR & AGAINST & ABSTAIN & BROKER NON-VOTE\\\\ 100,201,887 & 174,106 & 88,322 & 9,640,474\\\\ \\end{tabular}\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: May 11, 2026\n\nC.H. ROBINSON WORLDWIDE, INC.\n\nBy:<x_0.623><y_0.3305>\n\n/s/ Dorothy G. Capers <br>\nDorothy G. Capers <br>\nChief Legal Officer and Corporate Secretary",
+  "text_hash": "122a7d6a1809164be0ce3cd19a0e8f7c68cd32d0f35cbd06ac9e4a5d7685b926",
+  "parse_ms": 9477,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "C.H. Robinson held its 2026 Annual Meeting, approving director elections, executive compensation, auditor retention and an employee stock purchase plan with strong shareholder support.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:52:44.655Z"
+}

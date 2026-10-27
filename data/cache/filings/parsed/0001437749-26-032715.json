@@ -1,0 +1,25 @@
+{
+  "accession": "0001437749-26-032715",
+  "cik": "728535",
+  "supplier_id": "SUP-11",
+  "company": "\"J.B. HUNT TRANSPORT SERVICES",
+  "filed": "2026-10-15",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926032715/jbht20261014_8k.htm",
+  "pages_read": [
+    2
+  ],
+  "pages_total": 2,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "The information in this Current Report is being furnished and shall not be deemed “filed” for the purposes of Section 18 of the Securities Exchange Act of 1934, as amended, or otherwise subject to the liabilities of that Section. The information in this Current Report shall not be incorporated by reference into any registration statement or other document pursuant to the Securities Act of 1933, as amended.\n\nITEM 2.02. RESULTS OF OPERATIONS AND FINANCIAL CONDITION.\n\nOn October 15, 2026, we issued a news release announcing our revenues and earnings for the third quarter ended September 30, 2026. A copy of the news release is attached as Exhibit 99.1 and is incorporated herein by reference.\n\nITEM 9.01. FINANCIAL STATEMENTS AND EXHIBITS\n\n(d) Exhibits.\n\n99.1 News release dated October 15, 2026, issued by J.B. Hunt Transport Services, Inc.\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL Document)\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized on the 15th day of October 2026.\n\nJ.B. HUNT TRANSPORT SERVICES, INC.\n\nBY: /s/ Shelley Simpson ______________________________\n\nShelley Simpson-\nPresident and Chief Executive Officer (Principal Executive Officer)\n\nBY: /s/ A.Brad Delco _______________________\n\nA.Brad Delco\nChief Financial Officer,\nExecutive Vice President\n(Principal Financial Officer)",
+  "text_hash": "a13255da277a25a8d4d73fabae21e7a6fb42497141fb853370c86229d16f9d35",
+  "parse_ms": 4119,
+  "parse_calls": 1,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "J.B. Hunt Transport Services announced third quarter 2026 financial results via news release on October 15, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:53:03.845Z"
+}

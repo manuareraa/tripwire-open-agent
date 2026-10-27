@@ -11,7 +11,8 @@ secrets/
 credentials/
 .DS_Store
 coverage/
-data/cache/
+data/cache/*
+!data/cache/filings/
 data/ledger/
 
 # H-MEM persistence (app/adapters/hmem.ts)

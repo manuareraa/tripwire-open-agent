@@ -1,0 +1,28 @@
+{
+  "accession": "0001437749-25-036646",
+  "cik": "728535",
+  "supplier_id": "SUP-11",
+  "company": "\"J.B. HUNT TRANSPORT SERVICES",
+  "filed": "2025-12-02",
+  "metadata_items": [
+    "1.01",
+    "1.02",
+    "2.03",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774925036646/jbht20251201_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 1.01. ENTRY INTO A MATERIAL DEFINITIVE AGREEMENT\n\nSee the information set forth in Item 2.03 of this current report on Form 8-K, which is incorporated by reference herein.\n\nITEM 1.02. TERMINATION OF A MATERIAL DEFINITIVE AGREEMENT\n\nSee the information set forth in Item 2.03 of this current report on Form 8-K, which is incorporated by reference herein.\n\nITEM 2.03. CREATION OF A DIRECT FINANCIAL OBLIGATION\n\nOn November 25, 2025, J.B. Hunt Transport Services, Inc. and its principal operating subsidiary, J.B. Hunt Transport, Inc. (collectively, “we” or the “Company”), entered into a $1.7 billion Second Amended and Restated Credit Agreement, dated November 25, 2025, by and among J.B. Hunt Transport, Inc., as borrower, J.B. Hunt Transport Services, Inc., as parent guarantor, the lenders named therein, and Bank of America, N.A., as administrative agent. This amended credit facility extends the maturity date of our existing $1.0 billion revolving line of credit for a new five-year term, expiring November 25, 2030, with a right to request two one-year extensions of the maturity date (which, if fully exercised and agreed to by the lenders, would extend the revolving line of credit expiration date to November 25, 2032). The amended credit facility includes an increased accordion feature giving the borrower the right to request an increase in the total commitment by up to $400 million, a $100 million increase from the prior $300 million accordion (which, if fully exercised and agreed to by the lenders, would increase the revolving line of credit to $1.4 billion). Additionally, the amended credit facility provides a commitment of the lenders, upon requests of the borrower during the six-month period beginning November 25, 2025, to fund up to $700 million of term loans that, if and when so funded, would mature on November 25, 2028. This term loan commitment replaces the $500 million of term loans we previously borrowed and fully repaid in March 2025.\n\nThe amended credit facility requires us to maintain certain covenants and financial ratios. Borrowing costs are based on the Secured Overnight Financing Rate (SOFR), or a Base Rate, plus an applicable margin and other fees. The amended credit facility contains customary default provisions and remedies, including a right to accelerate the payment of outstanding obligations. The Company intends to use the amended credit facility for equipment purchases, repurchases of our common stock, refinancing of our existing senior debt and other working capital purposes.\n\nThis amended credit facility amends and restates, and therefore supersedes, our $1.5 billion Amended and Restated Credit Agreement, dated September 27, 2022, by and among J.B. Hunt Transport, Inc., as borrower, J.B. Hunt Transport Services, Inc., as parent guarantor, the lenders named therein, and Bank of America, N.A., as administrative agent.\n\nThe foregoing summary of the Second Amended and Restated Credit Agreement does not purport to be complete and is subject to, and qualified in its entirety by, the full text of the Second Amended and Restated Credit Agreement, which is filed as Exhibit 10.1 to this report and is incorporated herein by reference.\n\nITEM 9.01. FINANCIAL STATEMENTS AND EXHIBITS\n\n(d) Exhibits.\n\n10.1 Second Amended and Restated Credit Agreement and related documents\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL Document)\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized on the 2nd day of December, 2025.\n\nJ.B. HUNT TRANSPORT SERVICES, INC.\n\nBY:/s/ Shelley Simpson\n\nShelley Simpson \n\nPresident and Chief Executive Officer \n\n(Principal Executive Officer)\n\nBY:/s/ A. Brad Delco\n\nA. Brad Delco \n\nChief Financial Officer, \n\nExecutive Vice President \n\n(Principal Financial Officer)",
+  "text_hash": "ded80c91cbf7124b319ac37ac48bfc3277abe05e702d05910dc78088f5d306ad",
+  "parse_ms": 11337,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "J.B. Hunt replaced its $1.5B credit facility with a $1.7B amended agreement extending maturity to 2030 and adding $400M accordion feature.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:52:58.071Z"
+}

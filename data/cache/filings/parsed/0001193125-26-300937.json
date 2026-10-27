@@ -1,0 +1,26 @@
+{
+  "accession": "0001193125-26-300937",
+  "cik": "1751788",
+  "supplier_id": "SUP-05",
+  "company": "DOW INC.",
+  "filed": "2026-07-10",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000119312526300937/d166478d8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Section 8 - Other Events\n\nItem 8.01 Other Events.\n\nDow Inc. (the \"Company\") is registering 5,410,000 shares (the \"Shares\") of its common stock, par value $0.01 per share, under the Company's registration statement on Form S-3 (File No. 333-288028) (the \"Registration Statement\"), to be issued pursuant to the base prospectus contained therein, as supplemented by a prospectus supplement, dated as of July 10, 2026, filed with the U.S. Securities and Exchange Commission on July 10, 2026 (the \"Prospectus Supplement\"). The Shares may become issued and outstanding upon the exercise, settlement or vesting of certain awards issued by the Company under the Dow Inc. 2019 Stock Incentive Plan to the extent not eligible for registration on Form S-8. In connection with the filing of the Prospectus Supplement, the Company is filing a legal opinion as Exhibit 5.1 to this Current Report on Form 8-K, which is incorporated by reference into the Registration Statement.\n\nSection 9 - Financial Statements and Exhibits\n\nItem 9.01 Financial Statements and Exhibits.\n\n(d) Exhibits. The exhibits listed on the Exhibit Index are incorporated herein by reference.\n\n\\begin{tabular}{cc}\nExhibit No. & Exhibit Description\\\\\n5.1 & Opinion of Shandell S. Massey, Corporate Secretary and Assistant General Counsel, Dow Inc.\\\\\n23.1 & Consent of Shandell S. Massey (included in Exhibit 5.1)\\\\\n\\end{tabular}\n\nSignature\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDOW INC.\n\nDate: July 10, 2026\n\n<u>/s/ SHANDELL S. MASSEY</u> <br>\nShandell S. Massey <br>\nCorporate Secretary and Assistant General Counsel",
+  "text_hash": "a1fac35ec850616f232973cec3a362d837b70b955091d18e2b091cb29dd4dc6e",
+  "parse_ms": 4312,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Dow Inc. registers 5.4M shares for stock plan awards, filing legal opinion as Exhibit 5.1.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:49:13.646Z"
+}

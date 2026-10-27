@@ -1,0 +1,26 @@
+{
+  "accession": "0001140361-26-030989",
+  "cik": "1097864",
+  "supplier_id": "SUP-03",
+  "company": "ON SEMICONDUCTOR CORPORATION",
+  "filed": "2026-08-03",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126030989/ef20079200_8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "### Item 2.02. Results of Operation and Financial Condition.\n\nOn August 3, 2026, ON Semiconductor Corporation announced in a news release its financial performance for the second quarter ended July 3, 2026 and other related material information (the **\"Earnings Release\"**). A copy of the Earnings Release is attached hereto as Exhibit 99.1 and incorporated herein by reference.\n\nThe information in Item 2.02 of this Current Report on Form 8-K, including Exhibit 99.1, is being furnished under Item 2.02 and shall not be deemed to be \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the **\"Exchange Act\"**), or otherwise subject to liability under that section, nor shall such information be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act, regardless of any general incorporation language in such filing, except as shall be expressly set forth by specific reference in such filing.\n\n**Item 9.01. Financial Statements and Exhibits.**\n\n(d) Exhibits\n\nThe below exhibit is furnished as part of this Current Report on Form 8-K.\n\n\\begin{tabular}{cc}\nExhibit No. & Description\\\\\n99.1 & News release for ON Semiconductor Corporation, dated August 3, 2026, announcing financial performance for the second quarter ended July 3, 2026\\\\\n104 & CoverPage Interactive Data File (embedded within the Inline XBRL document)\\\\\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nON SEMICONDUCTOR CORPORATION <br>\n(Registrant)\n\nDate: August 3, 2026\n\nBy://s/ Thad Trent <br>\nThad Trent <br>\nExecutive Vice President and Chief Financial Officer",
+  "text_hash": "0e77f5d0f3e318c6ee52be8eb9cc0fff9f7161050ddccb7b4e446a3ba3289517",
+  "parse_ms": 4809,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "ON Semiconductor reported Q2 2026 financial results via earnings release on August 3, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:48:15.081Z"
+}

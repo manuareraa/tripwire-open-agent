@@ -1,0 +1,26 @@
+{
+  "accession": "0000895419-26-000049",
+  "cik": "895419",
+  "supplier_id": "SUP-04",
+  "company": "\"WOLFSPEED",
+  "filed": "2026-08-19",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000089541926000049/wolf-20260819.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "## Item 2.02 Results of Operations and Financial Condition\n\nOn August 19, 2026, Wolfspeed, Inc. (the \"Company\") issued a press release announcing results for the fiscal fourth quarter ended June 28, 2026. The press release is attached as Exhibit 99.1 and incorporated into this report by reference.\n\nThe information in this Item 2.02, including Exhibit 99.1 attached hereto, is being furnished under Item 2.02 and shall not be deemed \"filed\" for the purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), or otherwise subject to the liability of that section, nor shall such information be deemed incorporated by reference into any filings of the Company under the Securities Act of 1933, as amended, or the Exchange Act, regardless of any general incorporation language in such filing, except as shall be expressly set forth by specific reference in such filing.\n\n## Item 9.01 Financial Statements and Exhibits\n\n## Exhibits\n\n\\begin{tabular}{cc}\n108 & Description of Exhibit \\\\\n99.1 & PRES release dated August 19, 2026 \\\\\n & Cover Page Interactive Data File (embedded within the Inline XBRL document) \\\\\n\\end{tabular}\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n**WOLFSPEED, INC.**\n\nBy: /s/ Gregor van Issum\n\n<tbc>Gregor van Issum\n\nChief Financial Officer\n\nDate: August 19, 2026",
+  "text_hash": "a69ebcb3f43adda25d4721d28b7d15c21e7eaaf6ff00b74204d68c9ff45fbcc5",
+  "parse_ms": 4119,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Wolfspeed reported fiscal fourth quarter results for the period ended June 28, 2026, via press release on August 19, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:48:54.168Z"
+}

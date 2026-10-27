@@ -1,0 +1,1250 @@
+{
+  "note": "8-K documents fetched from EDGAR and read by Nemotron Parse (build.nvidia.com); headline and severity by Nemotron 3.5 Lightning from the parsed text. Written by scripts/parse_filings.ts.",
+  "parse_model": "nvidia/nemotron-parse",
+  "headline_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "read_at": "2026-10-27T09:58:35.942Z",
+  "per_supplier_cap": 4,
+  "parse_calls": 155,
+  "headline_calls": 80,
+  "parse_ms_total": 572243,
+  "cross_check": {
+    "filings": 80,
+    "risk_flag_agree": 80,
+    "exact_item_match": 70,
+    "metadata_items": 165,
+    "metadata_items_found_by_parse": 151
+  },
+  "by_supplier": {
+    "SUP-01": [
+      {
+        "id": "8k-0000097476-26-000165",
+        "supplier_id": "SUP-01",
+        "accession": "0000097476-26-000165",
+        "filed": "2026-10-21",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Texas Instruments released Q3 2026 earnings news, highlighting non-GAAP metrics like free cash flow for liquidity insight.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000165/txn-20261021.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "173b12e10957b270fae5bf2b66dc0cc1f054fe1a555c37fee6387f297a959cd8"
+      },
+      {
+        "id": "8k-0000097476-26-000148",
+        "supplier_id": "SUP-01",
+        "accession": "0000097476-26-000148",
+        "filed": "2026-07-22",
+        "items": [
+          "2.02"
+        ],
+        "headline": "Texas Instruments released Q2 2026 earnings news release referencing non-GAAP financial measures",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000148/txn-20260722.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "81f3da3efc4a8fc84937033bb979cf0ad33fd538b117977813b34181c084ab10"
+      },
+      {
+        "id": "8k-0000950103-26-008325",
+        "supplier_id": "SUP-01",
+        "accession": "0000950103-26-008325",
+        "filed": "2026-06-02",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Texas Instruments appoints new CFO and CPA effective August 2026, successor to retiring 25-year veteran",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010326008325/dp247795_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "ae9d7f5a05a6299f8c2c1533c34da01e28c6c4000778abb0cdd12a96a9049568"
+      },
+      {
+        "id": "8k-0000097476-26-000097",
+        "supplier_id": "SUP-01",
+        "accession": "0000097476-26-000097",
+        "filed": "2026-04-22",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Texas Instruments released Q1 2026 earnings news, reporting non-GAAP metrics like free cash flow for investor insight.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000097/txn-20260422.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "3c1a61e13daad0be15c763c0240948e58e5046077429caf94ce389d5e424c9d5"
+      }
+    ],
+    "SUP-02": [
+      {
+        "id": "8k-0000827054-26-000042",
+        "supplier_id": "SUP-02",
+        "accession": "0000827054-26-000042",
+        "filed": "2026-08-19",
+        "items": [
+          "5.02",
+          "5.07",
+          "9.01"
+        ],
+        "headline": "Microchip Technology stockholders approved an amended 2004 Equity Incentive Plan increasing authorized shares by 12 million at their August 2026 annual meeting.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000042/mchp-20260818.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "eb993c6fcd8e2e7051afc84b3b1eb241df316b6fd71a518c0b45290271103596"
+      },
+      {
+        "id": "8k-0000827054-26-000037",
+        "supplier_id": "SUP-02",
+        "accession": "0000827054-26-000037",
+        "filed": "2026-08-06",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Microchip Technology announced first quarter fiscal year 2027 financial results on August 6, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000037/mchp-20260806.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "8711b975b804aa822c9072fb06f55b63e23835e26251a019ac4879ea5c1746b7"
+      },
+      {
+        "id": "8k-0000827054-26-000031",
+        "supplier_id": "SUP-02",
+        "accession": "0000827054-26-000031",
+        "filed": "2026-07-24",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Microchip COO Richard Simonicic resigns to become CEO of Menlo Microsystems effective August 17, 2026",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000031/mchp-20260723.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "942fe30ae1660de55d9cef5d858cfbdbc3fefc24002123f73d045c66c2a4f949"
+      },
+      {
+        "id": "8k-0000827054-26-000020",
+        "supplier_id": "SUP-02",
+        "accession": "0000827054-26-000020",
+        "filed": "2026-06-01",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Microchip Technology appoints Mitch Little as new Board member effective June 1, 2026",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000020/mchp-20260528.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "b53b01bf6c14c9133c7d56795849540ec43b91c7ab9a050cd4d2634e16747d58"
+      }
+    ],
+    "SUP-03": [
+      {
+        "id": "8k-0001140361-26-038294",
+        "supplier_id": "SUP-03",
+        "accession": "0001140361-26-038294",
+        "filed": "2026-10-01",
+        "items": [
+          "1.01"
+        ],
+        "headline": "ON Semiconductor finalizes amended merger agreement to acquire Synaptics at $123 per share in cash.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126038294/ef20083030_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "d4d6fee12c664cc074b22952ee825a6ec5cd71f57f33023d3ab0bc22b8e97eae"
+      },
+      {
+        "id": "8k-0001140361-26-032594",
+        "supplier_id": "SUP-03",
+        "accession": "0001140361-26-032594",
+        "filed": "2026-08-13",
+        "items": [
+          "8.01"
+        ],
+        "headline": "ON Semiconductor announced agreement to acquire Synaptics Incorporated, subject to Hart-Scott-Rodino approval and stockholder vote, targeting mid-2027 close.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126032594/ef20080111_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "39a0bd72c32c3a3bb68b59cd2b3559a6c7c76aaa32bb171355e2680c046cc172"
+      },
+      {
+        "id": "8k-0001140361-26-030989",
+        "supplier_id": "SUP-03",
+        "accession": "0001140361-26-030989",
+        "filed": "2026-08-03",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "ON Semiconductor reported Q2 2026 financial results via earnings release on August 3, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126030989/ef20079200_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "0e77f5d0f3e318c6ee52be8eb9cc0fff9f7161050ddccb7b4e446a3ba3289517"
+      },
+      {
+        "id": "8k-0001140361-25-042498",
+        "supplier_id": "SUP-03",
+        "accession": "0001140361-25-042498",
+        "filed": "2025-11-17",
+        "items": [
+          "2.06"
+        ],
+        "headline": "ON Semiconductor approved $200M-$300M in non-cash asset impairment and accelerated depreciation charges for manufacturing facilities, reducing future depreciation but not requiring material cash expenditures.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036125042498/ef20059530_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "a7edfc632d375ba026b6659ad9f74e4c8cddc9f88ad55f78f7469f2adb97ec40"
+      }
+    ],
+    "SUP-04": [
+      {
+        "id": "8k-0001193125-26-416987",
+        "supplier_id": "SUP-04",
+        "accession": "0001193125-26-416987",
+        "filed": "2026-10-07",
+        "items": [
+          "7.01",
+          "8.01"
+        ],
+        "headline": "Wolfspeed entered conditional commitment for up to $1.5B U.S. government loan to refinance debt and fund domestic chip projects, subject to major conditions.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000119312526416987/d122407d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "0621583117d9e1e22cd836ae30875b903ced35ffb32dd1a8cbacaec09c7bcd20"
+      },
+      {
+        "id": "8k-0001193125-26-393237",
+        "supplier_id": "SUP-04",
+        "accession": "0001193125-26-393237",
+        "filed": "2026-09-16",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "Wolfspeed disclosed pro forma financials reflecting emergence from prepackaged reorganization and fresh start accounting effective Sept 29, 2025.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000119312526393237/d45459d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "20ce32e0a1c492c2e9faf0917c3a639cf6577871a9d42dc16f9aa3cae942a311"
+      },
+      {
+        "id": "8k-0000895419-26-000057",
+        "supplier_id": "SUP-04",
+        "accession": "0000895419-26-000057",
+        "filed": "2026-08-25",
+        "items": [
+          "5.02",
+          "9.01"
+        ],
+        "headline": "Renesas director Aris Bolisay resigns from Wolfspeed Board effective Sept 27, 2026; Renesas retains board designation rights.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000089541926000057/wolfspeed-20260820.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "7e44ad2aa4d1cc871a98f9c252d7f6136f812c8303651c05fe6ff9ae9317ef0c"
+      },
+      {
+        "id": "8k-0000895419-26-000049",
+        "supplier_id": "SUP-04",
+        "accession": "0000895419-26-000049",
+        "filed": "2026-08-19",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Wolfspeed reported fiscal fourth quarter results for the period ended June 28, 2026, via press release on August 19, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000089541926000049/wolf-20260819.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "a69ebcb3f43adda25d4721d28b7d15c21e7eaaf6ff00b74204d68c9ff45fbcc5"
+      }
+    ],
+    "SUP-05": [
+      {
+        "id": "8k-0001751788-26-000155",
+        "supplier_id": "SUP-05",
+        "accession": "0001751788-26-000155",
+        "filed": "2026-10-22",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Dow Inc. announced third quarter 2026 financial results via press release.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000155/dow-20261022.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "50844e26c03afcc3dd295e7a355032b7b9cae331aaa3bba41d7fef71ee95e33f"
+      },
+      {
+        "id": "8k-0001751788-26-000144",
+        "supplier_id": "SUP-05",
+        "accession": "0001751788-26-000144",
+        "filed": "2026-07-23",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Dow Inc. announced second quarter 2026 financial results via press release on July 23, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000144/dow-20260723.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "abfbccfb483779e27b6da5a2ba7be6a95a078da1aa22a5456d713cb42c942e76"
+      },
+      {
+        "id": "8k-0001193125-26-300937",
+        "supplier_id": "SUP-05",
+        "accession": "0001193125-26-300937",
+        "filed": "2026-07-10",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "Dow Inc. registers 5.4M shares for stock plan awards, filing legal opinion as Exhibit 5.1.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000119312526300937/d166478d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "a1fac35ec850616f232973cec3a362d837b70b955091d18e2b091cb29dd4dc6e"
+      },
+      {
+        "id": "8k-0001193125-26-296205",
+        "supplier_id": "SUP-05",
+        "accession": "0001193125-26-296205",
+        "filed": "2026-07-06",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Dow Inc. appointed Karen S. Carter as CEO effective July 1, 2026, with significant increases to her base salary, annual cash incentive target, and aggregate long-term incentive award value.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000119312526296205/d26391d8ka.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "2ebfd074d7c343eb659f9f44bcdaa4b3cdc459c26f092de6c0cc20973dfe9361"
+      }
+    ],
+    "SUP-06": [
+      {
+        "id": "8k-0001306830-26-000124",
+        "supplier_id": "SUP-06",
+        "accession": "0001306830-26-000124",
+        "filed": "2026-10-20",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Celanese appoints new director Anne Noonan to key board committees",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000124/ce-20260416.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "2663f1f9ad4e9c9a37f98e468f81d4ec4076e26077af3ca9a3fe3a62d978f2e6"
+      },
+      {
+        "id": "8k-0001306830-26-000119",
+        "supplier_id": "SUP-06",
+        "accession": "0001306830-26-000119",
+        "filed": "2026-09-16",
+        "items": [
+          "5.02",
+          "9.01"
+        ],
+        "headline": "Celanese elected Luis Fernandez-Moreno to its Board of Directors effective September 16, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000119/ce-20260916.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "53c546b920c9cffdaae9f279da8e0033ccce0546b18ef8c39521e11b2b17f932"
+      },
+      {
+        "id": "8k-0001306830-26-000113",
+        "supplier_id": "SUP-06",
+        "accession": "0001306830-26-000113",
+        "filed": "2026-08-04",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Celanese Corporation issued Q2 2026 financial results via press release on August 4, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000113/ce-20260804.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "9fd798ce1ea033ed485d96e25f394459406f6c2454b68aeb3c4b52065547d320"
+      },
+      {
+        "id": "8k-0001306830-25-000203",
+        "supplier_id": "SUP-06",
+        "accession": "0001306830-25-000203",
+        "filed": "2025-10-28",
+        "items": [
+          "2.05",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "Celanese plans to permanently close its Lanaken, Belgium acetate tow facility by mid-2026 after union consultation, expecting $70-90M in shutdown costs.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683025000203/ce-20251028.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "6a13927ac91b1e06334eed62fa3a016cb5936c04478b2a30ad9e1cffe1024719"
+      }
+    ],
+    "SUP-07": [
+      {
+        "id": "8k-0001104659-26-100848",
+        "supplier_id": "SUP-07",
+        "accession": "0001104659-26-100848",
+        "filed": "2026-08-25",
+        "items": [
+          "5.07",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "Huntsman stockholders approved merger with Olin Corporation in a stockholder vote.",
+        "severity": "high",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1307954/000110465926100848/tm2623961d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "cf88468554d1730505b8c64faff250ee4831a0aafc88a3b4e79fe71dc1999580"
+      },
+      {
+        "id": "8k-0001104659-26-097961",
+        "supplier_id": "SUP-07",
+        "accession": "0001104659-26-097961",
+        "filed": "2026-08-18",
+        "items": [
+          "8.01"
+        ],
+        "headline": "Huntsman and Olin agree to merge in a business combination, with stockholder votes scheduled for August 25, 2026.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1307954/000110465926097961/tm2623370d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "01b619462fd2859980803c2b0a6593b402fd95846f230096848f80f02bcb25d2"
+      },
+      {
+        "id": "8k-0001104659-26-088729",
+        "supplier_id": "SUP-07",
+        "accession": "0001104659-26-088729",
+        "filed": "2026-07-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Huntsman Corporation issued Q2 2026 earnings press release and scheduled July 31 conference call.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1307954/000110465926088729/tm2621698d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "84211ccd71d5c1df4ffd71e501f4fdddce35eb0a58f075133d4399b56fb3bb0d"
+      },
+      {
+        "id": "8k-0001104659-26-015235",
+        "supplier_id": "SUP-07",
+        "accession": "0001104659-26-015235",
+        "filed": "2026-02-13",
+        "items": [
+          "1.01",
+          "1.02",
+          "2.03",
+          "9.01"
+        ],
+        "headline": "Huntsman replaced its existing $800M credit facility with a new 5-year agreement from Citibank, expanding capacity by $400M.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1307954/000110465926015235/tm265738d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "d04315ba58a092e211fb59a0638538d0fec89f2d60cae61099db9b2b25b666e9"
+      }
+    ],
+    "SUP-08": [
+      {
+        "id": "8k-0000915389-26-000161",
+        "supplier_id": "SUP-08",
+        "accession": "0000915389-26-000161",
+        "filed": "2026-10-20",
+        "items": [
+          "5.03",
+          "8.01"
+        ],
+        "headline": "Eastman Chemical amends bylaws to change director nomination deadlines for 2027 annual meeting",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000161/emn-20261016.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "b731c4ebcb7ca85e315e7fc57bb00aefd12281fe4e345316e9160b6760e460b5"
+      },
+      {
+        "id": "8k-0000915389-26-000138",
+        "supplier_id": "SUP-08",
+        "accession": "0000915389-26-000138",
+        "filed": "2026-07-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Eastman Chemical released Q2 2026 financial results on July 30, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000138/emn-20260730.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "d8c3631086c18989eb9424067dca7de617831428e1527b9bf20f0d0edb4abd12"
+      },
+      {
+        "id": "8k-0000915389-26-000123",
+        "supplier_id": "SUP-08",
+        "accession": "0000915389-26-000123",
+        "filed": "2026-05-12",
+        "items": [
+          "5.07"
+        ],
+        "headline": "Eastman Chemical held its 2026 annual stockholder meeting, ratifying PwC as auditor and approving executive compensation and stock plans.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000123/emn-20260507.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "34d9a859e7c665e204de714f933aaf27645a8941d6fb92fba925b9bf1a30b152"
+      },
+      {
+        "id": "8k-0000915389-26-000094",
+        "supplier_id": "SUP-08",
+        "accession": "0000915389-26-000094",
+        "filed": "2026-04-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Eastman Chemical released first quarter 2026 financial results on April 30, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000094/emn-20260430.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "525036da7c9820762c08ecdbfd2cbf9afdf211529c8f266f3e69728b209ee895"
+      }
+    ],
+    "SUP-09": [
+      {
+        "id": "8k-0001628280-26-059609",
+        "supplier_id": "SUP-09",
+        "accession": "0001628280-26-059609",
+        "filed": "2026-08-31",
+        "items": [
+          "5.02",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "UPS executive Kate Gutmann retiring Sept 1, 2026; two senior officers receive multi-million dollar retention RSU awards.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026059609/ups-20260831.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "59a6e5fcce5e7c43d4569004c336f93956e17bb066474b6584fafd055529dfd4"
+      },
+      {
+        "id": "8k-0001104659-26-098351",
+        "supplier_id": "SUP-09",
+        "accession": "0001104659-26-098351",
+        "filed": "2026-08-18",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "UPS issued $325.1M in Floating Rate Senior Notes due 2076 for general corporate purposes.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000110465926098351/tm2622353d8_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "1f815140dadb5a29e0df024a0e77d36a1df28e618e6eccf5c15a79eb53fcff1c"
+      },
+      {
+        "id": "8k-0001104659-26-094502",
+        "supplier_id": "SUP-09",
+        "accession": "0001104659-26-094502",
+        "filed": "2026-08-12",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "UPS sold $1B of 4.850% Senior Notes due 2031, contributing $450M to pension trusts for general corporate purposes.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000110465926094502/tm2622353d5_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "02266576ca69014d859277baeaf9f69f361706a9a49ff8d3f53e58169f9e8f40"
+      },
+      {
+        "id": "8k-0001628280-26-049912",
+        "supplier_id": "SUP-09",
+        "accession": "0001628280-26-049912",
+        "filed": "2026-07-28",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "UPS reported Q2 2026 financial results and posted detailed schedules to its investor website.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026049912/ups-20260728.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "4c073153dc7333ef7607506d7d1fee1c6cc47a5353c0b841fa44b1d2d3025e29"
+      }
+    ],
+    "SUP-10": [
+      {
+        "id": "8k-0001193125-26-413203",
+        "supplier_id": "SUP-10",
+        "accession": "0001193125-26-413203",
+        "filed": "2026-10-05",
+        "items": [
+          "1.01"
+        ],
+        "headline": "C.H. Robinson to merge with RXO in a multi-step deal expected to close in early 2027",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000119312526413203/d115124d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "0fe9f05aeca7e52674397e7e71e813d7c17c0053b85756c783157cdc6d337afa"
+      },
+      {
+        "id": "8k-0001043277-26-000027",
+        "supplier_id": "SUP-10",
+        "accession": "0001043277-26-000027",
+        "filed": "2026-07-29",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "C.H. Robinson Worldwide reported Q2 2026 financial results and held earnings call on July 29, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000027/chrw-20260729.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "4cf35c10bf78e831729c1f681402cba8151f1aa5a624d0c49e2ed7cec414448f"
+      },
+      {
+        "id": "8k-0001043277-26-000023",
+        "supplier_id": "SUP-10",
+        "accession": "0001043277-26-000023",
+        "filed": "2026-06-02",
+        "items": [
+          "5.02",
+          "9.01"
+        ],
+        "headline": "C.H. Robinson granted a $7.5M equity award to Chief Strategy Officer Arun Rajan to retain his service and drive strategic outcomes.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000023/chrw-20260529.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "6c215856f3160e02cb93a23cba01645144614a2658b90711831c402f1ab362a1"
+      },
+      {
+        "id": "8k-0001043277-26-000018",
+        "supplier_id": "SUP-10",
+        "accession": "0001043277-26-000018",
+        "filed": "2026-05-11",
+        "items": [
+          "5.07"
+        ],
+        "headline": "C.H. Robinson held its 2026 Annual Meeting, approving director elections, executive compensation, auditor retention and an employee stock purchase plan with strong shareholder support.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000018/chrw-20260507.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "122a7d6a1809164be0ce3cd19a0e8f7c68cd32d0f35cbd06ac9e4a5d7685b926"
+      }
+    ],
+    "SUP-11": [
+      {
+        "id": "8k-0001437749-26-032715",
+        "supplier_id": "SUP-11",
+        "accession": "0001437749-26-032715",
+        "filed": "2026-10-15",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "J.B. Hunt Transport Services announced third quarter 2026 financial results via news release on October 15, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926032715/jbht20261014_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "a13255da277a25a8d4d73fabae21e7a6fb42497141fb853370c86229d16f9d35"
+      },
+      {
+        "id": "8k-0001437749-26-023629",
+        "supplier_id": "SUP-11",
+        "accession": "0001437749-26-023629",
+        "filed": "2026-07-15",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "J.B. Hunt Transport Services reported second quarter 2026 revenues and earnings via news release on July 15, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926023629/jbht20260714_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "e14d01ae3cdfff68aaff8eb31468042aacb7289dae301a8e9ff2711299caf2f5"
+      },
+      {
+        "id": "8k-0001437749-26-013243",
+        "supplier_id": "SUP-11",
+        "accession": "0001437749-26-013243",
+        "filed": "2026-04-24",
+        "items": [
+          "5.07"
+        ],
+        "headline": "J.B. Hunt held 2026 annual meeting to elect directors, approve executive compensation and ratify auditor PwC",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926013243/jbht20260423_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "f0a458911afdde152012ab4060f0e3e67ea807b930e8ef70288a6f1e0114dbdc"
+      },
+      {
+        "id": "8k-0001437749-25-036646",
+        "supplier_id": "SUP-11",
+        "accession": "0001437749-25-036646",
+        "filed": "2025-12-02",
+        "items": [
+          "1.01",
+          "2.03",
+          "1.02",
+          "9.01"
+        ],
+        "headline": "J.B. Hunt replaced its $1.5B credit facility with a $1.7B amended agreement extending maturity to 2030 and adding $400M accordion feature.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774925036646/jbht20251201_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "ded80c91cbf7124b319ac37ac48bfc3277abe05e702d05910dc78088f5d306ad"
+      }
+    ],
+    "SUP-12": [
+      {
+        "id": "8k-0001104659-26-088438",
+        "supplier_id": "SUP-12",
+        "accession": "0001104659-26-088438",
+        "filed": "2026-07-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "XPO, Inc. issued a press release on July 30, 2026, announcing Q2 2026 financial results.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926088438/tm2616097d5_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "155cca1e07a1519ef0db37c8c2bafd2d64471c3b2ef259275c0ec726e9ea8797"
+      },
+      {
+        "id": "8k-0001104659-26-086807",
+        "supplier_id": "SUP-12",
+        "accession": "0001104659-26-086807",
+        "filed": "2026-07-27",
+        "items": [
+          "5.02",
+          "8.01",
+          "9.01"
+        ],
+        "headline": "XPO Inc. appointed Michael Kneeland as a non-executive director to its Board of Directors.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926086807/tm2616097d3_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "43bea473e7b365bfbcfd613187c9fd1845499d90c43dc02d5d1431b82ff1209d"
+      },
+      {
+        "id": "8k-0001104659-26-068522",
+        "supplier_id": "SUP-12",
+        "accession": "0001104659-26-068522",
+        "filed": "2026-06-01",
+        "items": [
+          "1.01",
+          "2.03"
+        ],
+        "headline": "XPO refinances $385M Term B-4 loan and $500M Term A loan to restructure debt maturing 2026-2031",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926068522/tm2616097d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "6f292bb6ab88c67629a7d1c1e8c33a368b617c13a3e359952725b8b3dfb70fce"
+      },
+      {
+        "id": "8k-0001104659-26-066258",
+        "supplier_id": "SUP-12",
+        "accession": "0001104659-26-066258",
+        "filed": "2026-05-26",
+        "items": [
+          "5.02"
+        ],
+        "headline": "XPO legal chief Wendy Cassity resigns effective June 18, 2026 for personal reasons.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926066258/tm2615563d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "a6e9bd5e11f96d05ca2ba6ccd9d7fcc2ae2672abd7c156efc3ea6c6a8722c3f5"
+      }
+    ],
+    "SUP-13": [
+      {
+        "id": "8k-0000051434-26-000115",
+        "supplier_id": "SUP-13",
+        "accession": "0000051434-26-000115",
+        "filed": "2026-07-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "International Paper issued preliminary Q2 2026 financial results and press release on July 30, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000115/ip-20260730.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "94ac2de07598501469e60b55381362db2f6d20008b7833696d0ebe664de1b7d3"
+      },
+      {
+        "id": "8k-0000051434-26-000112",
+        "supplier_id": "SUP-13",
+        "accession": "0000051434-26-000112",
+        "filed": "2026-07-17",
+        "items": [
+          "5.02",
+          "9.01"
+        ],
+        "headline": "International Paper appointed two new independent directors and announced two planned retirements effective year-end 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000112/ip-20260714.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "76044b5c2004a6568c0c7643f8835e428e41ac55698dc95746867ccb25f67ea3"
+      },
+      {
+        "id": "8k-0000051434-26-000075",
+        "supplier_id": "SUP-13",
+        "accession": "0000051434-26-000075",
+        "filed": "2026-05-11",
+        "items": [
+          "5.07"
+        ],
+        "headline": "International Paper shareholders approved 11 directors and ratified Deloitte as auditor at the 2026 annual meeting.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000075/ip-20260511.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "4f7ebbbff0d8e446bdac209269615231ab5928eb66c12f6ae17e3672d20cc995"
+      },
+      {
+        "id": "8k-0000051434-26-000067",
+        "supplier_id": "SUP-13",
+        "accession": "0000051434-26-000067",
+        "filed": "2026-04-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "International Paper issued preliminary Q1 2026 financial results and provided an update on its Europe, Middle East and Africa packaging business separation.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000067/ip-20260430.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "b7fff6d73bf5c72c87df5766e10e08c97e0d597b12845792e36dc799246b9d68"
+      }
+    ],
+    "SUP-14": [
+      {
+        "id": "8k-0001104659-26-116918",
+        "supplier_id": "SUP-14",
+        "accession": "0001104659-26-116918",
+        "filed": "2026-10-19",
+        "items": [
+          "5.02",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "Ball Corp VP Beverage Packaging North America and EMEA president departures; Carey Causey and Scott Vail appointed to new roles.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926116918/ball-20261019x8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "e982482fe34a0ddace721210ad3907089b30406580a61e833b276124b204c564"
+      },
+      {
+        "id": "8k-0001104659-26-106140",
+        "supplier_id": "SUP-14",
+        "accession": "0001104659-26-106140",
+        "filed": "2026-09-09",
+        "items": [
+          "5.02",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "Ball Corp. elected two new independent directors, Darlene Nicosia and Sherry Buck, to its Board effective September 21, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926106140/tm2625007d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "dbbc330aca3b659e915a41cfc437843aa4531a0a13b199539ed798aee6b65411"
+      },
+      {
+        "id": "8k-0001104659-26-090074",
+        "supplier_id": "SUP-14",
+        "accession": "0001104659-26-090074",
+        "filed": "2026-08-04",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Ball Corporation reported second-quarter 2026 financial results via press release and conference call.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926090074/ball-20260804x8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "7961c68e0046ad8e4cb724a1ccc13b10801b0c495ef17833463ea09ba8675969"
+      },
+      {
+        "id": "8k-0000009389-26-000107",
+        "supplier_id": "SUP-14",
+        "accession": "0000009389-26-000107",
+        "filed": "2026-05-05",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Ball Corporation announced first-quarter 2026 financial results via press release and conference call.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000000938926000107/ball-20260505x8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "3c15a1388bbca97d742bed90c98a88bcfe7d54d7f764f8c7ad6dddd07b624c83"
+      }
+    ],
+    "SUP-15": [
+      {
+        "id": "8k-0000091767-26-000047",
+        "supplier_id": "SUP-15",
+        "accession": "0000091767-26-000047",
+        "filed": "2026-10-21",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Sonoco Products issued Q3 2026 earnings release with revised full-year guidance on Oct 21, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000047/son-20261021.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "d290504889f4cb71b272edacdfc09d3570fa605fb2e81d16606ece83ba2c4b56"
+      },
+      {
+        "id": "8k-0000091767-26-000044",
+        "supplier_id": "SUP-15",
+        "accession": "0000091767-26-000044",
+        "filed": "2026-09-30",
+        "items": [
+          "1.01",
+          "2.03"
+        ],
+        "headline": "Sonoco refinanced $500M of debt with new 2029/2031 term loans, including $300M delayed draw option.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000044/son-20260925.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "bbb22f39265a7c93af18e05bb0af8924de6be224826c327dcb402faa82c5c23c"
+      },
+      {
+        "id": "8k-0000091767-26-000034",
+        "supplier_id": "SUP-15",
+        "accession": "0000091767-26-000034",
+        "filed": "2026-07-22",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Sonoco Products Company reported Q2 2026 financial results and full-year guidance on July 22, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000034/son-20260722.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "8ecd60e59d87b3c57cd3761e0a6c5f9caaf49250956e18540ece7f414329e2b1"
+      },
+      {
+        "id": "8k-0000091767-26-000024",
+        "supplier_id": "SUP-15",
+        "accession": "0000091767-26-000024",
+        "filed": "2026-05-11",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Sonoco CFO's deputy, Aditya Gandhi, resigns as Chief Accounting Officer effective May 29, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000024/son-20260505.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "e1c69e65d7db316e44bc66c12894f680c0ba56eba11052470db4c3beeb5317bd"
+      }
+    ],
+    "SUP-16": [
+      {
+        "id": "8k-0001193125-26-428056",
+        "supplier_id": "SUP-16",
+        "accession": "0001193125-26-428056",
+        "filed": "2026-10-22",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "PCA issued Q3 2026 earnings press release on Oct 21, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526428056/pkg-20261021.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "415ff111878b1f5543b341d40acde4e011ee7e6f7d81c0f0bb9a50ae363754bc"
+      },
+      {
+        "id": "8k-0001193125-26-312651",
+        "supplier_id": "SUP-16",
+        "accession": "0001193125-26-312651",
+        "filed": "2026-07-23",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "PCA issued Q2 2026 earnings press release on July 22, 2026, announcing financial results.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526312651/pkg-20260722.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "2247ce3813f8b0ebba5c90f7b1ffd5d2a2426f4c4d0589e37ba450406e799f06"
+      },
+      {
+        "id": "8k-0001193125-26-221672",
+        "supplier_id": "SUP-16",
+        "accession": "0001193125-26-221672",
+        "filed": "2026-05-13",
+        "items": [
+          "5.07"
+        ],
+        "headline": "PCA shareholders ratified KPMG as independent auditor and approved executive compensation at its 2026 Annual Meeting.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526221672/d148522d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "36e270d1ed329b74e0679ee79293411489636aef257d526de380cc7062b0c714"
+      },
+      {
+        "id": "8k-0001193125-25-307535",
+        "supplier_id": "SUP-16",
+        "accession": "0001193125-25-307535",
+        "filed": "2025-12-04",
+        "items": [
+          "2.05",
+          "2.06",
+          "9.01"
+        ],
+        "headline": "PCA permanently shuts down a paper machine and pulping facilities at its Wallula mill, expecting $205M in restructuring charges and 200 job cuts by Q1 2026.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312525307535/d50663d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "c5b0d36cccf05b03b5c5047b72e2550d13291a7af95709215f4ad5348962b3e2"
+      }
+    ],
+    "SUP-17": [
+      {
+        "id": "8k-0001104659-26-114035",
+        "supplier_id": "SUP-17",
+        "accession": "0001104659-26-114035",
+        "filed": "2026-10-06",
+        "items": [
+          "5.02"
+        ],
+        "headline": "Amphenol executive Luc Walter to transition to new role; Ryan Fisher appointed as successor in Harsh Environment Solutions Division.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926114035/tm2627036d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "c93a47c224e4051877346f7ce9292d09dd2cbbb3e2fc9b5efcfc5f1056b995a6"
+      },
+      {
+        "id": "8k-0001104659-26-105485",
+        "supplier_id": "SUP-17",
+        "accession": "0001104659-26-105485",
+        "filed": "2026-09-04",
+        "items": [
+          "8.01"
+        ],
+        "headline": "Amphenol approved a 2-for-1 stock split and reduced its Q3 2026 dividend to $0.125 per share.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926105485/tm2624775d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "3b29564d1b9255518795d304f1844d767d1b740b7ba976ccbc27043a6f6cbd8c"
+      },
+      {
+        "id": "8k-0001104659-26-091969",
+        "supplier_id": "SUP-17",
+        "accession": "0001104659-26-091969",
+        "filed": "2026-08-06",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "Amphenol announced a 2-for-1 stock split of Class A Common Stock to be distributed September 2, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926091969/tm2622441d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "fb9e2211834d40abf158d5ffaee55918ef8f7cda74c521042f54cc84960ecccb"
+      },
+      {
+        "id": "8k-0001104659-26-087904",
+        "supplier_id": "SUP-17",
+        "accession": "0001104659-26-087904",
+        "filed": "2026-07-29",
+        "items": [
+          "2.02"
+        ],
+        "headline": "Amphenol Corporation issued a press release reporting financial results for Q2 and H1 2026 ended June 30, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926087904/aph-20260729x8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "0cd67644b417aecfa5c8360796feb89c5c3c4ba92593021faeaad6cfb9e9151c"
+      }
+    ],
+    "SUP-18": [
+      {
+        "id": "8k-0001628280-26-063890",
+        "supplier_id": "SUP-18",
+        "accession": "0001628280-26-063890",
+        "filed": "2026-09-30",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Jabil Inc. reported fourth-quarter and full-year fiscal 2026 financial results via press release on September 30, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828026063890/jbl-20260930.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "160061402710982468df363bb228fe6eb3a817e7bb32ae4365ee3e7b6cc354d9"
+      },
+      {
+        "id": "8k-0001628280-26-043719",
+        "supplier_id": "SUP-18",
+        "accession": "0001628280-26-043719",
+        "filed": "2026-06-17",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Jabil Inc. issued a press release announcing third fiscal quarter results ended May 31, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828026043719/jbl-20260617.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "016f3047d576a52b5654e30fa9a320511a9d1da824f267a25d1ddd96dea8f37b"
+      },
+      {
+        "id": "8k-0001193125-26-170734",
+        "supplier_id": "SUP-18",
+        "accession": "0001193125-26-170734",
+        "filed": "2026-04-22",
+        "items": [
+          "8.01"
+        ],
+        "headline": "Two directors tendered resignations after failing to win majority shareholder votes, but board rejected resignations, keeping them in place until 2027 annual meeting.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000119312526170734/d33519d8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "7ef844a5b0bb5db846c04b1e18e3a1b63db8d2b01e2f200b384cb5de02149bca"
+      },
+      {
+        "id": "8k-0001628280-26-019043",
+        "supplier_id": "SUP-18",
+        "accession": "0001628280-26-019043",
+        "filed": "2026-03-18",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Jabil Inc. reported second fiscal quarter results ended February 28, 2026, via press release on March 18, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828026019043/jbl-20260318.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "e495780661db8517bb4a0dd578a16f56686e8901a352c26a8794158c7f230b45"
+      }
+    ],
+    "SUP-19": [
+      {
+        "id": "8k-0000897723-26-000041",
+        "supplier_id": "SUP-19",
+        "accession": "0000897723-26-000041",
+        "filed": "2026-09-15",
+        "items": [
+          "5.02",
+          "9.01"
+        ],
+        "headline": "Sanmina appointed Shanker S. Trivedi as new Board Director with enterprise tech and AI background.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000041/sanm-20260914.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "f62af6ee7156922945be71da5719f79da4ad1e1c14bf98f120aaf389321eaac1"
+      },
+      {
+        "id": "8k-0000897723-26-000036",
+        "supplier_id": "SUP-19",
+        "accession": "0000897723-26-000036",
+        "filed": "2026-07-27",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Sanmina Corporation issued unaudited Q2 FY2026 financial results on July 27, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000036/sanm-20260727.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "b4555e032f510f44880acbf726b25da0d2266323690d5f3c75eb2c9d23e521dc"
+      },
+      {
+        "id": "8k-0000897723-26-000024",
+        "supplier_id": "SUP-19",
+        "accession": "0000897723-26-000024",
+        "filed": "2026-04-27",
+        "items": [
+          "2.02",
+          "9.01"
+        ],
+        "headline": "Sanmina Corporation issued a press release on April 27, 2026 announcing unaudited financial results for the fiscal quarter ended March 28, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000024/sanm-20260427.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "1ece315a5fc8cf6742445945b1c0bdec0a557e949df9562e8daf4fd0a2eece03"
+      },
+      {
+        "id": "8k-0001104659-25-104927",
+        "supplier_id": "SUP-19",
+        "accession": "0001104659-25-104927",
+        "filed": "2025-10-31",
+        "items": [
+          "1.01",
+          "2.01",
+          "1.02"
+        ],
+        "headline": "Sanmina refinanced its credit agreement and acquired ZT Systems for $3.5 billion in new financing.",
+        "severity": "medium",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000110465925104927/tm2529655d1_8k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "bc156c5bfaa291a95bcfac64feaed19f1dfb4f773178ea4924ce075cd05c817b"
+      }
+    ],
+    "SUP-20": [
+      {
+        "id": "8k-0000103730-26-000068",
+        "supplier_id": "SUP-20",
+        "accession": "0000103730-26-000068",
+        "filed": "2026-08-12",
+        "items": [
+          "9.01"
+        ],
+        "headline": "Vishay Intertechnology declared a $0.10 quarterly cash dividend per share, payable September 24, 2026.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000068/vsh-20260812.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "174f1ffd153bd36f7a470645b6431faa1ef25965dc2f4fda914b92e190e0ad38"
+      },
+      {
+        "id": "8k-0000103730-26-000064",
+        "supplier_id": "SUP-20",
+        "accession": "0000103730-26-000064",
+        "filed": "2026-08-05",
+        "items": [
+          "2.02",
+          "7.01",
+          "9.01"
+        ],
+        "headline": "Vishay Intertechnology released Q2 2026 financial results and EPS guidance detailing convertible note share calculations.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000064/vsh-20260805.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "22c2c6decbdfa05afd212d06414eedc93106e3ee83c47419960812ef36de170c"
+      },
+      {
+        "id": "8k-0000103730-26-000054",
+        "supplier_id": "SUP-20",
+        "accession": "0000103730-26-000054",
+        "filed": "2026-07-06",
+        "items": [
+          "8.01",
+          "9.01"
+        ],
+        "headline": "Vishay notified note holders that 2.25% convertible senior notes due 2030 became convertible starting Q4 2026, with conversion into cash or stock at company's election.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000054/vsh-20260706.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "76d7f69bb830e073ea4d60b4bf494c51865288f1b7ad5da148661859fd4e2e2b"
+      },
+      {
+        "id": "8k-0000103730-26-000003",
+        "supplier_id": "SUP-20",
+        "accession": "0000103730-26-000003",
+        "filed": "2026-01-09",
+        "items": [
+          "4.01",
+          "9.01"
+        ],
+        "headline": "Vishay replaces Ernst & Young with Deloitte as its independent auditor for 2026, effective after EY issues its 2025 audit reports.",
+        "severity": "low",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000003/form8-k.htm",
+        "parsed_by": "nvidia/nemotron-parse",
+        "text_hash": "5a7a31b60e4472c1ece428e741d36e2544a772237581a17d5d176cfc382a95bf"
+      }
+    ]
+  }
+}

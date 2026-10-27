@@ -1,0 +1,25 @@
+{
+  "accession": "0001193125-26-170734",
+  "cik": "898293",
+  "supplier_id": "SUP-18",
+  "company": "JABIL INC",
+  "filed": "2026-04-22",
+  "metadata_items": [
+    "8.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000119312526170734/d33519d8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "**Item 8.01 Other Events.**\n\nAs previously disclosed, each of John Plant and Tiger Tyagarajan did not receive a majority of the votes cast in the election of directors at the Company’s 2026 annual meeting of stockholders (the “2026 Stockholders Meeting”) and, in accordance with the Company’s bylaws, tendered their conditional resignations from the Board of Directors (the “Board”). The Nominating and Corporate Governance Committee (the “N&CG Committee”) evaluated each resignation and recommended to the Board that the resignations be rejected. Mr. Plant and Mr. Tyagarajan did not participate in the N&CG Committee’s review or the Board’s determination with respect to their respective resignation offers.\n\nIn making its determinations, the N&CG Committee and the Board each considered a number of factors it deemed relevant, including each director’s attendance and engagement, overall qualifications, contributions to the Board and its standing committees and whether acceptance of the resignation would be in the best interests of the Company and its stockholders.\n\nIn considering attendance and engagement, the N&CG Committee and the Board noted that both Mr. Plant and Mr. Tyagarajan historically maintained strong attendance records prior to the 2025 fiscal year. The Board also took into account that, to date in fiscal year 2026 (which began in September 2025), each has attended more than 75% of the regularly scheduled meetings of the Board and the committees on which they serve. The Board further considered that each director has remained engaged in Board and committee matters and committed to making every reasonable effort to attend all future meetings, absent unforeseen circumstances, consistent with the Company’s corporate governance guidelines.\n\nThe N&CG Committee and the Board also considered the experience, expertise, and contributions of each director. Mr. Plant, who has served as a director since 2016, provides substantial institutional knowledge and significant financial, operational and industry expertise, including as one of the Company’s audit committee financial experts and through his extensive leadership experience in global manufacturing and transportation-related end markets. Mr. Tyagarajan, who joined the Board in 2024, contributes deep experience in digital transformation, data analytics, artificial intelligence and global enterprise operations, informed by his service as President and Chief Executive Officer of Genpact Ltd., as well as his role in the Company’s Board refreshment efforts as a member of the N&CG Committee.\n\nAfter consideration of these factors, the Board determined at its April 22, 2026 meeting that the continued service of Mr. Plant and Mr. Tyagarajan on the Board is in the best interests of the Company and its stockholders. Accordingly, consistent with the N&CG Committee’s recommendation, the Board rejected each director’s conditional resignation and both Mr. Plant and Mr. Tyagarajan will continue to serve as members of the Board and their respective committees until the Company’s 2027 Annual Meeting of Stockholders or until their earlier resignation or removal.\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, as amended, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nJABIL INC.\n\nApril 22, 2026\n\nBy:\n\n/s/ Susan Wagner-Fleming\n\nSusan Wagner-Fleming\n\nSVP, Securities, M&A, and Corporate Secretary",
+  "text_hash": "7ef844a5b0bb5db846c04b1e18e3a1b63db8d2b01e2f200b384cb5de02149bca",
+  "parse_ms": 7792,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Two directors tendered resignations after failing to win majority shareholder votes, but board rejected resignations, keeping them in place until 2027 annual meeting.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:57:20.484Z"
+}

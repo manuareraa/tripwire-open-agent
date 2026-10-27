@@ -1,0 +1,30 @@
+{
+  "accession": "0001104659-25-104927",
+  "cik": "897723",
+  "supplier_id": "SUP-19",
+  "company": "Sanmina Corporation",
+  "filed": "2025-10-31",
+  "metadata_items": [
+    "1.01",
+    "1.02",
+    "2.01",
+    "2.03",
+    "3.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000110465925104927/tm2529655d1_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 8,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 1.01 ENTRY INTO A MATERIAL DEFINITIVE AGREEMENT\n\nAs previously disclosed by Sanmina Corporation (“Sanmina” or the “Company”), on July 29, 2025, the Company entered into a senior secured credit agreement (the “Initial Credit Agreement”, and as amended from time to time, including by Amendment No. 1 and Amendment No. 2, the “Credit Agreement”), providing for committed credit facilities in an aggregate principal amount of $3.5 billion, consisting of a $1.5 billion revolving credit facility and a $2.0 billion term loan A facility (the “Term Loan A Facility”).\n\nOn October 20, 2025, the Company entered into Amendment No. 1 to the Credit Agreement (“Amendment No. 1”), and on October 27, 2025, the Company entered into Amendment No. 2 to the Credit Agreement (“Amendment No. 2” and, together with Amendment No. 1, the “Amendments”).\n\nAmendment No. 1 amended the Initial Credit Agreement to, among other things, (i) provide for a reallocation of $600,000,000 of Term Loan A Facility commitments from the Term Loan A Facility into a new delayed draw term loan A sub-facility which may be drawn by the Company in up to two separate drawings during the period commencing with the Closing Date, as defined in Item 2.01 below, and ending on the one year anniversary of the Closing Date (the “Delayed Draw Facility”), (ii) add customary conditions precedent to the funding of delayed draw term loans under the Delayed Draw Facility, and (iii) update the use of proceeds provision to provide for the use of loans under the Delayed Draw Facility. Delayed draw terms loans incurred under the Delayed Draw Facility will have substantially the same terms and conditions as term loans drawn on the Closing Date under the Term Loan A Facility, other than the conditions to drawing under the Delayed Draw Facility.\n\nAmendment No. 2 amended the Credit Agreement to provide for an $800,000,000 incremental term loan facility in the form of “Incremental Term B-1 Loans” (the “Term Loan B Facility”). Term loans under the Term Loan B Facility constitute a separate class of term loans under the Credit Agreement. The proceeds of the Term Loan B Facility were made available to fund the Acquisition, as defined in Item 2.01 below, and other related transactions, and to pay fees, commissions and expenses, in each case as permitted by the Credit Agreement. Amendment No. 2 included customary conditions to effectiveness and borrowing, representations and warranties, and acknowledgments by the Company and the other loan parties confirming, among other things, that (i) their guarantees of the obligations under the Initial Credit Agreement extend to the Term Loan B Facility and (ii) the liens securing the obligations under the Initial Credit Agreement continue in full force and effect, unimpaired and with the same priority, after giving effect to Amendment No. 2.\n\nThe Credit Agreement provides that borrowings under the Term Loan A Facility (including any term loans drawn under the Delayed Draw Facility) bear interest, at the Company’s option, at either (a) a term SOFR-based rate plus an applicable margin or (b) a base rate plus an applicable margin, in each case with the applicable margin determined pursuant to a pricing grid based on the Company’s consolidated total net leverage ratio, with applicable margins ranging from 1.375% to 2.000% for term SOFR borrowings and from 0.375% to 1.000% for base rate borrowings. Borrowings under the Term Loan B Facility bear interest, at the Company’s option, at either (x) term SOFR plus 2.00% or (y) the base rate plus 1.00%.\n\nIn connection with the financing under the Credit Agreement on the Closing Date, the Company’s existing Fifth Amended and Restated Credit Agreement, dated as of September 27, 2022, by and among the Company, the lenders party thereto, and Bank of America, N.A., as administrative agent, has been refinanced in full and terminated.\n\nThe foregoing descriptions of the Credit Agreement, Amendment No. 1 and Amendment No. 2 do not purport to be complete and are qualified entirety by reference to the full text of respective agreements. The Company intends to file the Credit Agreement as an exhibit to its Annual Report on Form 10-K for the fiscal year ending September 30, 2025 and the Amendment No. 1 and Amendment No. 2 as exhibits to its Quarterly Report on Form 10-Q for the fiscal quarter ending December 27, 2025.\n\nITEM 1.02 TERMINATION OF A MATERIAL DEFINITIVE AGREEMENT\n\nThe information set forth in Item 1.01 of this Current Report on Form 8-K is incorporated by reference into this Item 1.02.\n\nITEM 2.01 COMPLETION OF ACQUISITION OR DISPOSITION OF ASSETS\n\nOn October 27, 2025 (the “Closing Date”), Sanmina completed the acquisition of all of the issued and outstanding equity interests of ZT Group Int'l, Inc. (“ZT Systems”) and its subsidiaries from AMD Design, LLC pursuant to that certain Equity Purchase Agreement, dated May 18, 2025 (the “Purchase Agreement,” and such transactions the “Acquisition”).\n\nZ Vu \\_Po GuyaLi 2",
+  "text_hash": "bc156c5bfaa291a95bcfac64feaed19f1dfb4f773178ea4924ce075cd05c817b",
+  "parse_ms": 8520,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sanmina refinanced its credit agreement and acquired ZT Systems for $3.5 billion in new financing.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:57:36.914Z"
+}

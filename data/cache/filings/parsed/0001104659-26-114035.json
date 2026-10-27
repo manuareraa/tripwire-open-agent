@@ -1,0 +1,25 @@
+{
+  "accession": "0001104659-26-114035",
+  "cik": "820313",
+  "supplier_id": "SUP-17",
+  "company": "AMPHENOL CORPORATION",
+  "filed": "2026-10-06",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926114035/tm2627036d1_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn October 1, 2026, Amphenol Corporation (the “Company”) notified its management team that after 43 years with the Company, Luc Walter, President of the Harsh Environment Solutions Division of the Company, would transition, effective January 1, 2027, into a new role as Senior Vice President, Strategic Programs. Ryan Fisher, who currently serves as the Group General Manager of the Company’s North American Military Group, will succeed Mr. Walter as President of the Harsh Environment Solutions Division beginning January 1, 2027.\n\n# Signature\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nAMPHENOL CORPORATION\n\n<tbc>By: /s/ Lance E. D’Amico <br>\nLance E. D’Amico <br>\nExecutive Vice President, Secretary and General Counsel\n\nDate: October 6, 2026",
+  "text_hash": "c93a47c224e4051877346f7ce9292d09dd2cbbb3e2fc9b5efcfc5f1056b995a6",
+  "parse_ms": 5141,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Amphenol executive Luc Walter to transition to new role; Ryan Fisher appointed as successor in Harsh Environment Solutions Division.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:32.393Z"
+}

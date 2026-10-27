@@ -1,0 +1,26 @@
+{
+  "accession": "0000827054-26-000037",
+  "cik": "827054",
+  "supplier_id": "SUP-02",
+  "company": "MICROCHIP TECHNOLOGY INCORPORATED",
+  "filed": "2026-08-06",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000037/mchp-20260806.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02. Results of Operations and Financial Condition\n\n\nThe information pursuant to Item 2.02 in this report on Form 8-K is being furnished as contemplated by General Instruction B(2) to Form 8-K and shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended, or otherwise subject to the liabilities of that Section.\n\n\nOn August 6, 2026, we announced the results of our operations for the first quarter of fiscal year 2027. The complete release is attached to this report as Exhibit 99.1.\n\n\nItem 9.01. Financial Statements and Exhibits\n\n\nThe following exhibits are provided as part of this report:\n\n\nExhibit\n\n\nExhibit Description\n\n\n99.1 Microchip Technology Announces Financial Results for First Quarter of Fiscal Year 2027\n\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n\n\\begin{tabular}{cc}\n(d) & Exhibits \\\\\n\\end{tabular}\n\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: August 6, 2026\n\nMICROCHIP TECHNOLOGY INCORPORATED\n\nBy: /s/ J. Eric Bjornholt\n\nJ. Eric Bjornholt\n\nSenior Corporate Vice President and Chief Financial Officer",
+  "text_hash": "8711b975b804aa822c9072fb06f55b63e23835e26251a019ac4879ea5c1746b7",
+  "parse_ms": 5298,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Microchip Technology announced first quarter fiscal year 2027 financial results on August 6, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:47:17.254Z"
+}

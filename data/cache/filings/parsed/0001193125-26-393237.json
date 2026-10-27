@@ -1,0 +1,26 @@
+{
+  "accession": "0001193125-26-393237",
+  "cik": "895419",
+  "supplier_id": "SUP-04",
+  "company": "\"WOLFSPEED",
+  "filed": "2026-09-16",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/895419/000119312526393237/d45459d8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 8.01. Other Events\n\nOn September 16, 2026, Wolfspeed, Inc. (the “Company”) disclosed certain unaudited pro forma consolidated financial information and explanatory notes (the “Pro Forma Financial Information”) for the Company and its consolidated subsidiaries. The Pro Forma Financial Information is provided for informational purposes only and gives effect to (i) the Company’s prepackaged plan of reorganization (the “Plan”), which became effective on September 29, 2025 (the “Plan Effective Date”), as described in the Company’s Annual Report on Form 10-K for the year ended June 28, 2026, filed with the Securities and Exchange Commission on August 20, 2026, (ii) the Company’s adoption of fresh start accounting on the Plan Effective Date in accordance with Accounting Standards Codification 852, “Reorganizations,” and (iii) receipt of Regulatory Approvals (as defined in the Plan), which occurred on January 29, 2026.\n\nItem 9.01. Financial Statements and Exhibits\n\n(b) Pro Forma Financial Information.\n\nThe following Pro Forma Financial Information, giving effect to the Plan, adoption of fresh start accounting on the Plan Effective Date and receipt of Regulatory Approvals on January 29, 2026, is attached as Exhibit 99.1 hereto and incorporated herein by reference: unaudited pro forma consolidated statements of operations for the year ended June 28, 2026.\n\n**(d) Exhibits**\n\nExhibit\n\nNo. Description of Exhibit\n\n99.1 Unaudited Pro Forma Consolidated Financial Information\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nWOLFSPEED, INC.\n\nBy: /s/ Melissa Garrett <br>\nMelissa Garrett <br>\nSenior Vice President and General Counsel\n\nDate: September 16, 2026",
+  "text_hash": "20ce32e0a1c492c2e9faf0917c3a639cf6577871a9d42dc16f9aa3cae942a311",
+  "parse_ms": 4241,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Wolfspeed disclosed pro forma financials reflecting emergence from prepackaged reorganization and fresh start accounting effective Sept 29, 2025.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:48:40.757Z"
+}

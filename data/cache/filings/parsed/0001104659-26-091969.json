@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-091969",
+  "cik": "820313",
+  "supplier_id": "SUP-17",
+  "company": "AMPHENOL CORPORATION",
+  "filed": "2026-08-06",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926091969/tm2622441d1_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 8.01 **Other Events.**\n\nOn August 6, 2026, Amphenol Corporation (the “Company”) announced the approval of a two-for-one stock split of the Company’s Class A Common Stock in the form of a stock dividend to be distributed on September 2, 2026, to holders of record of the Company’s Class A Common stock at the close of business on August 17, 2026.\n\nA copy of the press release announcing the approval of the stock dividend is attached hereto as Exhibit 99.1 and is incorporated by reference herein.\n\nThe information set forth in this Item 8.01, including the attached Exhibit 99.1, is being furnished and shall not be deemed “filed” for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the “Exchange Act”), or otherwise subject to the liabilities of that Section, nor shall it be deemed incorporated by reference in any filing by the Company under the Securities Act of 1933, as amended, or the Exchange Act, except as expressly set forth by specific reference in such filing.\n\nItem 9.01 Financial Statements and Exhibits.\n\n(d) Exhibits\n\nExhibit No. Document Description<br> 99.1 Press Release dated August 6, 2026<br> 104.1 Cover Page Interactive Data File (embedded within the Inline XBRL document).\n\n# Signature\n\n**Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.**\n\nAMPHENOL CORPORATION\n\nBy: /s/ Lance E. D’Amico Lance E. D’Amico <br>\nExecutive Vice President, Secretary and General Counsel\n\nDate: August 6, 2026",
+  "text_hash": "fb9e2211834d40abf158d5ffaee55918ef8f7cda74c521042f54cc84960ecccb",
+  "parse_ms": 4490,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Amphenol announced a 2-for-1 stock split of Class A Common Stock to be distributed September 2, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:48.576Z"
+}

@@ -1,0 +1,27 @@
+{
+  "accession": "0001104659-26-086807",
+  "cik": "1166003",
+  "supplier_id": "SUP-12",
+  "company": "\"XPO",
+  "filed": "2026-07-27",
+  "metadata_items": [
+    "5.02",
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926086807/tm2616097d3_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn July 24, 2026, the Board of Directors (the “Board”) of XPO, Inc. (the “Company”) appointed Mr. Michael Kneeland as a member of the Board, effective July 27, 2026.\n\nMr. Kneeland is non-executive chairman of United Rentals, the world’s largest equipment rental company. He joined United Rentals in 1998 and subsequently led the company as chief executive officer from 2007 to 2019, including 10 concurrent years as president. He became chairman upon his retirement in 2019. He has also served as a director of GXO Logistics, Inc. since 2025, and non-executive chair of the board of directors of Gildan Activewear Inc. since 2024.\n\nPursuant to the Company’s bylaws, Mr. Kneeland will serve as a director for an initial term until the Company’s 2027 annual meeting of stockholders or until his successor shall have been duly elected and qualified or until his earlier resignation, retirement, death, disqualification or removal from office.\n\nAs a non-employee director, Mr. Kneeland will be entitled to receive an annual cash retainer (currently $80,000) and an annual restricted stock unit (“RSU”) grant (currently $190,000 in value), which is granted on the first business day of each calendar year and vests on the first business day of the next calendar year. The number of RSUs granted is determined by dividing $190,000 by the average of the closing price of the Company’s common stock on the ten trading days immediately preceding the grant date. On July 27, 2026, Mr. Kneeland received a prorated grant of 388 RSUs that will vest on January 4, 2027, subject to his continued service as a director of the Company.\n\nSince the beginning of the last fiscal year, there have been no related party transactions between the Company and Mr. Kneeland that would be reportable under Item 404(a) of Regulation S-K. There are no arrangements or understandings between Mr. Kneeland and any other persons pursuant to which Mr. Kneeland was selected as a director, and Mr. Kneeland has no family relationships with any of the Company’s directors or executive officers.\n\nItem 8.01. Other Events.\n\nOn July 27, 2026, the Company issued a press release announcing the appointment of Mr. Kneeland to the Board. The press release is attached as Exhibit 99.1 hereto and is incorporated herein by reference.\n\nItem 9.01. Financial Statements and Exhibits.\n\n_(d) Exhibits_\n\n\\begin{tabular}{cc}\nExhibit No. & Exhibit Description \\\\\n99.1 & Press Release, dated July 27, 2026, issued by XPO, Inc. \\\\\n104 & Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\\end{tabular}\n\n\nSIGNATURE\n\n**Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned herento duly authorized.**\n\nDate: July 27, 2026\n\nXPO, INC.\n\nBy: /s/ Kyle Wismans Kyle Wismans Chief Financial Officer",
+  "text_hash": "43bea473e7b365bfbcfd613187c9fd1845499d90c43dc02d5d1431b82ff1209d",
+  "parse_ms": 8995,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "XPO Inc. appointed Michael Kneeland as a non-executive director to its Board of Directors.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:53:43.051Z"
+}

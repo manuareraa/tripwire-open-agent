@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-090074",
+  "cik": "9389",
+  "supplier_id": "SUP-14",
+  "company": "BALL CORPORATION",
+  "filed": "2026-08-04",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926090074/ball-20260804x8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "**Ball Corporation<br> Current Report on Form 8-K Dated August 4, 2026**\n\n## Item 2.02. Results of Operations and Financial Condition\n\nOn August 4, 2026, Ball Corporation (\"Ball\") issued a press release and will hold a conference call regarding its financial results for the quarter ended June 30, 2026. The release is furnished as Exhibit 99.1 to this Form 8-K.\n\nThe Company’s results and earnings information regarding its second quarter, as well as information regarding the use of non-U.S. GAAP financial measures, are set forth in the attached press release dated August 4, 2026, and attached hereto as Exhibit 99.1. Certain non-U.S. GAAP measures will be used in Ball’s earnings conference for the second quarter of 2026. These non-U.S. GAAP financial measures should not be considered a substitute for, or superior to, financial measures calculated in accordance with U.S. GAAP, and the financial results calculated in accordance with U.S. GAAP and reconciliations to these results should be carefully evaluated.\n\nThe information in Item 2.02 of this Current Report shall not be deemed to be \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended, (the \"Exchange Act\") or otherwise subject to the liability of that section, and shall not be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act, except as shall be expressly set forth by specific reference in such filing.\n\n## Item 9.01 Financial Statements and Exhibits\n\n\nExhibits.\n\nThe following are furnished as exhibits to this report:\n\nExhibit 99.1 Ball Corporation Press Release Dated August 4. 2026\n\nExhibit 104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n# Ball Corporation<br> Form 8-K<br> August 4, 2026\n\n**EXHIBIT INDEX**\n\n\\begin{tabular}{cc}\n**Description** & **Exhibit**\\\\\nBall Corporation Press Release Dated August 4, 2026 & 99.1\\\\\n\\end{tabular}",
+  "text_hash": "7961c68e0046ad8e4cb724a1ccc13b10801b0c495ef17833463ea09ba8675969",
+  "parse_ms": 6576,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Ball Corporation reported second-quarter 2026 financial results via press release and conference call.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:55:15.104Z"
+}

@@ -1,0 +1,27 @@
+{
+  "accession": "0001628280-26-059609",
+  "cik": "1090727",
+  "supplier_id": "SUP-09",
+  "company": "UNITED PARCEL SERVICE INC",
+  "filed": "2026-08-31",
+  "metadata_items": [
+    "5.02",
+    "7.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026059609/ups-20260831.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02 — Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn August 31, 2026, United Parcel Service, Inc. (the \"Company\") announced that Kate Gutmann, Executive Vice President and President, International, Healthcare and Supply Chain Solutions, will retire from her current positions, effective September 1, 2026. Ms. Gutmann has agreed to remain with the Company in a transitional role through March 31, 2027, at which time she is expected to retire from all positions with the Company.\n\nIn connection with her retirement, the Company has appointed Wilfredo Ramos to serve as Executive Vice President and Chief International, Healthcare and Supply Chain Solutions Officer. Mr. Ramos has over twenty years’ experience with the Company, most recently serving as President Asia Pacific Region, Global Brokerage, Customer Solutions and Global Revenue Operations.\n\nIn connection with certain related changes in executive leadership operational responsibilities, the Company is entering into retention agreements with each of Nando Cesarone, who has been serving as Executive Vice President and President U.S., and who will now serve as Executive Vice President and Chief Global Operations Officer, and Bala Subramanian, Executive Vice President and Chief Digital and Technology Officer. Under their respective agreements, Mr. Cesarone will receive a restricted stock unit (\"RSU\") award valued at $6.0 million, and Mr. Subramanian will receive a RSU award valued at $3.0 million. In each case, the number of RSUs granted will be calculated by dividing the award amount by the closing price of UPS Class B common stock on the September 1, 2026 grant date. The awards will vest as follows: 25 percent on September 1, 2027, 25 percent on September 1, 2028, and 50 percent on September 1, 2029, subject to continued employment through each applicable vesting date. Except as described below, unvested RSUs will be forfeited as of the date employment with the Company terminates. If employment terminates due to disability, unvested RSUs will continue to vest. If employment terminates due to death, unvested RSUs will immediately become fully vested.\n\nThe foregoing descriptions of the retention agreements are qualified in their entirety by reference to the full text of the applicable agreements, copies of which are filed as Exhibit 10.1 and Exhibit 10.2, respectively, to this Current Report on Form 8-K and incorporated herein by reference.\n\nItem 7.01. Regulation FD Disclosure\n\nOn August 31, 2026, the Company issued a press release describing the changes in executive leadership operational responsibilities discussed above and related matters. A copy of the press release is attached hereto as Exhibit 99.1.\n\nItem 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits.\n\nThe information contained in Item 7.01, and Exhibit 99.1, shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934 (the \"Exchange Act\") or otherwise subject to the liabilities of that Section, nor shall it be deemed incorporated by reference in any filings under the Securities Act of 1933 or the Exchange Act, except as may be expressly set forth by reference in any such filing.\n\n\\begin{tabular}{cc}\nExhibit & \\\\\nNumber & Description \\\\\n10.1 & Form of Retention Agreement between the Company and Nando Cesarone, to be dated September 1, 2026. \\\\\n10.2 & Form of Retention Agreement between the Company and Bala Subramanian, to be dated September 1, 2026. \\\\\n99.1 & Press release dated August 31, 2026. \\\\\n104 & The cover page of this Current Report on Form 8-K, formatted in Inline XBRL. \\\\\n\\end{tabular}\n\n# Signatures\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n# UNITED PARCEL SERVICE, INC.\n\nDate: August 31, 2026 By: /s/ NORMAN M. BROTHERS, JR.\n\nName: Norman M. Brothers, Jr.\n\n: Executive Vice President and Chief Legal and Compliance Officer",
+  "text_hash": "59a6e5fcce5e7c43d4569004c336f93956e17bb066474b6584fafd055529dfd4",
+  "parse_ms": 6962,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "UPS executive Kate Gutmann retiring Sept 1, 2026; two senior officers receive multi-million dollar retention RSU awards.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:51:32.640Z"
+}

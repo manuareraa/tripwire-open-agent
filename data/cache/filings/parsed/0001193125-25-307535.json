@@ -1,0 +1,27 @@
+{
+  "accession": "0001193125-25-307535",
+  "cik": "75677",
+  "supplier_id": "SUP-16",
+  "company": "PACKAGING CORP OF AMERICA",
+  "filed": "2025-12-04",
+  "metadata_items": [
+    "2.05",
+    "2.06",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312525307535/d50663d8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.05. Costs Associated with Exit or Disposal Activities.\n\nOn December 3, 2025, Packaging Corporation of America (the \"Company\") approved and announced a plan to permanently shut down the No. 2 paper machine and kraft pulping facilities at its Wallula, Washington containerboard mill. The Company will continue to operate the No. 3 paper machine and recycled pulping facilities at the mill. These actions are expected to be completed by the end of the first quarter of 2026.\n\nThe Company estimates that these actions will result in pre-tax restructuring charges of $205 million, substantially all of which will be recorded in the fourth quarter of 2025 and first quarter of 2026. These charges include approximately $165 million of non-cash impairment and accelerated depreciation charges and $40 million of cash charges for contract termination, severance, and other charges. The Company expects a reduction in headcount of approximately 200 positions.\n\nThe press release making such announcement is filed herewith as Exhibit 99.1 and incorporated by reference into this Item 2.05.\n\nItem 2.06. Material Impairments.\n\nThe disclosure included under Item 2.05 is incorporated by reference into this Item 2.06.\n\nItem 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits\n\n99.1 Press Release issued on December 3, 2025 \n\n104 CoverPage Interactive Data File (embedded within the Inline XBRL document)\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n# PACKAGING CORPORATION OF AMERICA <br>\n(Registrant)\n\nThe results are used in the analysis of the performance of the proposed model. In this case, this variation is clearly seen as a consequence of the accuracy of the proposed model there. By contrast, the performance is not limited to what the market is not a single model, which is expected to be viable. We have considered the results \\(\\mathcal{F}=\\mathcal{F}_\\mathcal{F}(\\cdot)\\) which guarantee the accuracy of the proposed model without notice. This can be easily seen as a consequence of the accuracy of the proposed model. As a result, the performance is not limited to what the market is not a single model, which is expected to be volatile. How to increase the accuracy of the proposed model to produce better performance thanks to the decision for the model. This result is consistent with our knowledge, which is practically important for the model center-of-mass model.\n\nBy: /s/ Kent A. Pfederer <br>\nExecutive Vice President and Chief Financial Officer\n\nDate: December 4, 2025",
+  "text_hash": "c5b0d36cccf05b03b5c5047b72e2550d13291a7af95709215f4ad5348962b3e2",
+  "parse_ms": 7106,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "PCA permanently shuts down a paper machine and pulping facilities at its Wallula mill, expecting $205M in restructuring charges and 200 job cuts by Q1 2026.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:56:01.354Z"
+}

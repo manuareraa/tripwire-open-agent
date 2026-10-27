@@ -1,0 +1,25 @@
+{
+  "accession": "0000051434-26-000075",
+  "cik": "51434",
+  "supplier_id": "SUP-13",
+  "company": "INTERNATIONAL PAPER COMPANY",
+  "filed": "2026-05-11",
+  "metadata_items": [
+    "5.07"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000075/ip-20260511.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.07 Submission of Matters to a Vote of Security Holders.\n\nOn May 11, 2026, the Company held its 2026 annual meeting of shareowners (the <u>\"CompanyAnnual Meeting\"</u>). At the Company Annual Meeting, holders of the Company’s shares of common stock, par value $1.00 per share (the <u>\"CommonStock\"</u>), approved the proposals described in the 2026 Proxy Statement.\n\nOf the 529,486,211 shares of Common Stock outstanding on the record date (March 12, 2026) and entitled to vote at the Company Annual Meeting, holders of 480,640,962 shares of Common Stock were present at the Company Annual Meeting in person or by proxy, constituting a quorum.\n\nThe voting results at the Company Annual Meeting were as follows:\n\nItem 1: Election of 11 Directors\n\nShareowners approved the proposal to elect each of the following 11 nominees as directors, to serve a term of one year ending the earlier of (i) the Company’s 2027 annual meeting of shareowners and the date a qualified successor has been elected or (ii) death, resignation or retirement.\n\nItem 2: Ratification of Deloitte & Touche LLP as our Independent Auditor for 2026\n\nShareowners ratified the appointment of Deloitte & Touche LLP as the Company’s independent auditor for 2026.\n\n**Item 3: Non-binding Resolution to Approve the Compensation of our Named Executive Officers**\n\nShareowners approved the non-binding resolution to approve the compensation of our Named Executive Officers.\n\n\\begin{tabular}{ccccc}\n**Director Nominees** & **For** & **Against** & **Abstain** & **Broker Non-Votes**\\\\\nJamie A. Beggs & 451,694,836 & 2,455,913 & 273,805 & 26,216,408\\\\\nChristopher M. Connor & 445,295,315 & 8,869,315 & 259,924 & 26,216,408\\\\\nAhmet C. Dorduncu & 444,426,468 & 9,731,820 & 266,266 & 26,216,408\\\\\nAnders Gustafsson & 450,805,888 & 3,368,166 & 250,500 & 26,216,408\\\\\nJacqueline C. Hinman & 444,524,262 & 9,414,494 & 485,798 & 26,216,408\\\\\nClinton A. Lewis, Jr. & 436,740,282 & 17,421,581 & 262,691 & 26,216,408\\\\\nDavid A. Robbie & 451,684,616 & 2,473,834 & 266,104 & 26,216,408\\\\\nAndrew K. Silvernail & 440,396,861 & 13,737,702 & 289,991 & 26,216,408\\\\\nKathryn D. Sullivan & 445,916,981 & 8,269,190 & 238,383 & 26,216,408\\\\\nScott A. Tozier & 450,747,593 & 3,412,997 & 263,964 & 26,216,408\\\\\nAnton V. Vincent & 445,835,828 & 8,071,251 & 517,475 & 26,216,408\\\\\n\\end{tabular}\n\n\n\\begin{tabular}{ccccccc}\n\\multicolumn{2}{c}{**Votes For**} & **Votes Against** & **Abstentions** & \\multicolumn{2}{c}{} & \\multicolumn{2}{c}{**Broker Non-Votes**}\\\\\n469,081,312 & & 11,291,145 & 268,505 & \\multicolumn{2}{c}{} & \\multicolumn{2}{c}{0}\\\\\n\\end{tabular}\n\n\\begin{tabular}{ccccc}\n\\multicolumn{2}{c}{**Votes For**} & **Votes Against** & **Abstentions** & **Broker Non-Votes**\\\\\n442,112,331 & & 11,656,152 & 656,071 & 26,216,408\\\\\n\\end{tabular}\n\n\\begin{tabular}{cc}\nExhibit Number & Description\\\\\n104 & The cover page from this Current Report on Form 8-K, formatted as inline XBRL.\\\\\n\\end{tabular}\n\n**SIGNATURES**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, as amended, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n**International Paper Company**\n\nDate: May 11, 2026\n\nBy: /s/ Joseph R. Saab\n\nName: Joseph R. Saab\n\n: Senior Vice President, General Counsel and Corporate Secretary\n\nDate: May 11, 2026",
+  "text_hash": "4f7ebbbff0d8e446bdac209269615231ab5928eb66c12f6ae17e3672d20cc995",
+  "parse_ms": 10635,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "International Paper shareholders approved 11 directors and ratified Deloitte as auditor at the 2026 annual meeting.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:54:37.278Z"
+}

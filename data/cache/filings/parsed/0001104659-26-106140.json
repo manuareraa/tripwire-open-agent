@@ -1,0 +1,27 @@
+{
+  "accession": "0001104659-26-106140",
+  "cik": "9389",
+  "supplier_id": "SUP-14",
+  "company": "BALL CORPORATION",
+  "filed": "2026-09-09",
+  "metadata_items": [
+    "5.02",
+    "7.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926106140/tm2625007d1_8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Ball Corporation\n\nCurrent Report on Form 8-K\n\nDated September 9, 2026\n\nItem 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers;\n\nCompensatory Arrangements of Certain Officers.\n\nOn September 8, 2026, the Board of Directors of Ball Corporation elected Darlene Nicosia and Sherry Buck to serve as directors of the Company beginning on September 21, 2026. Nicosia is expected to be appointed to serve on the Finance and Nominating/Corporate Governance Committees and Buck is expected to be appointed to serve on the Finance and Audit Committees.\n\nNicosia is the Chief Executive Officer of Maker’s Pride, a position she has held since 2022. Prior to Maker’s Pride, Nicosia held various leadership positions at the Coca-Cola Company from 1993 to 2022, including her roles as President, Canada from 2019 to 2021 and President, Canada and Northeast United Stated from 2021 to 2022. Nicosia also served as a member of the Board of Directors of Foot Locker, Inc. from 2020 to 2025.\n\nBuck was the Chief Financial Officer of W.L. Gore & Associates, Inc. from 2021 until her retirement in December 2025. Prior to W.L. Gore & Associates, Inc., she was the Chief Financial Officer of the Waters Corporation from 2017 to 2021; Chief Financial Officer of Libbey, Inc. from 2012 to 2017; and Chief Financial Officer of the Whirlpool Corporation from 2010 to 2012. Ms. Buck has also served on the Board of Directors of Lennox International, Inc. since 2019.\n\nThere are no arrangements or understandings between any person and either Nicosia or Buck pursuant to which either of them was elected to the Board of Directors. There is no family relationship between any member of the Board of Directors or any executive officer of the Company and either of Nicosia or Buck, and there are no transactions between the Company and Nicosia or Buck that require disclosure under Item 404(a) of Regulation S-K.\n\nItem 7.01 Regulation FD Disclosure.\n\nAlso on September 9, 2026, the Company issued a press release announcing the election of Nicosia and Buck. A copy of the press release is furnished hereto as Exhibit 99.1. In accordance with General Instruction B.2. of Current Report on Form 8-K, this press release is deemed to be “furnished” and shall not be deemed “filed” for purposes of Section 18 of the Exchange Act, or otherwise subject to the liabilities of that section, nor shall such information or Exhibit be deemed incorporated by reference in any filing under the Securities Act or the Exchange Act, except as shall be expressly set forth by specific reference in such a filing.\n\nItem 9.01 Financial Statements and Exhibits\n\nExhibits.\n\nThe following are furnished as exhibits to this report:\n\nExhibit 99.1<br> Call Corporation Press Release dated September 9, 2026<br> Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n# Ball Corporation **Form 8-K September 9, 2026**\n\n## EXHIBIT INDEX\n\n\\begin{tabular}{cc}\n**Description** & **Exhibit** \\\\\nBall Corporation Press Release dated September 9, 2026 & 99.1 \\\\\n\\end{tabular}",
+  "text_hash": "dbbc330aca3b659e915a41cfc437843aa4531a0a13b199539ed798aee6b65411",
+  "parse_ms": 8945,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Ball Corp. elected two new independent directors, Darlene Nicosia and Sherry Buck, to its Board effective September 21, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:55:06.714Z"
+}

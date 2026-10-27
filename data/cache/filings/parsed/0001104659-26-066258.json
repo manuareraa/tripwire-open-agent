@@ -1,0 +1,25 @@
+{
+  "accession": "0001104659-26-066258",
+  "cik": "1166003",
+  "supplier_id": "SUP-12",
+  "company": "\"XPO",
+  "filed": "2026-05-26",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926066258/tm2615563d1_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.<br>\n_Departure of Wendy Cassity as Chief Legal Officer and Corporate Secretary_\n\nOn May 20, 2026, Wendy Cassity notified XPO, Inc. (the «Company”) of her intention to resign as chief legal officer and corporate secretary of the Company effective on or about June 18, 2026. Her resignation is for personal reasons.\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: May 26, 2026\n\nXPO, INC.\n\nBy: /s/ Kyle Wismans Kyle Wismans Chief Financial Officer\n\n",
+  "text_hash": "a6e9bd5e11f96d05ca2ba6ccd9d7fcc2ae2672abd7c156efc3ea6c6a8722c3f5",
+  "parse_ms": 4426,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "XPO legal chief Wendy Cassity resigns effective June 18, 2026 for personal reasons.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:54:08.623Z"
+}

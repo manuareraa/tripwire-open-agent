@@ -1,0 +1,25 @@
+{
+  "accession": "0000897723-26-000036",
+  "cik": "897723",
+  "supplier_id": "SUP-19",
+  "company": "Sanmina Corporation",
+  "filed": "2026-07-27",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000036/sanm-20260727.htm",
+  "pages_read": [
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 2.02 RESULTS OF OPERATIONS AND FINANCIAL CONDITION\n\nOn July 27, 2026, Sanmina Corporation (the “Company”) issued the press release attached as Exhibit 99.1 announcing unaudited financial\nresults for its fiscal quarter ended June 27, 2026.\n\nThe information set forth in this Item 2.02, including the exhibit hereto, shall not be deemed “filed” for purposes of Section 18 of the Securities\nExchange Act of 1934, as amended (the “Exchange Act”), or otherwise subject to the liabilities of that section. In addition, the information in this Item\n2.02 shall not be incorporated by reference into any registration statement filed under the Securities Act of 1933, as amended, or the Exchange Act,\nregardless of any general incorporation language in such filing.\n\nITEM 9.01 FINANCIAL STATEMENTS AND EXHIBITS\n\n(d) Exhibits.\n\nCONTINUE\n\n\nSIGNATURE\n\nPursuant to the Requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its\nbehalf by the undersigned thereunto duly authorized.\n\n\nDate: July 27, 2026\n\n\n\n\\begin{tabular}{cc}\n**Exhibit No** & **Description** \\\\\n &\nPress Release issued by Sanmina Corporation on July 27, 2026 \\\\\n99.1 & Cover Page Interactive Data File (embedded within the inline XBRL document) \\\\\n & \\\\\n104 & \\\\\n\\end{tabular}\n\n\n\n\n\\begin{tabular}{cc}\n & /s/ JONATHAN FAUT \\\\\n & Jonathan Faust \\\\\n & Executive Vice President and Chief Financial Officer \\\\\n\\end{tabular}\n\n\nSANMINA CORPORATION\n\nBy:\n\nDate:\n\nJuly 27, 2026",
+  "text_hash": "b4555e032f510f44880acbf726b25da0d2266323690d5f3c75eb2c9d23e521dc",
+  "parse_ms": 4432,
+  "parse_calls": 1,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sanmina Corporation issued unaudited Q2 FY2026 financial results on July 27, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:57:48.044Z"
+}

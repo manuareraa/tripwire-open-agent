@@ -1,0 +1,25 @@
+{
+  "accession": "0001306830-26-000124",
+  "cik": "1306830",
+  "supplier_id": "SUP-06",
+  "company": "CELANESE CORPORATION",
+  "filed": "2026-10-20",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000124/ce-20260416.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "## Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\n\n(d) Celanese Corporation (the \"Company\") is filing this amendment to its Current Report on Form 8-K filed on April 20, 2026, which reported the election of Anne P. Noonan to the Board of Directors (the \"Board\") of the Company. At the time of her election, the Board had not determined her appointments to any committees of the Board.\n\nOn October 15, 2026, the Board appointed Ms. Noonan to its Compensation and Management Development Committee and its Nominating and Corporate Governance Committee, effective immediately.\n\n2\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nCELANESE COPORATION\n\nBy: /s/ ASHLEY B. DUFFIE\n\nName: Ashley B. Duffie\n\n: Senior Vice President, General Counsel and Corporate Secretary\n\nDate: October 20, 2026\n\n3\n\n\\begin{tabular}{cc}\n\\end{tabular}\n",
+  "text_hash": "2663f1f9ad4e9c9a37f98e468f81d4ec4076e26077af3ca9a3fe3a62d978f2e6",
+  "parse_ms": 3781,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Celanese appoints new director Anne Noonan to key board committees",
+  "severity": "low",
+  "read_at": "2026-10-27T09:49:36.158Z"
+}

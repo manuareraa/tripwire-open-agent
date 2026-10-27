@@ -1,0 +1,27 @@
+{
+  "accession": "0001306830-25-000203",
+  "cik": "1306830",
+  "supplier_id": "SUP-06",
+  "company": "CELANESE CORPORATION",
+  "filed": "2025-10-28",
+  "metadata_items": [
+    "2.05",
+    "7.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683025000203/ce-20251028.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 6,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.05 Costs Associated with Exit or Disposal Activities.\n\nOn October 28, 2025, Celanese Corporation (“Celanese” or the “Company”) announced the intended closure of its facility in Lanaken, Belgium to help streamline the Company’s production costs across its global network. Celanese’s facility in Lanaken, Belgium is an acetate tow production site. This proposed cessation is subject to a consultation process with the applicable works council and union representatives at the facility, which the Company intends to initiate on or about October 31, 2025. The Company intends to permanently cease all manufacturing operations during the second half of 2026, subject to the completion of such consultation process.\n\nAs a result of this intended closure, the Company expects to record expenses, excluding employee termination costs, of approximately $70 – 90 million, consisting primarily of approximately $55 – 65 million of non-cash accelerated depreciation of fixed asset costs and approximately $15 – 25 million of other facility-related shutdown cash costs, with such cash outflows expected to occur during fiscal years 2026 through 2028.\n\nIn addition to these expenses, the Company expects to incur employee termination costs, which are subject to the above-referenced works council consultation. Until such consultation is concluded, the Company is unable to reasonably estimate the employee termination costs it will incur in connection with the intended actions. The Company will disclose the amount, type and timing of such costs promptly after they are determined.\n\nThe above charges are estimates; the actual charges may vary significantly based on various factors, including the outcome of the consultation process with the applicable works council and union representatives.\n\nItem 7.01 Regulation FD Disclosure\n\nOn October 28, 2025, the Company issued a press release announcing the intended closure of its facility in Lanaken, Belgium. A copy of the press release is attached as Exhibit 99.1 and is incorporated herein by reference.\n\nForward-Looking Statements\n\nThe information set forth in this Current Report contains certain “forward-looking statements,” which include information concerning the Company’s plans, objectives, goals, expected future costs associated with the anticipated closure of the above-referenced facility in Lanaken, Belgium, and other information that is not historical information. All forward-looking statements are based upon current expectations and beliefs and various assumptions. There can be no assurance that the Company will realize these expectations or that these beliefs will prove correct. There are a number of risks and uncertainties that could cause actual results to differ materially from the forward-looking statements contained herein. Numerous factors, many of which are beyond the Company’s control, could cause actual results to differ materially from those expressed as forward-looking statements. Certain of these risk factors are discussed under the heading “Risk Factors” in the Company’s Annual Report on Form 10-K for the year ended December 31, 2024, and other filings with the Securities and Exchange Commission. Any forward-looking statement speaks only as of the date it is made, and the Company undertakes no obligation to update any forward-looking statements to reflect events or circumstances after the date the statement is made.\n\nItem 9.01 Financial Statements and Exhibits\n\n(d) The following exhibits are being filed herewith:\n\n* In connection with the disclosure set forth in Item 7.01, the information in Item 7.01 of this Current Report, including the exhibit attached hereto, is being furnished and shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of\n\n\\begin{tabular}{cc}\n**Exhibit Number** & **Description**\\\\\n99.1 & Press Release dated October 28, 2025.*\\\\\n104 & Cover Page Interactive Data File (the cover page XBRL tags are embedded within the inline XBRL document contained in Exhibit 101)\\\\\n\\end{tabular}\n\n1934, as amended (the \"Exchange Act\"), or otherwise subject to the liabilities of such section. The information in Item 7.01 of this Current Report, including the exhibit, shall not be incorporated by reference into any filing\n\n2",
+  "text_hash": "6a13927ac91b1e06334eed62fa3a016cb5936c04478b2a30ad9e1cffe1024719",
+  "parse_ms": 5839,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Celanese plans to permanently close its Lanaken, Belgium acetate tow facility by mid-2026 after union consultation, expecting $70-90M in shutdown costs.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:49:30.697Z"
+}

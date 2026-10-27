@@ -575,3 +575,10 @@ body { padding-bottom: var(--ab-h, 0px); }
 
 /* Proving Ground shell: why a stage did not run */
 .pg-skipped { margin: 8px 0 0; padding-left: 18px; font-size: 12px; line-height: 1.5; }
+/* Proving Ground stage 1 · Read (pg-read stream) */
+.pg-read-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; font-size: 12.5px; }
+.pg-read-list li { line-height: 1.35; }
+.pg-read-sev { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; padding: 1px 6px; border-radius: 8px; border: 1px solid var(--line); color: var(--muted); }
+.pg-read-high .pg-read-sev { border-color: #c0392b; color: #c0392b; }
+.pg-read-medium .pg-read-sev { border-color: #b7791f; color: #b7791f; }
+.pg-read-date { color: var(--muted); }

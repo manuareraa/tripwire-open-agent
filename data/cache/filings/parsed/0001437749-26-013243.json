@@ -1,0 +1,25 @@
+{
+  "accession": "0001437749-26-013243",
+  "cik": "728535",
+  "supplier_id": "SUP-11",
+  "company": "\"J.B. HUNT TRANSPORT SERVICES",
+  "filed": "2026-04-24",
+  "metadata_items": [
+    "5.07"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774926013243/jbht20260423_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 5.07. SUBMISSION OF MATTERS TO A VOTE OF SECURITY HOLDERS\n\nOur Annual Meeting of Shareholders was held on April 23, 2026. Proxies for the meeting were solicited pursuant to Regulation 14A of the Securities Exchange Act of 1934. The following three matters were included in our proxy dated March 11, 2026, and were voted upon at the annual meeting. Final vote tabulations are indicated below:\n\n1. To elect Directors for a term of one (1) year:\n\n2. To consider and approve an advisory resolution regarding the Company’s compensation of its named executive officers:\n\n3. To ratify the appointment of PricewaterhouseCoopers LLP as the Company’s independent registered public accounting firm for the 2026 calendar year:\n\nNo additional business or other matters came before the meeting or any adjournment thereof.\n\n\\begin{tabular}{ccccc}\n & **For** & **Against** & **Abstain** & **Non Votes**\\\\\nBrett Biggs & 81,443,754 & 1,097,576 & 112,239 & 5,586,663\\\\\nFrancesca M. Edwards & 77,749,311 & 4,873,222 & 31,035 & 5,586,663\\\\\nSharilyn S. Gasaway & 76,414,341 & 6,207,369 & 31,859 & 5,586,663\\\\\nThad (John B., III) Hill & 79,878,836 & 2,663,576 & 111,157 & 5,586,663\\\\\nBryan Hunt & 77,433,529 & 5,200,422 & 19,618 & 5,586,663\\\\\nPersio Lisboa & 80,541,570 & 1,991,411 & 120,588 & 5,586,663\\\\\nJohn N. Roberts, III & 77,993,265 & 4,563,181 & 97,123 & 5,586,663\\\\\nJames L. Robo & 72,035,656 & 10,523,895 & 94,018 & 5,586,663\\\\\nShelley Simpson & 79,116,449 & 3,521,497 & 15,623 & 5,586,663\\\\\n\\end{tabular}\n\n\n\\begin{tabular}{cc}\nFor & 77,169,925\\\\\nAgainst & 5,396,316\\\\\nAbstain & 87,328\\\\\nNon Votes & 5,586,663\\\\\n\\end{tabular}\n\n\\begin{tabular}{cc}\nFor & 88,052,214\\\\\nAgainst & 51,551\\\\\nAbstain & 136,467\\\\\nNon Votes & \\\\\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized on the 24th day of April 2026.\n\nJ.B. HUNT TRANSPORT SERVICES, INC.\n\nBy:/s/ Shelley Simpson _[.Y. A.Brad Delco<class_Bibliography>\n\nShelley Simpson<class_Bibliography>\n\nPresident and Chief Executive Officer<br>\n(Principal Executive Officer)<class_Bibliography>\n\nBY:/s/ A.Brad Delco<br>\nA.Brad Delco<br>\nChief Financial Officer,<br>\nExecutive Vice President<br>\n(Principal Financial Officer)\n\n\\begin{tabular}{c}\nby:/s/ Shelley Simon _[.Y. A.Brad Delco / X.P. ] \\\\\nby:/s/ A.Brad Delco \\\\\n\\end{tabular}",
+  "text_hash": "f0a458911afdde152012ab4060f0e3e67ea807b930e8ef70288a6f1e0114dbdc",
+  "parse_ms": 12588,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "J.B. Hunt held 2026 annual meeting to elect directors, approve executive compensation and ratify auditor PwC",
+  "severity": "low",
+  "read_at": "2026-10-27T09:53:23.335Z"
+}

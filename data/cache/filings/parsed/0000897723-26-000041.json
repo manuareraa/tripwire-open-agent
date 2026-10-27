@@ -1,0 +1,25 @@
+{
+  "accession": "0000897723-26-000041",
+  "cik": "897723",
+  "supplier_id": "SUP-19",
+  "company": "Sanmina Corporation",
+  "filed": "2026-09-15",
+  "metadata_items": [
+    "5.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000041/sanm-20260914.htm",
+  "pages_read": [
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "**ITEM 5.02 DEPARTURE OF DIRECTORS OR CERTAIN OFFICERS; ELECTION OF DIRECTORS; APPOINTMENT OF CERTAIN OFFICERS; COMPENSATORY ARRANGEMENTS OF CERTAIN OFFICERS**\n\nAppointment of New Director\n\nOn September 14, 2026, the Board of Directors of Sanmina Corporation (the “Company”) appointed Shanker S Trivedi, 69, as a member of the Board of Directors of the Company. Mr. Trivedi brings more than 30 years of leadership experience in enterprise technology, data centers, cloud infrastructure, and go-to-market execution. From 2009 to 2026, Mr. Trivedi was at NVIDIA Corporation, a leading AI accelerated computing company, most recently as Senior Vice President, Enterprise Business from April 2016 to April 2026. While at NVIDIA, Mr. Trivedi led worldwide sales for data center and professional visualization products, as well as business development across industry verticals, including manufacturing, healthcare, financial services, telecommunications, government, and education. Prior to NVIDIA, Mr. Trivedi held various senior leadership positions at Callidus Software, Sun Microsystems, IBM, and ICL. Mr. Trivedi also currently serves on the board of directors of Enphase Energy, a global energy technology company specializing in microinverter-based solar and battery systems.\n\nMr. Trivedi will receive cash and equity compensation for his service in accordance with the non-employee Board member compensation arrangements previously approved by the Board.\n\nThe press release announcing Mr. Trivedi’s appointment is filed as Exhibit 99.1 to this Form 8-K.\n\n**ITEM 9.01 FINANCIAL STATEMENTS AND EXHIBITS**\n\n(d) Exhibits.\n\n99.1\n\nPlease Release issued by Sanmina Corporation on September 14, 2026\n\n104 Cover Page Interactive Data File (embedded within the inline XBRL document)\n\nSIGNATURE\n\nPursuant to the Requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.\n\nDate: September 15, 2026\n\n2 Of the Arcepted number of BLAST is 10%.\n\n\\begin{tabular}{ccc}\n\\multicolumn{2}{c}{Exhibit No} & Description\\\\\n\\end{tabular}\n\n\n& by: /s/ JONATHAN FAUST\nJonathan Faust\nExecutive Vice President and Chief Financial Officer\n\nSANMINA CORPORATION \\\\\n\\end{tabular}",
+  "text_hash": "f62af6ee7156922945be71da5719f79da4ad1e1c14bf98f120aaf389321eaac1",
+  "parse_ms": 3076,
+  "parse_calls": 1,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sanmina appointed Shanker S. Trivedi as new Board Director with enterprise tech and AI background.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:57:41.478Z"
+}
