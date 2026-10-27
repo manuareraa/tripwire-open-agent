@@ -1,0 +1,7075 @@
+{
+ "window": "2021Q2–2026Q1",
+ "fetched_on": "2026-10-27",
+ "cases_total": 200,
+ "pre_registered": "app/proving/backtest.ts, docs/proving/BACKTEST.md",
+ "held_at_sample": [
+  "spend_share",
+  "lead_time_weeks",
+  "category_alternatives",
+  "sanctions_matches"
+ ],
+ "budget": {
+  "cases": 200,
+  "calls_per_case": 13,
+  "calls": 2600,
+  "minutes_estimate": 108
+ },
+ "arms": [
+  {
+   "arm": "rules",
+   "label": "Rule-based tripwires (no model)",
+   "status": "measured",
+   "totals": {
+    "decisions": 200,
+    "trouble_events": 67,
+    "trouble_8k": 52,
+    "trouble_covenant": 15,
+    "caught_early": 31,
+    "caught_a_quarter_or_more_early": 3,
+    "median_quarters_of_warning": 0,
+    "firings": 49,
+    "false_alarms": 14
+   },
+   "suppliers": [
+    {
+     "supplier_id": "SUP-01",
+     "ticker": "TXN",
+     "trouble_events": 0,
+     "caught_early": 0,
+     "false_alarms": 0,
+     "firings": 0
+    },
+    {
+     "supplier_id": "SUP-02",
+     "ticker": "MCHP",
+     "trouble_events": 4,
+     "caught_early": 3,
+     "false_alarms": 0,
+     "firings": 2
+    },
+    {
+     "supplier_id": "SUP-03",
+     "ticker": "ON",
+     "trouble_events": 4,
+     "caught_early": 4,
+     "false_alarms": 0,
+     "firings": 4
+    },
+    {
+     "supplier_id": "SUP-04",
+     "ticker": "WOLF",
+     "trouble_events": 6,
+     "caught_early": 5,
+     "false_alarms": 0,
+     "firings": 5
+    },
+    {
+     "supplier_id": "SUP-05",
+     "ticker": "DOW",
+     "trouble_events": 1,
+     "caught_early": 1,
+     "false_alarms": 2,
+     "firings": 4
+    },
+    {
+     "supplier_id": "SUP-06",
+     "ticker": "CE",
+     "trouble_events": 4,
+     "caught_early": 1,
+     "false_alarms": 2,
+     "firings": 4
+    },
+    {
+     "supplier_id": "SUP-07",
+     "ticker": "HUN",
+     "trouble_events": 1,
+     "caught_early": 0,
+     "false_alarms": 2,
+     "firings": 2
+    },
+    {
+     "supplier_id": "SUP-08",
+     "ticker": "EMN",
+     "trouble_events": 1,
+     "caught_early": 0,
+     "false_alarms": 0,
+     "firings": 0
+    },
+    {
+     "supplier_id": "SUP-09",
+     "ticker": "UPS",
+     "trouble_events": 5,
+     "caught_early": 0,
+     "false_alarms": 0,
+     "firings": 0
+    },
+    {
+     "supplier_id": "SUP-10",
+     "ticker": "CHRW",
+     "trouble_events": 4,
+     "caught_early": 0,
+     "false_alarms": 0,
+     "firings": 0
+    },
+    {
+     "supplier_id": "SUP-11",
+     "ticker": "JBHT",
+     "trouble_events": 4,
+     "caught_early": 3,
+     "false_alarms": 2,
+     "firings": 5
+    },
+    {
+     "supplier_id": "SUP-12",
+     "ticker": "XPO",
+     "trouble_events": 5,
+     "caught_early": 2,
+     "false_alarms": 1,
+     "firings": 3
+    },
+    {
+     "supplier_id": "SUP-13",
+     "ticker": "IP",
+     "trouble_events": 4,
+     "caught_early": 4,
+     "false_alarms": 0,
+     "firings": 3
+    },
+    {
+     "supplier_id": "SUP-14",
+     "ticker": "BALL",
+     "trouble_events": 5,
+     "caught_early": 1,
+     "false_alarms": 2,
+     "firings": 4
+    },
+    {
+     "supplier_id": "SUP-15",
+     "ticker": "SON",
+     "trouble_events": 7,
+     "caught_early": 3,
+     "false_alarms": 0,
+     "firings": 3
+    },
+    {
+     "supplier_id": "SUP-16",
+     "ticker": "PKG",
+     "trouble_events": 1,
+     "caught_early": 1,
+     "false_alarms": 0,
+     "firings": 2
+    },
+    {
+     "supplier_id": "SUP-17",
+     "ticker": "APH",
+     "trouble_events": 0,
+     "caught_early": 0,
+     "false_alarms": 0,
+     "firings": 0
+    },
+    {
+     "supplier_id": "SUP-18",
+     "ticker": "JBL",
+     "trouble_events": 3,
+     "caught_early": 0,
+     "false_alarms": 2,
+     "firings": 3
+    },
+    {
+     "supplier_id": "SUP-19",
+     "ticker": "SANM",
+     "trouble_events": 4,
+     "caught_early": 1,
+     "false_alarms": 1,
+     "firings": 2
+    },
+    {
+     "supplier_id": "SUP-20",
+     "ticker": "VSH",
+     "trouble_events": 4,
+     "caught_early": 2,
+     "false_alarms": 0,
+     "firings": 3
+    }
+   ],
+   "events": [
+    {
+     "date": "2023-05-25",
+     "quarter": "2023Q2",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2023-03-31: current ratio 0.9842",
+     "source": "0000827054-23-000080",
+     "supplier_id": "SUP-02",
+     "as_of": "2023-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2023-05-25",
+      "quarter": "2023Q2",
+      "metric": "current_ratio",
+      "value": 0.984,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2024-02-01",
+     "quarter": "2024Q1",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2023-12-31: current ratio 0.9777",
+     "source": "0000827054-24-000024",
+     "supplier_id": "SUP-02",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-11-05",
+     "quarter": "2024Q4",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-09-30: current ratio 0.8843",
+     "source": "0000827054-24-000206",
+     "supplier_id": "SUP-02",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2024-11-05",
+      "quarter": "2024Q4",
+      "metric": "current_ratio",
+      "value": 0.884,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2024-11-20",
+     "quarter": "2024Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/827054/000082705424000221/mchp-20241118.htm",
+     "supplier_id": "SUP-02",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2024-11-05",
+      "quarter": "2024Q4",
+      "metric": "current_ratio",
+      "value": 0.884,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2022-09-19",
+     "quarter": "2022Q3",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097864/000119312522247127/d256278d8k.htm",
+     "supplier_id": "SUP-03",
+     "as_of": "2022-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2022-09-19",
+      "quarter": "2022Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2023-09-14",
+     "quarter": "2023Q3",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097864/000119312523235313/d553822d8k.htm",
+     "supplier_id": "SUP-03",
+     "as_of": "2023-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 1,
+     "firing": {
+      "date": "2023-06-26",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-03-18",
+     "quarter": "2025Q1",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097864/000119312525056735/d922410d8k.htm",
+     "supplier_id": "SUP-03",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-25",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2025-11-17",
+     "quarter": "2025Q4",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/1097864/000114036125042498/ef20059530_8k.htm",
+     "supplier_id": "SUP-03",
+     "as_of": "2025-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-11-17",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 3,
+      "threshold": 2
+     }
+    },
+    {
+     "date": "2021-12-08",
+     "quarter": "2021Q4",
+     "kind": "8-K",
+     "detail": "8-K item 2.04",
+     "source": "https://www.sec.gov/Archives/edgar/data/895419/000089541921000149/wolfspeed-20211208.htm",
+     "supplier_id": "SUP-04",
+     "as_of": "2021-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2021-12-08",
+      "quarter": "2021Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2023-08-23",
+     "quarter": "2023Q3",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2023-06-25: liabilities to equity 3.0611",
+     "source": "0000895419-23-000061",
+     "supplier_id": "SUP-04",
+     "as_of": "2023-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 1,
+     "firing": {
+      "date": "2023-06-26",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2025-05-28",
+     "quarter": "2025Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/895419/000089541925000088/wolfspeed-20250523.htm",
+     "supplier_id": "SUP-04",
+     "as_of": "2025-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2025-07-01",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 1.03, 2.04",
+     "source": "https://www.sec.gov/Archives/edgar/data/895419/000119312525153145/d755867d8k.htm",
+     "supplier_id": "SUP-04",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-07-01",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-09-10",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 1.03",
+     "source": "https://www.sec.gov/Archives/edgar/data/895419/000119312525199310/d36059d8k.htm",
+     "supplier_id": "SUP-04",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-07-01",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-09-30",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 1.03",
+     "source": "https://www.sec.gov/Archives/edgar/data/895419/000119312525224251/d22768d8k.htm",
+     "supplier_id": "SUP-04",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-07-01",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-07-07",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/1751788/000175178825000139/dow-20250630.htm",
+     "supplier_id": "SUP-05",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-07-07",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2022-11-04",
+     "quarter": "2022Q4",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2022-09-30: liabilities to equity 3.3105",
+     "source": "0001306830-22-000184",
+     "supplier_id": "SUP-06",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-12-09",
+     "quarter": "2024Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1306830/000110465924126774/tm2430529d1_8k.htm",
+     "supplier_id": "SUP-06",
+     "as_of": "2024-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2025-02-21",
+     "quarter": "2025Q1",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-12-31: liabilities to equity 3.4168",
+     "source": "0001306830-25-000027",
+     "supplier_id": "SUP-06",
+     "as_of": "2024-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2026-01-06",
+     "quarter": "2026Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000003/ce-20260104.htm",
+     "supplier_id": "SUP-06",
+     "as_of": "2025-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 1,
+     "firing": {
+      "date": "2025-10-28",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2021-04-05",
+     "quarter": "2021Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1307954/000110465921046599/tm2112089d1_8k.htm",
+     "supplier_id": "SUP-07",
+     "as_of": "2021-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2021-12-07",
+     "quarter": "2021Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/915389/000091538921000080/emn-20211201.htm",
+     "supplier_id": "SUP-08",
+     "as_of": "2021-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2022-05-10",
+     "quarter": "2022Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1090727/000109072722000025/ups-20220504.htm",
+     "supplier_id": "SUP-09",
+     "as_of": "2022-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2024-02-20",
+     "quarter": "2024Q1",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2023-12-31: liabilities to equity 3.0944",
+     "source": "0001090727-24-000008",
+     "supplier_id": "SUP-09",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-05-06",
+     "quarter": "2024Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1090727/000109072724000031/ups-20240502.htm",
+     "supplier_id": "SUP-09",
+     "as_of": "2024-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2024-08-07",
+     "quarter": "2024Q3",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-06-30: liabilities to equity 3.0762",
+     "source": "0001090727-24-000045",
+     "supplier_id": "SUP-09",
+     "as_of": "2024-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2025-06-02",
+     "quarter": "2025Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1090727/000109072725000054/ups-20250602.htm",
+     "supplier_id": "SUP-09",
+     "as_of": "2025-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2022-11-04",
+     "quarter": "2022Q4",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2022-09-30: liabilities to equity 3.0508",
+     "source": "0001043277-22-000045",
+     "supplier_id": "SUP-10",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-01-03",
+     "quarter": "2023Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1043277/000119312523000266/d436281d8k.htm",
+     "supplier_id": "SUP-10",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-12-21",
+     "quarter": "2023Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1043277/000119312523301238/d563913d8k.htm",
+     "supplier_id": "SUP-10",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-05-13",
+     "quarter": "2024Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1043277/000104327724000028/chrw-20240509.htm",
+     "supplier_id": "SUP-10",
+     "as_of": "2024-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2021-06-28",
+     "quarter": "2021Q2",
+     "kind": "8-K",
+     "detail": "8-K item 4.01",
+     "source": "https://www.sec.gov/Archives/edgar/data/728535/000143774921015782/jbht20210625_8k.htm",
+     "supplier_id": "SUP-11",
+     "as_of": "2021-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2021-06-28",
+      "quarter": "2021Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2024-02-29",
+     "quarter": "2024Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/728535/000143774924006061/jbht20240229_8k.htm",
+     "supplier_id": "SUP-11",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-10-25",
+     "quarter": "2024Q4",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-09-30: current ratio 0.9436",
+     "source": "0001437749-24-032122",
+     "supplier_id": "SUP-11",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2024-10-25",
+      "quarter": "2024Q4",
+      "metric": "current_ratio",
+      "value": 0.944,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-04-25",
+     "quarter": "2025Q2",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2025-03-31: current ratio 0.8913",
+     "source": "0001437749-25-013085",
+     "supplier_id": "SUP-11",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-04-25",
+      "quarter": "2025Q2",
+      "metric": "current_ratio",
+      "value": 0.891,
+      "threshold": 0.897
+     }
+    },
+    {
+     "date": "2021-07-28",
+     "quarter": "2021Q3",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1166003/000110465921097013/tm2123564d1_8k.htm",
+     "supplier_id": "SUP-12",
+     "as_of": "2021-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2021-08-16",
+      "quarter": "2021Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2022-04-11",
+     "quarter": "2022Q2",
+     "kind": "8-K",
+     "detail": "8-K item 2.04",
+     "source": "https://www.sec.gov/Archives/edgar/data/1166003/000110465922044655/tm2212205d1_8k.htm",
+     "supplier_id": "SUP-12",
+     "as_of": "2022-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2022-04-11",
+      "quarter": "2022Q2",
+      "metric": "risk_events_12m",
+      "value": 3,
+      "threshold": 2
+     }
+    },
+    {
+     "date": "2023-01-25",
+     "quarter": "2023Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1166003/000110465923006589/tm234396d1_8k.htm",
+     "supplier_id": "SUP-12",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-03-09",
+     "quarter": "2023Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1166003/000110465923030611/tm235485d2_8k.htm",
+     "supplier_id": "SUP-12",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-07-19",
+     "quarter": "2023Q3",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/1166003/000110465923082348/tm2321589d1_8k.htm",
+     "supplier_id": "SUP-12",
+     "as_of": "2023-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2023-10-18",
+     "quarter": "2023Q4",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/51434/000119312523258136/d489478d8k.htm",
+     "supplier_id": "SUP-13",
+     "as_of": "2023-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2023-10-18",
+      "quarter": "2023Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2025-02-13",
+     "quarter": "2025Q1",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/51434/000119312525026087/d894584d8k.htm",
+     "supplier_id": "SUP-13",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-13",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-08-21",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/51434/000005143425000060/ip-20250820.htm",
+     "supplier_id": "SUP-13",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-08-21",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 4,
+      "threshold": 2
+     }
+    },
+    {
+     "date": "2025-08-21",
+     "quarter": "2025Q3",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/51434/000005143425000059/ip-20250820.htm",
+     "supplier_id": "SUP-13",
+     "as_of": "2025-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-08-21",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 4,
+      "threshold": 2
+     }
+    },
+    {
+     "date": "2022-01-27",
+     "quarter": "2022Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/9389/000000938922000003/bll-20220126x8k.htm",
+     "supplier_id": "SUP-14",
+     "as_of": "2021-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-09-11",
+     "quarter": "2023Q3",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/9389/000000938923000038/ball-20230907x8k.htm",
+     "supplier_id": "SUP-14",
+     "as_of": "2023-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2025-02-20",
+     "quarter": "2025Q1",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-12-31: current ratio 0.9988",
+     "source": "0001558370-25-001190",
+     "supplier_id": "SUP-14",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-20",
+      "quarter": "2025Q1",
+      "metric": "current_ratio",
+      "value": 0.999,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-05-22",
+     "quarter": "2025Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/9389/000000938925000010/ball-20250522x8k.htm",
+     "supplier_id": "SUP-14",
+     "as_of": "2025-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2025-08-05",
+     "quarter": "2025Q3",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2025-06-30: current ratio 0.9987",
+     "source": "0001558370-25-010234",
+     "supplier_id": "SUP-14",
+     "as_of": "2025-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2022-02-11",
+     "quarter": "2022Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/91767/000009176722000008/son-20220208.htm",
+     "supplier_id": "SUP-15",
+     "as_of": "2021-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2022-05-25",
+     "quarter": "2022Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/91767/000110465922064477/tm2216817d1_8k.htm",
+     "supplier_id": "SUP-15",
+     "as_of": "2022-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2022-06-16",
+     "quarter": "2022Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/91767/000110465922071896/tm2218672d1_8k.htm",
+     "supplier_id": "SUP-15",
+     "as_of": "2022-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2022-10-24",
+     "quarter": "2022Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/91767/000110465922110968/tm2228833d1_8k.htm",
+     "supplier_id": "SUP-15",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2025-01-06",
+     "quarter": "2025Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/91767/000110465925001112/tm251988d1_8k.htm",
+     "supplier_id": "SUP-15",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-28",
+      "quarter": "2025Q1",
+      "metric": "current_ratio",
+      "value": 0.787,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-02-28",
+     "quarter": "2025Q1",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2024-12-31: current ratio 0.7871",
+     "source": "0000091767-25-000014",
+     "supplier_id": "SUP-15",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-28",
+      "quarter": "2025Q1",
+      "metric": "current_ratio",
+      "value": 0.787,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-10-29",
+     "quarter": "2025Q4",
+     "kind": "covenant",
+     "detail": "covenant-level break for period 2025-09-28: current ratio 0.9229",
+     "source": "0000091767-25-000045",
+     "supplier_id": "SUP-15",
+     "as_of": "2025-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-10-29",
+      "quarter": "2025Q4",
+      "metric": "current_ratio",
+      "value": 0.923,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2025-12-04",
+     "quarter": "2025Q4",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/75677/000119312525307535/d50663d8k.htm",
+     "supplier_id": "SUP-16",
+     "as_of": "2025-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-12-04",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2022-11-09",
+     "quarter": "2022Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/898293/000119312522281200/d320977d8k.htm",
+     "supplier_id": "SUP-18",
+     "as_of": "2022-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-08-15",
+     "quarter": "2023Q3",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/898293/000119312523213434/d491026d8k.htm",
+     "supplier_id": "SUP-18",
+     "as_of": "2023-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2024-05-20",
+     "quarter": "2024Q2",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/898293/000119312524142941/d829227d8k.htm",
+     "supplier_id": "SUP-18",
+     "as_of": "2024-03-31",
+     "caught_early": false
+    },
+    {
+     "date": "2021-12-10",
+     "quarter": "2021Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/897723/000110465921148579/tm2135112d1_8k.htm",
+     "supplier_id": "SUP-19",
+     "as_of": "2021-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-05-11",
+     "quarter": "2023Q2",
+     "kind": "8-K",
+     "detail": "8-K item 4.02",
+     "source": "https://www.sec.gov/Archives/edgar/data/897723/000110465923059130/tm2315406d1_8k.htm",
+     "supplier_id": "SUP-19",
+     "as_of": "2023-03-31",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2023-05-11",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     }
+    },
+    {
+     "date": "2023-12-07",
+     "quarter": "2023Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/897723/000110465923124295/tm2332283d1_8k.htm",
+     "supplier_id": "SUP-19",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2023-12-19",
+     "quarter": "2023Q4",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/897723/000110465923127317/tm2333215d1_8k.htm",
+     "supplier_id": "SUP-19",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2022-02-22",
+     "quarter": "2022Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/103730/000010373022000008/form8-k.htm",
+     "supplier_id": "SUP-20",
+     "as_of": "2021-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2024-02-29",
+     "quarter": "2024Q1",
+     "kind": "8-K",
+     "detail": "8-K item 5.02 (CEO/CFO leaving)",
+     "source": "https://www.sec.gov/Archives/edgar/data/103730/000010373024000037/form8-k.htm",
+     "supplier_id": "SUP-20",
+     "as_of": "2023-09-30",
+     "caught_early": false
+    },
+    {
+     "date": "2025-02-05",
+     "quarter": "2025Q1",
+     "kind": "8-K",
+     "detail": "8-K item 2.06",
+     "source": "https://www.sec.gov/Archives/edgar/data/103730/000010373025000006/form8-k.htm",
+     "supplier_id": "SUP-20",
+     "as_of": "2024-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2025-02-05",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    },
+    {
+     "date": "2026-01-09",
+     "quarter": "2026Q1",
+     "kind": "8-K",
+     "detail": "8-K item 4.01",
+     "source": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000003/form8-k.htm",
+     "supplier_id": "SUP-20",
+     "as_of": "2025-09-30",
+     "caught_early": true,
+     "quarters_of_warning": 0,
+     "firing": {
+      "date": "2026-01-09",
+      "quarter": "2026Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     }
+    }
+   ],
+   "cases": [
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.725
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2021-09-30",
+     "firing": {
+      "date": "2021-09-16",
+      "quarter": "2021Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2021-09-30",
+     "firing": {
+      "date": "2021-06-28",
+      "quarter": "2021Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.886
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2021-09-30",
+     "firing": {
+      "date": "2021-08-16",
+      "quarter": "2021Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.894
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2021-09-30",
+     "firing": {
+      "date": "2021-05-07",
+      "quarter": "2021Q2",
+      "metric": "current_ratio",
+      "value": 0.85,
+      "threshold": 0.894
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 3
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.866
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2021-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2021-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-03-31",
+     "firing": {
+      "date": "2021-12-08",
+      "quarter": "2021Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2022-03-31",
+     "firing": {
+      "date": "2022-03-24",
+      "quarter": "2022Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.867
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 3
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.722
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.886
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2021-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2022-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-09-30",
+     "firing": {
+      "date": "2022-09-19",
+      "quarter": "2022Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-09-30",
+     "firing": {
+      "date": "2022-05-23",
+      "quarter": "2022Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.897
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2022-09-30",
+     "firing": {
+      "date": "2022-04-11",
+      "quarter": "2022Q2",
+      "metric": "risk_events_12m",
+      "value": 3,
+      "threshold": 2
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.745
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2022-09-30",
+     "firing": {
+      "date": "2022-08-04",
+      "quarter": "2022Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.924
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.839
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2022-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2022-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-03-31",
+     "firing": {
+      "date": "2023-01-26",
+      "quarter": "2023Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-03-31",
+     "firing": {
+      "date": "2022-10-03",
+      "quarter": "2022Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.852
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-03-31",
+     "firing": {
+      "date": "2023-02-21",
+      "quarter": "2023Q1",
+      "metric": "current_ratio",
+      "value": 0.783,
+      "threshold": 0.852
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.887
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2022-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2023-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-09-30",
+     "firing": {
+      "date": "2023-05-25",
+      "quarter": "2023Q2",
+      "metric": "current_ratio",
+      "value": 0.984,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-09-30",
+     "firing": {
+      "date": "2023-06-26",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-09-30",
+     "firing": {
+      "date": "2023-06-26",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.918
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.92
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.666
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.868
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2023-09-30",
+     "firing": {
+      "date": "2023-05-11",
+      "quarter": "2023Q2",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2023-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2023-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.864
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2024-03-31",
+     "firing": {
+      "date": "2023-10-31",
+      "quarter": "2023Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.844
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2024-03-31",
+     "firing": {
+      "date": "2023-12-21",
+      "quarter": "2023Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-03-31",
+     "firing": {
+      "date": "2023-10-18",
+      "quarter": "2023Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.667
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.904
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2024-03-31",
+     "firing": {
+      "date": "2023-10-02",
+      "quarter": "2023Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2023-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2024-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.831
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.933
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.852
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.672
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2024-09-30",
+     "firing": {
+      "date": "2024-09-19",
+      "quarter": "2024Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2024-09-30",
+     "firing": {
+      "date": "2024-09-26",
+      "quarter": "2024Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2024-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2024-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2024-09-30",
+     "firing": {
+      "date": "2024-09-24",
+      "quarter": "2024Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2024-11-05",
+      "quarter": "2024Q4",
+      "metric": "current_ratio",
+      "value": 0.884,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-02-25",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2024-11-06",
+      "quarter": "2024Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-01-30",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2024-10-25",
+      "quarter": "2024Q4",
+      "metric": "current_ratio",
+      "value": 0.944,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.853
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-02-13",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-02-20",
+      "quarter": "2025Q1",
+      "metric": "current_ratio",
+      "value": 0.999,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-02-28",
+      "quarter": "2025Q1",
+      "metric": "current_ratio",
+      "value": 0.787,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2025-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2024-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2025-03-31",
+     "firing": {
+      "date": "2025-02-05",
+      "quarter": "2025Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-07-01",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-07-07",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-08-11",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.897
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-04-25",
+      "quarter": "2025Q2",
+      "metric": "current_ratio",
+      "value": 0.891,
+      "threshold": 0.897
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.901
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-08-21",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 4,
+      "threshold": 2
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.849
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.669
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-08-06",
+      "quarter": "2025Q3",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.904
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2025-09-30",
+     "firing": {
+      "date": "2025-06-24",
+      "quarter": "2025Q2",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2025-03-31",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2025-09-30",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-01",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.5
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-02",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-03",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-11-17",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 3,
+      "threshold": 2
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-04",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.305
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 4
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-05",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 2
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2026-01-29",
+      "quarter": "2026Q1",
+      "metric": "risk_events_12m",
+      "value": 3,
+      "threshold": 2
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-06",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.45
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-10-28",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-07",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2026-02-13",
+      "quarter": "2026Q1",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-08",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-09",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.55
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-10",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-11",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.742
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-12-02",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-12",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.863
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-13",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 4
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-14",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.849
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.35
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-15",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.4
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-10-29",
+      "quarter": "2025Q4",
+      "metric": "current_ratio",
+      "value": 0.923,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-16",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.25
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-12-04",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-17",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.3
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-18",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 0.836
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.72
+      }
+     ],
+     "window_end": "2026-03-31",
+     "false_alarm": false
+    },
+    {
+     "supplier_id": "SUP-19",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.18
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2025-10-31",
+      "quarter": "2025Q4",
+      "metric": "risk_events_12m",
+      "value": 1,
+      "threshold": 0
+     },
+     "false_alarm": true
+    },
+    {
+     "supplier_id": "SUP-20",
+     "as_of": "2025-09-30",
+     "tripwires": [
+      {
+       "metric": "current_ratio",
+       "op": "<",
+       "threshold": 1
+      },
+      {
+       "metric": "risk_events_12m",
+       "op": ">",
+       "threshold": 1
+      },
+      {
+       "metric": "sanctions_matches",
+       "op": ">",
+       "threshold": 0
+      },
+      {
+       "metric": "spend_share",
+       "op": ">",
+       "threshold": 0.2
+      }
+     ],
+     "window_end": "2026-03-31",
+     "firing": {
+      "date": "2026-01-09",
+      "quarter": "2026Q1",
+      "metric": "risk_events_12m",
+      "value": 2,
+      "threshold": 1
+     },
+     "false_alarm": false
+    }
+   ]
+  },
+  {
+   "arm": "decider",
+   "label": "Ultra decider tripwires",
+   "status": "not run yet",
+   "note": "Not recorded yet. Needs a live Nightshift run on the Windows PC (`--record`) after the Imagine and Crash-test stages land."
+  },
+  {
+   "arm": "crashed",
+   "label": "Pre-mortem + crash-tested tripwires",
+   "status": "not run yet",
+   "note": "Not recorded yet. Needs a live Nightshift run on the Windows PC (`--record`) after the Imagine and Crash-test stages land."
+  }
+ ]
+}

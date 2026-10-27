@@ -1,0 +1,955 @@
+{
+ "SUP-01": {
+  "subject_id": "SUP-01",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     5.812,
+     4.45,
+     4.353,
+     4.456,
+     4.857
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-02": {
+  "subject_id": "SUP-02",
+  "arm": "rules",
+  "as_of": "2023Q1",
+  "quarters": [
+   "2023Q1",
+   "2023Q2",
+   "2023Q3",
+   "2023Q4",
+   "2024Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.759,
+     0.984,
+     1.016,
+     1.033,
+     0.978
+    ],
+    "fired_at": "2023Q2"
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q2",
+    "label": "Covenant-level break for period 2023-03-31: current ratio 0.9842"
+   },
+   {
+    "quarter": "2024Q1",
+    "label": "Covenant-level break for period 2023-12-31: current ratio 0.9777"
+   }
+  ]
+ },
+ "SUP-03": {
+  "subject_id": "SUP-03",
+  "arm": "rules",
+  "as_of": "2023Q1",
+  "quarters": [
+   "2023Q1",
+   "2023Q2",
+   "2023Q3",
+   "2023Q4",
+   "2024Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     2.779,
+     2.216,
+     2.391,
+     2.439,
+     2.708
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "fired_at": "2023Q2"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q3",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1097864/000119312523235313/d553822d8k.htm"
+   }
+  ]
+ },
+ "SUP-04": {
+  "subject_id": "SUP-04",
+  "arm": "rules",
+  "as_of": "2023Q1",
+  "quarters": [
+   "2023Q1",
+   "2023Q2",
+   "2023Q3",
+   "2023Q4",
+   "2024Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     6.705,
+     4.692,
+     5.744,
+     5.445,
+     5.134
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     1,
+     1,
+     1
+    ],
+    "fired_at": "2023Q2"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q3",
+    "label": "Covenant-level break for period 2023-06-25: liabilities to equity 3.0611"
+   }
+  ]
+ },
+ "SUP-05": {
+  "subject_id": "SUP-05",
+  "arm": "rules",
+  "as_of": "2025Q1",
+  "quarters": [
+   "2025Q1",
+   "2025Q2",
+   "2025Q3",
+   "2025Q4",
+   "2026Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.613,
+     1.542,
+     1.689,
+     1.944,
+     1.967
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     1,
+     2,
+     2,
+     2
+    ],
+    "fired_at": "2025Q3"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2025Q3",
+    "label": "Big write-down of assets (8-K 2.06)",
+    "items": [
+     "2.06"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178825000139/dow-20250630.htm"
+   }
+  ]
+ },
+ "SUP-06": {
+  "subject_id": "SUP-06",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     2.051,
+     1.634,
+     1.546,
+     1.383,
+     1.447
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     2,
+     2,
+     2,
+     1
+    ],
+    "fired_at": "2025Q4"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2026Q1",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000003/ce-20260104.htm"
+   }
+  ]
+ },
+ "SUP-07": {
+  "subject_id": "SUP-07",
+  "arm": "rules",
+  "as_of": "2022Q1",
+  "quarters": [
+   "2022Q1",
+   "2022Q2",
+   "2022Q3",
+   "2022Q4",
+   "2023Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.915,
+     1.883,
+     2.119,
+     2.004,
+     1.849
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     1,
+     1,
+     1
+    ],
+    "fired_at": "2022Q2"
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-08": {
+  "subject_id": "SUP-08",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.685,
+     1.757,
+     1.374,
+     1.465,
+     1.498
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-09": {
+  "subject_id": "SUP-09",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.324,
+     1.305,
+     1.219,
+     1.213,
+     1.179
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-10": {
+  "subject_id": "SUP-10",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.313,
+     1.585,
+     1.528,
+     1.586,
+     1.582
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-11": {
+  "subject_id": "SUP-11",
+  "arm": "rules",
+  "as_of": "2021Q1",
+  "quarters": [
+   "2021Q1",
+   "2021Q2",
+   "2021Q3",
+   "2021Q4",
+   "2022Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.698,
+     1.828,
+     1.799,
+     1.377,
+     1.338
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     1,
+     1,
+     1
+    ],
+    "fired_at": "2021Q2"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2021Q2",
+    "label": "Auditor changed (8-K 4.01)",
+    "items": [
+     "4.01"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/728535/000143774921015782/jbht20210625_8k.htm"
+   }
+  ]
+ },
+ "SUP-12": {
+  "subject_id": "SUP-12",
+  "arm": "rules",
+  "as_of": "2021Q1",
+  "quarters": [
+   "2021Q1",
+   "2021Q2",
+   "2021Q3",
+   "2021Q4",
+   "2022Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 0.886,
+    "values": [
+     1.042,
+     1.023,
+     1.02,
+     1.009,
+     1.055
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     1,
+     3,
+     3,
+     2
+    ],
+    "fired_at": "2021Q3"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2021Q3",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465921097013/tm2123564d1_8k.htm"
+   }
+  ]
+ },
+ "SUP-13": {
+  "subject_id": "SUP-13",
+  "arm": "rules",
+  "as_of": "2023Q3",
+  "quarters": [
+   "2023Q3",
+   "2023Q4",
+   "2024Q1",
+   "2024Q2",
+   "2024Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.592,
+     1.747,
+     1.669,
+     1.676,
+     1.594
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     1,
+     1,
+     1
+    ],
+    "fired_at": "2023Q4"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q4",
+    "label": "Big write-down of assets (8-K 2.06)",
+    "items": [
+     "2.06"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000119312523258136/d489478d8k.htm"
+   }
+  ]
+ },
+ "SUP-14": {
+  "subject_id": "SUP-14",
+  "arm": "rules",
+  "as_of": "2024Q3",
+  "quarters": [
+   "2024Q3",
+   "2024Q4",
+   "2025Q1",
+   "2025Q2",
+   "2025Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.177,
+     1.094,
+     0.999,
+     1.04,
+     0.999
+    ],
+    "fired_at": "2025Q1"
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2025Q1",
+    "label": "Covenant-level break for period 2024-12-31: current ratio 0.9988"
+   },
+   {
+    "quarter": "2025Q2",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000000938925000010/ball-20250522x8k.htm"
+   },
+   {
+    "quarter": "2025Q3",
+    "label": "Covenant-level break for period 2025-06-30: current ratio 0.9987"
+   }
+  ]
+ },
+ "SUP-15": {
+  "subject_id": "SUP-15",
+  "arm": "rules",
+  "as_of": "2024Q3",
+  "quarters": [
+   "2024Q3",
+   "2024Q4",
+   "2025Q1",
+   "2025Q2",
+   "2025Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.3,
+     2.365,
+     0.787,
+     0.797,
+     1.253
+    ],
+    "fired_at": "2025Q1"
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     1,
+     1,
+     1,
+     0
+    ]
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2025Q1",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000110465925001112/tm251988d1_8k.htm"
+   },
+   {
+    "quarter": "2025Q1",
+    "label": "Covenant-level break for period 2024-12-31: current ratio 0.7871"
+   }
+  ]
+ },
+ "SUP-16": {
+  "subject_id": "SUP-16",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     3.538,
+     3.158,
+     3.166,
+     3.071,
+     2.942
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     2,
+     2,
+     2,
+     1
+    ],
+    "fired_at": "2025Q4"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2025Q4",
+    "label": "Big write-down of assets (8-K 2.06)",
+    "items": [
+     "2.06"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312525307535/d50663d8k.htm"
+   }
+  ]
+ },
+ "SUP-17": {
+  "subject_id": "SUP-17",
+  "arm": "rules",
+  "as_of": "2025Q3",
+  "quarters": [
+   "2025Q3",
+   "2025Q4",
+   "2026Q1",
+   "2026Q2",
+   "2026Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     2.016,
+     2.07,
+     2.979,
+     1.714,
+     1.888
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "trouble": []
+ },
+ "SUP-18": {
+  "subject_id": "SUP-18",
+  "arm": "rules",
+  "as_of": "2023Q3",
+  "quarters": [
+   "2023Q3",
+   "2023Q4",
+   "2024Q1",
+   "2024Q2",
+   "2024Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 0.904,
+    "values": [
+     null,
+     1.16,
+     1.125,
+     1.166,
+     1.129
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     1,
+     1,
+     2
+    ],
+    "fired_at": "2023Q4"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q3",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000119312523213434/d491026d8k.htm"
+   },
+   {
+    "quarter": "2024Q2",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000119312524142941/d829227d8k.htm"
+   }
+  ]
+ },
+ "SUP-19": {
+  "subject_id": "SUP-19",
+  "arm": "rules",
+  "as_of": "2023Q1",
+  "quarters": [
+   "2023Q1",
+   "2023Q2",
+   "2023Q3",
+   "2023Q4",
+   "2024Q1"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     1.685,
+     1.789,
+     1.832,
+     1.908,
+     1.992
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 0,
+    "values": [
+     0,
+     1,
+     2,
+     2,
+     2
+    ],
+    "fired_at": "2023Q2"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2023Q2",
+    "label": "Past financial statements withdrawn (8-K 4.02)",
+    "items": [
+     "4.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000110465923059130/tm2315406d1_8k.htm"
+   },
+   {
+    "quarter": "2023Q4",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000110465923124295/tm2332283d1_8k.htm"
+   },
+   {
+    "quarter": "2023Q4",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/897723/000110465923127317/tm2333215d1_8k.htm"
+   }
+  ]
+ },
+ "SUP-20": {
+  "subject_id": "SUP-20",
+  "arm": "rules",
+  "as_of": "2024Q3",
+  "quarters": [
+   "2024Q3",
+   "2024Q4",
+   "2025Q1",
+   "2025Q2",
+   "2025Q3"
+  ],
+  "lines": [
+   {
+    "metric": "current_ratio",
+    "op": "<",
+    "threshold": 1,
+    "values": [
+     2.981,
+     2.815,
+     2.704,
+     2.801,
+     2.703
+    ]
+   },
+   {
+    "metric": "risk_events_12m",
+    "op": ">",
+    "threshold": 1,
+    "values": [
+     1,
+     1,
+     2,
+     2,
+     1
+    ],
+    "fired_at": "2025Q1"
+   }
+  ],
+  "trouble": [
+   {
+    "quarter": "2025Q1",
+    "label": "Big write-down of assets (8-K 2.06)",
+    "items": [
+     "2.06"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373025000006/form8-k.htm"
+   }
+  ]
+ }
+}

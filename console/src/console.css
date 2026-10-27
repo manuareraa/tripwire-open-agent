@@ -569,3 +569,6 @@ body { padding-bottom: var(--ab-h, 0px); }
 .pg-crash-badge.verified { --bc: var(--keep); }
 .pg-crash-badge.decorative { --bc: var(--dual); }
 .pg-crash-badge.mis_set { --bc: var(--exit); }
+/* Proving Ground stage 4 · Backtest (backtest stream). */
+.pg-backtest-headline { font-size: 13.5px; line-height: 1.45; margin-bottom: 6px; }
+.pg-backtest-headline b { font-variant-numeric: tabular-nums; }
