@@ -306,7 +306,7 @@ textarea.input { resize: vertical; min-height: 64px; }
 .hc-verb { color: var(--muted); font-size: 14px; }
 .hc-side { display: flex; gap: 18px; align-items: center; }
 .ring { position: relative; width: 92px; height: 92px; }
-.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
 .ring .t { fill: none; stroke: var(--line); stroke-width: 7; }
 .ring .v { fill: none; stroke: var(--vc, var(--primary)); stroke-width: 7; stroke-linecap: round; animation: ring-fill 1.1s var(--ease-out) both .15s; }
 @keyframes ring-fill { from { stroke-dashoffset: 100; } }
