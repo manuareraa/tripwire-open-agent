@@ -48,6 +48,9 @@
   .stat { padding: 10px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--line); text-align: center; }
   .stat b { display: block; font-family: var(--font-display); font-size: 22px; }
   .stat span { font-size: 11.5px; color: var(--muted); }
+  .pg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+  .pg-stats .stat b { font-size: 26px; }
+  @media (max-width: 760px) { .pg-stats { grid-template-columns: repeat(2, 1fr); } }
   .demo-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
   .wire-line { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--wire), transparent); background-size: 200% 100%; animation: wire 3.2s linear infinite; }
   @keyframes wire { from { background-position: 100% 0; } to { background-position: -100% 0; } }
@@ -218,7 +221,33 @@
     </div>
   </section>
 
-  <section class="block" style="background:var(--bg-2)" id="try">
+  <section class="block" style="background:var(--bg-2)" id="proving">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Proving Ground</div>
+        <h2>Nemotron tries to break its own call before you approve it.</h2>
+        <p>A tripwire is only worth keeping if crossing it would really change the decision. Every decision gets four checks, shown as one strip in the console. Big model designs, small model tests.</p>
+      </div>
+      <div class="flow">
+        <div class="card"><span class="num-badge">1</span><h3>Read</h3><p>Nemotron Parse reads the supplier's real 8-K filings, then Lightning lists the material risks. 80 filings read, 0 failures; all 7 material-risk filings found, no false positives.</p><div class="eg">Nemotron Parse · Lightning</div></div>
+        <div class="card"><span class="num-badge">2</span><h3>Imagine</h3><p>A pre-mortem: "six months on, this decision went badly. What happened?" Each story becomes a candidate tripwire. Ultra answered all 21 pre-mortems in the live run.</p><div class="eg">Nemotron 3 Ultra · thinking on</div></div>
+        <div class="card"><span class="num-badge">3</span><h3>Crash-test</h3><p>Push each tripwire just past its line and just short of it, then decide again. <i>Verified</i>: the call changes only past the line. <i>Mis-set</i>: it already changes short of it, so it is dropped.</p><div class="eg">Nemotron 3.5 Lightning</div></div>
+        <div class="card"><span class="num-badge">4</span><h3>Backtest</h3><p>Set tripwires using only what was filed by a past date, then replay real SEC history. The <b>time machine</b> slider shows lines turning red and real events landing.</p><div class="eg">2021Q2 – 2026Q1 · real filings</div></div>
+      </div>
+      <div class="pg-stats">
+        <div class="stat"><b>17 of 103</b><span>Nemotron tripwires survived its own crash test. The rest are dropped before a person sees them.</span></div>
+        <div class="stat"><b>4 vs 100</b><span>Decisions re-run over five source changes, against re-deciding everything. None missed.</span></div>
+        <div class="stat"><b>445</b><span>Nemotron answers recorded live through Meterless Nightshift. Anyone can replay them with no keys; the console shows each step's receipt id.</span></div>
+        <div class="stat"><b>0 of 9</b><span>Trouble events the model tripwires caught early on a 40-decision backtest (rules: 1 of 9). Too few to rank; reported as measured.</span></div>
+      </div>
+      <div class="card human">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <div><b>Nemotron disagrees with itself.</b> <span class="muted">If none of its tripwires would change the call, or the call flips before a line is crossed, the decision goes to a senior buyer with that reason in plain words.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="try">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">Try it</div>
@@ -233,7 +262,7 @@
     </div>
   </section>
 
-  <section class="block" id="agents">
+  <section class="block" style="background:var(--bg-2)" id="agents">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">The agent team</div>
@@ -252,7 +281,7 @@
     </div>
   </section>
 
-  <section class="block" style="background:var(--bg-2)">
+  <section class="block">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">Built on</div>
@@ -261,14 +290,14 @@
       </div>
       <div class="stack" id="stack">
         <div class="card"><h3>Zetaris</h3><p>The data layer. Every number is read with Zetaris SQL. Approved decisions are appended to a Parquet ledger through Zetaris RUN EXPORT and read back with Zetaris SQL.</p><span class="pill" data-mode="data"><span class="dot"></span>checking…</span></div>
-        <div class="card"><h3>NVIDIA Nemotron</h3><p>The reasoning. Three Nemotron models plan, analyse, decide and check safety, each with a timeout, retry and logged fallback.</p><span class="pill" data-mode="model"><span class="dot"></span>checking…</span></div>
-        <div class="card"><h3>Meterless H-MEM</h3><p>The memory. Each claim is a record with its source row and result hash, plus supersession and an audit ledger.</p><span class="pill" data-mode="memory"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>NVIDIA Nemotron</h3><p>The reasoning. Four Nemotron models, each with one job: Parse reads filings, Lightning plans and crash-tests, Ultra decides and writes pre-mortems, Content Safety checks the result. Each call has a timeout, retry and logged fallback.</p><span class="pill" data-mode="model"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>Meterless</h3><p>Nightshift serves every Nemotron call and returns a receipt id, shown per step in the console. H-MEM is the memory: each claim is a record with its source row and result hash, plus supersession and an audit ledger.</p><span class="pill" data-mode="memory"><span class="dot"></span>checking…</span></div>
         <div class="card"><h3>Cursor</h3><p>The build tool. The project was built in Cursor, with project rules in <span class="mono">.cursor/rules</span>.</p><span class="pill"><span class="dot"></span>development</span></div>
       </div>
     </div>
   </section>
 
-  <section class="block" id="guide">
+  <section class="block" style="background:var(--bg-2)" id="guide">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">Guide</div>
@@ -290,7 +319,8 @@
             <li><span class="tag">Step 1</span><span>Pick a supplier and press <b>Decide</b>. The agents run and the decision appears in the middle.</span></li>
             <li><span class="tag">Step 2</span><span>Read why, check the evidence, then <b>Approve</b> or <b>Reject</b>. Escalated decisions need a reason.</span></li>
             <li><span class="tag">Step 3</span><span>Apply a <b>data change</b>. The Watcher reports what it checked, what it reopened and what it left alone.</span></li>
-            <li><span class="tag">Anytime</span><span>The <b>agent trace</b> on the right shows every handoff, query, critique and fallback. Press <b>Tour</b> to replay the walkthrough.</span></li>
+            <li><span class="tag">Proving</span><span>The <b>Proving Ground</b> strip under each decision shows Read, Imagine, Crash-test and Backtest. Press <b>Play</b> on the time machine. The model table lists which Nemotron model did each step, with its receipt.</span></li>
+            <li><span class="tag">Anytime</span><span>The <b>agent trace</b> on the right shows every handoff, query, critique and fallback. Press <b>Tour</b> to replay the walkthrough, or <b>Fresh start</b> to reset the demo.</span></li>
           </ul>
         </div>
       </div>
@@ -304,6 +334,9 @@
         <div><dt>Confidence</dt><dd>How sure the Decider is, from 0 to 100%. It is lowered when evidence is missing or was rejected.</dd></div>
         <div><dt>Escalated</dt><dd>Flagged by the Risk Officer as high-stakes. A person must give a written reason to approve it.</dd></div>
         <div><dt>Superseded</dt><dd>Replaced by a newer decision on the same supplier, usually after a reopen. The old one is kept for audit.</dd></div>
+        <div><dt>Pre-mortem</dt><dd>Imagining the decision has already gone wrong and asking why. Each answer becomes a candidate tripwire.</dd></div>
+        <div><dt>Crash test</dt><dd>Moving the data just past a tripwire and just short of it, then deciding again, to see whether the tripwire really matters.</dd></div>
+        <div><dt>Receipt</dt><dd>The id Meterless Nightshift returns for a model call, so each answer can be traced to the run that produced it.</dd></div>
         <div><dt>Work saved</dt><dd>Decisions that depended on the changed row but whose tripwires didn't fire, so they weren't re-run.</dd></div>
       </dl>
     </div>
