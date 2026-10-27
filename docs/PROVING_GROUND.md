@@ -60,3 +60,16 @@ Need a change in an integration file (a new field, a hook)? Do not edit it. Writ
 ## Live recording (one session on the Windows PC, at the end)
 
 Nightshift only runs on the user's Windows PC. Stages 2 and 3 run inside the decision graph, so `scripts/record_live.ts` records their calls with no extra work. The backtest's model arms run from `scripts/backtest.ts --record`, which writes to the same recordings file. Each stream states its model-call budget (calls and rough minutes) in its doc, so the coordinator can give the user one command and one time estimate.
+
+### The one command (Windows PC, PowerShell, Nightshift running)
+
+Set `METERLESS_BASE_URL` and `METERLESS_RUNTIME_TOKEN` first, as in [docs/NIGHTSHIFT.md](NIGHTSHIFT.md). Then, in the repo on the `pg-integrate` branch:
+
+```powershell
+npx tsx scripts/record_live.ts; if ($?) { npx tsx scripts/backtest.ts --record --max-cases 40 }
+```
+
+- **Part 1, `record_live.ts`** (about 15–25 min): the demo story live, now with the pre-mortem (about 20 Ultra calls, 5–15 s each) and the crash tests (about 250–300 Lightning calls, about 1.8 s each), on top of the existing pipeline calls. Appends to `data/recordings/nightshift.jsonl`. Replay keeps the latest answer for each prompt, so this run replaces the old answers as one consistent set.
+- **Part 2, `backtest.ts --record --max-cases 40`** (about 22 min at the recorded mean latency, longer with Ultra; plan for 25–35): the model arms on 40 past decisions, about 520 calls. Writes `data/backtest/recordings.jsonl`.
+- **Total: about 45–60 minutes.** Read (stage 1) needs no calls; its Parse output is already cached.
+- **Afterwards:** commit both recordings files only (never `.env`). The coordinator then replays them keyless (`scripts/eval_crash.ts`, `scripts/backtest.ts --replay --max-cases 40`) to write the measured model-arm numbers into `eval/` and the README.

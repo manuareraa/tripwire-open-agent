@@ -19,6 +19,25 @@ Demo video: _link added before submission_
 
 Clear-cut labels, the same 8 cases both times (small sample): the agent graph got 8/8 called directly on build.nvidia.com and 6/8 through Nightshift, where every model set-up scored lower and leaned towards dual-sourcing; simple rules get 8/8 on these cases by construction. We report both. A live Nightshift answer, replayed offline with its receipt ids, is in [output_examples/04_decide_replayed_nemotron.trace.jsonl](output_examples/04_decide_replayed_nemotron.trace.jsonl).
 
+### Proving Ground: Nemotron attacks its own call before you approve it
+
+A tripwire ("reopen if spend share goes above 45%") is only worth keeping if crossing it would really change the decision. Nobody checks that today. Before a human approves, Tripwire makes Nemotron try to break its own call, in four steps shown as one strip on every decision:
+
+| # | Step | Borrowed from | Nemotron model | Measured so far | Source |
+|---|---|---|---|---|---|
+| 1 | **Read**: the supplier's real 8-K filings (the forms US companies file when something material happens) | Insurance claim intake: read the document, not a summary | Nemotron Parse, then Lightning (offline, cached) | 80 real 8-Ks for all 20 suppliers, 0 failures. Agrees with SEC EDGAR on whether a filing has a material-risk item in 80 of 80, finding all 7 such filings with no false positives; 151 of 165 listed items (92%) found | [docs/proving/READ.md](docs/proving/READ.md) |
+| 2 | **Imagine**: "six months on, this decision went badly: what happened?" Each story becomes a candidate tripwire | The pre-mortem used by surgeons and project teams | Nemotron 3 Ultra, thinking on | Not recorded live yet. In replay the step says so and is skipped | [docs/proving/IMAGINE.md](docs/proving/IMAGINE.md) |
+| 3 | **Crash-test**: push each tripwire just past its line and just short of it, then decide again. *Verified* = the call changes only past the line; *decorative* = it never changes; *mis-set* = it already changes short of the line | Car crash tests, bank stress tests | Nemotron 3.5 Lightning | Rule-based control (no model): 47 of 80 rule tripwires survived (41 verified, 6 mis-set and moved, then verified); all 12 exit tripwires were decorative. Lightning arm not recorded yet | [eval/CRASH.md](eval/CRASH.md) |
+| 4 | **Backtest**: set tripwires using only what was filed by a past date, then replay real SEC history | Backtesting a trading rule; scoring a forecast | Lightning + Ultra, replayed | Rule-based tripwires (no model), 2021Q2–2026Q1, 200 decisions: fired before or in the same quarter as 31 of 67 real trouble events, only 3 of them a full quarter or more ahead; 14 of 49 firings were false alarms. Model arms not recorded yet | [eval/BACKTEST.md](eval/BACKTEST.md) |
+
+Big model designs, small model tests: Ultra writes the failure stories once; Lightning runs the many cheap crash tests.
+
+**Nemotron disagrees with itself.** If the crash test finds that none of Nemotron's own tripwires would change the call, or that the call already flips before a line is crossed, or Ultra rates one of its own failure stories as likely and it rests on a high-severity filing, the decision goes to a senior buyer with that reason in plain words ([app/proving/challenge.ts](app/proving/challenge.ts)).
+
+**Time machine.** In the console, a slider replays one supplier's real quarters with the tripwires set at the start: lines turn red when crossed, real SEC events appear when they happened, and the end says whether the warning came early, late or not at all.
+
+The rule-based numbers above are a baseline, not the headline. The model arms are filled in only from a live run; until then they read "not recorded yet" everywhere and are never estimated.
+
 ---
 
 ## Why this is a fragmented-data problem
