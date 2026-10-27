@@ -96,7 +96,7 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
   // tripwire, so only lines that really change the call are kept.
   const candidates = [
     ...draft.tripwires.map((t) => ({ origin: draft!.rules ? "rules" as const : "decider" as const, ...t })),
-    ...(await premortem(deps, s, draft)),
+    ...(await premortem(deps, s, draft, backup?.metrics)),
   ];
   const proven = await crashTest(deps, s, draft, candidates);
   // If its own findings argue against the call, Nemotron escalates rather than presenting a confident card.

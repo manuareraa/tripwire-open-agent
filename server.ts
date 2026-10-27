@@ -311,6 +311,13 @@ app.get("/proving/timeline/:subject_id", (c) => {
   return t ? c.json(t) : c.json({ error: "not_found", detail: "No backtest timeline for this supplier." }, 404);
 });
 
+// The whole backtest scorecard (written by scripts/backtest.ts), for the overall score.
+app.get("/proving/backtest", (c) => {
+  const file = "eval/backtest_results.json";
+  if (!existsSync(file)) return c.json({ error: "not_found", detail: "No backtest results yet. Run scripts/backtest.ts." }, 404);
+  return c.json(JSON.parse(readFileSync(file, "utf8")));
+});
+
 app.get("/trace/:run_id", (c) => {
   const t = traces.get(c.req.param("run_id"));
   return t ? c.json(t) : c.json({ error: "not_found" }, 404);
