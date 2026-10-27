@@ -1,0 +1,26 @@
+{
+  "accession": "0000915389-26-000094",
+  "cik": "915389",
+  "supplier_id": "SUP-08",
+  "company": "EASTMAN CHEMICAL CO",
+  "filed": "2026-04-30",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000094/emn-20260430.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "EASTMAN CHEMICAL COMPANY - EMN\n\nItem 2.02 Results of Operations and Financial Condition\n\nOn April 30, 2026, the registrant publicly released its financial results for first quarter 2026. The full text of the release is furnished as Exhibit 99.01 to this Current Report on Form 8-K, and is incorporated herein by reference. This information shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), or incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act, except as shall be expressly set forth by specific reference in such a filing.\n\nItem 9.01 Financial Statements and Exhibits:\n\n(d) Exhibits\n\nThe following exhibits are furnished pursuant to Item 9.01:<br> 99.01 Public release by Eastman on April 30, 2026 of first quarter 2026 financial results<br> 104 Cover Page Interactive Data File\n\nEASTMAN CHEMICAL COMPANY - EMN\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunto duly authorized.\n\nBaseman Chemical Company<br>\nBy: /s/ Michelle R. Stewart\n\nMichelle R. Stewart\n\nVice President, Chief Accounting Officer and Corporate Controller\n\nDate: April 30, 2026",
+  "text_hash": "525036da7c9820762c08ecdbfd2cbf9afdf211529c8f266f3e69728b209ee895",
+  "parse_ms": 5706,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Eastman Chemical released first quarter 2026 financial results on April 30, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:51:24.058Z"
+}

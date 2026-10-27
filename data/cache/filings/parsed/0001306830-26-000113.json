@@ -1,0 +1,26 @@
+{
+  "accession": "0001306830-26-000113",
+  "cik": "1306830",
+  "supplier_id": "SUP-06",
+  "company": "CELANESE CORPORATION",
+  "filed": "2026-08-04",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000113/ce-20260804.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02 Results of Operations and Financial Condition\n\nOn August 4, 2026, Celanese Corporation (the \"Company\") issued a press release reporting the financial results for its second quarter\n2026. A copy of the press release is attached to this Current Report on Form 8-K (\"Current Report\") as Exhibit 99.1 and is incorporated herein solely for purposes of this Item 2.02 disclosure. Each Non-US GAAP financial measure appearing in the press release is accompanied by the most directly comparable US GAAP financial measure and is reconciled to the most comparable US GAAP financial measure in Exhibit 99.2, which includes other supplemental information of interest to investors, analysts and other parties, including the reasons why management believes such Non-US GAAP financial measures provide useful information to investors, and which is incorporated herein solely for purposes of this Item 2.02 disclosure.\n\nItem 9.01 Financial Statements and Exhibits\n\n(d) The following exhibits are being furnished herewith:\n\n* In connection with the disclosure set forth in Item 2.02, the information in this Current Report, including the exhibits attached hereto, is being furnished and shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), or otherwise subject to the liabilities of such section. The information in this Current Report, including the exhibits, shall not be incorporated by reference into any filing under the Securities Act of 1933, as amended, or the Exchange Act, regardless of any incorporation by reference language in any such filing.\n\n2\n\n\\begin{tabular}{cc}\nExhibit\nNumber & Description\\\\\n\\multirow{9}{*}{99.1} & Press Release dated August 4, 2026*\\\\\n & Non-US GAAP Financial Measures and Supplemental Information dated August 4, 2026\\\\\n & Cover Page Interactive Data File (the cover page XBRL tags are embedded within the inline XBRL document contained in Exhibit 101)\\\\\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n3\n\nCELANESE CORPORATION\n\n\\begin{tabular}{ccc}\n**By:** & \\multicolumn{2}{c}{/s/ ASHLEY B. DUFFIE} \\\\\nName: & \\multicolumn{2}{c}{ Ashley B. Duffie} \\\\\n & \\multicolumn{2}{c}{ Senior Vice President, General Counsel and Corporate} \\\\\n: & \\multicolumn{2}{c}{Secretary} \\\\\n\\end{tabular}\n\n\\begin{tabular}{cc}\nDate: & August 4, 2026 \\\\\n\\end{tabular}",
+  "text_hash": "9fd798ce1ea033ed485d96e25f394459406f6c2454b68aeb3c4b52065547d320",
+  "parse_ms": 5488,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Celanese Corporation issued Q2 2026 financial results via press release on August 4, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:49:50.389Z"
+}

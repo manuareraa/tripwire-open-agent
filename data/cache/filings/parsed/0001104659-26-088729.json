@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-088729",
+  "cik": "1307954",
+  "supplier_id": "SUP-07",
+  "company": "Huntsman Corporation",
+  "filed": "2026-07-30",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1307954/000110465926088729/tm2621698d1_8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02. Results of Operations and Financial Condition.\n\nOn July 30, 2026, we issued a press release announcing our results for the three months ended June 30, 2026. The press release is furnished herewith as Exhibit 99.1.\n\nWe will hold a conference call to discuss our second quarter 2026 financial results on Friday, July 31, 2026, at 10:00 a.m. ET:\n\nWebcast link: https://event.choruscall.com/mediaframe/webcast.html?webcastid=r4UuXqgQ\n\nParticipant dial-in numbers:\n\nDomestic callers: (877) 402-8037\n\nInternational callers: (201) 378-4913\n\nThe conference call will be accompanied by presentation slides that will be accessible via the webcast link and Huntsman’s investor relations website, www.huntsman.com/investors. Upon conclusion of the call, the webcast replay will be accessible via Huntsman’s website.\n\nInformation with respect to the conference call, together with a copy of the press release furnished herewith as Exhibit 99.1, is available on the investor relations page of our website at www.huntsman.com/investors.\n\n## Item 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits.\n\n2\n\n**SIGNATURES**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDated: July 30, 2026\n\n3\n\nHUNTSMAN CORPORATION\n\n/s/ IVAN MARCUSE _Vice President, Investor Relations and Corporate Development_",
+  "text_hash": "84211ccd71d5c1df4ffd71e501f4fdddce35eb0a58f075133d4399b56fb3bb0d",
+  "parse_ms": 4843,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Huntsman Corporation issued Q2 2026 earnings press release and scheduled July 31 conference call.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:50:43.896Z"
+}

@@ -1,0 +1,26 @@
+{
+  "accession": "0000103730-26-000054",
+  "cik": "103730",
+  "supplier_id": "SUP-20",
+  "company": "\"Vishay Intertechnology",
+  "filed": "2026-07-06",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000054/vsh-20260706.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 8.01 – Other Events\n\nOn July 6, 2026, Vishay Intertechnology, Inc. (the \"Company\") announced that it had notified the holders of its 2.25% convertible senior notes due 2030 (the \"Notes\") that the Notes have become convertible, at the option of the holders during the calendar quarter ending October 3, 2026. The Notes are convertible into cash, up to the aggregate principal amount of the Notes, and in cash, shares of the Company’s common stock or a combination thereof, at the Company’s election, in respect of the remainder, if any, of the Company’s conversion obligation in excess of the aggregate principal amount of the Notes being converted.\n\nA copy of the Company’s press release, dated July 6, 2026, is attached hereto as Exhibit 99.1 and is incorporated by reference into this Item 8.01. A copy of the notice provided to the holders of the Notes in accordance with the terms of the indenture governing the Notes is attached hereto as Exhibit 99.2 and is incorporated by reference into this Item 8.01.\n\nItem 9.01 – Financial Statements and Exhibits\n\n**(d) Exhibits**\n\n## Exhibit No. Description\n\n99.1 Press release dated July 6, 2026.\n\n99.2 Form of Notice of Convertibility to Holders of Vishay Intertechnology, Inc.’s 2.25% Convertible Senior Notes due 2030.\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document).\n\n**Signature**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n**Date: July 6, 2026**\n\nVISHAY INTERTECHNOLOGY, INC.\n\nBy: /s/ David L. Tomlinson\n\nName:  David L. Tomlinson <br>\n: Senior Vice President – Chief Accounting Officer",
+  "text_hash": "76d7f69bb830e073ea4d60b4bf494c51865288f1b7ad5da148661859fd4e2e2b",
+  "parse_ms": 5626,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Vishay notified note holders that 2.25% convertible senior notes due 2030 became convertible starting Q4 2026, with conversion into cash or stock at company's election.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:58:35.942Z"
+}

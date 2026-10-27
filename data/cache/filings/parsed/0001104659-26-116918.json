@@ -1,0 +1,27 @@
+{
+  "accession": "0001104659-26-116918",
+  "cik": "9389",
+  "supplier_id": "SUP-14",
+  "company": "BALL CORPORATION",
+  "filed": "2026-10-19",
+  "metadata_items": [
+    "5.02",
+    "7.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000110465926116918/ball-20261019x8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Ball Corporation <br>\nCurrent Report on Form 8-K <br>\nDated October 19, 2026\n\n**Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.**\n\nOn October 19, 2026, Ball Corporation (the \"Company\") announced that Kathleen Pitre, President of the Company’s Beverage Packaging North and Central America business, will be leaving the Company and Carey Causey, Chief Growth Officer of the Company, has been appointed President of the Company’s Beverage Packaging North and Central America business. The Company also announced that Mandy Glew, President of the Company’s Beverage Packaging EMEA business, will retire from the Company on January 31, 2027 and will step down from her role as President of the Company’s Beverage Packaging EMEA business effective December 31, 2026. Ms. Glew will assist with transition activities and will remain as a non-officer employee through January 31, 2027. Scott A. Vail, Chief Supply Chain and Operations Officer of the Company, will become President of the Company’s Beverage Packaging EMEA business effective January 1, 2027.\n\nThe Company appreciates the contributions of Ms. Pitre and Ms. Glew during their tenure and wish each of them the best in their future endeavors. The departures are not related to any disagreement with the Company on any matter relating to its accounting practices, financial statements, internal controls, or operations.\n\nItem 7.01. Regulation FD Disclosure.\n\nAlso on October 19, 2026, the Company issued a press release announcing the departure of Ms. Pitre and the appointments of Mr. Vail and Ms. Causey. A copy of the press release is furnished hereto as Exhibit 99.1. In accordance with General Instruction B.2. of Current Report on Form 8-K, this press release is deemed to be \"furnished\" and shall not be deemed \"filed\" for purposes of Section 18 of the Exchange Act, or otherwise subject to the liabilities of that section, nor shall such information or Exhibit be deemed incorporated by reference in any filing under the Securities Act or the Exchange Act, except as shall be expressly set forth by specific reference in such a filing.\n\nItem 9.01 Financial Statements and Exhibits\n\n Exhibits.\n\nThe following are furnished as exhibits to this report:\n\nExhibit 99.1 Ball Corporation Press Release dated October 19, 2026\n\nExhibit 104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n**Ball Corporation** <br>\nForm 8-K <br>\nOctober 19, 2026\n\nEXHIBIT INDEX\n\n\\begin{tabular}{cc}\n**Description** & **Exhibit** \\\\\n & \\\\\nBall Corporation Press Release dated October 19, 2026 & 99.1 \\\\\n\\end{tabular}\n",
+  "text_hash": "e982482fe34a0ddace721210ad3907089b30406580a61e833b276124b204c564",
+  "parse_ms": 7853,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Ball Corp VP Beverage Packaging North America and EMEA president departures; Carey Causey and Scott Vail appointed to new roles.",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:54:55.594Z"
+}

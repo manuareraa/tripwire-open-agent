@@ -1,0 +1,25 @@
+{
+  "accession": "0000091767-26-000024",
+  "cik": "91767",
+  "supplier_id": "SUP-15",
+  "company": "Sonoco Products Company",
+  "filed": "2026-05-11",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/91767/000009176726000024/son-20260505.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "**Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.**\n\nOn May 5, 2026, Aditya Gandhi informed Sonoco Products Company (the \"Company\") of his intention to resign from his position as Chief Accounting Officer, effective May 29, 2026. Mr. Gandhi’s decision to resign was not the result of any disagreement with the Company or its Board of Directors relating to the Company’s operations, policies or practices or any issues regarding its accounting policies or practices.\n\nPaul Joachimczyk, the Company’s Chief Financial Officer, will assume the responsibilities of principal accounting officer until a successor principal accounting officer is appointed.\n\n# SIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n# SONOCO PRODUCTS COMPANY\n\nDate: May 11, 2026\n\nBy: /s/ John M. Florence, Jr.<br>\nJohn M. Florence, Jr.<br>\nGeneral Counsel, Secretary and Vice President",
+  "text_hash": "e1c69e65d7db316e44bc66c12894f680c0ba56eba11052470db4c3beeb5317bd",
+  "parse_ms": 3771,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Sonoco CFO's deputy, Aditya Gandhi, resigns as Chief Accounting Officer effective May 29, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:55:52.326Z"
+}

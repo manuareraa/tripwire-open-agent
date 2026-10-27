@@ -1,0 +1,26 @@
+{
+  "accession": "0001628280-26-049912",
+  "cik": "1090727",
+  "supplier_id": "SUP-09",
+  "company": "UNITED PARCEL SERVICE INC",
+  "filed": "2026-07-28",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026049912/ups-20260728.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "### Item 2.02 — Results of Operations and Financial Condition.\n\nOn July 28, 2026, United Parcel Service, Inc. (the \"Company\") issued a press release containing information about the Company’s results of operations and financial condition for the quarter ended June 30, 2026. The Company also posted on its website at _www.investors.ups.com_ financial statement schedules containing additional detail about the Company’s results of operations and financial condition for the same period.\n\nA copy of the press release is attached hereto as Exhibit 99.1. A copy of the financial statement schedules is attached hereto as Exhibit 99.2.\n\nItem 9.01 -- Financial Statements and Exhibits.\n\n(d) Exhibits\n\n99.1 Press release dated July 28, 2026\n\n99.2 Financial statement schedules\n\n104 The cover page from this Current Report on Form 8-K, formatted in Inline XBRL\n\nThe information contained in Items 2.02 and 9.01 shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934 (the \"Exchange Act\") or otherwise subject to the liabilities of that Section, nor shall it be deemed incorporated by reference in any filings under the Securities Act of 1933 or the Exchange Act, except as may be expressly set forth by reference in any such filing.\n\n<sup>1</sup>Note that the checks are not guaranteed with applicable terms. <sup>2</sup>Note that there is sufficient termination details for checks.\n\nSignatures\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized\n\nUNITED PARCEL SERVICE, INC.\n\nDate: July 28, 2026\n\nBy: /s/ BRIAN DYKES\n\nBrian Dykes\n\nExecutive Vice President and Chief Financial Officer",
+  "text_hash": "4c073153dc7333ef7607506d7d1fee1c6cc47a5353c0b841fa44b1d2d3025e29",
+  "parse_ms": 6336,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "UPS reported Q2 2026 financial results and posted detailed schedules to its investor website.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:51:57.133Z"
+}

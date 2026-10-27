@@ -1,0 +1,25 @@
+{
+  "accession": "0000827054-26-000020",
+  "cik": "827054",
+  "supplier_id": "SUP-02",
+  "company": "MICROCHIP TECHNOLOGY INCORPORATED",
+  "filed": "2026-06-01",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000020/mchp-20260528.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\n\nOn May 28, 2026, the Board of Directors (the \"Board\") of Microchip Technology Incorporated (\"Microchip\"), upon the recommendation from the Nominating, Governance and Sustainability Committee of the Board, appointed Mitch Little, former Senior Vice President, Worldwide Client Engagement of Microchip, as a member of the Board, effective June 1, 2026. Mr. Little founded CUSP Advisory Group and has authored two books, Shiftability: Creating a Sustainable Competitive Advantage in Selling and CUSP: Leading by Serving, When Outcomes Matter Most, to help lead others in understanding client value, excellence in cocreating leadership, and results outcome. Mr. Little was not appointed to any committee of the Board.\n\nMr. Little retired from Microchip effective May 31, 2022. The Board determined that Mr. Little meets the requirements of an independent director under Rule 5605(a)(2) of the Nasdaq Listing Rules.\n\nThere is no arrangement or understanding between Mr. Little and any other person pursuant to which Mr. Little was appointed as a director. There are no transactions in which Mr. Little has an interest requiring disclosure under Item 404(a) of Regulation S-K.\n\nMr. Little will participate in Microchip’s standard compensation plan for non-employee directors. The standard compensation plan for non-employee directors is described in the section entitled \"Director Compensation\" of Microchip’s definitive proxy statement on Schedule 14A, filed with the Securities and Exchange Commission on July 7, 2025.\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n\\begin{tabular}{ccc}\nDate: June 1, & 2026 & \\\\\n\\end{tabular}\n\nMICROCHIP TECHNOLOGY INCORPORATED\n\nBy: /s/ J. Eric Bjornholt J. Eric Bjornholt Senior Corporate Vice President and Chief Financial Officer (Principal Financial and Accounting Officer)",
+  "text_hash": "b53b01bf6c14c9133c7d56795849540ec43b91c7ab9a050cd4d2634e16747d58",
+  "parse_ms": 5352,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Microchip Technology appoints Mitch Little as new Board member effective June 1, 2026",
+  "severity": "low",
+  "read_at": "2026-10-27T09:47:29.648Z"
+}

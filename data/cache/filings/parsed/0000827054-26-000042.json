@@ -1,0 +1,27 @@
+{
+  "accession": "0000827054-26-000042",
+  "cik": "827054",
+  "supplier_id": "SUP-02",
+  "company": "MICROCHIP TECHNOLOGY INCORPORATED",
+  "filed": "2026-08-19",
+  "metadata_items": [
+    "5.02",
+    "5.07",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000042/mchp-20260818.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\n\nOn August 18, 2026, our stockholders approved an amendment and restatement of our 2004 Equity Incentive Plan (the \"Plan\") to increase the number of shares of common stock authorized for issuance thereunder by 12,000,000. Our Board of Directors had previously approved the amendment and restatement of our Plan, subject to stockholder approval. The foregoing description of the Plan is qualified in its entirety by reference to the Plan, a copy of which is filed as Exhibit 10.1 hereto and incorporated herein by reference.\n\n**Item 5.07. Submission of Matters to a Vote of Security Holders**\n\n1. At our annual meeting of stockholders held on August 18, 2026, our stockholders elected each of the following individuals to serve on the Board until the next annual meeting of stockholders, or until his or her successor is duly elected and qualified.\n\nIn addition, the following proposals were voted on at the annual meeting:\n\n2. Proposal to approve the amendment and restatement of our Plan to increase the number of shares of common stock authorized for issuance thereunder by 12,000,000 -_Approved_.\n\n3. Proposal to ratify the appointment of Ernst & Young LLP as the independent registered public accounting firm of Microchip for the fiscal year ending March 31, 2027 -_Approved_.\n\n4. Proposal to approve, on an advisory (non-binding) basis, the compensation of our named executives -_Approved_.\n\n\\begin{tabular}{ccccc}\nNominees & Votes For & Votes Against & Abstentions & Broker Non-Votes\\\\\nEllen L. Barker & 386,259,649 & 58,930,857 & 297,042 & 36,264,971\\\\\nRick Cassidy & 422,631,851 & 22,245,572 & 610,125 & 36,264,971\\\\\nMatthew W. Chapman & 416,114,792 & 28,250,453 & 1,122,303 & 36,264,971\\\\\nMitch Little & 439,287,679 & 5,100,058 & 1,099,811 & 36,264,971\\\\\nVictor Peng & 425,984,561 & 18,630,161 & 872,826 & 36,264,971\\\\\nKaren M. Rapp & 396,537,228 & 48,684,261 & 266,059 & 36,264,971\\\\\nSteve Sanghi & 407,175,970 & 37,235,300 & 1,076,278 & 36,264,971\\\\\n\\end{tabular}\n\n\n\\begin{tabular}{cccc}\n**Votes For** & **Votes Against** & **Abstentions** & **Broker Non-Votes**\\\\\n430,844,377 & 13,783,474 & 859,697 & 36,264,971\\\\\n\\end{tabular}\n\n\n\\begin{tabular}{cccc}\n**Votes For** & **Votes Against** & **Abstentions** & **Broker Non-Votes**\\\\\n448,748,959 & 32,630,529 & 373,031 & 0\\\\\n\\end{tabular}\n\n\n\\begin{tabular}{cccc}\n**Votes For** & **Votes Against** & **Abstentions** & **Broker Non-Votes**\\\\\n366,406,303 & 77,323,079 & 1,758,166 & 36,264,971\\\\\n\\end{tabular}\n\nItem 9.01. Financial Statements and Exhibits\n\n\n(d) Exhibits\n\n\nThe following exhibits are provided as part of this report:\n\n\\begin{tabular}{cc}\nExhibit\nNumber & Exhibit Description \\\\\n10.1 & 2004 Equity Incentive Plan, as amended and restated August 18, 2026 \\\\\n104 & Cover Page Interactive Data File (embedded within the Inline XBRL document) \\\\\n\\end{tabular}",
+  "text_hash": "eb993c6fcd8e2e7051afc84b3b1eb241df316b6fd71a518c0b45290271103596",
+  "parse_ms": 7516,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Microchip Technology stockholders approved an amended 2004 Equity Incentive Plan increasing authorized shares by 12 million at their August 2026 annual meeting.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:47:10.220Z"
+}

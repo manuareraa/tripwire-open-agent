@@ -1,0 +1,25 @@
+{
+  "accession": "0000950103-26-008325",
+  "cik": "97476",
+  "supplier_id": "SUP-01",
+  "company": "TEXAS INSTRUMENTS INCORPORATED",
+  "filed": "2026-06-02",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010326008325/dp247795_8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "<tbc>ITEM 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn May 27, 2026, the Board appointed Julie Knecht to become senior vice president and Chief Financial Officer (Chief Accounting Officer) of Texas Instruments Incorporated (the \"Company\") effective August 1, 2026. Ms. Knecht will succeed Rafael Lizardi, who will retire after 25 years with the Company. Mr. Lizardi’s retirement is not related to the Company’s financial or operating results or to any disagreements or concerns regarding the Company’s financial or reporting practices or internal control over financial reporting. In connection with Mr. Lizardi’s retirement, the Company and Mr. Lizardi expect to enter into a separation agreement as described beginning on page 46 of the Company’s 2026 Proxy Statement in the section subtitled \"Separation agreements\".\n\nMs. Knecht, 54, has served in various positions with the Company for more than 25 years, including most recently as vice president and Chief Accounting Officer since 2021. In connection with her appointment, Ms. Knecht will receive an annual base salary of $700,000, and equity compensation totaling $2 million in restricted stock units.\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nTEXAS INSTRUMENTS INCORPORATED\n\nDate: June 2, 2026\n\nBy: /s/ Katie Kane Katie Kane Senior Vice President, Secretary and General Counsel",
+  "text_hash": "ae9d7f5a05a6299f8c2c1533c34da01e28c6c4000778abb0cdd12a96a9049568",
+  "parse_ms": 5778,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Texas Instruments appoints new CFO and CPA effective August 2026, successor to retiring 25-year veteran",
+  "severity": "low",
+  "read_at": "2026-10-27T09:46:52.799Z"
+}

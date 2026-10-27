@@ -1,0 +1,26 @@
+{
+  "accession": "0000103730-26-000003",
+  "cik": "103730",
+  "supplier_id": "SUP-20",
+  "company": "\"Vishay Intertechnology",
+  "filed": "2026-01-09",
+  "metadata_items": [
+    "4.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000003/form8-k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "### Item 4.01 – Changes in Registrant’s Certifying Accountant\n\nThe audit committee (the \"Audit Committee\") of the Board of Directors of Vishay Intertechnology, Inc. (the \"Company\") recently completed a competitive process to determine the Company’s independent registered public accounting firm for the fiscal year ending December 31, 2026. Following that process, on January 7, 2026, the Audit Committee informed Deloitte & Touche LLP (\"Deloitte\") that it had selected Deloitte to serve as the Company’s independent registered public accounting firm for the fiscal year ending December 31, 2026, and related interim periods, subject to Deloitte’s customary client acceptance procedures and execution of an engagement letter.\n\nOn the same date, the Audit Committee informed Ernst & Young LLP (\"EY\") that it had determined to dismiss EY (the Company’s independent registered public accounting firm for the year ended December 31, 2025 and prior years), effective upon the issuance by EY of its reports on the Company’s consolidated financial statements as of and for the year ended December 31, 2025 and the effectiveness of internal control over financial reporting as of December 31, 2025, for inclusion in the Company’s Annual Report on Form 10-K for the year ended December 31, 2025 to be filed with the Securities and Exchange Commission (the \"SEC\").\n\nEY’s audit reports on the Company’s consolidated financial statements as of and for the fiscal years ended December 31, 2024 and December 31, 2023 did not contain any adverse opinion or disclaimer of opinion and were not qualified or modified as to uncertainty, audit scope, or accounting principles. During the Company’s fiscal years ended December 31, 2024 and December 31, 2023, and the subsequent interim period through January 7, 2026, there were no (i) \"disagreements,\" within the meaning of Item 304(a)(1)(iv) of Regulation S-K, between the Company and EY on any matter of accounting principles or practices, financial statement disclosure, or auditing scope or procedure, any of which, if not resolved to EY’s satisfaction, would have caused EY to make reference to the subject matter of any such disagreements in its audit reports, or (ii) \"reportable events\" within the meaning of Item 304(a)(1)(v) of Regulation S-K.\n\nThe Company has provided a copy of the foregoing disclosures to EY and requested that EY furnish it with a letter addressed to the SEC stating whether EY agrees with the above statements. A copy of EY’s letter, dated January 9, 2026, is filed as Exhibit 16.1 to this Current Report on Form 8-K.\n\nDuring the Company’s fiscal years ended December 31, 2024 and December 31, 2023, and the subsequent interim period through the date of this Current Report on Form 8-K, neither the Company nor anyone acting on its behalf consulted with Deloitte regarding: (i) the application of accounting principles to a specified transaction, either completed or proposed, or the type of audit opinion that might be rendered on the Company’s financial statements, and neither a written report nor oral advice was provided by Deloitte to the Company that Deloitte concluded was an important factor considered by the Company in reaching a decision as to any accounting, auditing, or financial reporting issue; or (ii) any matter that was either the subject of a \"disagreement,\" as defined in Item 304(a)(1)(iv) of Regulation S-K, or a \"reportable event,\" as described in Item 304(a)(1)(v) of Regulation S-K).\n\nItem 9.01 - Financial Statements and Exhibits\n\n## (d) Exhibits\n\nExhibit<br>\nNo.\n\nDescription\n\n16.1 Letter from Ernst & Young LLP, dated January 9, 2026.\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document).\n\nSignature\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: January 9, 2025\n\nVISHAY INTERTECHNOLOGY, INC.\n\nBy: /s/ David L. Tomlinson<br>\nName: David L. Tomlinson<br>\n: Senior Vice President – Chief Accounting<br>\nOfficer",
+  "text_hash": "5a7a31b60e4472c1ece428e741d36e2544a772237581a17d5d176cfc382a95bf",
+  "parse_ms": 10146,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Vishay replaces Ernst & Young with Deloitte as its independent auditor for 2026, effective after EY issues its 2025 audit reports.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:58:09.361Z"
+}

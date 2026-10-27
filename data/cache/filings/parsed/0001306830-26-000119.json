@@ -1,0 +1,26 @@
+{
+  "accession": "0001306830-26-000119",
+  "cik": "1306830",
+  "supplier_id": "SUP-06",
+  "company": "CELANESE CORPORATION",
+  "filed": "2026-09-16",
+  "metadata_items": [
+    "5.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1306830/000130683026000119/ce-20260916.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\n\n(d) On September 16, 2026, the Board of Directors (the \"Board\") of Celanese Corporation (the \"Company\") increased the size of the Board from 10 to 11 members and elected Luis Fernandez-Moreno as a director of the Company, in each case effective September 16, 2026.\n\nMr. Fernandez-Moreno has been elected to serve on the Board until the Company's 2027 Annual Meeting of Shareholders, at which time he is expected to be a nominee for election by the Company's shareholders. At this time, Mr. Fernandez-Moreno has not yet been appointed to any committee of the Board.\n\nThe Board has determined that Mr. Fernandez-Moreno (a) is an independent director within the meaning of the Securities Exchange Act of 1934, as amended, rules and regulations promulgated by the U.S. Securities and Exchange Commission (the \"SEC\") thereunder, and the listing standards of the New York Stock Exchange (the \"NYSE\") and (b) is not related to any officer or director of the Company nor is he a party to any transactions or relationships with the Company and its subsidiaries that require disclosure under Item 404(a) of Regulation S-K.\n\nMr. Fernandez-Moreno will be compensated in accordance with the Company's compensation practices for non-management directors. Mr. Fernandez-Moreno will also be reimbursed for expenses incurred on behalf of the Company, in accordance with Company policy.\n\nThere are no arrangements or understandings between Mr. Fernandez-Moreno and any other person pursuant to which he was elected as director.\n\nOn September 16, 2026, the Company issued a press release announcing the election of Mr. Fernandez-Moreno, a copy of which is attached hereto as Exhibit 99.1 and is incorporated by reference herein.\n\nItem 9.01 Financial Statements and Exhibits\n\n(d) The following exhibits are being furnished herewith:\n\n2\n\n\\begin{tabular}{cc}\nExhibit Number & Description\\\\\n99.1 & Press Release dated September 16, 2026\\\\\n104 & Cover Page Interactive Data File (the cover page XBRL tags are embedded within the inline XBRL document contained in Exhibit 101)\\\\\n\\end{tabular}\n\n# SIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nCELANESE CORPORATION\n\nBy: /s/ ASHLEY B. DUFFIE\n\nName: Ashley B. Duffie\n\n: Senior Vice President, General Counsel and Corporate Secretary\n\nDate: September 16, 2026\n\n3",
+  "text_hash": "53c546b920c9cffdaae9f279da8e0033ccce0546b18ef8c39521e11b2b17f932",
+  "parse_ms": 4948,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Celanese elected Luis Fernandez-Moreno to its Board of Directors effective September 16, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:49:42.970Z"
+}

@@ -1,0 +1,26 @@
+{
+  "accession": "0001043277-26-000027",
+  "cik": "1043277",
+  "supplier_id": "SUP-10",
+  "company": "\"C. H. ROBINSON WORLDWIDE",
+  "filed": "2026-07-29",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000027/chrw-20260729.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "## Item 2.02 Results of Operations and Financial Condition.\n\nThe following information is being \"furnished\" in accordance with the General Instruction B.2 of Form 8-K and shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), or otherwise subject to the liabilities of that section, nor shall it be deemed to be incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act, except as expressly set forth by specific reference in such filing.\n\nFurnished herewith as Exhibits 99.1 and 99.2, respectively, and incorporated by reference herein are the text of the Company’s announcement regarding its financial results for the quarter ended June 30, 2026 and its earnings conference call slides.\n\n### Item 9.01 Financial Statements and Exhibits.\n\n(d) Exhibits\n\n\\begin{tabular}{cc}\nNumber & Description \\\\\n99.1 & Press Release dated July 29, 2026 of C.H. Robinson Worldwide, Inc. \\\\\n99.2 & Earnings conference call slides dated July 29, 2026 \\\\\n104 & The cover page from the Current Report on Form 8-K formatted in Inline XBRL\n\\end{tabular}\n\n## SIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: July 29, 2026\n\nC.H. ROBINSON WORLDWIDE, INC.\n\nBy: <u>/s/ Dorothy G. Capers</u> Dorothy G. Capers Chief Legal Officer and Secretary",
+  "text_hash": "4cf35c10bf78e831729c1f681402cba8151f1aa5a624d0c49e2ed7cec414448f",
+  "parse_ms": 5425,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "C.H. Robinson Worldwide reported Q2 2026 financial results and held earnings call on July 29, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:52:22.790Z"
+}

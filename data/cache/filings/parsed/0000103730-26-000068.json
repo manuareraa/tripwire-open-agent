@@ -1,0 +1,26 @@
+{
+  "accession": "0000103730-26-000068",
+  "cik": "103730",
+  "supplier_id": "SUP-20",
+  "company": "\"Vishay Intertechnology",
+  "filed": "2026-08-12",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000068/vsh-20260812.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "## Item 8.1 - Other Events\n\n### Cash Dividend Declaration\n\nOn August 12, 2026, Vishay Intertechnology, Inc. declared a quarterly cash dividend of $0.10 per share of common stock and Class B common stock outstanding payable on September 24, 2026 to stockholders of record at the close of business on September 10, 2026. A copy of the press release announcing the dividend declaration is attached as Exhibit 99.1 to this report.\n\n### Item 9.01 – Financial Statements and Exhibits\n\n## (d) Exhibits\n\nExhibit No. Description\n\n99.1 Press release dated August 12, 2026,<br>\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document).\n\n**Signature**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: August 12, 2026\n\nVISHAY INTERTECHNOLOGY, INC.\n\nBy: /s/ David L. Tomlinson _____________________\n\n# Name: David L. Tomlinson\n\n: Senior Vice President ---- Chief Accounting Officer",
+  "text_hash": "174f1ffd153bd36f7a470645b6431faa1ef25965dc2f4fda914b92e190e0ad38",
+  "parse_ms": 4700,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Vishay Intertechnology declared a $0.10 quarterly cash dividend per share, payable September 24, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:58:16.102Z"
+}

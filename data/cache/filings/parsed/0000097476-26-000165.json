@@ -1,0 +1,26 @@
+{
+  "accession": "0000097476-26-000165",
+  "cik": "97476",
+  "supplier_id": "SUP-01",
+  "company": "TEXAS INSTRUMENTS INCORPORATED",
+  "filed": "2026-10-21",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000165/txn-20261021.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 2.02. Results of Operations and Financial Condition\n\nThe Registrant’s news release dated October 21, 2026, regarding its third-quarter results of operations and financial condition is attached hereto as Exhibit 99.\n\nThe attached news release includes references to the following financial measures that were not prepared in accordance with generally accepted accounting principles in the United States (non-GAAP measures): free cash flow and ratios based on free cash flow. The company believes these non-GAAP measures provide insight into its liquidity, cash generating capability and the amount of cash potentially available to return to shareholders, as well as insight into its financial performance. These non-GAAP measures are supplemental to the comparable GAAP measures. Reconciliation to the most directly comparable GAAP measures is included in the \"Non-GAAP financial information\" section of the news release.\n\nITEM 9.01. Exhibits\n\nDesignation of Exhibit\n\nin this Report Description of Exhibit\n\n99 Registrant's News Release Dated October 21, 2026 (furnished pursuant to Item 2.02)\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nTEXAS INSTRUMENTS INCORPORATED\n\nDate: October 21, 2026 \n\nBy: /s/ Julie Knecht\n\nJulie Knecht\n\nSenior Vice President and\n\nChief Financial Officer",
+  "text_hash": "173b12e10957b270fae5bf2b66dc0cc1f054fe1a555c37fee6387f297a959cd8",
+  "parse_ms": 4523,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Texas Instruments released Q3 2026 earnings news, highlighting non-GAAP metrics like free cash flow for liquidity insight.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:46:39.028Z"
+}

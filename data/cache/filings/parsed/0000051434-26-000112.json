@@ -1,0 +1,26 @@
+{
+  "accession": "0000051434-26-000112",
+  "cik": "51434",
+  "supplier_id": "SUP-13",
+  "company": "INTERNATIONAL PAPER COMPANY",
+  "filed": "2026-07-17",
+  "metadata_items": [
+    "5.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000112/ip-20260714.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n\nOn July 14, 2026, the Board of Directors (the \"Board\") of International Paper Company (the \"Company\"), upon the recommendation of the Company’s Governance Committee, appointed Katherine Collins and Lori J. Rykerker to serve as independent directors to the Board effective October 1, 2026. Ms. Collins and Ms. Rykerker's terms as independent directors will expire at the annual meeting of the Company’s shareowners in May 2027 where they will be nominated by the Board for re-election. With the appointment of Ms. Collins and Ms. Rykerkerk, the Board now consists of 13 members, 12 of whom are independent.\n\nUnder the Company’s Restricted Stock and Deferred Compensation Plan for Non-Employee Directors, Ms. Collins and Ms. Rykerkerk are eligible for an annual cash and equity retainer. The compensation of Ms. Collins and Ms. Rykerkerk will be prorated effective October 1, 2026, and consistent with that provided to all non-employee directors as disclosed in the Elements of our Director Compensation Program section of our proxy statement filed with the U.S. Securities and Exchange Commission on March 27, 2026.\n\nThe Board has determined that Ms. Collins and Ms. Rykerkerk are independent, meet the applicable independence requirements of the New York Stock Exchange and the Board’s more rigorous standards for determining director independence. The selection of Ms. Collins and Ms. Rykerkerk was not pursuant to an agreement or understanding between Ms. Collins or Ms. Rykerkerk and any other person. Furthermore, there are no related party transactions between the Company and Ms. Collins or Ms. Rykerkerk that would require disclosure under Item 404(a) of Regulation S-K.\n\nFurther, on July 14, 2026, members of the Board acknowledged the intentions of Dr. Kathryn D. Sullivan and Ahmet C. Dorduncu to retire from Board service effective December 31, 2026. Neither Dr. Sullivan nor Mr. Dorduncu’s retirements are due to any disagreement with the Company on any matter relating to its operations, policies, or practices. Their planned retirements are in accordance with the Company’s Corporate Governance Guidelines, which were amended in March 2026, to eliminate the mandatory retirement age of 75, effective December 31, 2026, and adopt a 12-year term limit for directors. The Board thanks Dr. Sullivan and Mr. Dorduncu for their service and contributions to the Company during their tenures.\n\nCommittee appointments will be made at a later date.\n\nOn July 17, 2026, the Company issued a press release announcing the appointment of Ms. Collins and Ms. Rykerkerk to the Company’s Board. A copy of the release is included as Exhibit 99.1 to this Current Report on Form 8-K.\n\nItem 9.01 Financial Statements and Exhibits.\n\n(d). Exhibits.\n\n\\begin{tabular}{cc}\nExhibit Number & Description \\\\\n99.1 & Press release of International Paper Company dated July 17, 2026. \\\\\n104 & The cover page from this Current Report on Form 8-K, formatted as inline XBRL.\n\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, as amended, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nDate: July 17, 2026\n\nInternational Paper Company\n\nBy: /s/ Joseph R. Saab\n\nName: Joseph R. Saab\n\n: Senior Vice President, General Counsel and Corporate\n\nSecretary",
+  "text_hash": "76044b5c2004a6568c0c7643f8835e428e41ac55698dc95746867ccb25f67ea3",
+  "parse_ms": 8279,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "International Paper appointed two new independent directors and announced two planned retirements effective year-end 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:54:24.840Z"
+}

@@ -1,0 +1,26 @@
+{
+  "accession": "0001193125-26-312651",
+  "cik": "75677",
+  "supplier_id": "SUP-16",
+  "company": "PACKAGING CORP OF AMERICA",
+  "filed": "2026-07-23",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526312651/pkg-20260722.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02. Results of Operations and Financial Condition.\n\nThe information furnished in this Item 2.02, including the exhibit described below, shall not be deemed “filed” hereunder for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the “Exchange Act”), or incorporated by reference in any filing under the Securities Exchange Act of 1933, as amended, or the Exchange Act, except as shall be expressly set forth by specific reference in such a filing.\n\nOn July 22, 2026, Packaging Corporation of America issued a press release announcing second quarter financial results. The press release is furnished as Exhibit 99.1 and is incorporated into this Item 2.02 by reference.\n\n## Item 9.01. Financial Statements and Exhibits.\n\n## (d) Exhibits\n\n## 99.1 Second Quarter 2026 Earnings Press Release dated July 22, 2026\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n**SIGNATURES**\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrants have duly caused this report to be signed on their behalf by the undersigned hereunto duly authorized.\n\nPACKAGING CORPORATION OF AMERICA <br>\n(Registrant)\n\nBy: /s/ FABIAN C. STRAUSS<br>\nSenior Vice President, Finance, Controller and Treasurer\n\nDate: July 22, 2026",
+  "text_hash": "2247ce3813f8b0ebba5c90f7b1ffd5d2a2426f4c4d0589e37ba450406e799f06",
+  "parse_ms": 5289,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "PCA issued Q2 2026 earnings press release on July 22, 2026, announcing financial results.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:17.345Z"
+}

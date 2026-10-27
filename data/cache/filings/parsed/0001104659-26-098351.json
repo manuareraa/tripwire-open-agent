@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-098351",
+  "cik": "1090727",
+  "supplier_id": "SUP-09",
+  "company": "UNITED PARCEL SERVICE INC",
+  "filed": "2026-08-18",
+  "metadata_items": [
+    "8.01",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000110465926098351/tm2622353d8_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "## Item 8.01. Other Events.\n\nOn August 14, 2026, United Parcel Service, Inc. (the \"Company\") entered into an agreement (the \"Underwriting Agreement\") with the underwriters listed on Schedule II thereto (the \"Underwriters\"), whereby the Company agreed to sell and the Underwriters agreed to purchase from the Company, subject to and upon the terms and conditions set forth in the Underwriting Agreement, $325,105,000 aggregate principal amount of Floating Rate Senior Notes due 2076 (such purchase and sale, the \"Transaction\").\n\nThe Company intends to use the net proceeds of the Transaction for general corporate purposes.\n\nA copy of the Underwriting Agreement is attached hereto as Exhibit 1.1 and is incorporated herein by reference. The foregoing summary does not purport to be complete and is qualified in its entirety by reference to the Underwriting Agreement.\n\nThe Company is filing this Current Report on Form 8-K in order to file with the Securities and Exchange Commission certain items related to the Transaction that are to be incorporated by reference into its Registration Statement on <u>FormS-3(RegistrationNo. 333-285036)</u>, as amended.\n\n### Item 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits.\n\n+ Portions of this exhibit have been omitted in accordance with Item 601(a)(5) of Regulation S-K.\n\n\\begin{tabular}{cc}\n1.1+ & Underwriting Agreement\\\\\n4.1 & Form of Floating Rate Senior Notes due 2076\\\\\n5.1 & Opinion of King & Spalding LLP\\\\\n23.1 & Consent of King & Spalding LLP (included in Exhibit 5.1)\\\\\n104 & The cover page from this Current Report on Form 8-K, formatted in Inline XBRL\\\\\n\\end{tabular}\n\nSignatures\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nUNITED PARCEL SERVICE, INC.\n\nSee Note:\n\nDate: August 18, 2026\n\nBy: /s/ Brian M. Dykes Name: Brian M. Dykes : Executive Vice President and Chief Financial Officer",
+  "text_hash": "1f815140dadb5a29e0df024a0e77d36a1df28e618e6eccf5c15a79eb53fcff1c",
+  "parse_ms": 5317,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "UPS issued $325.1M in Floating Rate Senior Notes due 2076 for general corporate purposes.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:51:40.991Z"
+}

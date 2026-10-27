@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-088438",
+  "cik": "1166003",
+  "supplier_id": "SUP-12",
+  "company": "\"XPO",
+  "filed": "2026-07-30",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1166003/000110465926088438/tm2616097d5_8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02. Results of Operations and Financial Condition.\n\nOn July 30, 2026, XPO, Inc. (the \"Company\") issued a press release announcing its results of operations for the fiscal quarter ended June 30, 2026. A copy of the press release is furnished as Exhibit 99.1 to this Current Report on Form 8-K.\n\nThe information furnished pursuant to this Item 2.02, including Exhibit 99.1, shall not be deemed \"filed\" for purposes of Section 18 of the Securities Exchange Act of 1934 (the ”Exchange Act”) or otherwise subject to the liabilities under that Section and shall not be deemed to be incorporated by reference into any filing of the Company under the Securities Act of 1933 or the Exchange Act, except as shall be expressly set forth by specific reference in such filing.\n\nItem 9.01. Financial Statements and Exhibits.\n\n_(d) Exhibits_\n\nExhibit No. Exhibit Description\n\nBy/ Proponnt no. 99.6 DTC New College 2016 (website: Hddashiw@meunlogduty.com)<br> Press Release, dated July 30, 2026, issued by XPO, Inc.<br> Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n104\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on\nits behalf by the undersigned hereunto duly authorized.\n\nDate: July 30, 2026\n\nXPO, INC.\n\nBy: /s/ Kyle Wismans\n\nKyle Wismans\n\nChief Financial Officer",
+  "text_hash": "155cca1e07a1519ef0db37c8c2bafd2d64471c3b2ef259275c0ec726e9ea8797",
+  "parse_ms": 6856,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "XPO, Inc. issued a press release on July 30, 2026, announcing Q2 2026 financial results.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:53:32.109Z"
+}

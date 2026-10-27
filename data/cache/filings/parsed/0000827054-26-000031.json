@@ -1,0 +1,25 @@
+{
+  "accession": "0000827054-26-000031",
+  "cik": "827054",
+  "supplier_id": "SUP-02",
+  "company": "MICROCHIP TECHNOLOGY INCORPORATED",
+  "filed": "2026-07-24",
+  "metadata_items": [
+    "5.02"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000031/mchp-20260723.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\n\nOn July 23, 2026, Richard J. Simonicic, Chief Operating Officer of Microchip Technology Incorporated (the \"Company\"), notified the Company that he was resigning from the Company effective August 17, 2026 to become Chief Executive Officer of Menlo Microsystems, Inc., a private company headquartered in Irvine, California.\n\n# SIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n# MICROCHIP TECHNOLOGY INCORPORATED\n\nDate: July 24, 2026\n\nBy: /s/ J. Eric Bjornholt <br>\nJ. Eric Bjornholt <br>\nSenior Corporate Vice President and Chief Financial C\n\n",
+  "text_hash": "942fe30ae1660de55d9cef5d858cfbdbc3fefc24002123f73d045c66c2a4f949",
+  "parse_ms": 3330,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Microchip COO Richard Simonicic resigns to become CEO of Menlo Microsystems effective August 17, 2026",
+  "severity": "medium",
+  "read_at": "2026-10-27T09:47:22.707Z"
+}

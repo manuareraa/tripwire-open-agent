@@ -1,0 +1,25 @@
+{
+  "accession": "0000915389-26-000123",
+  "cik": "915389",
+  "supplier_id": "SUP-08",
+  "company": "EASTMAN CHEMICAL CO",
+  "filed": "2026-05-12",
+  "metadata_items": [
+    "5.07"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/915389/000091538926000123/emn-20260507.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.07 Submission of Matters to a Vote of Security Holders\n\nThe 2026 Annual Meeting of the Stockholders (the \"Annual Meeting\") of Eastman Chemical Company (the \"Company\") was held on May 7, 2026. There were 114,349,911 shares of common stock outstanding and entitled to be voted, and of those shares 100,631,008 were represented virtually or by proxy, at the Annual Meeting.\n\nFour items of business were considered by stockholders at the Annual Meeting:\n\n\\(\\bullet\\) The election of eleven directors to serve until the Annual Meeting of Stockholders in 2027 and until their successors are duly elected and qualified;\n\n\\(\\bullet\\) Ratification of the appointment of PricewaterhouseCoopers LLP as the Company’s independent registered public accounting firm for the year ending December 31, 2026;\n\n\\(\\bullet\\) An advisory vote on executive compensation (the \"say-on-pay\" vote) as disclosed in the 2026 Annual Meeting Proxy Statement (the \"Proxy Statement\");\n\n\\(\\bullet\\) Approval of the 2026 Omnibus Stock Compensation Plan; and\n\n\\(\\bullet\\) An advisory vote on stockholder proposal regarding lowering the threshold for calling special shareholder meetings to 10% as disclosed in the Proxy Statement.\n\n## 1. The results of the voting on the election of directors were as follows:\n\nAccordingly, each of the eleven nominees received a majority of votes cast in favor of that director’s election and was elected.\n\n**2. The results of the voting on the ratification of the appointment of PricewaterhouseCoopers LLP as the independent registered public accounting firm for the Company for 2026 were as follows:**\n\n\\begin{tabular}{ccccc}\nNominee & Votes For & Votes Against & Abstentions & Broker Non-Votes\\\\\nHumberto P. Alfonso & 86,574,085 & 3,721,684 & 121,907 & 10,213,332\\\\\nDamon J. Audia & 89,949,795 & 344,446 & 123,438 & 10,213,329\\\\\nBrett D. Begemann & 85,780,518 & 4,534,791 & 102,368 & 10,213,331\\\\\nEric L. Butler & 89,454,490 & 855,441 & 107,747 & 10,213,330\\\\\nMark J. Costa & 86,014,316 & 4,291,824 & 111,536 & 10,213,332\\\\\nLinnie M. Haynesworth & 89,759,261 & 559,329 & 99,089 & 10,213,329\\\\\nJulie F. Holder & 82,207,815 & 8,114,787 & 95,066 & 10,213,340\\\\\nRenée J. Hornbaker & 86,314,362 & 4,007,136 & 96,182 & 10,213,328\\\\\nKim Ann Mink & 87,902,915 & 2,396,876 & 117,887 & 10,213,330\\\\\nJames J. O'Brien & 87,179,492 & 3,114,040 & 124,149 & 10,213,327\\\\\nDonald W. Slager & 89,954,694 & 358,034 & 104,952 & 10,213,328\\\\\n\\end{tabular}\n\n\\begin{tabular}{cccc}\nVotes For & Votes Against & Abstentions & Broker Non-Votes\\\\\n96,146,277 & 4,386,005 & 98,726 & 0\\\\\n\\end{tabular}\n\nAccordingly, a majority of votes cast on the ratification of the appointment of the independent registered public accounting firm were in favor of the proposal and the appointment of PricewaterhouseCoopers LLP was ratified.",
+  "text_hash": "34d9a859e7c665e204de714f933aaf27645a8941d6fb92fba925b9bf1a30b152",
+  "parse_ms": 9812,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Eastman Chemical held its 2026 annual stockholder meeting, ratifying PwC as auditor and approving executive compensation and stock plans.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:51:16.570Z"
+}

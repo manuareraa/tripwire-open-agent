@@ -1,0 +1,25 @@
+{
+  "accession": "0001193125-26-221672",
+  "cik": "75677",
+  "supplier_id": "SUP-16",
+  "company": "PACKAGING CORP OF AMERICA",
+  "filed": "2026-05-13",
+  "metadata_items": [
+    "5.07"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526221672/d148522d8k.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.07. Submission of Matters to a Vote of Security Holders\n\nOn May 12, 2026, Packaging Corporation of America (\"PCA\") held its 2026 Annual Meeting of Stockholders, at which the following proposals were voted upon and approved by PCA's stockholders:\n\n(a) Election of Directors. Voting results are summarized as follows:\n\n(b) Ratification of Independent Registered Public Accounting Firm. The audit committee’s appointment of KPMG LLP as PCA's independent registered public accounting firm was ratified by the following vote: 82,796,126 votes for, 744,560 votes against, and 20,724 abstentions.\n\n(c) Approval of PCA's Executive Compensation: 76,265,206 votes for, 2,299,022 votes against, 1,021,675 abstentions and 3,975,507 broker non-votes.\n\n\\begin{tabular}{ccccc}\nNominee\ncheryl K. Beebe & Votes For\n74,535,448 & Votes Against\n5,009,056 & Abstentions\n41,399 & Broker\nNon-Vote\n3,975,507\\\\\nDuane C. Farrington & 78,947,264 & 561,789 & 76,850 & 3,975,507\\\\\nKaren E. Gowland & 78,119,832 & 1,370,588 & 95,483 & 3,975,507\\\\\nDonna A. Harman & 78,940,200 & 572,065 & 73,638 & 3,975,507\\\\\nMark W. Kowlzan & 77,154,503 & 2,387,938 & 43,462 & 3,975,507\\\\\nRobert C. Lyons & 78,012,659 & 1,494,605 & 78,639 & 3,975,507\\\\\nSamuel M. Mencoff & 67,878,835 & 8,681,658 & 3,025,410 & 3,975,507\\\\\nRoger B. Porter & 64,678,389 & 11,849,812 & 3,057,702 & 3,975,507\\\\\nThomas S. Souleles & 75,213,947 & 4,291,228 & 80,728 & 3,975,507\\\\\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nPACKAGING CORPORATION OF AMERICA\n\nBy: /s/ S. Ellis Cunningham _____\n\nVice President and General Counsel\n\nDate: May 13, 2026",
+  "text_hash": "36e270d1ed329b74e0679ee79293411489636aef257d526de380cc7062b0c714",
+  "parse_ms": 6749,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "PCA shareholders ratified KPMG as independent auditor and approved executive compensation at its 2026 Annual Meeting.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:25.838Z"
+}

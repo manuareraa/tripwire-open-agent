@@ -1,0 +1,26 @@
+{
+  "accession": "0000097476-26-000148",
+  "cik": "97476",
+  "supplier_id": "SUP-01",
+  "company": "TEXAS INSTRUMENTS INCORPORATED",
+  "filed": "2026-07-22",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000148/txn-20260722.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "ITEM 2.02. Results of Operations and Financial Condition\n\nThe Registrant’s news release dated July 22, 2026, regarding its second-quarter results of operations and financial condition is attached hereto as Exhibit 99.\n\nThe attached news release includes references to the following financial measures that were not prepared in accordance with generally accepted accounting principles in the United States (non-GAAP measures): free cash flow and ratios based on free cash flow. The company believes these non-GAAP measures provide insight into its liquidity, cash generating capability and the amount of cash potentially available to return to shareholders, as well as insight into its financial performance. These non-GAAP measures are supplemental to the comparable GAAP measures. Reconciliation to the most directly comparable GAAP measures is included in the \"Non-GAAP financial information\" section of the news release.\n\n\\begin{tabular}{cc}\nDesignation of Exhibit this Report & Description of Exhibit \\\\\n99 & Registrant’s News Release \\\\\n04 & Dated July 22, 2026 (furnished pursuant to Item 2.02) \\\\\n & Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nTEXAS INSTRUMENTS INCORPORATED\n\nDate: July 22, 2026\n\nBy: /s/ Rafael R. Lizardi Rafael R. Lizardi Senior Vice President and Chief Financial Officer\n",
+  "text_hash": "81f3da3efc4a8fc84937033bb979cf0ad33fd538b117977813b34181c084ab10",
+  "parse_ms": 4674,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Texas Instruments released Q2 2026 earnings news release referencing non-GAAP financial measures",
+  "severity": "low",
+  "read_at": "2026-10-27T09:46:45.529Z"
+}

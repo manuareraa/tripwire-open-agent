@@ -1,0 +1,26 @@
+{
+  "accession": "0000051434-26-000115",
+  "cik": "51434",
+  "supplier_id": "SUP-13",
+  "company": "INTERNATIONAL PAPER COMPANY",
+  "filed": "2026-07-30",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/51434/000005143426000115/ip-20260730.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 5,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "EXPLANATORY NOTE\n\nThe information in this Current Report on Form 8-K (the \"Report\"), including the exhibit, is furnished pursuant to Item 2.02 and General Instruction B.2 thereunder. Such information shall not be deemed “filed” for purposes of Section 18 of the Securities Exchange Act of 1934, as amended, or otherwise subject to the liabilities of that section, nor shall it be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended.\n\n## SECTION 2. FINANCIAL INFORMATION.\n\n### Item 2.02. Results of Operations and Financial Condition.\n\nOn July 30, 2026, International Paper Company (the \"Company\") issued a press release announcing its preliminary, unaudited financial results for the fiscal quarter ended June 30, 2026. The Company will host a webcast and conference call today to discuss results for the fiscal quarter ended June 30, 2026. Attached as Exhibit 99.1 and incorporated herein by reference is a copy of the press release.\n\n## SECTION 9. FINANCIAL STATEMENTS AND EXHIBITS.\n\n### Item 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits. The following exhibit is being furnished as part of this Report.\n\n\\begin{tabular}{cc}\nExhibit & Description \\\\\nNumber & \\\\\n99.1 & Press Release of International Paper Company dated July 30, 2026 \\\\\n\\end{tabular}\n\nEXHIBIT INDEX\n\n\\begin{tabular}{cc}\nExhibit Number & Description \\\\\n99.1 & Press Release of International Paper dated July 30, 2026. \\\\\n101 & Cover Page Interactive Data File - the cover page XBRL tags are embedded within the Inline XBRL document. \\\\\n104 & The cover page from this Current Report on Form 8-K, formatted as Inline XBRL. \\\\\n\\end{tabular}",
+  "text_hash": "94ac2de07598501469e60b55381362db2f6d20008b7833696d0ebe664de1b7d3",
+  "parse_ms": 4471,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "International Paper issued preliminary Q2 2026 financial results and press release on July 30, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:54:14.801Z"
+}

@@ -1,0 +1,26 @@
+{
+  "accession": "0001193125-26-428056",
+  "cik": "75677",
+  "supplier_id": "SUP-16",
+  "company": "PACKAGING CORP OF AMERICA",
+  "filed": "2026-10-22",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/75677/000119312526428056/pkg-20261021.htm",
+  "pages_read": [
+    2,
+    3
+  ],
+  "pages_total": 3,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "### Item 2.02. Results of Operations and Financial Condition.\n\nThe information furnished in this Item 2.02, including the exhibit described below, shall not be deemed “filed” hereunder for purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the “Exchange Act”), or incorporated by reference in any filing under the Securities Exchange Act of 1933, as amended, or the Exchange Act, except as shall be expressly set forth by specific reference in such a filing.\n\nOn October 21, 2026, Packaging Corporation of America issued a press release announcing third quarter financial results. The press release is furnished as Exhibit 99.1 and is incorporated into this Item 2.02 by reference.\n\n## Item 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits\n\n99.1 Third Quarter 2026 Earnings Press Release dated October 21, 2026\n\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document)\n\n# SIEGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrants have duly caused this report to be signed on their behalf by the undersigned hereunto duly authorized.\n\nPACKAGING CORPORATION OF AMERICA <br>\n(Registrant)\n\nBy: /s/ FABIAN C. STRAUSS Senior Vice President, Finance, Controller and Treasurer\n\nDate: October 21, 2026",
+  "text_hash": "415ff111878b1f5543b341d40acde4e011ee7e6f7d81c0f0bb9a50ae363754bc",
+  "parse_ms": 7443,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "PCA issued Q3 2026 earnings press release on Oct 21, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:10.153Z"
+}

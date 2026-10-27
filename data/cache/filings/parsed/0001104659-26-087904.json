@@ -1,0 +1,26 @@
+{
+  "accession": "0001104659-26-087904",
+  "cik": "820313",
+  "supplier_id": "SUP-17",
+  "company": "AMPHENOL CORPORATION",
+  "filed": "2026-07-29",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926087904/aph-20260729x8k.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 2.02. Results of Operations and Financial Condition.\n\nOn July 29, 2026, Amphenol Corporation (the “Company”) issued a press release setting forth the Company’s financial results for the quarter and six months ended June 30, 2026. A copy of the press release is attached hereto as Exhibit 99.1 and is incorporated herein by reference.\n\nThis Current Report on Form 8-K may include forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995 and the provisions of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended (the “Exchange Act”), and other related laws, which relate to future events and are subject to risks and uncertainties. The forward-looking statements, which address the Company’s expected business and financial performance and financial condition, among other matters, may contain words and terms such as: “anticipate,” “believe,” “continue,” “could,” “estimate,” “expect,” “forecast,” “guidance,” “intend,” “look ahead,” “may,” “ongoing,” “optimistic,” “plan,” “potential,” “predict,” “project,” “seek,” “should,” “target,” “will,” or “would” and other words and terms of similar meaning. Forward-looking statements by their nature address matters that are, to different degrees, uncertain, such as statements about expected earnings, revenues, growth, liquidity, effective tax rate, interest rates, the expected timing for the closing of certain acquisitions or other matters. A further description of these uncertainties and other risks can be found under the caption “Risk Factors” in Part I, Item 1A and elsewhere in the Company’s Annual Report on Form 10-K for the year ended December 31, 2025, as well as other reports filed with the Securities and Exchange Commission, including, but not limited to, Quarterly Reports on Form 10-Q and Current Reports on Form 8-K. These or other uncertainties could cause the Company’s actual future results to be materially different from those expressed in any forward-looking statements. The Company undertakes no obligation to update or revise any forward-looking statements except as required by law.\n\nThe information set forth in this Item 2.02, including the attached Exhibit 99.1, is being furnished and shall not be deemed “filed” for purposes of Section 18 of the Exchange Act, or otherwise subject to the liabilities of that Section, nor shall it be deemed incorporated by reference in any filing by the Company under the Securities Act of 1933, as amended, or the Exchange Act, except as expressly set forth by specific reference in such filing.\n\n[(d) Exhibits\n\n\\begin{tabular}{c}\n \\\\\nExhibit Document Description\n\nNo.\n\n99.1 Press Release dated July 29, 2026\\\\\n104 Cover Page Interactive Data File (formatted as inline XBRL and contained in Exhibit 101)\n\n* 10-1 First Party Press Report no later open to the Company's law. 105 February 2026 pageuex\n\nSignature\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\nAMPHENOL CORPORATION\n\nBy: /s/ Craig A. Lampo<br>\nCraig A. Lampo<br>\nExecutive Vice President and Chief Financial<br>\nOfficer\n\nDate: July 29, 2026",
+  "text_hash": "0cd67644b417aecfa5c8360796feb89c5c3c4ba92593021faeaad6cfb9e9151c",
+  "parse_ms": 8396,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Amphenol Corporation issued a press release reporting financial results for Q2 and H1 2026 ended June 30, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:56:58.506Z"
+}

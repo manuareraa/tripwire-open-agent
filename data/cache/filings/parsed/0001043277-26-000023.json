@@ -1,0 +1,26 @@
+{
+  "accession": "0001043277-26-000023",
+  "cik": "1043277",
+  "supplier_id": "SUP-10",
+  "company": "\"C. H. ROBINSON WORLDWIDE",
+  "filed": "2026-06-02",
+  "metadata_items": [
+    "5.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000023/chrw-20260529.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory\n\nAgreements of Certain Officers\n\nOn May 29, 2026, the Talent & Compensation Committee of C.H. Robinson Worldwide, Inc. (the “Company”) approved a special equity award for Arun Rajan, the Company’s Chief Strategy and Innovation Officer, designed to drive strategic and talent development outcomes, as well as to reward financial overperformance and retain Mr. Rajan’s service to achieve these objectives. The special equity award consists of performance stock units valued at $6 million at the target level of performance and restricted stock units valued at $1.5 million. The number of units subject to the equity award will be determined by dividing the value of the grant by the average closing price of a share of the Company’s common stock during the 30-day period ending on day prior to the grant date, and rounding down to the nearest whole number. Mr. Rajan’s special equity award is subject to the Amended and Restated 2022 Equity Incentive Plan.\n\nThe performance stock unit award vests based on achievement of strategic and talent development milestones over a five-year period covering FY2026 – FY2030, plus an “outperformance” portion based on exceptional financial performance in 2030. The award includes two strategic milestones, each weighted equally for a total of $2.5 million of the total award, that relate to (i) high-quality truckload growth in any fiscal year during the performance period and (ii) introducing AI-enabled products and solutions by increasing adjusted growth profit in the Robinson Managed Services business unit for two consecutive years during the performance period. The award also includes talent development milestones, representing $1.0 million of the total award, that relates to the creation, identification and development of leadership in the Company’s strategic and innovation functions over the performance period. The outperformance award, representing $2.5 million of the total award at target, is based on achievement of adjusted earnings per share goals for the last year of the performance period, with potential payouts ranging from 50% to 200% of target. The performance stock units will be forfeited if Mr. Rajan’s service with the Company terminates for any reason other than death or disability prior to vesting, unless a qualifying termination occurs within 12 months following a change in control.\n\nThe restricted stock unit award vests over five years, as to 20% of the shares on each one-year anniversary of the date of grant, subject to certain accelerated or continued vesting provisions in the case of a termination without cause, resignation for good reason, death or disability.\n\nThe foregoing descriptions of the performance stock unit and restricted stock unit award agreements are qualified by reference to the full text of the award agreements, which are filed as Exhibits 10.1 and 10.2 hereto, respectively.\n\n**Item 9.01 Financial Statements and Exhibits.**\n\n(d) Exhibits.\n\nNUMBER\n\nDESCRIPTION\n\n10.1 Performance stock unit award for Arun Rajan.<tbc>\n\n10.2 Restricted stock unit award agreement for Arun Rajan.<tbc>\n\n104 The cover page from the Current Report on Form 8-K formatted in Inline XBRL.\n\nToughish what political isn't eusellcon hion, not in fashion.\n\nSIGNATURE\n\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.**\n\nDate:May 29, 2026\n\nC.H. ROBINSON WORLDWIDE, INC.\n\nBy: /s/ Dorothy G. Capers\n\nDorothy G. Capers <br>\nChief Legal Officer and Corporate Secretary",
+  "text_hash": "6c215856f3160e02cb93a23cba01645144614a2658b90711831c402f1ab362a1",
+  "parse_ms": 7662,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "C.H. Robinson granted a $7.5M equity award to Chief Strategy Officer Arun Rajan to retain his service and drive strategic outcomes.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:52:32.851Z"
+}

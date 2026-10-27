@@ -1,0 +1,26 @@
+{
+  "accession": "0001628280-26-019043",
+  "cik": "898293",
+  "supplier_id": "SUP-18",
+  "company": "JABIL INC",
+  "filed": "2026-03-18",
+  "metadata_items": [
+    "2.02",
+    "9.01"
+  ],
+  "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828026019043/jbl-20260318.htm",
+  "pages_read": [
+    3,
+    4
+  ],
+  "pages_total": 4,
+  "parsed_by": "nvidia/nemotron-parse",
+  "parsed_text": "**Item 2.02 Results of Operations and Financial Condition.**\n\nOn March 18, 2026, Jabil Inc. (the “Company”) issued a press release announcing its results of operations for the second fiscal quarter ended February 28, 2026. A copy of the press release is furnished as Exhibit 99.1 hereto and is incorporated herein by reference.\n\nThe information furnished herewith pursuant to Item 2.02 of this Current Report, including Exhibit 99.1, shall not be deemed to be \"filed\" for the purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), or otherwise subject to the liabilities of that section. The information in this Current Report shall not be incorporated by reference into any filing under the Securities Act of 1933, as amended, or the Exchange Act, whether made before or after the date of this Current Report, regardless of any general incorporation language in the filing.\n\n## Item 9.01. Financial Statements and Exhibits.\n\n(d) Exhibits\n\nThe following exhibit is furnished herewith:\n\n\\begin{tabular}{cc}\n**Exhibit No.** & **Description**\\\\\n99.1 & Press Release dated March 18, 2026.\\\\\n104 & Cover Page Interactive Data File - Embedded within the inline XBRL document\\\\\n\\end{tabular}\n\nSIGNATURES\n\nPursuant to the requirements of the Securities Exchange Act of 1934, as amended, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\n\n3ABIL INC.\n\n(Registrant)\n\nBy: /s/ GREGORY B. HEBARD\n\n\\<|unk|\\> __________________________\n\nGregory B. Hebard\n\nChief Financial Officer\n\nMarch 18, 2026\n\n",
+  "text_hash": "e495780661db8517bb4a0dd578a16f56686e8901a352c26a8794158c7f230b45",
+  "parse_ms": 4001,
+  "parse_calls": 2,
+  "headline_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "headline": "Jabil Inc. reported second fiscal quarter results ended February 28, 2026, via press release on March 18, 2026.",
+  "severity": "low",
+  "read_at": "2026-10-27T09:57:26.484Z"
+}
