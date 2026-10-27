@@ -548,3 +548,13 @@ body { padding-bottom: var(--ab-h, 0px); }
 .pg-tl-ev { display: grid; gap: 6px; font-size: 13px; }
 .pg-tl-trouble .tag { font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .05em; color: var(--dual); }
 .pg-tl-verdict { margin: 0; font-weight: 600; }
+/* Proving Ground · Imagine: failure-story cards (owner: imagine stream). */
+.pg-imagine-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pg-imagine-card { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 10px; font-size: 12.5px; }
+.pg-imagine-card.dropped { opacity: .6; }
+.pg-imagine-card.dropped .pg-imagine-wire { text-decoration: line-through; }
+.pg-imagine-wire { margin-top: 6px; font-weight: 600; color: var(--primary); }
+.pg-imagine-mark { margin-top: 4px; font-size: 11.5px; color: var(--exit); }
+.pg-imagine-mark.verified { color: var(--keep); }
+.pg-imagine-mark.untested { color: var(--muted); }
+.pg-imagine-cite { margin-top: 4px; font-size: 11px; }
