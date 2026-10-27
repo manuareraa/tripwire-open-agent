@@ -29,7 +29,7 @@ So Tripwire keeps the joins it made:
 - **Cross-source lineage.** Memory stores which rows of which system each decision read.
 - **Selective reopen.** When a fragment changes, memory names the decisions that read that row, code checks only their tripwires (including "reopen when this source publishes a newer as-of date"), and only those that fire are re-decided.
 
-Measured in [eval/REOPEN.md](eval/REOPEN.md): over five source changes (a real new quarter, a real 8-K, a synthetic OFAC match and two synthetic ERP shifts) on a portfolio of 20 decisions, Tripwire re-ran **3 decisions where re-deciding everything takes 100**, and missed **none** of the decisions whose outcome actually changed when all 20 were re-decided from scratch. At the live run's measured cost per decision that is about 390 model calls and 230,000 tokens not spent.
+Measured in [eval/REOPEN.md](eval/REOPEN.md): over five source changes (a real new quarter, a real 8-K, a synthetic OFAC match and two synthetic ERP shifts) on a portfolio of 20 decisions, Tripwire re-ran **4 decisions where re-deciding everything takes 100**, and missed **none** of the decisions whose outcome actually changed when all 20 were re-decided from scratch. At the live run's measured cost per decision that is about 380 model calls and 227,000 tokens not spent.
 
 ## How the agents reason
 
@@ -131,7 +131,7 @@ The server listens on `0.0.0.0:$PORT` (default 8000). Errors are JSON (`{"error"
 
 ## Examples
 
-Inputs are in `input_examples/`, the matching outputs (from a SAMPLE_MODE run) in `output_examples/`, each with its full trace (`*.trace.jsonl`).
+Inputs are in `input_examples/`, the matching outputs (from a SAMPLE_MODE run) in `output_examples/`, each with its full trace (`*.trace.jsonl`). Their questions are worded differently from the recorded live run, so no recorded Nemotron answer matches and every model step shows "rule-based path" in the trace. Leave out `question` (as the console does) to get the replayed live answers instead.
 
 | # | Input | Result |
 |---|---|---|

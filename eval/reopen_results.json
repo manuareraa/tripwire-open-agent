@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-25T14:04:46.048Z",
+  "generated_at": "2026-10-27T08:48:32.172Z",
   "summary": {
     "scenarios": 5,
     "decisions_each": 20,
     "reruns": {
       "full": 100,
       "table_level": 100,
-      "tripwire": 3
+      "tripwire": 4
     },
     "dependents_checked": 11,
     "outcome_changed": 2,
@@ -135,12 +135,21 @@
       "decisions": 20,
       "table_level_reruns": 20,
       "dependents": 4,
-      "reopened": 0,
-      "reopened_detail": [],
+      "reopened": 1,
+      "reopened_detail": [
+        {
+          "subject": "SUP-06",
+          "was": "exit (escalated)",
+          "now": "exit (escalated)",
+          "fired": [
+            "spend_share > 0.45 (now 0.58, was 0.35)"
+          ]
+        }
+      ],
       "outcome_changed": [],
       "missed": [],
       "disagree_with_full_redecide": [],
-      "not_rerun": 20
+      "not_rerun": 19
     },
     {
       "scenario": "lead-time-slip",

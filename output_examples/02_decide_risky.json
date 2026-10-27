@@ -1,1 +1,429 @@
-{"run_id":"a1efc489","decision_id":"DEC-SUP-18-jp1i7v","decision":"exit","confidence":0.9,"status":"proposed","evidence":[{"template_id":"supplier_spend_row","params":{"supplier_id":"SUP-18"},"sql":"SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'","table":"supplier_spend","result_hash":"974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198","depends_on":[{"table":"supplier_spend","key":"SUP-18"}]},{"template_id":"supplier_financials_latest","params":{"cik":"898293"},"sql":"SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1","table":"supplier_financials","result_hash":"4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"},{"template_id":"supplier_financials_history","params":{"cik":"898293","periods":5},"sql":"SELECT cik, period_end, revenue, gross_margin, current_ratio, debt_to_equity FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 5","table":"supplier_financials","result_hash":"83dcd5db97af3867afd79c1287b90376bd6786343e5a4e35898be662ee360965","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"},{"template_id":"category_concentration","params":{"category":"electronic_components"},"sql":"SELECT supplier_id, spend_share, lead_time_weeks FROM supplier_spend WHERE category = 'electronic_components' ORDER BY spend_share DESC","table":"supplier_spend","result_hash":"11119906dadcf8aaf56e1f3f583da12f2538c731d7f02a206bb484ec002eb56b","depends_on":[{"table":"supplier_spend","key":"SUP-18"},{"table":"supplier_spend","key":"SUP-17"},{"table":"supplier_spend","key":"SUP-20"},{"table":"supplier_spend","key":"SUP-19"}]}],"tripwires":[{"id":"DEC-SUP-18-jp1i7v-tw1","metric":"current_ratio","op":"<","threshold":0.834,"depends_on":[{"table":"supplier_financials","key":"898293"}]},{"id":"DEC-SUP-18-jp1i7v-tw2","metric":"debt_to_equity","op":">","threshold":20.401,"depends_on":[{"table":"supplier_financials","key":"898293"}]},{"id":"DEC-SUP-18-jp1i7v-tw3","metric":"spend_share","op":">","threshold":0.72,"depends_on":[{"table":"supplier_spend","key":"SUP-18"}]}],"escalated":true,"escalation_reasons":["high risk: current ratio 0.981 < 1; liabilities/equity 17.001 > 3; gross margin 0.095 < 0.1; spend share 0.62 ≥ 0.25; lead time 14 weeks ≥ 12","exit decisions always go to a senior buyer"],"limitations":["Decided by the rule-based policy, not the reasoning model"],"rationale":"Rule-based policy: exit: 3 financial distress signals (current ratio 0.981 < 1; liabilities/equity 17.001 > 3; gross margin 0.095 < 0.1) and 3 alternative suppliers in the category.","risk":"high","findings":[{"claim":"Share of our category spend: 62.0%","metric":"spend_share","value":0.62,"evidence":{"template_id":"supplier_spend_row","params":{"supplier_id":"SUP-18"},"sql":"SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'","table":"supplier_spend","result_hash":"974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198","depends_on":[{"table":"supplier_spend","key":"SUP-18"}]}},{"claim":"Lead time: 14 weeks","metric":"lead_time_weeks","value":14,"evidence":{"template_id":"supplier_spend_row","params":{"supplier_id":"SUP-18"},"sql":"SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'","table":"supplier_spend","result_hash":"974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198","depends_on":[{"table":"supplier_spend","key":"SUP-18"}]}},{"claim":"Current ratio: 0.981","metric":"current_ratio","value":0.981,"evidence":{"template_id":"supplier_financials_latest","params":{"cik":"898293"},"sql":"SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1","table":"supplier_financials","result_hash":"4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"}},{"claim":"Liabilities to equity: 17.001","metric":"debt_to_equity","value":17.001,"evidence":{"template_id":"supplier_financials_latest","params":{"cik":"898293"},"sql":"SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1","table":"supplier_financials","result_hash":"4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"}},{"claim":"Gross margin: 9.5%","metric":"gross_margin","value":0.095,"evidence":{"template_id":"supplier_financials_latest","params":{"cik":"898293"},"sql":"SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1","table":"supplier_financials","result_hash":"4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"}},{"claim":"Revenue change across reported periods: 11.8%","metric":"revenue_change_pct","value":11.791,"evidence":{"template_id":"supplier_financials_history","params":{"cik":"898293","periods":5},"sql":"SELECT cik, period_end, revenue, gross_margin, current_ratio, debt_to_equity FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 5","table":"supplier_financials","result_hash":"83dcd5db97af3867afd79c1287b90376bd6786343e5a4e35898be662ee360965","depends_on":[{"table":"supplier_financials","key":"898293"}],"period":"2026-05-31"}},{"claim":"Other suppliers in the category: 3","metric":"category_alternatives","value":3,"evidence":{"template_id":"category_concentration","params":{"category":"electronic_components"},"sql":"SELECT supplier_id, spend_share, lead_time_weeks FROM supplier_spend WHERE category = 'electronic_components' ORDER BY spend_share DESC","table":"supplier_spend","result_hash":"11119906dadcf8aaf56e1f3f583da12f2538c731d7f02a206bb484ec002eb56b","depends_on":[{"table":"supplier_spend","key":"SUP-18"},{"table":"supplier_spend","key":"SUP-17"},{"table":"supplier_spend","key":"SUP-20"},{"table":"supplier_spend","key":"SUP-19"}]}}],"trace_file":"logs/trace-a1efc489.jsonl"}
+{
+  "run_id": "a1fa8b33",
+  "decision_id": "DEC-SUP-18-qg24ws",
+  "decision": "exit",
+  "confidence": 0.9,
+  "status": "proposed",
+  "evidence": [
+    {
+      "template_id": "supplier_spend_row",
+      "params": {
+        "supplier_id": "SUP-18"
+      },
+      "sql": "SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'",
+      "table": "supplier_spend",
+      "result_hash": "974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198",
+      "depends_on": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-18"
+        }
+      ]
+    },
+    {
+      "template_id": "supplier_financials_latest",
+      "params": {
+        "cik": "898293"
+      },
+      "sql": "SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1",
+      "table": "supplier_financials",
+      "result_hash": "4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da",
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "898293"
+        }
+      ],
+      "period": "2026-05-31"
+    },
+    {
+      "template_id": "supplier_financials_history",
+      "params": {
+        "cik": "898293",
+        "periods": 5
+      },
+      "sql": "SELECT cik, period_end, revenue, gross_margin, current_ratio, debt_to_equity FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 5",
+      "table": "supplier_financials",
+      "result_hash": "83dcd5db97af3867afd79c1287b90376bd6786343e5a4e35898be662ee360965",
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "898293"
+        }
+      ],
+      "period": "2026-05-31"
+    },
+    {
+      "template_id": "supplier_events_recent",
+      "params": {
+        "cik": "898293"
+      },
+      "sql": "SELECT cik, filed_date, form, items, accession, url FROM supplier_events WHERE cik = '898293' ORDER BY filed_date DESC LIMIT 25",
+      "table": "supplier_events",
+      "result_hash": "3a350821f647a1f2a3a81bc794f8f2c9b9a71ee47046dfeac3d7b054120f6281",
+      "depends_on": [
+        {
+          "table": "supplier_events",
+          "key": "898293"
+        }
+      ]
+    },
+    {
+      "template_id": "sanctions_screen_row",
+      "params": {
+        "cik": "898293"
+      },
+      "sql": "SELECT cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url FROM sanctions_screen WHERE cik = '898293'",
+      "table": "sanctions_screen",
+      "result_hash": "b8f470ecb8c685607f7db2f7604f412e8b87341ebeb61b5ec4bf2e664aa00169",
+      "depends_on": [
+        {
+          "table": "sanctions_screen",
+          "key": "898293"
+        }
+      ]
+    },
+    {
+      "template_id": "category_concentration",
+      "params": {
+        "category": "electronic_components"
+      },
+      "sql": "SELECT supplier_id, spend_share, lead_time_weeks FROM supplier_spend WHERE category = 'electronic_components' ORDER BY spend_share DESC",
+      "table": "supplier_spend",
+      "result_hash": "11119906dadcf8aaf56e1f3f583da12f2538c731d7f02a206bb484ec002eb56b",
+      "depends_on": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-18"
+        },
+        {
+          "table": "supplier_spend",
+          "key": "SUP-17"
+        },
+        {
+          "table": "supplier_spend",
+          "key": "SUP-20"
+        },
+        {
+          "table": "supplier_spend",
+          "key": "SUP-19"
+        }
+      ]
+    },
+    {
+      "template_id": "supplier_spend_row",
+      "params": {
+        "supplier_id": "SUP-17"
+      },
+      "sql": "SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-17'",
+      "table": "supplier_spend",
+      "result_hash": "f5f4b72b174651db2377c1b1ab16355a33d792a90b85d965da5e3b2b34831d2e",
+      "depends_on": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-17"
+        }
+      ]
+    },
+    {
+      "template_id": "supplier_financials_latest",
+      "params": {
+        "cik": "820313"
+      },
+      "sql": "SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '820313' ORDER BY period_end DESC LIMIT 1",
+      "table": "supplier_financials",
+      "result_hash": "5fda136e552fea8eff2a1c15cdf4eaabbfbf1db6d213e405d86d9c07b2ac6e60",
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "820313"
+        }
+      ],
+      "period": "2026-06-30"
+    }
+  ],
+  "tripwires": [
+    {
+      "id": "DEC-SUP-18-qg24ws-tw1",
+      "metric": "current_ratio",
+      "op": "<",
+      "threshold": 0.834,
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "898293"
+        }
+      ]
+    },
+    {
+      "id": "DEC-SUP-18-qg24ws-tw2",
+      "metric": "risk_events_12m",
+      "op": ">",
+      "threshold": 0,
+      "depends_on": [
+        {
+          "table": "supplier_events",
+          "key": "898293"
+        }
+      ]
+    },
+    {
+      "id": "DEC-SUP-18-qg24ws-tw3",
+      "metric": "sanctions_matches",
+      "op": ">",
+      "threshold": 0,
+      "depends_on": [
+        {
+          "table": "sanctions_screen",
+          "key": "898293"
+        }
+      ]
+    },
+    {
+      "id": "DEC-SUP-18-qg24ws-tw4",
+      "metric": "spend_share",
+      "op": ">",
+      "threshold": 0.72,
+      "depends_on": [
+        {
+          "table": "supplier_spend",
+          "key": "SUP-18"
+        }
+      ]
+    },
+    {
+      "id": "DEC-SUP-18-qg24ws-tw5",
+      "metric": "backup_current_ratio",
+      "op": "<",
+      "threshold": 1,
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "820313"
+        }
+      ]
+    },
+    {
+      "id": "DEC-SUP-18-qg24ws-tw6",
+      "metric": "backup_debt_to_equity",
+      "op": ">",
+      "threshold": 3,
+      "depends_on": [
+        {
+          "table": "supplier_financials",
+          "key": "820313"
+        }
+      ]
+    }
+  ],
+  "escalated": true,
+  "escalation_reasons": [
+    "high risk: current ratio 0.981 < 1; liabilities/equity 17.001 > 3; gross margin 0.095 < 0.1; spend share 0.62 ≥ 0.25; lead time 14 weeks ≥ 12",
+    "exit decisions always go to a senior buyer"
+  ],
+  "limitations": [
+    "Decided by the rule-based policy, not the reasoning model"
+  ],
+  "rationale": "Rule-based policy: exit: 3 financial distress signals (current ratio 0.981 < 1; liabilities/equity 17.001 > 3; gross margin 0.095 < 0.1) and 3 alternative suppliers in the category.",
+  "risk": "high",
+  "findings": [
+    {
+      "claim": "Share of our category spend: 62.0%",
+      "metric": "spend_share",
+      "value": 0.62,
+      "evidence": {
+        "template_id": "supplier_spend_row",
+        "params": {
+          "supplier_id": "SUP-18"
+        },
+        "sql": "SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'",
+        "table": "supplier_spend",
+        "result_hash": "974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198",
+        "depends_on": [
+          {
+            "table": "supplier_spend",
+            "key": "SUP-18"
+          }
+        ]
+      }
+    },
+    {
+      "claim": "Lead time: 14 weeks",
+      "metric": "lead_time_weeks",
+      "value": 14,
+      "evidence": {
+        "template_id": "supplier_spend_row",
+        "params": {
+          "supplier_id": "SUP-18"
+        },
+        "sql": "SELECT supplier_id, cik, category, spend_share, lead_time_weeks, open_po_value, contract_end, updated_at FROM supplier_spend WHERE supplier_id = 'SUP-18'",
+        "table": "supplier_spend",
+        "result_hash": "974a57d0f2e0a4b1a18afb98d7502b1b094099fa7d5adffb6ac4efa218f6d198",
+        "depends_on": [
+          {
+            "table": "supplier_spend",
+            "key": "SUP-18"
+          }
+        ]
+      }
+    },
+    {
+      "claim": "Current ratio: 0.981",
+      "metric": "current_ratio",
+      "value": 0.981,
+      "evidence": {
+        "template_id": "supplier_financials_latest",
+        "params": {
+          "cik": "898293"
+        },
+        "sql": "SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1",
+        "table": "supplier_financials",
+        "result_hash": "4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da",
+        "depends_on": [
+          {
+            "table": "supplier_financials",
+            "key": "898293"
+          }
+        ],
+        "period": "2026-05-31"
+      }
+    },
+    {
+      "claim": "Liabilities to equity: 17.001",
+      "metric": "debt_to_equity",
+      "value": 17.001,
+      "evidence": {
+        "template_id": "supplier_financials_latest",
+        "params": {
+          "cik": "898293"
+        },
+        "sql": "SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1",
+        "table": "supplier_financials",
+        "result_hash": "4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da",
+        "depends_on": [
+          {
+            "table": "supplier_financials",
+            "key": "898293"
+          }
+        ],
+        "period": "2026-05-31"
+      }
+    },
+    {
+      "claim": "Gross margin: 9.5%",
+      "metric": "gross_margin",
+      "value": 0.095,
+      "evidence": {
+        "template_id": "supplier_financials_latest",
+        "params": {
+          "cik": "898293"
+        },
+        "sql": "SELECT cik, ticker, name, period_end, revenue, gross_margin, current_ratio, debt_to_equity, source_url FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 1",
+        "table": "supplier_financials",
+        "result_hash": "4ee9913d489b02c397b10ecb49893e9caee9a3f8fc374cf41a625e9a0f3186da",
+        "depends_on": [
+          {
+            "table": "supplier_financials",
+            "key": "898293"
+          }
+        ],
+        "period": "2026-05-31"
+      }
+    },
+    {
+      "claim": "Revenue change across reported periods: 11.8%",
+      "metric": "revenue_change_pct",
+      "value": 11.791,
+      "evidence": {
+        "template_id": "supplier_financials_history",
+        "params": {
+          "cik": "898293",
+          "periods": 5
+        },
+        "sql": "SELECT cik, period_end, revenue, gross_margin, current_ratio, debt_to_equity FROM supplier_financials WHERE cik = '898293' ORDER BY period_end DESC LIMIT 5",
+        "table": "supplier_financials",
+        "result_hash": "83dcd5db97af3867afd79c1287b90376bd6786343e5a4e35898be662ee360965",
+        "depends_on": [
+          {
+            "table": "supplier_financials",
+            "key": "898293"
+          }
+        ],
+        "period": "2026-05-31"
+      }
+    },
+    {
+      "claim": "Material-risk 8-K filings in 12 months: 0",
+      "metric": "risk_events_12m",
+      "value": 0,
+      "evidence": {
+        "template_id": "supplier_events_recent",
+        "params": {
+          "cik": "898293"
+        },
+        "sql": "SELECT cik, filed_date, form, items, accession, url FROM supplier_events WHERE cik = '898293' ORDER BY filed_date DESC LIMIT 25",
+        "table": "supplier_events",
+        "result_hash": "3a350821f647a1f2a3a81bc794f8f2c9b9a71ee47046dfeac3d7b054120f6281",
+        "depends_on": [
+          {
+            "table": "supplier_events",
+            "key": "898293"
+          }
+        ]
+      }
+    },
+    {
+      "claim": "Name matches on the OFAC sanctions list: 0",
+      "metric": "sanctions_matches",
+      "value": 0,
+      "evidence": {
+        "template_id": "sanctions_screen_row",
+        "params": {
+          "cik": "898293"
+        },
+        "sql": "SELECT cik, name, list, list_as_of, list_entries, match_count, matches, screened_on, source_url FROM sanctions_screen WHERE cik = '898293'",
+        "table": "sanctions_screen",
+        "result_hash": "b8f470ecb8c685607f7db2f7604f412e8b87341ebeb61b5ec4bf2e664aa00169",
+        "depends_on": [
+          {
+            "table": "sanctions_screen",
+            "key": "898293"
+          }
+        ]
+      }
+    },
+    {
+      "claim": "Other suppliers in the category: 3",
+      "metric": "category_alternatives",
+      "value": 3,
+      "evidence": {
+        "template_id": "category_concentration",
+        "params": {
+          "category": "electronic_components"
+        },
+        "sql": "SELECT supplier_id, spend_share, lead_time_weeks FROM supplier_spend WHERE category = 'electronic_components' ORDER BY spend_share DESC",
+        "table": "supplier_spend",
+        "result_hash": "11119906dadcf8aaf56e1f3f583da12f2538c731d7f02a206bb484ec002eb56b",
+        "depends_on": [
+          {
+            "table": "supplier_spend",
+            "key": "SUP-18"
+          },
+          {
+            "table": "supplier_spend",
+            "key": "SUP-17"
+          },
+          {
+            "table": "supplier_spend",
+            "key": "SUP-20"
+          },
+          {
+            "table": "supplier_spend",
+            "key": "SUP-19"
+          }
+        ]
+      }
+    }
+  ],
+  "trace_file": "logs/trace-a1fa8b33.jsonl"
+}

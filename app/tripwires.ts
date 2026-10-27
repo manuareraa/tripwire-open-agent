@@ -47,11 +47,13 @@ export function defaultTripwires(metrics: MetricValue[]): TripwireDraft[] {
   // One financial line, one per real-time source (8-K events, sanctions), then exposure: each source a decision
   // reads gets a tripwire, so a change in any one of them can reopen it.
   const prefer = ["current_ratio", "debt_to_equity", "risk_events_12m", "sanctions_matches", "spend_share", "revenue_change_pct", "gross_margin", "category_alternatives"];
+  const financial = new Set(["current_ratio", "debt_to_equity", "revenue_change_pct", "gross_margin"]);
   const out: TripwireDraft[] = [];
   for (const name of prefer) {
     const m = metrics.find((x) => x.metric === name);
     const def = metricDef(name);
     if (!m || !def) continue;
+    if (financial.has(name) && out.some((t) => financial.has(t.metric))) continue;
     const v = m.value;
     let threshold: number;
     switch (name) {

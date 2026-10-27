@@ -62,6 +62,11 @@ describe("8-K risk items", () => {
     expect(tws).toContainEqual(expect.objectContaining({ metric: "sanctions_matches", op: ">", threshold: 0 }));
     expect(tws.length).toBeLessThanOrEqual(4);
   });
+
+  it("keeps one financial line so the spend share still gets a tripwire", () => {
+    const tws = defaultTripwires([metric("current_ratio", 1.4), metric("debt_to_equity", 2), metric("risk_events_12m", 0), metric("sanctions_matches", 0), metric("spend_share", 0.35)]);
+    expect(tws.map((t) => t.metric)).toEqual(["current_ratio", "risk_events_12m", "sanctions_matches", "spend_share"]);
+  });
 });
 
 describe("a real 8-K arriving", () => {
