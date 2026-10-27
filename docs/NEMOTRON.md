@@ -1,7 +1,7 @@
 # How Tripwire uses NVIDIA Nemotron
 
 Tripwire makes supplier decisions (keep, dual-source or exit) with a team of agents, and records which data rows each
-decision relied on so it can reopen the decision when one of those rows changes. Four Nemotron models do four
+decision relied on so it can reopen the decision when one of those rows changes. Five Nemotron models do five
 different jobs in that team. Each job has its own measurement against a cheaper alternative, and every number below
 comes from a recorded live run that anyone can replay without a key.
 
@@ -11,6 +11,7 @@ comes from a recorded live run that anyone can replay without a key.
 | Decide, with a thinking budget set by risk | Nemotron 3 Ultra 550B (`nvidia/nemotron-3-ultra-550b-a55b`) | `app/agents/decider.ts` | Nightshift (same backup) |
 | Final safety check on the recommendation | Nemotron 3.5 Content Safety (`nvidia/nemotron-3.5-content-safety`) | `app/agents/risk.ts` | build.nvidia.com directly (Nightshift 1.2.7 does not serve it; see below) |
 | Put the findings that answer the buyer's question first | Nemotron 3.5 Rerank 8B (`nvidia/nemotron-3.5-rerank-8b`) | `app/adapters/rerank.ts`, `app/agents/analyst.ts` | build.nvidia.com directly (Nightshift serves chat models only) |
+| Read the supplier's real 8-K filings (offline, once; output cached) | Nemotron Parse (`nvidia/nemotron-parse`) | `scripts/parse_filings.ts`, `app/proving/filings.ts` | build.nvidia.com directly (see [proving/READ.md](proving/READ.md)) |
 
 Every call writes the model that actually answered, the provider and the latency into the decision's trace. If a
 model cannot answer, the step falls back to a rule-based path and the trace and the rationale say so; a fallback is

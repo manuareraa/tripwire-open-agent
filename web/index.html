@@ -237,7 +237,7 @@
       <div class="pg-stats">
         <div class="stat"><b>17 of 103</b><span>Nemotron tripwires survived its own crash test. The rest are dropped before a person sees them.</span></div>
         <div class="stat"><b>4 vs 100</b><span>Decisions re-run over five source changes, against re-deciding everything. None missed.</span></div>
-        <div class="stat"><b>445</b><span>Nemotron answers recorded live through Meterless Nightshift. Anyone can replay them with no keys; the console shows each step's receipt id.</span></div>
+        <div class="stat"><b>494</b><span>Nemotron answers recorded live through Meterless Nightshift, each with a signed receipt. Anyone can replay them with no keys; the console shows each step's receipt id.</span></div>
         <div class="stat"><b>0 of 9</b><span>Trouble events the model tripwires caught early on a 40-decision backtest (rules: 1 of 9). Too few to rank; reported as measured.</span></div>
       </div>
       <div class="card human">
@@ -290,7 +290,7 @@
       </div>
       <div class="stack" id="stack">
         <div class="card"><h3>Zetaris</h3><p>The data layer. Every number is read with Zetaris SQL. Approved decisions are appended to a Parquet ledger through Zetaris RUN EXPORT and read back with Zetaris SQL.</p><span class="pill" data-mode="data"><span class="dot"></span>checking…</span></div>
-        <div class="card"><h3>NVIDIA Nemotron</h3><p>The reasoning. Four Nemotron models, each with one job: Parse reads filings, Lightning plans and crash-tests, Ultra decides and writes pre-mortems, Content Safety checks the result. Each call has a timeout, retry and logged fallback.</p><span class="pill" data-mode="model"><span class="dot"></span>checking…</span></div>
+        <div class="card"><h3>NVIDIA Nemotron</h3><p>The reasoning. Five Nemotron models, each with one job: Parse reads filings, Lightning plans and crash-tests, Ultra decides and writes pre-mortems, Rerank puts the right evidence first, Content Safety checks the result. Each call has a timeout, retry and logged fallback.</p><span class="pill" data-mode="model"><span class="dot"></span>checking…</span></div>
         <div class="card"><h3>Meterless</h3><p>Nightshift serves every Nemotron call and returns a receipt id, shown per step in the console. H-MEM is the memory: each claim is a record with its source row and result hash, plus supersession and an audit ledger.</p><span class="pill" data-mode="memory"><span class="dot"></span>checking…</span></div>
         <div class="card"><h3>Cursor</h3><p>The build tool. The project was built in Cursor, with project rules in <span class="mono">.cursor/rules</span>.</p><span class="pill"><span class="dot"></span>development</span></div>
       </div>
