@@ -10,6 +10,7 @@ import type { FailureStory } from "../types.js";
 
 const AGENT = "PreMortem";
 const MAX_STORIES = 4;
+const LIKELIHOOD = ["low", "medium", "high"];
 const LABEL: Record<string, string> = { keep: "keep", dual_source: "dual-source", exit: "exit" };
 
 /**
@@ -31,7 +32,8 @@ export async function premortem(deps: Deps, s: RunState, draft: DecisionDraft, b
       'Each failure story names ONE metric from the list given, the direction it would move (op "<" or ">") and the line (threshold) that would warn us first. ' +
       "The line must NOT already be crossed today. Use only metric names from the list and quote only numbers given. " +
       "In grounded_in, cite only metric names or filing ids from the lists given. " +
-      'Reply only with JSON: {"stories": [{"story": "1-2 plain sentences", "metric": "...", "op": "<" or ">", "threshold": number, "grounded_in": ["..."]}]}',
+      "Rate each story's likelihood (low, medium or high) from today's evidence. " +
+      'Reply only with JSON: {"stories": [{"story": "1-2 plain sentences", "metric": "...", "op": "<" or ">", "threshold": number, "grounded_in": ["..."], "likelihood": "low|medium|high"}]}',
     user:
       `It is six months from now. We made this decision (${LABEL[draft.decision] ?? draft.decision} for ${s.subject_id}) and it went badly. ` +
       "Write the 2-4 most likely failure stories. For each, name the earliest number from this list that would move first, the direction, and the line.\n" +
@@ -62,9 +64,9 @@ export async function premortem(deps: Deps, s: RunState, draft: DecisionDraft, b
       out.push({ metric: st!.metric, op: st!.op as "<" | ">", threshold: st!.threshold, origin: "premortem", story_id: id });
     }
     deps.tracer.emit({
-      decision_id: s.decision_id, agent_name: AGENT, action: "failure_story", event: "message", target_agent: "CrashTest",
+      decision_id: s.decision_id, agent_name: AGENT, action: "premortem", event: "message", target_agent: "CrashTest",
       status: why ? "failed" : "success",
-      output_summary: why ? `Dropped story ${id}: ${why}` : `${st!.story} Watch: ${st!.metric} ${st!.op} ${st!.threshold}`,
+      output_summary: why ? `Dropped story ${id}: ${why}` : `${st!.story} Watch: ${st!.metric} ${st!.op} ${st!.threshold}${st!.likelihood ? ` (likelihood ${st!.likelihood})` : ""}`,
       data: st ? { story: st, ...(why ? { dropped: why } : {}) } : { raw },
     });
   });
@@ -90,6 +92,8 @@ function toStory(raw: unknown, id: string): FailureStory | undefined {
     op: String(r.op ?? "").trim() as FailureStory["op"], // checked in check()
     ...(Number.isFinite(threshold) ? { threshold: round(threshold) } : {}),
     grounded_in: Array.isArray(r.grounded_in) ? r.grounded_in.map((g) => String(g).trim()) : [],
+    // Kept only when it is one of the three words; a missing or odd rating never drops the story.
+    ...(LIKELIHOOD.includes(String(r.likelihood ?? "").trim().toLowerCase()) ? { likelihood: String(r.likelihood).trim().toLowerCase() as FailureStory["likelihood"] } : {}),
   };
 }
 

@@ -39,7 +39,9 @@ A story is dropped, and the reason written to the decision's limitations, when a
 
 If no model answers, or the answer is not JSON, Imagine adds one line to `proving.skipped` (for example "imagine: no model answered (…)") and returns nothing. Code never writes a story itself.
 
-The trace gets one `PreMortem / failure_story` event per story. A kept story's summary is the story itself plus "Watch: <metric> <op> <line>"; a dropped story's summary is "Dropped story … : <reason>".
+Ultra also rates each story's likelihood (low, medium or high). Code keeps the rating only when it is one of those three words, and never drops a story over it. A "high" story grounded in a high-severity filing feeds the "Nemotron disagrees with itself" escalation in `app/proving/challenge.ts` (integration branch).
+
+The trace gets one `PreMortem / premortem` event per story. A kept story's summary is the story itself plus "Watch: <metric> <op> <line>"; a dropped story's summary is "Dropped story … : <reason>".
 
 ## Console
 
@@ -58,16 +60,17 @@ Once the crash test has run, a story with no matching tripwire is marked "✕ dr
 
 ## Measured results (2026-10-27, keyless)
 
-- Tests: `test/proving_imagine.test.ts`, 8 tests, all pass. They use the scripted fake model and cover:
+- Tests: `test/proving_imagine.test.ts`, 9 tests, all pass. They use the scripted fake model and cover:
   - valid stories;
   - each drop reason;
   - the 4-story cap and duplicates;
   - backup metrics;
+  - the likelihood rating;
   - no answer;
   - a non-JSON answer;
   - a deterministic prompt;
   - one full `runDecide` run where a story reaches the compiled tripwires with `origin`, `story_id` and row dependencies.
-- Full suite: 18 files, 138 passed, 1 skipped. Typecheck is clean for the server and the console.
+- Full suite: 18 files, 139 passed, 1 skipped. Typecheck is clean for the server and the console.
 - **Replay unchanged:** I ran the 20 sample suppliers against the recorded answers, on `proving-base` and on this branch, using the recorded question "Keep, dual-source or exit this supplier?".
   - Both runs replayed 71 calls.
   - Both gave the same decision, confidence and tripwire count for all 20 suppliers.

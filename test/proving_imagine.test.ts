@@ -66,7 +66,7 @@ describe("Imagine: pre-mortem stories become candidate tripwires", () => {
     expect(req.user).toContain("- current_ratio = 0.85");
     expect(req.user).toContain("fil-1 (2026-09-01");
 
-    const events = deps.tracer.all().filter((e) => e.agent_name === "PreMortem" && e.action === "failure_story");
+    const events = deps.tracer.all().filter((e) => e.agent_name === "PreMortem" && e.action === "premortem");
     expect(events).toHaveLength(3);
     expect(events.every((e) => e.status === "success")).toBe(true);
     expect(events[0].output_summary).toContain("Watch: current_ratio < 0.7");
@@ -99,7 +99,7 @@ describe("Imagine: pre-mortem stories become candidate tripwires", () => {
     expect(dropped[5]).toMatch(/s6 dropped: direction "rises"/);
     expect(dropped[6]).toMatch(/s7 dropped: spend_share: no numeric line/);
     expect(dropped[7]).toMatch(/s8 dropped: not a story object/);
-    const events = deps.tracer.all().filter((e) => e.action === "failure_story");
+    const events = deps.tracer.all().filter((e) => e.action === "premortem");
     expect(events.filter((e) => e.status === "failed")).toHaveLength(8);
     expect(dropped.join(" ")).not.toContain("need 2-4");
   });
@@ -127,13 +127,27 @@ describe("Imagine: pre-mortem stories become candidate tripwires", () => {
     expect(none.s.limitations.some((l) => /no data for metric "backup_lead_time_weeks"/.test(l))).toBe(true);
   });
 
+  it("keeps Ultra's likelihood rating when it is low, medium or high, and never drops a story over it", async () => {
+    const { model, deps, s, draft } = setup([reply(
+      { ...story("current_ratio", "<", 0.7, ["fil-1"]), likelihood: "High" },
+      { ...story("spend_share", ">", 0.6), likelihood: "very likely" },
+      story("risk_events_12m", ">", 1),
+    )]);
+    await premortem(deps, s, draft);
+    expect(model.calls[0].system).toContain('"likelihood": "low|medium|high"');
+    expect(s.proving.stories?.map((x) => x.likelihood)).toEqual(["high", undefined, undefined]);
+    expect(s.proving.stories?.[1]).not.toHaveProperty("likelihood");
+    const first = deps.tracer.all().find((e) => e.action === "premortem");
+    expect(first?.output_summary).toContain("(likelihood high)");
+  });
+
   it("with no model answer it records why and invents nothing", async () => {
     const { deps, s, draft } = setup([]);
     const out = await premortem(deps, s, draft);
     expect(out).toEqual([]);
     expect(s.proving.stories).toBeUndefined();
     expect(s.proving.skipped).toEqual(["imagine: no model answered (scripted: none)"]);
-    expect(deps.tracer.all().some((e) => e.action === "failure_story")).toBe(false);
+    expect(deps.tracer.all().some((e) => e.action === "premortem")).toBe(false);
   });
 
   it("with a reply that is not JSON it records why and invents nothing", async () => {

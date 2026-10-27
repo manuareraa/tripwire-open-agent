@@ -132,7 +132,7 @@ export interface ChangeReport {
 
 // Proving Ground (mirrors app/types.ts; see docs/PROVING_GROUND.md).
 export interface FilingEvent { id: string; supplier_id: string; accession: string; filed: string; items: string[]; headline: string; severity: "low" | "medium" | "high"; source_url: string; parsed_by: string; text_hash: string }
-export interface FailureStory { id: string; story: string; metric: string; op: string; threshold?: number; grounded_in: string[] }
+export interface FailureStory { id: string; story: string; metric: string; op: string; threshold?: number; grounded_in: string[]; likelihood?: "low" | "medium" | "high" }
 export interface CrashTest { verdict: "verified" | "decorative" | "mis_set" | "untested"; past_value?: number; short_value?: number; past_decision?: string; short_decision?: string; why?: string; reason?: string }
 export interface TrackRecord { window: string; trouble_events: number; caught_early: number; false_alarms: number; note: string }
 export interface ProvingGround {

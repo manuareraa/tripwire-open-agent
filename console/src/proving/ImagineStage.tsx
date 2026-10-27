@@ -36,6 +36,7 @@ export function ImagineStage({ d }: { d: Decision }) {
               <li key={st.id} className={`pg-imagine-card${dropped ? " dropped" : ""}`}>
                 <div className="pg-imagine-story">{st.story}</div>
                 <div className="pg-imagine-wire">{watch(tw ?? st)}</div>
+                {st.likelihood && <div className="pg-imagine-cite muted">Ultra rates this {st.likelihood} likelihood</div>}
                 {dropped && <div className="pg-imagine-mark">✕ dropped by the crash test</div>}
                 {!dropped && verdict && VERDICT[verdict] && <div className={`pg-imagine-mark ${verdict}`}>{verdict === "verified" ? "✓ " : ""}{VERDICT[verdict]}</div>}
                 {st.grounded_in.length > 0 && <div className="pg-imagine-cite muted">based on {st.grounded_in.map((g) => metricName(g)).join(", ")}</div>}

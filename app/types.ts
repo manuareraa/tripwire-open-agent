@@ -73,6 +73,8 @@ export interface FailureStory {
   threshold?: number;
   /** FilingEvent ids or finding metrics the story leans on. */
   grounded_in: string[];
+  /** How likely Ultra judged this failure path, given today's evidence. */
+  likelihood?: "low" | "medium" | "high";
 }
 
 /** Stage 3, Crash-test: push one number just past the line, and just short of it, and re-decide. */
