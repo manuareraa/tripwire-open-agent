@@ -5,7 +5,7 @@
 // Raw downloads are cached in data/cache/ (gitignored). Nothing is estimated; a screen with no match says so.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const UA = process.env.SEC_USER_AGENT || "Tripwire hackathon demo manuareraa@gmail.com";
@@ -216,7 +216,8 @@ async function main() {
   for (const s of screen.filter((x) => x.match_count > 0)) console.log(`  ${s.name}: ${s.matches}`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run main() only when started directly. Compare file paths, not a hand-built URL: that form never matches on Windows.
+if (process.argv[1] && fileURLToPath(import.meta.url).toLowerCase() === resolve(process.argv[1]).toLowerCase()) {
   main().catch((e) => {
     console.error(e);
     process.exit(1);

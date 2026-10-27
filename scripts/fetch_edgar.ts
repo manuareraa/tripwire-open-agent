@@ -3,7 +3,7 @@
 // Raw downloads are cached in data/cache/ (gitignored). Every figure comes from a filing; nothing is estimated.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeSourceStatus } from "./fetch_sources.js";
 
@@ -240,7 +240,8 @@ async function main() {
   console.log(`wrote ${all.length} rows (fetched ${new Date().toISOString()}, User-Agent "${UA}")`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run main() only when started directly. Compare file paths, not a hand-built URL: that form never matches on Windows.
+if (process.argv[1] && fileURLToPath(import.meta.url).toLowerCase() === resolve(process.argv[1]).toLowerCase()) {
   main().catch((e) => {
     console.error(e);
     process.exit(1);

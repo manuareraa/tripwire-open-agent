@@ -13,7 +13,7 @@
 // Nothing here touches Zetaris.
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defaultTripwires, type TripwireDraft } from "../app/tripwires.js";
 import {
@@ -425,7 +425,8 @@ async function main() {
   console.log(`unscored trouble events (outside every window): ${histories.reduce((n, h) => n + troubleEvents(h).length, 0) - arms[0].totals!.trouble_events}`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run main() only when started directly. Compare file paths, not a hand-built URL: that form never matches on Windows.
+if (process.argv[1] && fileURLToPath(import.meta.url).toLowerCase() === resolve(process.argv[1]).toLowerCase()) {
   main().catch((e) => {
     console.error(e);
     process.exit(1);
