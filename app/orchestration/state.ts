@@ -4,7 +4,7 @@ import type { MetricValue } from "../metrics.js";
 import type { TripwireDraft } from "../tripwires.js";
 import type { SourceFreshness } from "../freshness.js";
 import type {
-  DataGateway, Decision, DecisionKind, Finding, MemoryClaim, MemoryStore, ModelCall, ModelClient, ModelRequest, ModelResponse, QueryResult,
+  DataGateway, Decision, DecisionKind, ProvingGround, Finding, MemoryClaim, MemoryStore, ModelCall, ModelClient, ModelRequest, ModelResponse, QueryResult,
 } from "../types.js";
 
 export interface Deps {
@@ -49,6 +49,8 @@ export interface RunState {
   rankedFor?: { question: string; n: number; order: number[] };
   risk: { level: RiskLevel; flags: string[]; thinking: boolean };
   draft?: DecisionDraft;
+  /** Proving Ground results so far (filings read, failure stories, crash tests); copied onto the decision. */
+  proving: ProvingGround;
   rounds: number;
   limitations: string[];
   escalated: boolean;

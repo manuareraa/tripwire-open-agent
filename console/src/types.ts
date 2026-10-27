@@ -25,6 +25,9 @@ export interface Tripwire {
   op: string;
   threshold?: number | null;
   depends_on?: RowRef[];
+  origin?: "decider" | "premortem" | "rules" | "backup" | "stale";
+  story_id?: string;
+  crash_test?: CrashTest;
 }
 
 export interface Backup { supplier_id: string; name?: string; healthy?: boolean; reason?: string; findings?: Finding[] }
@@ -48,6 +51,7 @@ export interface Decision {
   approved_by_reason?: string;
   sources?: SourceFreshness[];
   model_calls?: ModelCall[];
+  proving?: ProvingGround;
 }
 
 export interface ModelCall {
@@ -124,4 +128,17 @@ export interface ChangeReport {
   reopened: { old: string; new: Decision; fired: string[] }[];
   still_valid: { decision_id: string; checked?: unknown[] }[];
   work_saved: number;
+}
+
+// Proving Ground (mirrors app/types.ts; see docs/PROVING_GROUND.md).
+export interface FilingEvent { id: string; supplier_id: string; accession: string; filed: string; items: string[]; headline: string; severity: "low" | "medium" | "high"; source_url: string; parsed_by: string; text_hash: string }
+export interface FailureStory { id: string; story: string; metric: string; op: string; threshold?: number; grounded_in: string[] }
+export interface CrashTest { verdict: "verified" | "decorative" | "mis_set" | "untested"; past_value?: number; short_value?: number; past_decision?: string; short_decision?: string; why?: string; reason?: string }
+export interface TrackRecord { window: string; trouble_events: number; caught_early: number; false_alarms: number; note: string }
+export interface ProvingGround {
+  filings?: FilingEvent[];
+  stories?: FailureStory[];
+  crash?: { tested: number; verified: number; decorative: number; mis_set: number; dropped: string[] };
+  track_record?: TrackRecord;
+  skipped?: string[];
 }

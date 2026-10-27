@@ -1,11 +1,14 @@
 // Tripwires are proposed by the Decider but checked and evaluated here, in code.
 import { METRIC_NAMES, metricDef, round, type MetricValue } from "./metrics.js";
-import type { Tripwire } from "./types.js";
+import type { CrashTest, Tripwire, TripwireOrigin } from "./types.js";
 
 export interface TripwireDraft {
   metric: string;
   op: "<" | ">" | "changed";
   threshold?: number;
+  origin?: TripwireOrigin;
+  story_id?: string;
+  crash_test?: CrashTest;
 }
 
 export function isTripped(tw: Pick<Tripwire, "op" | "threshold">, value: number, previous?: number): boolean {
@@ -39,6 +42,9 @@ export function compileTripwires(decisionId: string, drafts: TripwireDraft[], me
     op: d.op,
     threshold: d.threshold === undefined ? undefined : round(d.threshold),
     depends_on: byMetric.get(d.metric)?.evidence.depends_on ?? [],
+    ...(d.origin ? { origin: d.origin } : {}),
+    ...(d.story_id ? { story_id: d.story_id } : {}),
+    ...(d.crash_test ? { crash_test: d.crash_test } : {}),
   }));
 }
 

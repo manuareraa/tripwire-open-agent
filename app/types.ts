@@ -29,6 +29,90 @@ export interface Tripwire {
   op: "<" | ">" | "changed";
   threshold?: number;
   depends_on: RowRef[];
+  /** Who proposed it (Proving Ground). Absent on older decisions. */
+  origin?: TripwireOrigin;
+  /** The pre-mortem failure story this tripwire guards against, when origin = "premortem". */
+  story_id?: string;
+  /** The crash test result: does crossing the line really change the call? */
+  crash_test?: CrashTest;
+}
+
+// ---------- Proving Ground: Nemotron attacks its own decision before a human approves it ----------
+// Read (Nemotron Parse on real 8-K filings) → Imagine (Ultra pre-mortem) → Crash-test (Lightning) → Backtest (real SEC history).
+// See docs/PROVING_GROUND.md. Each stage fills its own part of `Decision.proving`; every stage is optional and labelled when skipped.
+
+export type TripwireOrigin = "decider" | "premortem" | "rules" | "backup" | "stale";
+
+/** A material event read out of a real 8-K filing by Nemotron Parse (stage 1, Read). */
+export interface FilingEvent {
+  id: string;
+  supplier_id: string;
+  accession: string;
+  filed: string;
+  /** 8-K item numbers, e.g. ["2.06", "5.02"]. */
+  items: string[];
+  /** One plain sentence: what happened. */
+  headline: string;
+  severity: "low" | "medium" | "high";
+  /** EDGAR URL of the document that was read. */
+  source_url: string;
+  /** The model that read the document, e.g. "nvidia/nemotron-parse". */
+  parsed_by: string;
+  /** SHA-256 of the parsed text, so the reading can be checked against the document. */
+  text_hash: string;
+}
+
+/** "It is six months later and this decision went badly. What happened?" (stage 2, Imagine). */
+export interface FailureStory {
+  id: string;
+  /** Two or three plain sentences. */
+  story: string;
+  /** The early-warning number the story would move first. */
+  metric: string;
+  op: "<" | ">" | "changed";
+  threshold?: number;
+  /** FilingEvent ids or finding metrics the story leans on. */
+  grounded_in: string[];
+}
+
+/** Stage 3, Crash-test: push one number just past the line, and just short of it, and re-decide. */
+export interface CrashTest {
+  /** verified: holds short of the line, changes past it. decorative: past the line changes nothing. mis-set: already changes short of the line. */
+  verdict: "verified" | "decorative" | "mis_set" | "untested";
+  /** The value tried just past the line, and just short of it. */
+  past_value?: number;
+  short_value?: number;
+  /** What the re-decision said past the line and short of it. */
+  past_decision?: DecisionKind;
+  short_decision?: DecisionKind;
+  /** One plain sentence from the model on why the call held or changed. */
+  why?: string;
+  /** Why it was not tested (no model, no number), when verdict = "untested". */
+  reason?: string;
+}
+
+/** How this decision's tripwires did on real history (stage 4, Backtest); filled from eval/backtest_results.json. */
+export interface TrackRecord {
+  /** Quarters replayed, e.g. "2022Q1–2025Q4". */
+  window: string;
+  /** Real trouble events in the window (8-K items 1.03, 2.04, 2.06, 4.02, 5.02 …, or a covenant-level ratio break). */
+  trouble_events: number;
+  /** How many of them a tripwire fired on before (or the same quarter as) the event. */
+  caught_early: number;
+  /** Tripwire firings with no trouble in the next two quarters. */
+  false_alarms: number;
+  /** Plain one-liner for the UI. */
+  note: string;
+}
+
+export interface ProvingGround {
+  filings?: FilingEvent[];
+  stories?: FailureStory[];
+  /** Counts over this decision's candidate tripwires; dropped = candidates removed as decorative or mis-set. */
+  crash?: { tested: number; verified: number; decorative: number; mis_set: number; dropped: string[] };
+  track_record?: TrackRecord;
+  /** Stages that did not run, and why, so nothing is passed off as done. */
+  skipped?: string[];
 }
 
 export interface Finding {
@@ -65,6 +149,8 @@ export interface Decision {
   model_calls?: ModelCall[];
   supersedes?: string;
   backup?: Backup;
+  /** Proving Ground: how Nemotron read, imagined, crash-tested and backtested this decision. */
+  proving?: ProvingGround;
   escalated: boolean;
   escalation_reasons?: string[];
   risk?: "low" | "medium" | "high";

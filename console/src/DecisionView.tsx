@@ -7,6 +7,7 @@ import { Ic, VICON } from "./icons";
 import { GROUP, LABEL, METRIC, METRIC_TIP, OP, TIP, VERB } from "./labels";
 import { decName, initials, rowName, rowTip, supName, tplName } from "./names";
 import { ModelCalls, Sources } from "./ModelCalls";
+import { ProvingGround } from "./proving/ProvingGround";
 import { readReasons, writeText } from "./plain";
 import type { Decision, Tripwire, WriteResult } from "./types";
 
@@ -151,6 +152,8 @@ export function DecisionView({ d, write }: { d: Decision; write?: WriteResult })
       <div className="sec"><div className="sec-h"><h3>Tripwires: reopen if…</h3><Info k="tripwire" /><span className="line" /></div>
         <div className="gauges">{(d.tripwires || []).length ? (d.tripwires || []).map((t, i) => <Gauge key={i} t={t} d={d} />) : <Empty>No tripwires.</Empty>}</div>
       </div>
+
+      <ProvingGround d={d} />
 
       {(d.sources || []).length > 0 && <Sources sources={d.sources!} />}
       {(d.model_calls || []).length > 0 && <ModelCalls calls={d.model_calls!} />}

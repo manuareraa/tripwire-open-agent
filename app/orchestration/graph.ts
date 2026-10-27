@@ -9,6 +9,10 @@ import { dropStale, recallPrior, record } from "../agents/memory_keeper.js";
 import { assess, finalCheck } from "../agents/risk.js";
 import { decide, rulesDecision } from "../agents/decider.js";
 import { pickBackup } from "../agents/backup.js";
+import { readFilings } from "../proving/filings.js";
+import { premortem } from "../proving/premortem.js";
+import { crashTest } from "../proving/crashtest.js";
+import { trackRecord } from "../proving/backtest.js";
 import type { DecisionDraft, Deps, RunState } from "./state.js";
 import type { Decision, Evidence } from "../types.js";
 
@@ -20,6 +24,7 @@ export function newState(run_id: string, subject_id: string, question: string, s
     plan: [], results: {}, freshness: [], modelCalls: [], metrics: [], findings: [], summary: "",
     priorClaims: [], staleClaims: [],
     risk: { level: "low", flags: [], thinking: false },
+    proving: {},
     rounds: 0, limitations: [], escalated: false, escalationReasons: [],
   };
 }
@@ -35,6 +40,8 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
 
   s.plan = await plan(deps, s);
   await gather(deps, s);
+  // Proving Ground 1, Read: real 8-K filings, read by Nemotron Parse, join the evidence before anything is checked.
+  await readFilings(deps, s);
   await verifyEvidence(deps, s);
   // Critic → Planner: a source past its line is re-read once before anything is decided on it.
   if (reviewFreshness(deps, s).length) {
@@ -84,6 +91,16 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
   const backup = draft.decision === "keep" ? undefined : await pickBackup(deps, s);
   const stale = holdForStale(deps, s, draft);
 
+  // Proving Ground 2-3: Ultra imagines how this call fails (pre-mortem), then Lightning crash-tests every candidate
+  // tripwire, so only lines that really change the call are kept.
+  const candidates = [
+    ...draft.tripwires.map((t) => ({ origin: draft!.rules ? "rules" as const : "decider" as const, ...t })),
+    ...(await premortem(deps, s, draft)),
+  ];
+  const proven = await crashTest(deps, s, draft, candidates);
+  const track = trackRecord(subject_id);
+  if (track) s.proving.track_record = track;
+
   await finalCheck(deps, s, draft);
 
   const evidence = uniqueEvidence([...s.findings, ...(backup?.backup.findings ?? [])].map((f) => f.evidence));
@@ -95,12 +112,13 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     status: "proposed",
     findings: s.findings,
     evidence,
-    tripwires: compileTripwires(s.decision_id, [...draft.tripwires, ...(backup?.tripwires ?? []), ...stale.tripwires], [...s.metrics, ...(backup?.metrics ?? []), ...stale.metrics]),
+    tripwires: compileTripwires(s.decision_id, [...proven, ...(backup?.tripwires ?? []).map((t) => ({ origin: "backup" as const, ...t })), ...stale.tripwires.map((t) => ({ origin: "stale" as const, ...t }))], [...s.metrics, ...(backup?.metrics ?? []), ...stale.metrics]),
     limitations: [...new Set([...s.limitations, ...draft.limitations])],
     sources: s.freshness,
     model_calls: s.modelCalls,
     supersedes: supersedes?.decision_id,
     ...(backup ? { backup: backup.backup } : {}),
+    proving: s.proving,
     escalated: s.escalated,
     escalation_reasons: s.escalationReasons,
     risk: s.risk.level,

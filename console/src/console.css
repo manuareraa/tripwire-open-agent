@@ -514,3 +514,11 @@ body { padding-bottom: var(--ab-h, 0px); }
 .src-f.stale { border-left-color: var(--dual); } .src-f.stale .st { color: var(--dual); }
 .src-f.missing { border-left-color: var(--exit); } .src-f.missing .st { color: var(--exit); }
 .src-f small { color: var(--muted); font-size: 11.5px; }
+
+/* Proving Ground: four stages in one strip. Stage files add their own rules below this block, prefixed .pg-<stage>. */
+.pg-stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.pg-stage { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; height: 100%; }
+.pg-stage.skipped { opacity: .55; }
+.pg-step { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.pg-title { font-weight: 600; margin: 4px 0 8px; }
+.pg-note { font-size: 12.5px; }
