@@ -72,7 +72,7 @@ describe("record and replay of live model calls", () => {
     for (const id of subjects) liveDecisions.push((await runDecide(liveDeps, id, "Review")).decision);
     const recs = readRecordings(file);
     expect(recs).toHaveLength(live.calls);
-    expect(new Set(recs.map((r) => r.agent_name))).toEqual(new Set(["Planner", "Analyst", "Decider", "RiskOfficer", "PreMortem"]));
+    expect(new Set(recs.map((r) => r.agent_name))).toEqual(new Set(["Planner", "Analyst", "Decider", "RiskOfficer", "PreMortem", "CrashTester"]));
 
     const replay = new ReplayModelClient(file);
     const tracer = new Tracer();

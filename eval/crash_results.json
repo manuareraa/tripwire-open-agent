@@ -1,0 +1,726 @@
+{
+  "generated_at": "2026-10-27T09:48:25.551Z",
+  "suppliers": 20,
+  "note": "Measured by scripts/eval_crash.ts on the bundled sample data (20 suppliers). survived_share = verified / tested.",
+  "arms": {
+    "rules": {
+      "label": "Control: the rule-based policy re-decides (not a model)",
+      "all": {
+        "group": "all",
+        "proposed": 80,
+        "tested": 80,
+        "verified_first_try": 41,
+        "decorative": 33,
+        "mis_set_dropped": 0,
+        "untested": 0,
+        "already_true": 0,
+        "mis_set_reset_verified": 6,
+        "survived_share": 0.588
+      },
+      "by_origin": [
+        {
+          "group": "rules",
+          "proposed": 80,
+          "tested": 80,
+          "verified_first_try": 41,
+          "decorative": 33,
+          "mis_set_dropped": 0,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 6,
+          "survived_share": 0.588
+        }
+      ],
+      "by_decision": [
+        {
+          "group": "dual_source",
+          "proposed": 48,
+          "tested": 48,
+          "verified_first_try": 25,
+          "decorative": 21,
+          "mis_set_dropped": 0,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 2,
+          "survived_share": 0.563
+        },
+        {
+          "group": "keep",
+          "proposed": 20,
+          "tested": 20,
+          "verified_first_try": 16,
+          "decorative": 0,
+          "mis_set_dropped": 0,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 4,
+          "survived_share": 1
+        },
+        {
+          "group": "exit",
+          "proposed": 12,
+          "tested": 12,
+          "verified_first_try": 0,
+          "decorative": 12,
+          "mis_set_dropped": 0,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 0,
+          "survived_share": 0
+        }
+      ],
+      "rows": [
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "decorative",
+          "summary": "current ratio 0.95 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "decorative",
+          "summary": "risk events 12m 1 (past 0): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.5",
+          "verdict": "decorative",
+          "summary": "spend share 0.51 (past 0.5): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): dual_source instead of keep; 1.05 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.36 (past 0.35): dual_source instead of keep; 0.34 (short of it): dual_source instead of keep → mis-set | reset spend share > 0.35 → 0.3: spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): still keep → verified",
+          "reset": 0.35
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "decorative",
+          "summary": "spend share 0.31 (past 0.3): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "decorative",
+          "summary": "current ratio 0.95 (past 1): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "decorative",
+          "summary": "risk events 12m 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "decorative",
+          "summary": "sanctions matches 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "spend share > 0.25",
+          "verdict": "decorative",
+          "summary": "spend share 0.26 (past 0.25): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.4",
+          "verdict": "decorative",
+          "summary": "spend share 0.41 (past 0.4): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "decorative",
+          "summary": "current ratio 0.95 (past 1): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "decorative",
+          "summary": "sanctions matches 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "spend share > 0.45",
+          "verdict": "decorative",
+          "summary": "spend share 0.46 (past 0.45): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.25",
+          "verdict": "decorative",
+          "summary": "spend share 0.26 (past 0.25): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): dual_source instead of keep; 1.05 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.55",
+          "verdict": "decorative",
+          "summary": "spend share 0.56 (past 0.55): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): dual_source instead of keep; 1.05 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.36 (past 0.35): dual_source instead of keep; 0.34 (short of it): dual_source instead of keep → mis-set | reset spend share > 0.35 → 0.3: spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): still keep → verified",
+          "reset": 0.35
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "decorative",
+          "summary": "spend share 0.31 (past 0.3): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 0.95",
+          "verdict": "verified",
+          "summary": "current ratio 0.809 (past 0.859): exit instead of dual_source; 0.909 (short of it): exit instead of dual_source → mis-set | reset current ratio < 0.859 → 0.95: current ratio 0.9 (past 0.95): exit instead of dual_source; 1 (short of it): still dual_source → verified",
+          "reset": 0.859
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.2",
+          "verdict": "decorative",
+          "summary": "spend share 0.21 (past 0.2): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.883 (past 0.933): exit instead of dual_source; 0.983 (short of it): exit instead of dual_source → mis-set | reset current ratio < 0.933 → 1: current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified",
+          "reset": 0.933
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.4",
+          "verdict": "decorative",
+          "summary": "spend share 0.41 (past 0.4): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.859 (past 0.909): dual_source instead of keep; 0.959 (short of it): dual_source instead of keep → mis-set | reset current ratio < 0.909 → 1: current ratio 0.95 (past 1): dual_source instead of keep; 1.05 (short of it): still keep → verified",
+          "reset": 0.909
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.36 (past 0.35): dual_source instead of keep; 0.34 (short of it): dual_source instead of keep → mis-set | reset spend share > 0.35 → 0.3: spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): still keep → verified",
+          "reset": 0.35
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 0.819",
+          "verdict": "decorative",
+          "summary": "current ratio 0.769 (past 0.819): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.4",
+          "verdict": "decorative",
+          "summary": "spend share 0.41 (past 0.4): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.25",
+          "verdict": "decorative",
+          "summary": "spend share 0.26 (past 0.25): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): dual_source instead of keep; 1.05 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "rules",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "current ratio < 0.834",
+          "verdict": "decorative",
+          "summary": "current ratio 0.784 (past 0.834): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "decorative",
+          "summary": "risk events 12m 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "decorative",
+          "summary": "sanctions matches 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "rules",
+          "tripwire": "spend share > 0.72",
+          "verdict": "decorative",
+          "summary": "spend share 0.73 (past 0.72): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.18",
+          "verdict": "decorative",
+          "summary": "spend share 0.19 (past 0.18): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "decorative",
+          "summary": "risk events 12m 2 (past 1): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.2",
+          "verdict": "decorative",
+          "summary": "spend share 0.21 (past 0.2): still dual_source → decorative"
+        }
+      ]
+    },
+    "model": {
+      "label": "Nemotron Lightning re-decides",
+      "status": "not run yet: no recorded live CrashTester answers"
+    }
+  }
+}
