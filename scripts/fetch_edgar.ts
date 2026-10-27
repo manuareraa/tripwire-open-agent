@@ -4,10 +4,11 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { writeSourceStatus } from "./fetch_sources.js";
 
 const UA = process.env.SEC_USER_AGENT || "Tripwire hackathon demo manuareraa@gmail.com";
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const CACHE = join(ROOT, "data/cache");
 const OUT = join(ROOT, "data/sample");
 const REFRESH = process.argv.includes("--refresh");

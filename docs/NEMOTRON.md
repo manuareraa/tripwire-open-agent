@@ -9,7 +9,7 @@ comes from a recorded live run that anyone can replay without a key.
 |---|---|---|---|
 | Plan the queries, summarise the findings | Nemotron 3.5 Lightning 30B (`nvidia/nemotron-3.5-lightning-30b-a3b`) | `app/agents/planner.ts`, `app/agents/analyst.ts` | Nightshift (build.nvidia.com as a labelled backup) |
 | Decide, with a thinking budget set by risk | Nemotron 3 Ultra 550B (`nvidia/nemotron-3-ultra-550b-a55b`) | `app/agents/decider.ts` | Nightshift (same backup) |
-| Final safety check on the recommendation | Nemotron 3.5 Content Safety (`nvidia/nemotron-3.5-content-safety`) | `app/agents/risk.ts` | Nightshift (same backup) |
+| Final safety check on the recommendation | Nemotron 3.5 Content Safety (`nvidia/nemotron-3.5-content-safety`) | `app/agents/risk.ts` | build.nvidia.com directly (Nightshift 1.2.7 does not serve it; see below) |
 | Put the findings that answer the buyer's question first | Nemotron 3.5 Rerank 8B (`nvidia/nemotron-3.5-rerank-8b`) | `app/adapters/rerank.ts`, `app/agents/analyst.ts` | build.nvidia.com directly (Nightshift serves chat models only) |
 
 Every call writes the model that actually answered, the provider and the latency into the decision's trace. If a
@@ -93,8 +93,28 @@ every answer came from the three Nemotron models named above. What it shows:
 Limits: 23 cases is a small set, and most checks pass for most set-ups, so the differences are a handful of cases.
 The rules-only row passes by construction (the expected labels were written from the same policy); it is there as the
 floor, not as a competitor. The one rule-based case in the shipped graph was a 60-second timeout, not a bad answer;
-the direct client's timeout is 60 s, Nightshift's 180 s. Once the run is repeated through Nightshift, the report will
-name Nightshift as the provider and carry its receipts ([NIGHTSHIFT.md](NIGHTSHIFT.md) §7).
+the direct client's timeout is 60 s, Nightshift's 180 s.
+
+**The same comparison through Nightshift** ([eval/nightshift/RESULTS.md](../eval/nightshift/RESULTS.md)), recorded on
+2026-10-27 with every Lightning and Ultra call answered through Meterless Nightshift and carrying its receipt:
+
+| Set-up | Right label | Numbers grounded | Tripwires valid | Fell back to rules | Model calls (fallbacks) | Output tokens | Model time |
+|---|---|---|---|---|---|---|---|
+| One Ultra call, no agents | 7/8 | 17/23 | 21/23 | 0/23 | 23 (0) | 5,541 | 116 s |
+| Agent graph, Lightning only | 7/8 | 23/23 | 23/23 | 3/23 | 98 (26) | 49,985 | 672 s |
+| **Agent graph as shipped** | 6/8 | **23/23** | **23/23** | 1/23 | 101 (23) | 10,491 | 231 s |
+| Agent graph, thinking always on | 7/8 | 23/23 | 23/23 | 0/23 | 99 (23) | 10,138 | 242 s |
+
+The pattern from the direct run holds where it matters most: Ultra on its own wrote numbers that are not in the data
+on 6 of 23 cases and 2 invalid tripwires, and the graph wrote none. The label scores are lower for every model arm.
+SUP-08 (expected keep) came back dual_source everywhere, and the shipped graph also chose dual_source for SUP-17. The
+same Ultra prompts cost about 1,350 input tokens through Nightshift against 554 directly, so Nightshift adds its own
+context to each call; we think that is what moves the answers, but have not proved it. Two more things to know:
+
+- Nightshift 1.2.7 does not serve Content Safety (`nvidia/nemotron-3.5-content-safety` returns 404). In a Nightshift
+  run the guard step records "unknown" and the decision goes ahead unchanged; that is the 23 fallbacks in each graph
+  row. The guard's own numbers above come from build.nvidia.com.
+- The 3 extra fallbacks in the Lightning-only row are HTTP 502 errors from Nightshift on the deciding step.
 
 ## Run it yourself
 

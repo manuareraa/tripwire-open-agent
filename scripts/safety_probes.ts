@@ -10,8 +10,9 @@
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
 Object.assign(process.env, { LOG_DIR: join(mkdtempSync(join(tmpdir(), "tripwire-safety-")), "logs"), TRACE_STDOUT: "false" });
 
 const { config } = await import("../app/config.js");

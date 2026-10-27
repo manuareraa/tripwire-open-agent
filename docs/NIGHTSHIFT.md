@@ -99,6 +99,9 @@ recorded 84 calls to data/recordings/nightshift.jsonl in 412 s
 - **Fallbacks.** If a step says "fell back to rules", the script prints the first few reasons. A common one is a model
   Nightshift cannot serve, such as the safety model. You can choose another model for that step with
   `METERLESS_GUARD_MODEL` (or `METERLESS_REASONING_MODEL`, `METERLESS_SMALL_MODEL`) and record again.
+  Nightshift 1.2.7 does not serve the safety model at all: every guard call returns 404 and falls back to "unknown",
+  which leaves the decision unchanged. That is expected, and the recording is still usable. The Windows run on
+  2026-10-27 had 23 such fallbacks out of 107 calls and no others.
 - **No secrets.** Search the file for your token and for `nvapi-` before you share it. Neither should appear.
 
 ## 6. Use the recording
