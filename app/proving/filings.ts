@@ -44,7 +44,7 @@ export async function readFilings(deps: Deps, s: RunState, index = loadFilingsIn
   if (!index || events.length === 0) {
     const why = !index ? "no cached 8-K readings (run scripts/parse_filings.ts)" : `no 8-K filings read for ${s.subject_id}`;
     (s.proving.skipped ??= []).push(`read: ${why}`);
-    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "filings_read", event: "message", status: "partial", output_summary: why });
+    deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "read_filings", event: "message", status: "partial", output_summary: why });
     return;
   }
   s.proving.filings = [...events].sort(bySeverity);
@@ -53,7 +53,7 @@ export async function readFilings(deps: Deps, s: RunState, index = loadFilingsIn
   deps.tracer.emit({
     decision_id: s.decision_id,
     agent_name: AGENT,
-    action: "filings_read",
+    action: "read_filings",
     event: "sponsor_call",
     sponsor: "nvidia",
     status: "success",
