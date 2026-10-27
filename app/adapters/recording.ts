@@ -63,17 +63,24 @@ export class ReplayModelClient implements ModelClient {
   private byKey = new Map<string, Recording>();
 
   constructor(readonly file: string) {
-    // The newest answer for a prompt wins, so a re-recorded run replaces an older one.
-    for (const r of readRecordings(file)) if (!r.response.fallback) this.byKey.set(r.key, r);
-    this.enabled = this.byKey.size > 0;
+    // The newest record for a prompt wins, so a re-recorded run replaces an older one. That includes a newest call
+    // that failed: replay then falls back too, rather than mixing in an older run's answer and its different chain.
+    for (const r of readRecordings(file)) this.byKey.set(r.key, r);
+    this.answered = [...this.byKey.values()].filter((r) => !r.response.fallback).length;
+    this.enabled = this.answered > 0;
   }
 
+  private readonly answered: number;
+
   get size(): number {
-    return this.byKey.size;
+    return this.answered;
   }
 
   async complete(req: ModelRequest): Promise<ModelResponse> {
     const rec = this.byKey.get(recordingKey(req));
+    if (rec?.response.fallback) {
+      return { ...rec.response, text: "", error: `replay: this prompt failed when recorded (${rec.response.error ?? "fallback"})` };
+    }
     if (!rec) {
       return {
         text: "", model: req.tier, thinking: false, tokens_in: 0, tokens_out: 0, latency_ms: 0, fallback: true,

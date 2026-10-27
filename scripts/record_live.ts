@@ -12,6 +12,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+// Remove a temp folder; on Windows an antivirus or indexer lock must not fail a run whose results are saved.
+const cleanup = (dir: string) => { try { rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch { console.warn(`could not remove ${dir}; delete it by hand`); } };
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const arg = (name: string) => {
   const i = process.argv.indexOf(name);
@@ -36,7 +38,7 @@ console.log(`model: ${rt.modes.model}`);
 for (const n of rt.modes.notes) console.log(`  note: ${n}`);
 if (!rt.modes.model.startsWith("nightshift")) {
   console.error("\nNightshift is not answering, so nothing was recorded. Check METERLESS_BASE_URL and METERLESS_RUNTIME_TOKEN (docs/NIGHTSHIFT.md).");
-  rmSync(work, { recursive: true, force: true });
+  cleanup(work);
   process.exit(1);
 }
 
@@ -74,4 +76,4 @@ console.log(`  with a Nightshift receipt: ${answered.filter((r) => r.response.re
 console.log(`  tokens in/out: ${answered.reduce((n, r) => n + r.response.tokens_in, 0)} / ${answered.reduce((n, r) => n + r.response.tokens_out, 0)}`);
 for (const [m, n] of served) console.log(`  ${m}: ${n}`);
 for (const r of recs.filter((x) => x.response.fallback).slice(0, 5)) console.log(`  fallback ${r.agent_name}: ${r.response.error}`);
-rmSync(work, { recursive: true, force: true });
+cleanup(work);

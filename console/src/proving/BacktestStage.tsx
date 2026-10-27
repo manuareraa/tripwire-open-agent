@@ -12,12 +12,12 @@ export function BacktestStage({ d }: { d: Decision }) {
   return (
     <div className={`pg-stage pg-backtest${t ? "" : " skipped"}`}>
       <div className="pg-step">4 · Backtest</div>
-      <div className="pg-title">How these tripwires did on real SEC history</div>
+      <div className="pg-title">How tripwires like these did on real SEC history</div>
       {!t && <div className="pg-note muted">Not run for this decision.</div>}
       {t && (
         <>
           <div className="pg-backtest-headline">
-            On real history {years(t.window)}: caught <b>{t.caught_early}</b> of <b>{t.trouble_events}</b> trouble event{t.trouble_events === 1 ? "" : "s"} early, <b>{t.false_alarms}</b> false alarm{t.false_alarms === 1 ? "" : "s"}
+            On real history {years(t.window)}: caught <b>{t.caught_early}</b> of <b>{t.trouble_events}</b> trouble event{t.trouble_events === 1 ? "" : "s"} before they were filed, <b>{t.false_alarms}</b> false alarm{t.false_alarms === 1 ? "" : "s"}
           </div>
           <div className="pg-note muted">This supplier only. {t.note}</div>
         </>

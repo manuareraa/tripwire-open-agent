@@ -94,14 +94,16 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
 
   // Proving Ground 2-3: Ultra imagines how this call fails (pre-mortem), then Lightning crash-tests every candidate
   // tripwire, so only lines that really change the call are kept.
-  const candidates = [
-    ...draft.tripwires.map((t) => ({ origin: draft!.rules ? "rules" as const : "decider" as const, ...t })),
-    ...(await premortem(deps, s, draft, backup?.metrics)),
-  ];
-  const proven = await crashTest(deps, s, draft, candidates);
+  // A failure inside a Proving Ground stage is recorded as skipped; it never takes the decision down with it.
+  const skip = (stage: string, e: unknown) => (s.proving.skipped ??= []).push(`${stage}: failed (${(e as Error).message})`);
+  const own = draft.tripwires.map((t) => ({ origin: draft!.rules ? "rules" as const : "decider" as const, ...t }));
+  const stories = await premortem(deps, s, draft, backup?.metrics).catch((e) => (skip("pre-mortem", e), []));
+  const candidates = [...own, ...stories];
+  const proven = await crashTest(deps, s, draft, candidates).catch((e) => (skip("crash-test", e), candidates));
   // If its own findings argue against the call, Nemotron escalates rather than presenting a confident card.
-  selfChallenge(deps, s, draft, proven);
-  const track = trackRecord(subject_id);
+  try { selfChallenge(deps, s, draft, proven); } catch (e) { skip("self-challenge", e); }
+  let track: ReturnType<typeof trackRecord> | undefined;
+  try { track = trackRecord(subject_id); } catch (e) { skip("backtest", e); }
   if (track) s.proving.track_record = track;
 
   await finalCheck(deps, s, draft);

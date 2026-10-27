@@ -307,7 +307,8 @@ app.get("/proving/timeline/:subject_id", (c) => {
   const file = "eval/backtest_timeline.json";
   if (!existsSync(file)) return c.json({ error: "not_found", detail: "No backtest timeline yet. Run scripts/backtest.ts." }, 404);
   const all = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
-  const t = all[c.req.param("subject_id")];
+  const id = c.req.param("subject_id");
+  const t = Object.hasOwn(all, id) ? all[id] : undefined;
   return t ? c.json(t) : c.json({ error: "not_found", detail: "No backtest timeline for this supplier." }, 404);
 });
 

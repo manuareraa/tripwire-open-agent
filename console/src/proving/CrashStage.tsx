@@ -3,19 +3,21 @@
 // their own result; dropped ones are listed in proving.crash.dropped as "<tripwire> (<verdict>): <why>".
 import type { CrashTest, Decision, Tripwire } from "../types";
 
-const LABEL: Record<CrashTest["verdict"], string> = { verified: "verified", decorative: "decorative", mis_set: "mis-set", untested: "untested" };
-const TIP: Record<CrashTest["verdict"], string> = {
+type Verdict = CrashTest["verdict"] | "already_true";
+const LABEL: Record<Verdict, string> = { verified: "verified", decorative: "decorative", mis_set: "mis-set", untested: "untested", already_true: "already true" };
+const TIP: Record<Verdict, string> = {
   verified: "Holds just short of the line and changes just past it: this line really guards the call.",
   decorative: "Crossing the line does not change the call, so it would reopen the decision for nothing.",
   mis_set: "The call already changes before the line is reached: the line is set too far out.",
   untested: "Could not be crash-tested; kept as proposed.",
+  already_true: "The line is already crossed today, so it could never fire: dropped.",
 };
 const ORIGIN: Record<string, string> = { decider: "Decider", rules: "rules", premortem: "pre-mortem" };
 
 const words = (m: string) => m.replace(/_/g, " ");
 const what = (d: string | undefined, orig: string) => (d === undefined ? "" : d === orig ? `still ${words(orig)}` : `${words(d)}`);
 
-interface Row { key: string; tripwire: string; verdict: CrashTest["verdict"]; origin?: string; detail?: string; why?: string; kept: boolean }
+interface Row { key: string; tripwire: string; verdict: Verdict; origin?: string; detail?: string; why?: string; kept: boolean }
 
 function rows(d: Decision): Row[] {
   const out: Row[] = [];
@@ -29,7 +31,8 @@ function rows(d: Decision): Row[] {
   (d.proving?.crash?.dropped ?? []).forEach((s, i) => {
     const m = /^(.*?) \(([^)]*)\)(?:: (.*))?$/.exec(s);
     const v = m?.[2] === "decorative" ? "decorative" : m?.[2] === "mis-set" ? "mis_set" : undefined;
-    out.push({ key: `d${i}`, tripwire: m?.[1] ?? s, verdict: v ?? "untested", why: v ? m?.[3] : m?.[2], kept: false });
+    const already = !v && /^already true today/.test(m?.[2] ?? "");
+    out.push({ key: `d${i}`, tripwire: m?.[1] ?? s, verdict: v ?? (already ? "already_true" : "untested"), why: v ? m?.[3] : m?.[2], kept: false });
   });
   return out;
 }

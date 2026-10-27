@@ -153,7 +153,7 @@ export async function runCrash(deps: Deps, s: RunState, draft: DecisionDraft, ca
         emit(`reset ${describe(c)} → ${moved}: ${summary(r, again.test)}`, again.verdict === "verified" ? "success" : "needs_revision", { tripwire: describe(r), metric: c.metric, origin: c.origin, reset_from: c.threshold, ...again.test });
         if (again.verdict === "verified") {
           const why = `Line moved from ${c.threshold} to ${moved}: the old line was past the point where the call already changes. ${again.test.why ?? ""}`.trim();
-          results.push({ c: { ...r, crash_test: { ...again.test, why } }, test: again.test, keep: true });
+          results.push({ c: { ...r, crash_test: { ...again.test, why, reset_from: c.threshold } }, test: again.test, keep: true });
           continue;
         }
       }

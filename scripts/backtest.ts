@@ -11,7 +11,7 @@
 //   npx tsx scripts/backtest.ts --replay [--max-cases N]   model arms from data/backtest/recordings.jsonl, no keys
 // Raw downloads go to data/backtest/raw/ (gitignored); the derived history (data/backtest/history.json) is committed.
 // Nothing here touches Zetaris.
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -21,6 +21,8 @@ import {
   type ArmResult, type BacktestResults, type CaseTripwires, type Filing8K, type HeldValues, type Period, type SupplierHistory,
 } from "../app/proving/backtest.js";
 
+// Remove a temp folder; on Windows an antivirus or indexer lock must not fail a run whose results are saved.
+const cleanup = (dir: string) => { try { rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch { console.warn(`could not remove ${dir}; delete it by hand`); } };
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIR = join(ROOT, "data/backtest");
 const RAW = join(DIR, "raw");
@@ -153,7 +155,7 @@ async function filingsFor(cik: number, cik10: string): Promise<Filing8K[]> {
 }
 
 function readCsv(path: string): Record<string, string>[] {
-  const [head, ...lines] = readFileSync(path, "utf8").trim().split("\n");
+  const [head, ...lines] = readFileSync(path, "utf8").trim().split(/\r?\n/);
   const cols = head.split(",");
   return lines.map((l) => {
     const cells = l.match(/("([^"]|"")*"|[^,]*)(,|$)/g)!.map((c) => c.replace(/,$/, "").replace(/^"|"$/g, "").replace(/""/g, '"'));
@@ -218,9 +220,9 @@ function ruleCases(hist: HistoryFile, cases: { supplier_id: string; as_of: strin
 
 // ---------- Model arms (Nightshift on the Windows PC, or replay) ----------
 
-/** Rough per-decision model calls: 4 from the existing pipeline (measured in data/recordings/nightshift.jsonl), 1 Ultra pre-mortem, ~8 Lightning crash tests. */
-const CALLS_PER_CASE = { pipeline: 4, premortem: 1, crash: 8 };
-const MEAN_LATENCY_S = 2.5; // mean latency_ms of the 107 recorded Nightshift calls; Ultra calls run longer
+/** Rough per-decision model calls: ~5 from the existing pipeline (with its retries), 1 Ultra pre-mortem, 12–15 Lightning crash tests (docs/proving/CRASH.md). */
+const CALLS_PER_CASE = { pipeline: 5, premortem: 1, crash: 14 };
+const MEAN_LATENCY_S = 3; // the 107 recorded Nightshift calls average 2.5 s; Ultra pre-mortems with thinking on run far longer
 
 function budget(n: number) {
   const per = CALLS_PER_CASE.pipeline + CALLS_PER_CASE.premortem + CALLS_PER_CASE.crash;
@@ -265,16 +267,17 @@ async function modelCases(hist: HistoryFile, cases: { supplier_id: string; as_of
   const rt = await buildRuntime();
   console.log(`model: ${rt.modes.model}`);
   if (mode === "record" && !rt.modes.model.startsWith("nightshift")) {
-    rmSync(work, { recursive: true, force: true });
+    cleanup(work);
     throw new Error("Nightshift is not answering, so nothing was recorded (docs/NIGHTSHIFT.md).");
   }
   if (mode === "replay" && rt.modes.model !== "replay") {
-    rmSync(work, { recursive: true, force: true });
+    cleanup(work);
     throw new Error(`no recordings to replay in ${RECORDINGS}`);
   }
   const decider: CaseTripwires[] = [];
   const crashed: CaseTripwires[] = [];
   let modelAnswered = 0;
+  const skippedCases: string[] = [];
   const started = Date.now();
   for (const [i, c] of cases.entries()) {
     const dir = join(work, `case-${i}`);
@@ -284,14 +287,21 @@ async function modelCases(hist: HistoryFile, cases: { supplier_id: string; as_of
     const gateway = new SampleDataGateway({ sampleDir: join(dir, "sample"), ledgerDir: join(dir, "ledger") });
     const deps = { gateway, model: rt.model, memory: new LocalMemory(join(dir, "memory.json")), tracer: new Tracer() };
     const { decision } = await runDecide(deps, c.supplier_id, "Keep, dual-source or exit this supplier?");
-    if (decision.model_calls?.some((m) => !m.fallback)) modelAnswered++;
+    // A case joins a model arm only if that arm's own model call was answered; a rule fallback is never scored as a model's.
+    const answered = (agent: string) => (decision.model_calls ?? []).some((m) => m.agent === agent && !m.fallback);
+    const deciderOk = answered("Decider"), premortemOk = answered("PreMortem");
+    if (deciderOk) modelAnswered++;
+    else skippedCases.push(`${c.supplier_id} as of ${c.as_of}: Decider not answered`);
+    if (!premortemOk) skippedCases.push(`${c.supplier_id} as of ${c.as_of}: pre-mortem not answered`);
     const draft = (t: { metric: string; op: TripwireDraft["op"]; threshold?: number }): TripwireDraft => ({ metric: t.metric, op: t.op, threshold: t.threshold });
-    decider.push({ ...c, tripwires: decision.tripwires.filter((t) => t.origin === "decider").map(draft) });
-    crashed.push({ ...c, tripwires: decision.tripwires.filter((t) => t.origin === "premortem" && t.crash_test?.verdict === "verified").map(draft) });
-    console.log(`${c.supplier_id} as of ${c.as_of}: ${decision.decision}; decider tripwires ${decider.at(-1)!.tripwires.length}, verified pre-mortem tripwires ${crashed.at(-1)!.tripwires.length}`);
+    if (deciderOk) decider.push({ ...c, tripwires: decision.tripwires.filter((t) => t.origin === "decider").map(draft) });
+    if (premortemOk) crashed.push({ ...c, tripwires: decision.tripwires.filter((t) => t.origin === "premortem" && t.crash_test?.verdict === "verified").map(draft) });
+    const fails = (decision.model_calls ?? []).filter((m) => m.fallback).length;
+    console.log(`${c.supplier_id} as of ${c.as_of}: ${decision.decision}; decider ${deciderOk ? `${decider.at(-1)!.tripwires.length} tripwires` : "not answered"}, pre-mortem ${premortemOk ? `${crashed.at(-1)!.tripwires.length} verified tripwires` : "not answered"}; ${fails} failed model calls`);
   }
   delete process.env.SAMPLE_CLOCK;
-  rmSync(work, { recursive: true, force: true });
+  cleanup(work);
+  if (skippedCases.length) console.log(`left out of a model arm (${skippedCases.length}):\n  ${skippedCases.join("\n  ")}`);
   return { decider, crashed, modelAnswered, minutes: (Date.now() - started) / 60_000, mode: rt.modes.model };
 }
 
@@ -304,6 +314,7 @@ interface BacktestTimeline {
   arm: string;
   as_of: string;
   quarters: string[];
+  watched: number;
   lines: { metric: string; op: "<" | ">"; threshold: number; values: (number | null)[]; fired_at?: string }[];
   trouble: { quarter: string; label: string; items?: string[]; source_url?: string }[];
 }
@@ -340,14 +351,14 @@ function timelines(arm: ArmResult, armName: string, hist: HistoryFile, held: Rec
       lines.push({ metric: tw.metric, op: tw.op, threshold: tw.threshold, values, ...(c.firing?.metric === tw.metric ? { fired_at: c.firing.quarter } : {}) });
     }
     const trouble: BacktestTimeline["trouble"] = troubleEvents(h)
-      .filter((e) => qIndex(e.date) >= qs[0] && qIndex(e.date) <= qs.at(-1)!)
+      .filter((e) => e.date > c.as_of && qIndex(e.date) <= qs.at(-1)!)
       .map((e) => {
         if (e.kind === "covenant") return { quarter: e.quarter, label: e.detail.replace(/^covenant-level break/, "Covenant-level break") };
         const f = h.filings.find((x) => x.url === e.source)!;
         const items = f.items.filter((i) => ITEM_WORDS[i] && (i !== OFFICER_ITEM || f.ceo_cfo_departure));
         return { quarter: e.quarter, label: `${items.map((i) => ITEM_WORDS[i]).join("; ")} (8-K ${items.join(", ")})`, items, source_url: e.source };
       });
-    out[h.supplier_id] = { subject_id: h.supplier_id, arm: armName, as_of: qLabel(q0), quarters: qs.map(qLabel), lines, trouble };
+    out[h.supplier_id] = { subject_id: h.supplier_id, arm: armName, as_of: qLabel(q0), quarters: qs.map(qLabel), watched: WINDOW_QUARTERS + 1, lines, trouble };
   }
   return out;
 }
@@ -361,7 +372,7 @@ function markdown(r: BacktestResults & { fetched_on: string; cases_total: number
     `Written by \`scripts/backtest.ts\` from SEC EDGAR data fetched ${r.fetched_on}. Rules: \`docs/proving/BACKTEST.md\` (pre-registered).`,
     `Window: ${r.window}. ${r.cases_total} decisions = 20 suppliers x ${r.cases_total / 20} as-of dates, each watched for ${WINDOW_QUARTERS} quarters.`,
     "",
-    "| Arm | Status | Decisions | Trouble events | Caught early (same quarter or before) | A quarter or more early | Median quarters of warning | Firings | False alarms |",
+    "| Arm | Status | Decisions | Trouble events | Caught early (fired before the filing date) | A quarter or more early | Median quarters of warning | Firings | False alarms |",
     "|---|---|---|---|---|---|---|---|---|",
   ];
   for (const a of r.arms) {
@@ -404,7 +415,7 @@ async function main() {
   if (has("--record") || has("--replay")) {
     const cases = subset(every, max);
     const m = await modelCases(hist, cases, has("--record") ? "record" : "replay");
-    note = `${m.mode}: ${cases.length} of ${every.length} decisions (an even spread), ${m.modelAnswered} with at least one model answer, ${m.minutes.toFixed(1)} minutes.`;
+    note = `${m.mode}: ${cases.length} of ${every.length} decisions (an even spread), ${m.modelAnswered} with the Decider answered by the model (cases where an arm's own call failed are left out of that arm), ${m.minutes.toFixed(1)} minutes.`;
     const sameRules = scoreArm("rules_same_cases", `${label.rules}, same ${cases.length} decisions`, ruleCases(hist, cases, held), histories, held);
     arms.push({ ...scoreArm("decider", label.decider, m.decider, histories, held), note }, { ...scoreArm("crashed", label.crashed, m.crashed, histories, held), note }, sameRules);
   } else if (prior) {
@@ -426,7 +437,7 @@ async function main() {
 }
 
 // Run main() only when started directly. Compare file paths, not a hand-built URL: that form never matches on Windows.
-if (process.argv[1] && fileURLToPath(import.meta.url).toLowerCase() === resolve(process.argv[1]).toLowerCase()) {
+if (process.argv[1] && realpathSync(fileURLToPath(import.meta.url)).toLowerCase() === realpathSync(resolve(process.argv[1])).toLowerCase()) {
   main().catch((e) => {
     console.error(e);
     process.exit(1);

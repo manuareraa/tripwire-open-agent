@@ -40,9 +40,11 @@ const RANK = { high: 0, medium: 1, low: 2 } as const;
 export const bySeverity = (a: FilingEvent, b: FilingEvent) => RANK[a.severity] - RANK[b.severity] || b.filed.localeCompare(a.filed);
 
 export async function readFilings(deps: Deps, s: RunState, index = loadFilingsIndex()): Promise<void> {
-  const events = index?.by_supplier[s.subject_id] ?? [];
+  // A backtest replays an earlier date (SAMPLE_CLOCK): filings made after it must not be seen.
+  const asOf = process.env.SAMPLE_CLOCK?.slice(0, 10);
+  const events = (index?.by_supplier?.[s.subject_id] ?? []).filter((e) => !asOf || e.filed.slice(0, 10) <= asOf);
   if (!index || events.length === 0) {
-    const why = !index ? "no cached 8-K readings (run scripts/parse_filings.ts)" : `no 8-K filings read for ${s.subject_id}`;
+    const why = !index ? "no cached 8-K readings (run scripts/parse_filings.ts)" : `no 8-K filings read for ${s.subject_id}${asOf ? ` filed by ${asOf}` : ""}`;
     (s.proving.skipped ??= []).push(`read: ${why}`);
     deps.tracer.emit({ decision_id: s.decision_id, agent_name: AGENT, action: "read_filings", event: "message", status: "partial", output_summary: why });
     return;

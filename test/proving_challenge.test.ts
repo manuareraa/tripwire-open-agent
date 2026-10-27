@@ -40,9 +40,27 @@ describe("self-challenge", () => {
   it("escalates when no proposed tripwire survives the crash test", () => {
     const { deps, s } = setup();
     s.proving.crash = { tested: 3, verified: 0, decorative: 3, mis_set: 0, dropped: ["a", "b", "c"] };
-    selfChallenge(deps, s, draft, [tw("spend_share", "untested", "rules")]);
+    selfChallenge(deps, s, draft, [tw("spend_share", "decorative")]);
     expect(s.escalated).toBe(true);
     expect(s.escalationReasons[0]).toMatch(/^Nemotron disagrees with itself: none of the tripwires/);
+  });
+
+  it("does not escalate an exit, or rule-only tripwires, for failing the crash test", () => {
+    for (const [d, t] of [[{ ...draft, decision: "exit" as const }, tw("spend_share", "decorative")], [draft, tw("spend_share", "untested", "rules")]] as const) {
+      const { deps, s } = setup();
+      s.proving.crash = { tested: 1, verified: 0, decorative: 1, mis_set: 0, dropped: ["spend_share"] };
+      selfChallenge(deps, s, d, [t]);
+      expect(s.escalated).toBe(false);
+    }
+  });
+
+  it("treats a tripwire reset by the crash test as a knife-edge call", () => {
+    const { deps, s } = setup();
+    s.proving.crash = { tested: 2, verified: 2, decorative: 0, mis_set: 0, dropped: [] };
+    const reset: TripwireDraft = { ...tw("spend_share", "verified"), crash_test: { verdict: "verified", reset_from: 0.5 } as TripwireDraft["crash_test"] };
+    selfChallenge(deps, s, draft, [tw("debt_to_equity", "verified"), reset]);
+    expect(s.escalated).toBe(true);
+    expect(s.escalationReasons.join(" ")).toMatch(/knife-edge/);
   });
 
   it("escalates a knife-edge call (a mis-set tripwire)", () => {

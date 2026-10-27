@@ -82,6 +82,14 @@ class OpenAICompatClient implements ModelClient {
         delete body.response_format;
         res = await this.post(body, ctrl.signal);
       }
+      // Rate limit or a busy upstream: wait (Retry-After when given, capped) and try again, at most twice, within the timeout.
+      for (let i = 0; i < 2 && [429, 502, 503, 504].includes(res.status); i++) {
+        const after = Number(res.headers.get("retry-after"));
+        const ms = Math.min(Number.isFinite(after) && after > 0 ? after * 1000 : 2000 * (i + 1) ** 2, 20000);
+        if (Date.now() - started + ms >= w.timeoutMs - 1000) break;
+        await new Promise((r) => setTimeout(r, ms));
+        res = await this.post(body, ctrl.signal);
+      }
       if (res.status === 401 || res.status === 403) return fallback(model, thinking, started, `unauthorized (HTTP ${res.status})`, w.provider);
       if (!res.ok) return fallback(model, thinking, started, `HTTP ${res.status}`, w.provider);
       const data = (await res.json()) as {

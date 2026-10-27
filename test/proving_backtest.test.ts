@@ -75,15 +75,20 @@ describe("scoring", () => {
     const h = hist();
     const quiet: SupplierHistory = { ...hist({ supplier_id: "SUP-02" }), periods: [period("2020-12-31", "2021-02-10", 1.2), period("2021-03-31", "2021-05-05", 0.95), period("2021-06-30", "2021-08-04", 1.3)] };
     const cases = [
-      { supplier_id: "SUP-01", as_of: "2021-03-31", tripwires: [{ metric: "current_ratio", op: "<" as const, threshold: 1 }] },
+      { supplier_id: "SUP-01", as_of: "2021-03-31", tripwires: [{ metric: "current_ratio", op: "<" as const, threshold: 1.45 }] },
       { supplier_id: "SUP-02", as_of: "2021-06-01", tripwires: [{ metric: "current_ratio", op: ">" as const, threshold: 1.25 }] },
     ];
     const r = scoreArm("rules", "Rule-based tripwires (no model)", cases, [h, quiet], {});
     expect(r.totals).toMatchObject({ decisions: 2, trouble_events: 1, caught_early: 1, firings: 2 });
-    expect(r.events![0]).toMatchObject({ caught_early: true, quarters_of_warning: 0 });
+    // Fired on the May filing (1.4), a quarter before the covenant break was filed in August.
+    expect(r.events![0]).toMatchObject({ caught_early: true, quarters_of_warning: 1 });
     // SUP-02 had a break onset at 2021-05-05 (0.95), before its as-of, so the August firing has nothing after it.
     expect(r.cases!.find((c) => c.supplier_id === "SUP-02")!.false_alarm).toBe(true);
     expect(r.suppliers!.find((s) => s.supplier_id === "SUP-02")).toMatchObject({ false_alarms: 1, trouble_events: 0 });
+  });
+  it("does not count a firing on the same day the trouble was filed as early", () => {
+    const r = scoreArm("x", "x", [{ supplier_id: "SUP-01", as_of: "2021-03-31", tripwires: [{ metric: "current_ratio", op: "<", threshold: 1 }] }], [hist()], {});
+    expect(r.totals).toMatchObject({ trouble_events: 1, caught_early: 0, firings: 1 });
   });
   it("misses trouble when no tripwire watches it", () => {
     const r = scoreArm("x", "x", [{ supplier_id: "SUP-01", as_of: "2021-03-31", tripwires: [] }], [hist()], {});

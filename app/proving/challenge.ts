@@ -12,14 +12,16 @@ export function selfChallenge(deps: Deps, s: RunState, draft: DecisionDraft, pro
   const label = (m: string) => metricDef(m)?.label.toLowerCase() ?? m.replace(/_/g, " ");
 
   // 1. The safety net is decoration: Nemotron proposed tripwires, Lightning tested them, and none would change the call.
+  // Not for an exit: there a worse number only confirms the call by design, and the crash stage already says so.
   const crash = s.proving.crash;
   const modelTested = proven.filter((t) => MODEL_ORIGINS.has(t.origin ?? "") && t.crash_test && t.crash_test.verdict !== "untested");
-  if (crash && crash.tested > 0 && crash.verified === 0 && (modelTested.length > 0 || crash.dropped.length > 0)) {
+  if (draft.decision !== "exit" && crash && crash.tested > 0 && crash.verified === 0 && modelTested.length > 0) {
     reasons.push("none of the tripwires Nemotron proposed would change the decision when crossed, so nothing would reopen it in time");
   }
 
   // 2. Knife-edge: the call already flips when a number moves only part of the way to its line.
-  const misSet = proven.filter((t) => t.crash_test?.verdict === "mis_set").map((t) => label(t.metric));
+  // A line that was reset closer to today counts too: its original position was past the point where the call flips.
+  const misSet = proven.filter((t) => t.crash_test?.verdict === "mis_set" || t.crash_test?.reset_from !== undefined).map((t) => label(t.metric));
   if (misSet.length) reasons.push(`the decision already changes before the line is crossed (${misSet.join(", ")}), so it sits on a knife-edge`);
 
   // 3. The pre-mortem's own story: a likely failure path backed by a serious real filing.

@@ -119,7 +119,12 @@ export const inBreak = (p: Period) =>
 /** Every trouble event in a supplier's history, by the date it became public. One event per 8-K; a covenant break counts when it starts. */
 export function troubleEvents(h: SupplierHistory): TroubleEvent[] {
   const out: TroubleEvent[] = [];
+  const seen = new Set<string>();
   for (const f of h.filings) {
+    // The same document filed twice on one day (an amended accession) is one event, not two.
+    const doc = `${f.filed}|${f.items.join(",")}|${f.url.split("/").at(-1)}`;
+    if (seen.has(doc)) continue;
+    seen.add(doc);
     const hits = f.items.filter((i) => TROUBLE_ITEMS.includes(i));
     if (f.items.includes(OFFICER_ITEM) && f.ceo_cfo_departure) hits.push(`${OFFICER_ITEM} (CEO/CFO leaving)`);
     if (hits.length) out.push({ date: f.filed, quarter: qLabel(qIndex(f.filed)), kind: "8-K", detail: `8-K item ${hits.join(", ")}`, source: f.url });
@@ -260,7 +265,8 @@ const median = (xs: number[]) => {
 
 /**
  * Score one arm. Each trouble event is judged by the tripwire set in force when it became public
- * (the latest as-of date before it, within its window). Caught early = that set fired in the event's quarter or before.
+ * (the latest as-of date before it, within its window). Caught early = that set fired strictly before the event was filed:
+ * a trouble 8-K also counts toward risk_events_12m, so a firing on the event's own date is the event itself, not a warning.
  * Each set fires at most once (the decision reopens); a firing with no trouble in its quarter or the next two is a false alarm.
  */
 export function scoreArm(arm: string, label: string, cases: CaseTripwires[], histories: SupplierHistory[], held: Record<string, HeldValues>): ArmResult {
@@ -286,7 +292,7 @@ export function scoreArm(arm: string, label: string, cases: CaseTripwires[], his
         .filter((x) => x.supplier_id === h.supplier_id && x.as_of < e.date && e.date <= x.window_end)
         .sort((a, b) => b.as_of.localeCompare(a.as_of))[0];
       if (!c) continue; // outside every window: not scored
-      const caught = !!c.firing && qIndex(c.firing.date) <= qIndex(e.date);
+      const caught = !!c.firing && c.firing.date < e.date;
       events.push({
         ...e, supplier_id: h.supplier_id, as_of: c.as_of, caught_early: caught,
         ...(caught ? { quarters_of_warning: qIndex(e.date) - qIndex(c.firing!.date), firing: c.firing } : {}),

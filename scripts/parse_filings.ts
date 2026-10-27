@@ -11,9 +11,9 @@
 // data/cache/filings/index.json. Cached files are reused unless --refresh. The key is read from env, never printed.
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { FilingEvent } from "../app/types.js";
 import { RISK_ITEMS } from "../app/metrics.js";
@@ -276,4 +276,5 @@ async function main() {
   console.log(JSON.stringify(index.cross_check));
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) await main();
+// Compare real paths: a plain string compare never matches on Windows.
+if (process.argv[1] && realpathSync(fileURLToPath(import.meta.url)).toLowerCase() === realpathSync(resolve(process.argv[1])).toLowerCase()) await main();

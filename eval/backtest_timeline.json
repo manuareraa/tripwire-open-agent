@@ -10,6 +10,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -41,27 +42,28 @@
  "SUP-02": {
   "subject_id": "SUP-02",
   "arm": "rules",
-  "as_of": "2023Q1",
+  "as_of": "2024Q3",
   "quarters": [
-   "2023Q1",
-   "2023Q2",
-   "2023Q3",
-   "2023Q4",
-   "2024Q1"
+   "2024Q3",
+   "2024Q4",
+   "2025Q1",
+   "2025Q2",
+   "2025Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
     "threshold": 1,
     "values": [
-     1.759,
-     0.984,
-     1.016,
-     1.033,
-     0.978
+     1.939,
+     0.884,
+     2.252,
+     2.59,
+     2.313
     ],
-    "fired_at": "2023Q2"
+    "fired_at": "2024Q4"
    },
    {
     "metric": "risk_events_12m",
@@ -69,21 +71,25 @@
     "threshold": 0,
     "values": [
      0,
-     0,
-     0,
-     0,
-     0
+     1,
+     2,
+     2,
+     2
     ]
    }
   ],
   "trouble": [
    {
-    "quarter": "2023Q2",
-    "label": "Covenant-level break for period 2023-03-31: current ratio 0.9842"
+    "quarter": "2024Q4",
+    "label": "Covenant-level break for period 2024-09-30: current ratio 0.8843"
    },
    {
-    "quarter": "2024Q1",
-    "label": "Covenant-level break for period 2023-12-31: current ratio 0.9777"
+    "quarter": "2024Q4",
+    "label": "CEO or CFO leaving (8-K 5.02)",
+    "items": [
+     "5.02"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/827054/000082705424000221/mchp-20241118.htm"
    }
   ]
  },
@@ -98,6 +104,7 @@
    "2023Q4",
    "2024Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -147,6 +154,7 @@
    "2023Q4",
    "2024Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -184,51 +192,43 @@
  "SUP-05": {
   "subject_id": "SUP-05",
   "arm": "rules",
-  "as_of": "2025Q1",
+  "as_of": "2022Q3",
   "quarters": [
-   "2025Q1",
-   "2025Q2",
-   "2025Q3",
-   "2025Q4",
-   "2026Q1"
+   "2022Q3",
+   "2022Q4",
+   "2023Q1",
+   "2023Q2",
+   "2023Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
     "threshold": 1,
     "values": [
-     1.613,
-     1.542,
-     1.689,
-     1.944,
-     1.967
+     1.636,
+     1.606,
+     1.807,
+     1.845,
+     1.922
     ]
    },
    {
     "metric": "risk_events_12m",
     "op": ">",
-    "threshold": 1,
+    "threshold": 0,
     "values": [
+     0,
+     0,
      1,
      1,
-     2,
-     2,
-     2
+     1
     ],
-    "fired_at": "2025Q3"
+    "fired_at": "2023Q1"
    }
   ],
-  "trouble": [
-   {
-    "quarter": "2025Q3",
-    "label": "Big write-down of assets (8-K 2.06)",
-    "items": [
-     "2.06"
-    ],
-    "source_url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178825000139/dow-20250630.htm"
-   }
-  ]
+  "trouble": []
  },
  "SUP-06": {
   "subject_id": "SUP-06",
@@ -241,6 +241,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -290,6 +291,7 @@
    "2022Q4",
    "2023Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -330,6 +332,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -369,6 +372,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -408,6 +412,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -447,6 +452,7 @@
    "2021Q4",
    "2022Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -496,6 +502,7 @@
    "2021Q4",
    "2022Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -545,6 +552,7 @@
    "2024Q2",
    "2024Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -586,27 +594,28 @@
  "SUP-14": {
   "subject_id": "SUP-14",
   "arm": "rules",
-  "as_of": "2024Q3",
+  "as_of": "2021Q1",
   "quarters": [
-   "2024Q3",
-   "2024Q4",
-   "2025Q1",
-   "2025Q2",
-   "2025Q3"
+   "2021Q1",
+   "2021Q2",
+   "2021Q3",
+   "2021Q4",
+   "2022Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
-    "threshold": 1,
+    "threshold": 0.894,
     "values": [
-     1.177,
-     1.094,
-     0.999,
-     1.04,
-     0.999
+     1.052,
+     0.85,
+     0.85,
+     0.965,
+     0.877
     ],
-    "fired_at": "2025Q1"
+    "fired_at": "2021Q2"
    },
    {
     "metric": "risk_events_12m",
@@ -623,59 +632,52 @@
   ],
   "trouble": [
    {
-    "quarter": "2025Q1",
-    "label": "Covenant-level break for period 2024-12-31: current ratio 0.9988"
-   },
-   {
-    "quarter": "2025Q2",
+    "quarter": "2022Q1",
     "label": "CEO or CFO leaving (8-K 5.02)",
     "items": [
      "5.02"
     ],
-    "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000000938925000010/ball-20250522x8k.htm"
-   },
-   {
-    "quarter": "2025Q3",
-    "label": "Covenant-level break for period 2025-06-30: current ratio 0.9987"
+    "source_url": "https://www.sec.gov/Archives/edgar/data/9389/000000938922000003/bll-20220126x8k.htm"
    }
   ]
  },
  "SUP-15": {
   "subject_id": "SUP-15",
   "arm": "rules",
-  "as_of": "2024Q3",
+  "as_of": "2024Q1",
   "quarters": [
+   "2024Q1",
+   "2024Q2",
    "2024Q3",
    "2024Q4",
-   "2025Q1",
-   "2025Q2",
-   "2025Q3"
+   "2025Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
     "threshold": 1,
     "values": [
+     1.76,
+     1.309,
      1.3,
      2.365,
-     0.787,
-     0.797,
-     1.253
-    ],
-    "fired_at": "2025Q1"
+     0.787
+    ]
    },
    {
     "metric": "risk_events_12m",
     "op": ">",
-    "threshold": 1,
+    "threshold": 0,
     "values": [
+     0,
+     0,
      1,
      1,
-     1,
-     1,
-     0
-    ]
+     1
+    ],
+    "fired_at": "2024Q3"
    }
   ],
   "trouble": [
@@ -696,39 +698,40 @@
  "SUP-16": {
   "subject_id": "SUP-16",
   "arm": "rules",
-  "as_of": "2025Q3",
+  "as_of": "2025Q1",
   "quarters": [
+   "2025Q1",
+   "2025Q2",
    "2025Q3",
    "2025Q4",
-   "2026Q1",
-   "2026Q2",
-   "2026Q3"
+   "2026Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
     "threshold": 1,
     "values": [
+     3.228,
+     3.277,
      3.538,
      3.158,
-     3.166,
-     3.071,
-     2.942
+     3.166
     ]
    },
    {
     "metric": "risk_events_12m",
     "op": ">",
-    "threshold": 1,
+    "threshold": 0,
     "values": [
+     0,
+     0,
      1,
      2,
-     2,
-     2,
-     1
+     2
     ],
-    "fired_at": "2025Q4"
+    "fired_at": "2025Q3"
    }
   ],
   "trouble": [
@@ -753,6 +756,7 @@
    "2026Q2",
    "2026Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -792,6 +796,7 @@
    "2024Q2",
    "2024Q3"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -821,14 +826,6 @@
   ],
   "trouble": [
    {
-    "quarter": "2023Q3",
-    "label": "CEO or CFO leaving (8-K 5.02)",
-    "items": [
-     "5.02"
-    ],
-    "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000119312523213434/d491026d8k.htm"
-   },
-   {
     "quarter": "2024Q2",
     "label": "CEO or CFO leaving (8-K 5.02)",
     "items": [
@@ -849,6 +846,7 @@
    "2023Q4",
    "2024Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
@@ -906,39 +904,40 @@
  "SUP-20": {
   "subject_id": "SUP-20",
   "arm": "rules",
-  "as_of": "2024Q3",
+  "as_of": "2024Q1",
   "quarters": [
+   "2024Q1",
+   "2024Q2",
    "2024Q3",
    "2024Q4",
-   "2025Q1",
-   "2025Q2",
-   "2025Q3"
+   "2025Q1"
   ],
+  "watched": 3,
   "lines": [
    {
     "metric": "current_ratio",
     "op": "<",
     "threshold": 1,
     "values": [
+     3.32,
+     3.021,
      2.981,
      2.815,
-     2.704,
-     2.801,
-     2.703
+     2.704
     ]
    },
    {
     "metric": "risk_events_12m",
     "op": ">",
-    "threshold": 1,
+    "threshold": 0,
     "values": [
+     0,
+     0,
      1,
      1,
-     2,
-     2,
-     1
+     2
     ],
-    "fired_at": "2025Q1"
+    "fired_at": "2024Q3"
    }
   ],
   "trouble": [

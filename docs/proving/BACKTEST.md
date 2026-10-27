@@ -4,7 +4,7 @@ A time-machine test of Tripwire's tripwires on real SEC history. We go back to a
 
 Measured numbers live in [`eval/BACKTEST.md`](../../eval/BACKTEST.md) and `eval/backtest_results.json`. Both are written only by `scripts/backtest.ts`. Nothing in them is typed by hand or estimated.
 
-**Rule arm, measured (data fetched 2026-10-27, window 2021Q2–2026Q1, 200 decisions):** 67 trouble events scored (52 from 8-Ks, 15 covenant-level breaks). 31 were caught early, and 3 of those a quarter or more early. Median warning: 0 quarters. 49 firings, of which 14 were false alarms. 23 more trouble events fell outside every watch window and are not scored. The model arms are **not run yet**.
+**Rule arm, measured (data fetched 2026-10-27, window 2021Q2–2026Q1, 200 decisions):** 67 trouble events scored (52 from 8-Ks, 15 covenant-level breaks). 7 were caught early (the tripwire fired strictly before the filing date), and 3 of those a quarter or more early. Median warning: 0 quarters. 49 firings, of which 14 were false alarms. 23 more trouble events fell outside every watch window and are not scored. The model arms are **not run yet**.
 
 `eval/backtest_timeline.json` is the time-lapse view: one strip per supplier, keyed by `subject_id`, in the `BacktestTimeline` shape (arm `"rules"`). Each strip covers 5 quarters from one as-of date. It holds the figures actually filed in each quarter, with `null` where none were filed, plus the quarter each tripwire fired and the trouble in plain words. Per supplier the script picks the as-of with the longest-warning catch, or else the first firing, or else the latest date. It is written from the measured rule run only. pg-integrate serves it at `GET /proving/timeline/:subject_id`.
 
@@ -41,7 +41,7 @@ One 8-K is one event, however many trouble items it lists.
 - **Firing.** The first tripwire to cross its line reopens the decision. A set fires at most once.
 
 **Scoring:**
-- **Caught early:** the trouble event is judged by the tripwire set in force when it became public. It counts as caught if that set fired in the same calendar quarter as the event or before. We also report "a quarter or more early" on its own.
+- **Caught early:** the trouble event is judged by the tripwire set in force when it became public. It counts as caught only if that set fired strictly before the event's filing date. We also report "a quarter or more early" on its own.
 - **Quarters of warning:** the event's quarter minus the firing's quarter (0 = same quarter).
 - **False alarm:** a firing with no trouble event for that supplier in the firing's quarter or the next 2 quarters.
 - Trouble events outside every watch window are not scored. The script prints how many there are.
@@ -71,9 +71,9 @@ npx tsx scripts/backtest.ts --budget    # model arms' call budget and minutes es
 
 ### Live-recording budget (model arms, Windows PC with Nightshift only)
 
-- **Per decision:** about 13 model calls. That is ~4 from the current pipeline (Planner, Analyst, Risk Officer, Decider: the existing 107-call recording has 29 Decider calls for 29 decisions), plus 1 Ultra pre-mortem and about 8 Lightning crash tests.
-- **All 200 decisions:** about 2,600 calls, roughly 108 minutes at the recorded mean latency of 2.5 s. Ultra calls run longer, so treat that as a floor.
-- **Suggested run:** `npx tsx scripts/backtest.ts --record --max-cases 40`, an even spread of 40 decisions across suppliers and years. That is about 520 calls and about 22 minutes. The rule arm is also scored on the same 40 decisions, so the comparison is fair.
+- **Per decision:** about 20 model calls: about 5 from the current pipeline, 1 Ultra pre-mortem and about 14 Lightning crash tests.
+- **All 200 decisions:** about 4,000 calls, roughly 200 minutes at 3 s a call. Ultra calls run longer, so treat that as a floor.
+- **Suggested run:** `npx tsx scripts/backtest.ts --record --max-cases 40`, an even spread of 40 decisions across suppliers and years. That is about 800 calls and about 40 minutes (`--budget` prints the current estimate). A decision is scored in a model arm only if that arm's model call was answered. The rule arm is also scored on the same 40 decisions, so the comparison is fair.
 - **Afterwards:** commit `data/backtest/recordings.jsonl`. Anyone can then run `--replay --max-cases 40` with no keys.
 
 These are cost estimates, not results.
@@ -87,9 +87,9 @@ How the model run stays honest:
 
 - **One 8-K, one event.** A company can file two 8-Ks on the same day (IP filed two with item 2.06 on 2025-08-21), and that counts as two events.
 - **Few trouble events.** These are 20 large, mostly healthy public companies over about 5 years, so real trouble is rare and the counts are small. One event more or less moves the rate a lot. Treat the counts as the result, not the percentages.
-- **Partly circular by design.** The rule arm's current-ratio line is often exactly 1.0, the same line as the covenant-break definition. Its "8-K risk count" tripwire counts most of the same 8-K items that define trouble. So many rule-arm catches land in the *same quarter*, on the same filing that defines the trouble: the tripwire reopens the decision the day the trouble becomes public. That is useful (the decision does not sit stale), but it is not foresight. The "a quarter or more early" column is the real early-warning number.
+- **Partly circular by design.** The rule arm's current-ratio line is often exactly 1.0, the same line as the covenant-break definition. Its "8-K risk count" tripwire counts most of the same 8-K items that define trouble. So many rule-arm firings land on the same filing that defines the trouble: the tripwire reopens the decision the day the trouble becomes public. That is useful (the decision does not sit stale), but it is not foresight, so those do **not** count as caught. The "a quarter or more early" column is the strongest early-warning number.
 - **Large companies with high leverage.** Some suppliers carry liabilities above 3× equity for the whole period. A break that starts before 2020 is never an event here. A company that hovers around the line can start a new break several times.
 - **The CEO/CFO text match can miss successions** worded without a leaving word (for example "will succeed"). It can also count a sentence that mentions a CEO near a leaving word for someone else. The 5.02 filings it flagged are listed with their URLs in `data/backtest/history.json` (`ceo_cfo_departure: true`).
 - **Missing data.** Gross margin is not reported for the logistics companies and BALL, so those metrics are absent there. That does not affect the rule arm, which always picks the current ratio as its one financial line.
 - **Held values** (spend share, lead time, alternatives, sanctions) never move, so those tripwires never fire. In real use they could, and they could add both catches and false alarms.
-- **Quarter-level timing.** "Caught early" is measured by calendar quarter, as pre-registered. A firing earlier in the same quarter but after the event's filing date still counts as caught early, as the brief defines it. Each event's exact firing date is in the results file.
+- **Rule changed after the first run (stated openly).** The first draft counted a firing in the same calendar quarter as caught, even on or after the filing date. An adversarial review found that let a tripwire "catch" the very filing that defined the trouble (31 of 67). The rule is now strictly before the filing date (7 of 67). Each event's exact firing date is in the results file.

@@ -13,7 +13,7 @@ export function ProvingGround({ d }: { d: Decision }) {
   return (
     <div className="sec proving">
       <div className="sec-h"><h3>Proving Ground: Nemotron attacks its own call</h3>
-        <span className="info" tabIndex={0} data-tip="Before you approve, Nemotron reads the supplier's real 8-K filings, imagines how this decision could fail, and crash-tests every tripwire. A tripwire is kept only if crossing it really changes the call. The track record shows how these tripwires did on real SEC history.">i</span><span className="line" /></div>
+        <span className="info" tabIndex={0} data-tip="Before you approve, Nemotron reads the supplier's real 8-K filings, imagines how this decision could fail, and crash-tests every tripwire. A tripwire is kept only if crossing it really changes the call. The track record shows how tripwires like these did on real SEC history; the note says which kind.">i</span><span className="line" /></div>
       <ol className="pg-stages">
         <li><ReadStage d={d} /></li>
         <li><ImagineStage d={d} /></li>

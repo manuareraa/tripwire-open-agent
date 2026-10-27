@@ -91,6 +91,8 @@ export interface CrashTest {
   why?: string;
   /** Why it was not tested (no model, no number), when verdict = "untested". */
   reason?: string;
+  /** The proposed line, when it was mis-set (the call changed short of it) and moved closer to today. */
+  reset_from?: number;
 }
 
 /** How this decision's tripwires did on real history (stage 4, Backtest); filled from eval/backtest_results.json. */
@@ -115,6 +117,8 @@ export interface BacktestTimeline {
   /** The quarter the tripwires were set in, using only what was filed by then. */
   as_of: string;
   quarters: string[];
+  /** How many quarters, from the first, the scorecard watches; the rest only show what followed. */
+  watched?: number;
   lines: { metric: string; op: "<" | ">"; threshold: number; values: (number | null)[]; fired_at?: string }[];
   trouble: { quarter: string; label: string; items?: string[]; source_url?: string }[];
 }

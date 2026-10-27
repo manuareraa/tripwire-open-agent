@@ -4,7 +4,7 @@
 // Usage: npx tsx scripts/fetch_sources.ts [--refresh]
 // Raw downloads are cached in data/cache/ (gitignored). Nothing is estimated; a screen with no match says so.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, realpathSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -217,7 +217,7 @@ async function main() {
 }
 
 // Run main() only when started directly. Compare file paths, not a hand-built URL: that form never matches on Windows.
-if (process.argv[1] && fileURLToPath(import.meta.url).toLowerCase() === resolve(process.argv[1]).toLowerCase()) {
+if (process.argv[1] && realpathSync(fileURLToPath(import.meta.url)).toLowerCase() === realpathSync(resolve(process.argv[1])).toLowerCase()) {
   main().catch((e) => {
     console.error(e);
     process.exit(1);

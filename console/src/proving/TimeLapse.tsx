@@ -9,7 +9,8 @@ import type { BacktestTimeline } from "../types";
 
 type Line = BacktestTimeline["lines"][number];
 const crossed = (l: Line, v: number | null) => v !== null && (l.op === "<" ? v < l.threshold : v > l.threshold);
-const firstFired = (l: Line) => l.values.findIndex((v) => crossed(l, v));
+// Only the watched quarters count as firings; later quarters only show what followed.
+const firstFired = (l: Line, watched: number) => l.values.findIndex((v, i) => i < watched && crossed(l, v));
 const ARM: Record<string, string> = { rules: "rule-based tripwires", decider: "Ultra's tripwires", "premortem+crash": "pre-mortem tripwires that passed the crash test" };
 
 export function TimeLapse({ subject }: { subject: string }) {
@@ -31,7 +32,7 @@ export function TimeLapse({ subject }: { subject: string }) {
     return () => clearTimeout(id);
   }, [playing, q, t]);
 
-  const fired = useMemo(() => t?.lines.map(firstFired) ?? [], [t]);
+  const fired = useMemo(() => t?.lines.map((l) => firstFired(l, t.watched ?? t.quarters.length)) ?? [], [t]);
   if (!t) return null;
 
   const n = t.quarters.length;
@@ -58,13 +59,14 @@ export function TimeLapse({ subject }: { subject: string }) {
         <button type="button" className="btn sm" onClick={() => { if (end) setQ(0); setPlaying(!playing || end); }}>{playing ? "Pause" : end ? "Replay" : "Play"}</button>
       </div>
       <div className="pg-tl-q"><b>{t.quarters[q]}</b>
-        <input type="range" min={0} max={n - 1} value={q} onChange={(e) => { setPlaying(false); setQ(Number(e.target.value)); }} aria-label="Quarter" />
+        <input type="range" min={0} max={n - 1} value={q} onChange={(e) => { setPlaying(false); setQ(Number(e.target.value)); }} aria-label="Quarter" aria-valuetext={t.quarters[q]} />
+        {t.watched !== undefined && q >= t.watched && <span className="muted"> after the watched window</span>}
       </div>
       <div className="pg-tl-lines">{t.lines.map((l, k) => <Spark key={k} l={l} q={q} n={n} trouble={troubleAt.map((e) => e.i)} fired={fired[k]} quarters={t.quarters} />)}</div>
       <div className="pg-tl-ev">{seen.length ? seen.map((e, i) => (
         <div key={i} className="pg-tl-trouble enter"><span className="tag">Real event · {e.quarter}</span> {e.source_url ? <a href={e.source_url} target="_blank" rel="noreferrer">{e.label}</a> : e.label}</div>
       )) : <span className="muted">No real trouble filed yet by {t.quarters[q]}.</span>}</div>
-      {verdict && <p className="pg-tl-verdict">{verdict}</p>}
+      <p className="pg-tl-verdict" aria-live="polite">{verdict}</p>
     </div>
   );
 }
@@ -76,7 +78,9 @@ function Spark({ l, q, n, trouble, fired, quarters }: { l: Line; q: number; n: n
   const x = (i: number) => P + (i * (W - 2 * P)) / Math.max(1, n - 1);
   const y = (v: number) => H - P - ((v - lo) / span) * (H - 2 * P);
   const pts = l.values.slice(0, q + 1).map((v, i) => (v === null ? null : `${x(i)},${y(v)}`)).filter(Boolean).join(" ");
-  const now = [...l.values.slice(0, q + 1)].reverse().find((v) => v !== null) ?? null;
+  let nowAt = q;
+  while (nowAt >= 0 && l.values[nowAt] === null) nowAt--;
+  const now = nowAt >= 0 ? l.values[nowAt] : null;
   const red = fired >= 0 && fired <= q;
   const name = METRIC[l.metric]?.[0] ?? l.metric.replace(/_/g, " ");
   return (
@@ -87,7 +91,7 @@ function Spark({ l, q, n, trouble, fired, quarters }: { l: Line; q: number; n: n
         {trouble.filter((i) => i <= q).map((i) => <line key={i} className="tr" x1={x(i)} x2={x(i)} y1={0} y2={H} />)}
         <line className="th" x1={P} x2={W - P} y1={y(l.threshold)} y2={y(l.threshold)} />
         <polyline className="v" points={pts} />
-        {now !== null && <circle className="dot" cx={x(q)} cy={y(now)} r={3.5} />}
+        {now !== null && <circle className="dot" cx={x(nowAt)} cy={y(now)} r={3.5} />}
       </svg>
     </div>
   );

@@ -144,7 +144,7 @@ export interface ProvingGround {
   skipped?: string[];
 }
 export interface BacktestTimeline {
-  subject_id: string; arm: string; as_of: string; quarters: string[];
+  subject_id: string; arm: string; as_of: string; quarters: string[]; watched?: number;
   lines: { metric: string; op: "<" | ">"; threshold: number; values: (number | null)[]; fired_at?: string }[];
   trouble: { quarter: string; label: string; items?: string[]; source_url?: string }[];
 }
