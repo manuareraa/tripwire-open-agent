@@ -572,3 +572,6 @@ body { padding-bottom: var(--ab-h, 0px); }
 /* Proving Ground stage 4 · Backtest (backtest stream). */
 .pg-backtest-headline { font-size: 13.5px; line-height: 1.45; margin-bottom: 6px; }
 .pg-backtest-headline b { font-variant-numeric: tabular-nums; }
+
+/* Proving Ground shell: why a stage did not run */
+.pg-skipped { margin: 8px 0 0; padding-left: 18px; font-size: 12px; line-height: 1.5; }

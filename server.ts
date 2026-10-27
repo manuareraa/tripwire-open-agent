@@ -103,7 +103,7 @@ function toResponse(run_id: string, d: Decision, extra: Record<string, unknown> 
   return {
     run_id, decision_id: d.decision_id, decision: d.decision, confidence: d.confidence, status: d.status,
     evidence: d.evidence, tripwires: d.tripwires, escalated: d.escalated, escalation_reasons: d.escalation_reasons,
-    limitations: d.limitations, rationale: d.rationale, risk: d.risk, findings: d.findings, supersedes: d.supersedes, ...extra,
+    limitations: d.limitations, rationale: d.rationale, risk: d.risk, findings: d.findings, supersedes: d.supersedes, proving: d.proving, ...extra,
   };
 }
 

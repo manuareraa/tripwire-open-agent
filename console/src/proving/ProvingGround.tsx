@@ -20,6 +20,9 @@ export function ProvingGround({ d }: { d: Decision }) {
         <li><CrashStage d={d} /></li>
         <li><BacktestStage d={d} /></li>
       </ol>
+      {!!p.skipped?.length && (
+        <ul className="pg-skipped muted">{p.skipped.map((r, i) => <li key={i}>Skipped · {r}</li>)}</ul>
+      )}
       <TimeLapse subject={d.subject_id} />
     </div>
   );
