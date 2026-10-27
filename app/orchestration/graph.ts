@@ -13,6 +13,7 @@ import { readFilings } from "../proving/filings.js";
 import { premortem } from "../proving/premortem.js";
 import { crashTest } from "../proving/crashtest.js";
 import { trackRecord } from "../proving/backtest.js";
+import { selfChallenge } from "../proving/challenge.js";
 import type { DecisionDraft, Deps, RunState } from "./state.js";
 import type { Decision, Evidence } from "../types.js";
 
@@ -98,6 +99,8 @@ export async function runDecide(deps: Deps, subject_id: string, question: string
     ...(await premortem(deps, s, draft)),
   ];
   const proven = await crashTest(deps, s, draft, candidates);
+  // If its own findings argue against the call, Nemotron escalates rather than presenting a confident card.
+  selfChallenge(deps, s, draft, proven);
   const track = trackRecord(subject_id);
   if (track) s.proving.track_record = track;
 

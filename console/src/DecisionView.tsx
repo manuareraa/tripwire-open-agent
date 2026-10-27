@@ -57,12 +57,17 @@ function Gauge({ t, d }: { t: Tripwire; d: Decision }) {
 
 /** The escalation reasons as readable rows: what was measured, its value, the policy line and what it means. */
 function EscPanel({ d }: { d: Decision }) {
-  const flags = readReasons(d.escalation_reasons);
+  const SELF = "Nemotron disagrees with itself: ";
+  const self = (d.escalation_reasons || []).map(String).filter((r) => r.startsWith(SELF)).map((r) => r.slice(SELF.length));
+  const flags = readReasons((d.escalation_reasons || []).filter((r) => !String(r).startsWith(SELF)));
   const groups = (Object.keys(GROUP) as (keyof typeof GROUP)[]).map((g) => [g, flags.filter((f) => f.group === g)] as const).filter(([, l]) => l.length);
   return (
     <section className="esc-panel enter" aria-label="Why this was escalated">
       <div className="esc-h"><span className="esc-ic"><Ic n="warn" /></span><div><b>Escalated: a senior buyer must sign off</b> <Info k="escalated" />
-        <p>{flags.length ? `The Risk Officer found ${plural(flags.length, "reason")} in code. Each value is compared with a fixed policy line.` : "This decision needs a senior buyer's sign-off."}</p></div></div>
+        <p>{flags.length ? `The Risk Officer found ${plural(flags.length, "reason")} in code. Each value is compared with a fixed policy line.` : self.length ? "Nemotron's own checks raised doubts about this decision." : "This decision needs a senior buyer's sign-off."}</p></div></div>
+      {self.length > 0 && <div className="esc-self"><div className="esc-gh">Nemotron disagrees with itself</div>
+        <p>Its own Proving Ground checks argue against approving this as it stands, so it asks a person to look instead of presenting a confident answer.</p>
+        <ul>{self.map((r, i) => <li key={i}>{cap(r)}.</li>)}</ul></div>}
       {groups.map(([g, list]) => (
         <div className="esc-g" key={g}><div className="esc-gh">{GROUP[g]}</div>{list.map((f, i) => (
           <div className="flag" key={i}>

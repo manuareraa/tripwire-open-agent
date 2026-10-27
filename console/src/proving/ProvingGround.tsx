@@ -5,6 +5,7 @@ import { ReadStage } from "./ReadStage";
 import { ImagineStage } from "./ImagineStage";
 import { CrashStage } from "./CrashStage";
 import { BacktestStage } from "./BacktestStage";
+import { TimeLapse } from "./TimeLapse";
 
 export function ProvingGround({ d }: { d: Decision }) {
   const p = d.proving;
@@ -19,6 +20,7 @@ export function ProvingGround({ d }: { d: Decision }) {
         <li><CrashStage d={d} /></li>
         <li><BacktestStage d={d} /></li>
       </ol>
+      <TimeLapse subject={d.subject_id} />
     </div>
   );
 }

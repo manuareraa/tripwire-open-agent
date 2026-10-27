@@ -60,7 +60,7 @@ export const DATA_SRC: Dict = { zetaris: "live data in Zetaris", sample: "the bu
 export const GUARD: Dict = { safe: "The guard model saw no problem.", unsafe: "The guard model raised a concern.", unknown: "The guard model gave no clear verdict, so the code rules decide." };
 export const ZETARIS: Dict = { health: "Zetaris health check", write_decision: "Zetaris wrote the decision to the ledger", verify_decision: "Zetaris read the ledger back to confirm the write", read_decisions: "Zetaris read the decision ledger" };
 export const GROUP: Dict = { health: "Financial health", exposure: "How much we depend on them", policy: "Policy" };
-export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", BackupPicker: "Ba", Human: "Hu", Server: "Da" };
+export const AGENT: Dict = { Orchestrator: "Or", ZetarisGateway: "Ze", Planner: "Pl", Analyst: "An", EvidenceCritic: "Cr", MemoryKeeper: "Me", RiskOfficer: "Ri", Decider: "De", Watcher: "Wa", BackupPicker: "Ba", Human: "Hu", Server: "Da", FilingReader: "Fi", PreMortem: "Pm", CrashTester: "Ct", SelfChallenge: "Sc" };
 
 // ---------- Live run view ----------
 export type Stage = [agent: string, short: string, does: string];
@@ -71,6 +71,8 @@ export const STAGES: Stage[] = [
   ["MemoryKeeper", "Me", "Recalls, drops stale claims"],
   ["RiskOfficer", "Ri", "Grades risk in code"],
   ["Decider", "De", "Chooses, sets tripwires"],
+  ["PreMortem", "Pm", "Imagines how it fails"],
+  ["CrashTester", "Ct", "Crash-tests each tripwire"],
 ];
 export const CHANGE_STAGES: Stage[] = [
   ["Watcher", "Wa", "Finds dependent decisions"],
@@ -81,6 +83,10 @@ export const CHANGE_STAGES: Stage[] = [
   ["Decider", "De", "Proposes again"],
 ];
 export const NOW: Dict = {
+  read_filings: "Nemotron Parse's reading of the supplier's 8-K filings is being loaded",
+  premortem: "Ultra is writing a pre-mortem: how could this decision go wrong?",
+  crash_test: "Lightning is crash-testing a tripwire: pushing the number past its line and deciding again",
+  challenge_decision: "Checking whether Nemotron's own findings argue against the decision",
   start_decision: "Starting the run and handing the question to the Planner",
   plan: "Planner is choosing which approved queries to run",
   check_summary: "Evidence Critic is checking the summary against the numbers",

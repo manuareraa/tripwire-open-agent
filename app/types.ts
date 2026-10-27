@@ -73,6 +73,8 @@ export interface FailureStory {
   threshold?: number;
   /** FilingEvent ids or finding metrics the story leans on. */
   grounded_in: string[];
+  /** How likely Ultra judged this failure path, given today's evidence. */
+  likelihood?: "low" | "medium" | "high";
 }
 
 /** Stage 3, Crash-test: push one number just past the line, and just short of it, and re-decide. */
@@ -105,12 +107,26 @@ export interface TrackRecord {
   note: string;
 }
 
+/** One supplier's backtest as a quarter-by-quarter strip, for the time-lapse view (eval/backtest_timeline.json). */
+export interface BacktestTimeline {
+  subject_id: string;
+  /** Which tripwire set is shown, e.g. "rules" or "premortem+crash". */
+  arm: string;
+  /** The quarter the tripwires were set in, using only what was filed by then. */
+  as_of: string;
+  quarters: string[];
+  lines: { metric: string; op: "<" | ">"; threshold: number; values: (number | null)[]; fired_at?: string }[];
+  trouble: { quarter: string; label: string; items?: string[]; source_url?: string }[];
+}
+
 export interface ProvingGround {
   filings?: FilingEvent[];
   stories?: FailureStory[];
   /** Counts over this decision's candidate tripwires; dropped = candidates removed as decorative or mis-set. */
   crash?: { tested: number; verified: number; decorative: number; mis_set: number; dropped: string[] };
   track_record?: TrackRecord;
+  /** Self-challenge: the Proving Ground's own findings argue against approving as-is, so a human must look. */
+  challenge?: { disagrees: boolean; reasons: string[] };
   /** Stages that did not run, and why, so nothing is passed off as done. */
   skipped?: string[];
 }

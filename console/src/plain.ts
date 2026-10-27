@@ -150,6 +150,10 @@ export function say(e: TraceEvent): { title: string; detail: string } {
       if (fail) return { title: "Couldn't save to memory", detail: o };
       m = o.match(/^(\d+) claims stored with lineage(?:, (\d+) superseding)?/);
       return { title: "Saved the claims with where each came from", detail: m ? `${plural(m[1], "claim")} stored, each linked to the data row it came from${m[2] ? `. ${m[2]} replace the old decision's claims` : ""}.` : plain(o) };
+    case "challenge_decision":
+      return e.event === "escalation"
+        ? { title: "Nemotron disagrees with itself, so a person must look", detail: cap(plain(o.replace(/^escalate \w+: /, ""))) + "." }
+        : { title: "The decision held up against its own pre-mortem and crash tests", detail: "Nothing in Nemotron's own checks argues against it." };
     case "decision_proposed": {
       m = o.match(/^(\w+) @ ([\d.]+), (\d+) tripwires, (\w+) approval/);
       return { title: "Ready for a person to review", detail: m ? `${verdictName(m[1])} at ${pct(Number(m[2]))} confidence with ${plural(m[3], "tripwire")}. ${m[4] === "escalated" ? "Needs a senior buyer's sign-off." : "Routine sign-off."}` : plain(o) };

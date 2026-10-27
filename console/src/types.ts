@@ -132,7 +132,7 @@ export interface ChangeReport {
 
 // Proving Ground (mirrors app/types.ts; see docs/PROVING_GROUND.md).
 export interface FilingEvent { id: string; supplier_id: string; accession: string; filed: string; items: string[]; headline: string; severity: "low" | "medium" | "high"; source_url: string; parsed_by: string; text_hash: string }
-export interface FailureStory { id: string; story: string; metric: string; op: string; threshold?: number; grounded_in: string[] }
+export interface FailureStory { id: string; story: string; metric: string; op: string; threshold?: number; grounded_in: string[]; likelihood?: "low" | "medium" | "high" }
 export interface CrashTest { verdict: "verified" | "decorative" | "mis_set" | "untested"; past_value?: number; short_value?: number; past_decision?: string; short_decision?: string; why?: string; reason?: string }
 export interface TrackRecord { window: string; trouble_events: number; caught_early: number; false_alarms: number; note: string }
 export interface ProvingGround {
@@ -140,5 +140,11 @@ export interface ProvingGround {
   stories?: FailureStory[];
   crash?: { tested: number; verified: number; decorative: number; mis_set: number; dropped: string[] };
   track_record?: TrackRecord;
+  challenge?: { disagrees: boolean; reasons: string[] };
   skipped?: string[];
+}
+export interface BacktestTimeline {
+  subject_id: string; arm: string; as_of: string; quarters: string[];
+  lines: { metric: string; op: "<" | ">"; threshold: number; values: (number | null)[]; fired_at?: string }[];
+  trouble: { quarter: string; label: string; items?: string[]; source_url?: string }[];
 }

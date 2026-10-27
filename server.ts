@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
+import { existsSync, readFileSync } from "node:fs";
 import { config } from "./app/config.js";
 import { Tracer } from "./app/tracing.js";
 import { buildRuntime } from "./app/runtime.js";
@@ -299,6 +300,15 @@ app.post("/changes/reset", async (c) => {
     remember(tracer);
     return c.json({ error: "run_failed", detail: (e as Error).message, run_id: tracer.run_id }, 500);
   }
+});
+
+// Proving Ground time-lapse: one supplier's backtest, quarter by quarter (written by scripts/backtest.ts).
+app.get("/proving/timeline/:subject_id", (c) => {
+  const file = "eval/backtest_timeline.json";
+  if (!existsSync(file)) return c.json({ error: "not_found", detail: "No backtest timeline yet. Run scripts/backtest.ts." }, 404);
+  const all = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
+  const t = all[c.req.param("subject_id")];
+  return t ? c.json(t) : c.json({ error: "not_found", detail: "No backtest timeline for this supplier." }, 404);
 });
 
 app.get("/trace/:run_id", (c) => {
