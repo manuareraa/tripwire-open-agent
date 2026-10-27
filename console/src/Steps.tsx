@@ -141,14 +141,19 @@ function WhatIfItem({ w, i, applying, suggest, pulse, disabled, onApply }: { w: 
 }
 
 /** Puts every table back to the bundled sample. Asks once inline, as it can reopen decisions too. */
-function ResetData({ running, applying, onReset }: { running: boolean; applying: boolean; onReset: () => void }) {
-  const [ask, setAsk] = useState(false);
+function ResetData({ running, applying, onReset, onFresh }: { running: boolean; applying: string | null; onReset: () => void; onFresh: () => void }) {
+  const [ask, setAsk] = useState<"reset" | "fresh" | null>(null);
+  const q = ask === "reset" ? "Put the spend and financials tables back to the bundled sample? Decisions that read a restored row are re-checked."
+    : "Forget every decision and everything remembered, and put the bundled data back? Each supplier's next decision is its first again, so a replay with no keys shows the recorded Nemotron answers.";
   return (
     <div className="reset" id="reset-data">
-      {ask ? <><span>Put the spend and financials tables back to the bundled sample? Decisions that read a restored row are re-checked.</span>
-        <button className="btn sm" type="button" disabled={running} onClick={() => { setAsk(false); onReset(); }}>Reset</button>
-        <button className="btn sm ghost" type="button" onClick={() => setAsk(false)}>Cancel</button></>
-        : <button className="btn sm ghost" type="button" disabled={running} onClick={() => setAsk(true)}>{applying ? <><Spin />Resetting</> : "Reset demo data"}</button>}
+      {ask ? <><span>{q}</span>
+        <button className="btn sm" type="button" disabled={running} onClick={() => { setAsk(null); (ask === "reset" ? onReset : onFresh)(); }}>{ask === "reset" ? "Reset" : "Fresh start"}</button>
+        <button className="btn sm ghost" type="button" onClick={() => setAsk(null)}>Cancel</button></>
+        : <>
+          <button className="btn sm ghost" type="button" disabled={running} onClick={() => setAsk("reset")}>{applying === "reset" ? <><Spin />Resetting</> : "Reset demo data"}</button>
+          <button className="btn sm ghost" type="button" disabled={running} onClick={() => setAsk("fresh")}>{applying === "fresh" ? <><Spin />Starting fresh</> : "Fresh start"}</button>
+        </>}
     </div>
   );
 }
@@ -267,7 +272,7 @@ export function ChangesBoard({ changes, whatifs, suppliers, supplier, report, st
           : changes.length ? changes.map((c, i) => <ChangeItem key={c.file} c={c} i={i} applying={applying === c.file} suggest={suggest === c.file} pulse={pulse.has(c.file)} disabled={running} onApply={() => onRun({ kind: "file", file: c.file })} />)
           : <Empty>No change files found.</Empty>}
       </div>
-      <ResetData running={running} applying={applying === "reset"} onReset={() => onRun({ kind: "reset" })} />
+      <ResetData running={running} applying={applying} onReset={() => onRun({ kind: "reset" })} onFresh={() => onRun({ kind: "fresh" })} />
     </div>
   );
 }

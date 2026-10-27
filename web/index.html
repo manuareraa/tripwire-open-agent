@@ -333,9 +333,10 @@
     for (const m of list) {
       const el = document.querySelector(`[data-mode="${m.key}"]`);
       if (!el) continue;
-      el.className = `pill ${m.live ? "live" : "fallback"}`;
+      const state = m.live ? "live" : m.replay ? "replay" : "fallback";
+      el.className = `pill ${state}`;
       el.setAttribute("data-tip", m.tip); el.tabIndex = 0;
-      el.innerHTML = `<span class="dot"></span>${m.live ? "live on this server" : "fallback on this server"}`;
+      el.innerHTML = `<span class="dot"></span>${state === "replay" ? "recorded answers replayed on this server" : `${state} on this server`}`;
     }
   });
   // Scroll reveal: stagger cards inside each section.

@@ -30,6 +30,23 @@ async function optional<T>(path: string, exportName: string): Promise<(new (...a
   }
 }
 
+/** Where memory is kept on disk. The demo's fresh start empties these paths, so they stay inside the ledger folder. */
+export const memoryPaths = (ledgerDir: string) => [process.env.HMEM_DIR ?? join(ledgerDir, "memory"), join(ledgerDir, "memory.json")];
+
+/** H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback. */
+export async function openMemory(ledgerDir: string, notes: string[] = []): Promise<MemoryStore> {
+  const [hmemDir, lineageFile] = memoryPaths(ledgerDir);
+  const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemoryStore");
+  if (Hmem) {
+    try {
+      return new Hmem({ persistDir: hmemDir });
+    } catch (e) {
+      notes.push(`H-MEM unavailable (${(e as Error).message}); using local lineage index`);
+    }
+  } else notes.push("H-MEM adapter not present; using local lineage index");
+  return new LocalMemory(lineageFile);
+}
+
 export async function buildRuntime(): Promise<Runtime> {
   const notes: string[] = [];
   const ledgerDir = join(config.dataDir, "ledger");
@@ -81,17 +98,7 @@ export async function buildRuntime(): Promise<Runtime> {
     if (config.modelRecordResume !== undefined) notes.push(`Resuming run ${config.modelRecordResume}: ${rec.reusable} answers already recorded will be reused, not asked again`);
   }
 
-  // H-MEM is in-process, so it runs in every mode (SAMPLE_MODE included); the JSON lineage file is only a fallback.
-  let memory: MemoryStore | undefined;
-  const Hmem = await optional<MemoryStore>("./adapters/hmem.js", "HmemMemoryStore");
-  if (Hmem) {
-    try {
-      memory = new Hmem({ persistDir: process.env.HMEM_DIR ?? join(ledgerDir, "memory") });
-    } catch (e) {
-      notes.push(`H-MEM unavailable (${(e as Error).message}); using local lineage index`);
-    }
-  } else notes.push("H-MEM adapter not present; using local lineage index");
-  memory ??= new LocalMemory(join(ledgerDir, "memory.json"));
+  const memory = await openMemory(ledgerDir, notes);
 
   // Opt-in: Nightshift serves chat models only, so rerank is a direct build.nvidia.com call and labelled as one.
   const reranker = config.rerank ? new NemotronReranker() : undefined;

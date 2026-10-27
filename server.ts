@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, rmSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
 import { config } from "./app/config.js";
 import { Tracer } from "./app/tracing.js";
-import { buildRuntime } from "./app/runtime.js";
+import { buildRuntime, memoryPaths, openMemory } from "./app/runtime.js";
 import { runDecide } from "./app/orchestration/graph.js";
 import { reopenFor } from "./app/watcher.js";
 import type { Deps } from "./app/orchestration/state.js";
@@ -299,6 +300,31 @@ app.post("/changes/reset", async (c) => {
     tracer.emit({ agent_name: "Server", action: "run_failed", event: "error", status: "failed", output_summary: (e as Error).message });
     remember(tracer);
     return c.json({ error: "run_failed", detail: (e as Error).message, run_id: tracer.run_id }, 500);
+  }
+});
+
+// Fresh start: forget every decision and everything remembered, and put the bundled sample data back. A decision made
+// again on top of an earlier one asks the model a different question, so with no live model only a fresh start gets
+// the recorded Nemotron answers again. Shared Zetaris tables are never rewritten here.
+app.post("/demo/fresh-start", async (c) => {
+  const ledgerDir = join(config.dataDir, "ledger");
+  const paths = memoryPaths(ledgerDir);
+  const outside = paths.find((p) => relative(resolve(ledgerDir), resolve(p)).startsWith(".."));
+  if (outside) return c.json({ error: "memory_outside_ledger", detail: `Memory is kept at ${outside}, outside ${ledgerDir}, so it is left alone. Unset HMEM_DIR to use a fresh start.` }, 409);
+  try {
+    const out = await exclusive(async () => {
+      const decisions = rt.store.list().length;
+      const rows = rt.gateway === rt.sample ? await rt.sample.restoreBase() : [];
+      rt.store.clear();
+      for (const p of paths) rmSync(p, { recursive: true, force: true });
+      rt.memory = await openMemory(ledgerDir);
+      traces.clear();
+      return { decisions_cleared: decisions, rows_restored: rows.length, data_restored: rt.gateway === rt.sample };
+    });
+    if (!out) return c.json(BUSY, 409);
+    return c.json(out);
+  } catch (e) {
+    return c.json({ error: "fresh_start_failed", detail: (e as Error).message }, 500);
   }
 });
 

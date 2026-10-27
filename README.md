@@ -6,6 +6,8 @@ Tripwire is a team of agents that makes a business decision, writes down exactly
 
 The demo domain is supplier risk: for each of 20 suppliers, should we **keep**, **dual-source** (add a second supplier) or **exit**?
 
+**The idea in one breath: Nemotron writes the warning signs, then Nemotron tries to break them, and only the ones that survive are kept.** Ultra imagines how each decision could go wrong and turns every story into a candidate tripwire. Lightning then crash-tests each one: it pushes the numbers just past the line and checks whether the decision really changes. In the live run, 17 of the 103 tripwires Nemotron tested survived; of the rest, 74 had the line in the wrong place and 12 would not have changed the decision, and all of them are dropped before a human sees them (10 more could not be tested). Every one of these answers was recorded live through Meterless Nightshift, with receipts, so anyone can replay them with no keys and get the same numbers ([Proving Ground](#proving-ground-nemotron-attacks-its-own-call-before-you-approve-it)).
+
 Demo video: _link added before submission_
 
 ### Nemotron at a glance: what each model does, and what we measured
@@ -117,7 +119,7 @@ docker build -t tripwire .
 docker run -p 8000:8000 -e SAMPLE_MODE=true tripwire
 ```
 
-Open `http://localhost:8000` for the landing page and `http://localhost:8000/console` for the console (a guided tour starts on the first visit). `npm start` builds the console first; for hot reload while editing it, run `npm run dev:web` next to the server and open `http://localhost:5173/console`. Or call the API:
+Open `http://localhost:8000` for the landing page and `http://localhost:8000/console` for the console (a guided tour starts on the first visit). With no keys, the console replays the recorded live Nemotron answers (the Nemotron badge says "replay"). They match each supplier's first decision; press **Fresh start** (under the data changes) to clear earlier decisions and memory and get them again. `npm start` builds the console first; for hot reload while editing it, run `npm run dev:web` next to the server and open `http://localhost:5173/console`. Or call the API:
 
 ```bash
 curl -s -X POST localhost:8000/run -H 'content-type: application/json' --data @input_examples/02_decide_risky.json

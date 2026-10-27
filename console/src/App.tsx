@@ -22,7 +22,7 @@ type View =
   | { kind: "changes" };
 
 /** What step 3 can run: a bundled change file, a what-if for one supplier, or a reset to the bundled sample. */
-export type ChangeOp = { kind: "file"; file: string } | { kind: "whatif"; w: WhatIf } | { kind: "reset" };
+export type ChangeOp = { kind: "file"; file: string } | { kind: "whatif"; w: WhatIf } | { kind: "reset" } | { kind: "fresh" };
 export const opKey = (op: ChangeOp) => op.kind === "file" ? op.file : op.kind === "whatif" ? op.w.id : "reset";
 
 type StepId = "step-decide" | "step-review" | "step-change";
@@ -188,8 +188,26 @@ export function App() {
   };
   const pick = (id: string, thenChange: boolean) => { setSupplier(id); supplierRef.current = id; setSupSwap((n) => n + 1); decide(thenChange); };
 
+  // Fresh start: the server forgets every decision and memory, so a keyless replay gets the recorded answers again.
+  const freshStart = async () => {
+    runningRef.current = true; setRunning(true); setApplying("fresh");
+    try {
+      const r = await api<{ decisions_cleared: number; rows_restored: number }>("/demo/fresh-start", { method: "POST" });
+      setReport(null); setSuggest(null); setDone(new Set());
+      setTrace((t) => ({ gen: t.gen + 1, events: [], empty: "initial" }));
+      await Promise.all([loadDecisions(), loadCatalog(), loadSuppliers(), loadWhatIfs(supplierRef.current)]);
+      goStep(1); setView({ kind: "start" });
+      toast(<><b>Fresh start.</b> {r.decisions_cleared === 1 ? "1 decision" : `${r.decisions_cleared} decisions`} and the memory were cleared{r.rows_restored ? ` and ${r.rows_restored} data rows restored` : ""}. With no live model, each supplier&rsquo;s first decision replays the recorded Nemotron answers again.</>);
+    } catch (e) {
+      toast(<><b>Fresh start failed.</b> {(e as Error).message}</>);
+    }
+    setApplying(null);
+    runningRef.current = false; setRunning(false);
+  };
+
   const runChange = async (op: ChangeOp) => {
     if (runningRef.current) return;
+    if (op.kind === "fresh") return freshStart();
     const key = opKey(op);
     runningRef.current = true; setRunning(true); setApplying(key);
     setSuggest(op.kind === "reset" ? null : key); goStep(3);

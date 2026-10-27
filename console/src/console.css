@@ -324,6 +324,7 @@ textarea.input { resize: vertical; min-height: 64px; }
 .hc-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
 .hc-meta .id { margin-left: auto; font-family: var(--font-mono); font-size: 11px; }
 .pill.fallback .dot { background: var(--dual); }
+.pill.replay .dot { background: var(--primary); }
 
 .banner { display: flex; gap: 10px; padding: 12px 14px; border-radius: var(--radius-sm); margin: 14px 0 0; font-size: 13.5px; border: 1px solid var(--line); background: var(--surface-2); }
 .banner svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }

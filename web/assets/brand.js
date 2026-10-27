@@ -91,8 +91,10 @@
     return [
       { key: "data", name: "Zetaris", role: "data layer", live: m.data === "zetaris",
         tip: m.data === "zetaris" ? "Live: every number is read with Zetaris SQL, and approvals are written back to a Zetaris Parquet ledger." : "Fallback: using the bundled sample files (same tables and queries) because Zetaris is not configured." },
-      { key: "model", name: "NVIDIA Nemotron", role: "reasoning", live: m.model === "nemotron",
-        tip: m.model === "nemotron" ? "Live: the Planner, Analyst, Decider and safety check call Nemotron models." : "Fallback: no NVIDIA key, so model steps use a simple rule-based policy. The trace and rationale say so." },
+      { key: "model", name: "NVIDIA Nemotron", role: "reasoning", live: /^(nightshift|nvidia)/.test(m.model ?? ""), replay: m.model === "replay",
+        tip: /^(nightshift|nvidia)/.test(m.model ?? "") ? `Live (${m.model}): the Planner, Analyst, Decider, pre-mortem, crash tests and safety check call Nemotron models.`
+          : m.model === "replay" ? "Replay: no NVIDIA key, so recorded live Nemotron answers are replayed and labelled as replays. Each supplier's first decision after a Fresh start matches the recording; a prompt that was never recorded uses the rule-based policy and says so."
+          : "Fallback: no NVIDIA key, so model steps use a simple rule-based policy. The trace and rationale say so." },
       { key: "memory", name: "Meterless H-MEM", role: "memory", live: m.memory === "meterless-hmem",
         tip: m.memory === "meterless-hmem" ? "Live: claims and their lineage are stored in Meterless H-MEM, which runs inside the app." : "Fallback: local lineage store." },
     ];
@@ -100,7 +102,7 @@
   async function renderModes(el) {
     if (!el) return;
     const list = await modes();
-    el.innerHTML = list.map((x) => `<span class="pill ${x.live ? "live" : "fallback"}" tabindex="0" data-tip="${esc(x.tip)}"><span class="dot"></span><b>${esc(x.name)}</b>&nbsp;${x.live ? "live" : "fallback"}</span>`).join("");
+    el.innerHTML = list.map((x) => `<span class="pill ${x.live ? "live" : x.replay ? "replay" : "fallback"}" tabindex="0" data-tip="${esc(x.tip)}"><span class="dot"></span><b>${esc(x.name)}</b>&nbsp;${x.live ? "live" : x.replay ? "replay" : "fallback"}</span>`).join("");
   }
 
   // ---------- Guided tour ----------

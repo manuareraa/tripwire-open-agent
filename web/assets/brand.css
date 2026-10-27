@@ -197,6 +197,7 @@ html { background: var(--bg); }
 .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
 .pill.live { color: var(--ink); } .pill.live .dot { background: var(--keep); box-shadow: 0 0 0 3px color-mix(in srgb, var(--keep) 22%, transparent); }
 .pill.fallback .dot { background: var(--dual); }
+.pill.replay .dot { background: var(--primary); }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }

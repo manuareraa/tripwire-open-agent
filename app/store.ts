@@ -26,6 +26,12 @@ export class DecisionStore {
     return [...this.byId.values()].sort((a, b) => b.created_at.localeCompare(a.created_at));
   }
 
+  /** Forget every decision (the demo's fresh start). */
+  clear(): void {
+    this.byId.clear();
+    this.save();
+  }
+
   /** Decisions still in force (not superseded or rejected). */
   active(): Decision[] {
     return this.list().filter((d) => d.status === "proposed" || d.status === "approved");
