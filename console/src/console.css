@@ -522,3 +522,7 @@ body { padding-bottom: var(--ab-h, 0px); }
 .pg-step { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
 .pg-title { font-weight: 600; margin: 4px 0 8px; }
 .pg-note { font-size: 12.5px; }
+
+/* Proving Ground stage 4 · Backtest (backtest stream). */
+.pg-backtest-headline { font-size: 13.5px; line-height: 1.45; margin-bottom: 6px; }
+.pg-backtest-headline b { font-variant-numeric: tabular-nums; }
