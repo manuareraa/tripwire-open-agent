@@ -8,6 +8,17 @@ The demo domain is supplier risk: for each of 20 suppliers, should we **keep**, 
 
 Demo video: _link added before submission_
 
+### Nemotron at a glance: what each model does, and what we measured
+
+| Model (how it is reached) | Job in Tripwire | Measured against | Result | Source |
+|---|---|---|---|---|
+| Nemotron 3.5 Lightning 30B (Nightshift) | Plans the queries, summarises the evidence | Ultra alone, Lightning alone | Agent graph: 23/23 decisions with every number grounded vs 17/23 for one Ultra call (Nightshift run) | [eval/nightshift/RESULTS.md](eval/nightshift/RESULTS.md) |
+| Nemotron 3 Ultra 550B (Nightshift) | Decides keep / dual-source / exit; thinking budget set by risk grade | Thinking always on | Thinking always on took 58% more model time (662 s vs 418 s) and scored lower on labels, 7/8 vs 8/8 (direct run) | [eval/RESULTS.md](eval/RESULTS.md) |
+| Nemotron 3.5 Content Safety (build.nvidia.com; Nightshift 1.2.7 does not serve it) | Final check on the recommendation | Keyword filter | 19/22 harmful caught, 0/10 safe flagged, vs 11/22 and 1/10 | [eval/SAFETY.md](eval/SAFETY.md) |
+| Nemotron 3.5 Rerank 8B (build.nvidia.com, optional) | Puts the findings that answer the question first | Keyword overlap | Right first item in 34/34 rankings vs 8/34 | [eval/RERANK.md](eval/RERANK.md) |
+
+Clear-cut labels, the same 8 cases both times (small sample): the agent graph got 8/8 called directly on build.nvidia.com and 6/8 through Nightshift, where every model set-up scored lower and leaned towards dual-sourcing; simple rules get 8/8 on these cases by construction. We report both. A live Nightshift answer, replayed offline with its receipt ids, is in [output_examples/04_decide_replayed_nemotron.trace.jsonl](output_examples/04_decide_replayed_nemotron.trace.jsonl).
+
 ---
 
 ## Why this is a fragmented-data problem
@@ -131,7 +142,7 @@ The server listens on `0.0.0.0:$PORT` (default 8000). Errors are JSON (`{"error"
 
 ## Examples
 
-Inputs are in `input_examples/`, the matching outputs (from a SAMPLE_MODE run) in `output_examples/`, each with its full trace (`*.trace.jsonl`). Their questions are worded differently from the recorded live run, so no recorded Nemotron answer matches and every model step shows "rule-based path" in the trace. Leave out `question` (as the console does) to get the replayed live answers instead.
+Inputs are in `input_examples/`, the matching outputs (from a SAMPLE_MODE run) in `output_examples/`, each with its full trace (`*.trace.jsonl`). Their questions are worded differently from the recorded live run, so no recorded Nemotron answer matches and every model step shows "rule-based path" in the trace. Leave out `question` (as the console does) to get the replayed live answers instead: `04_decide_replayed_nemotron` does exactly that, and its trace names the Nemotron model, the Nightshift receipt and the recording time of every model step.
 
 | # | Input | Result |
 |---|---|---|
