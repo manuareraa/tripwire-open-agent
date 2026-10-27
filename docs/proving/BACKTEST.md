@@ -4,7 +4,9 @@ A time-machine test of Tripwire's tripwires on real SEC history. We go back to a
 
 Measured numbers live in [`eval/BACKTEST.md`](../../eval/BACKTEST.md) and `eval/backtest_results.json`. Both are written only by `scripts/backtest.ts`. Nothing in them is typed by hand or estimated.
 
-**Rule arm, measured (data fetched 2026-10-27, window 2021Q2–2026Q1, 200 decisions):** 67 trouble events scored (52 from 8-Ks, 15 covenant-level breaks). 7 were caught early (the tripwire fired strictly before the filing date), and 3 of those a quarter or more early. Median warning: 0 quarters. 49 firings, of which 14 were false alarms. 23 more trouble events fell outside every watch window and are not scored. The model arms are **not run yet**.
+**Rule arm, measured (data fetched 2026-10-27, window 2021Q2–2026Q1, 200 decisions):** 67 trouble events scored (52 from 8-Ks, 15 covenant-level breaks). 7 were caught early (the tripwire fired strictly before the filing date), and 3 of those a quarter or more early. Median warning: 0 quarters. 49 firings, of which 14 were false alarms. 23 more trouble events fell outside every watch window and are not scored.
+
+**Model arms, measured (live Nightshift recording of 2026-10-27, 40 of the 200 decisions, an even spread):** 9 trouble events fall in those 40 windows. Ultra's own tripwires caught 0 early (1 firing, a false alarm). Pre-mortem tripwires that passed the crash test caught 0 early (4 firings, 3 false alarms). The rule tripwires on the same 40 decisions caught 1 early, a quarter ahead (11 firings, 4 false alarms). With 9 events the arms cannot be ranked; the honest reading is that the model-set tripwires did not warn earlier than the rules here. Each decision's only failed call was the safety check (404 on Nightshift 1.2.7), which does not set tripwires, so no case was left out.
 
 `eval/backtest_timeline.json` is the time-lapse view: one strip per supplier, keyed by `subject_id`, in the `BacktestTimeline` shape (arm `"rules"`). Each strip covers 5 quarters from one as-of date. It holds the figures actually filed in each quarter, with `null` where none were filed, plus the quarter each tripwire fired and the trouble in plain words. Per supplier the script picks the as-of with the longest-warning catch, or else the first firing, or else the latest date. It is written from the measured rule run only. pg-integrate serves it at `GET /proving/timeline/:subject_id`.
 
@@ -53,10 +55,10 @@ One 8-K is one event, however many trouble items it lists.
 | Arm | What sets the tripwires | Status |
 |---|---|---|
 | Rule-based | `defaultTripwires()` from `app/tripwires.ts`, the code fallback, run on the as-of metrics | measured (see `eval/BACKTEST.md`) |
-| Ultra decider | the Decider's own tripwires (`origin: "decider"`) from `runDecide` on an as-of copy of the sample data | **not run yet** |
-| Pre-mortem + crash-tested | pre-mortem tripwires that passed the crash test (`origin: "premortem"`, `verdict: "verified"`) | **not run yet** |
+| Ultra decider | the Decider's own tripwires (`origin: "decider"`) from `runDecide` on an as-of copy of the sample data | measured on 40 decisions (live recording 2026-10-27) |
+| Pre-mortem + crash-tested | pre-mortem tripwires that passed the crash test (`origin: "premortem"`, `verdict: "verified"`) | measured on 40 decisions (live recording 2026-10-27) |
 
-The model arms are never estimated. Until a live recording exists they show "not run yet" in the results file and in the UI. The UI shows the best *measured* arm and names it.
+The model arms are never estimated: without a recording they show "not run yet" in the results file and in the UI. The UI shows the best *measured* arm and names it.
 
 ## How to run
 

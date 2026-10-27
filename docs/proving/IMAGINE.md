@@ -4,7 +4,7 @@
 
 1. **Pass the backup's metrics to the pre-mortem.** `premortem()` now takes an optional 4th argument, `backupMetrics`. In `app/orchestration/graph.ts`, change the call to `premortem(deps, s, draft, backup?.metrics)`. Until then, Ultra never sees `backup_*` numbers, so it cannot write a story about the backup supplier failing. The current 3-argument call still compiles and works.
 2. **One line changed outside this stream's files:** `test/recording.test.ts` line 75 lists every agent that makes a model call. I added `"PreMortem"` to that list, because the pre-mortem is a new model call. Nothing else in that test changed.
-3. **Before the live recording:** the 81 recorded answers in `data/recordings/nightshift.jsonl` contain no PreMortem answers. Replay therefore skips Imagine with "imagine: no model answered (replay: no recorded live answer for this prompt)". To show stories in a keyless replay, record once more with a live model (budget below).
+3. **Live recording done (2026-10-27, Nightshift):** `data/recordings/nightshift.jsonl` now holds 21 PreMortem answers from Ultra (20 suppliers and 1 reopened decision), all answered by the model. They proposed 37 candidate tripwires; how many survived the crash test is in [`eval/CRASH.md`](../../eval/CRASH.md). With no keys, a fresh start (empty `data/ledger/`) replays the stories on each supplier's first decision. Deciding the same supplier again builds a different prompt (it includes the earlier decision), which was never recorded, so that run says Imagine was skipped instead of guessing.
 
 ## What it does
 

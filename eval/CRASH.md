@@ -1,6 +1,6 @@
 # Crash test: do the tripwires really change the call?
 
-Generated 2026-10-27 09:48 UTC by `npx tsx scripts/eval_crash.ts --write` on the 20 sample suppliers.
+Generated 2026-10-27 15:07 UTC by `npx tsx scripts/eval_crash.ts --write` on the 20 sample suppliers.
 
 Each proposed tripwire is pushed just past its line and just short of it, and the decision is made again with only that number moved.
 **Verified**: holds short of the line, changes past it. **Decorative**: still holds past the line. **Mis-set**: already changes short of the line.
@@ -30,4 +30,10 @@ By decision:
 
 ## Nemotron Lightning re-decides
 
-Not run yet: there are no recorded live CrashTester answers. It runs inside the decision graph during the live recording, and this script then replays it.
+Replayed from 316 recorded live answers; 10 prompts had no recording and are counted as untested.
+
+| Group | Proposed | Tested | Verified | Mis-set, reset, then verified | Mis-set, dropped | Decorative | Untested | Already true today | Survived |
+|---|---|---|---|---|---|---|---|---|---|
+| decider | 76 | 75 | 8 | 6 | 53 | 8 | 1 | 0 | 19% |
+| premortem | 37 | 28 | 2 | 1 | 21 | 4 | 9 | 0 | 11% |
+| rules | 4 | 4 | 1 | 0 | 3 | 0 | 0 | 0 | 25% |

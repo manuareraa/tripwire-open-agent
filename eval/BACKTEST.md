@@ -6,13 +6,14 @@ Window: 2021Q2–2026Q1. 200 decisions = 20 suppliers x 10 as-of dates, each wat
 | Arm | Status | Decisions | Trouble events | Caught early (fired before the filing date) | A quarter or more early | Median quarters of warning | Firings | False alarms |
 |---|---|---|---|---|---|---|---|---|
 | Rule-based tripwires (no model) | measured | 200 | 67 (52 8-K, 15 covenant) | 7 | 3 | 0 | 49 | 14 |
-| Ultra decider tripwires | **not run yet** | | | | | | | |
-| Pre-mortem + crash-tested tripwires | **not run yet** | | | | | | | |
+| Ultra decider tripwires | measured | 40 | 9 (5 8-K, 4 covenant) | 0 | 0 | n/a | 1 | 1 |
+| Pre-mortem + crash-tested tripwires | measured | 40 | 9 (5 8-K, 4 covenant) | 0 | 0 | n/a | 4 | 3 |
+| Rule-based tripwires (no model), same 40 decisions | measured | 40 | 9 (5 8-K, 4 covenant) | 1 | 1 | 1 | 11 | 4 |
 
 Arms marked "not run yet" have no numbers: they are never estimated.
 
-- **Ultra decider tripwires:** Not recorded yet. Needs a live Nightshift run on the Windows PC (`--record`) after the Imagine and Crash-test stages land.
-- **Pre-mortem + crash-tested tripwires:** Not recorded yet. Needs a live Nightshift run on the Windows PC (`--record`) after the Imagine and Crash-test stages land.
+- **Ultra decider tripwires:** replay: 40 of 200 decisions (an even spread), 40 with the Decider answered by the model (cases where an arm's own call failed are left out of that arm), 0.0 minutes.
+- **Pre-mortem + crash-tested tripwires:** replay: 40 of 200 decisions (an even spread), 40 with the Decider answered by the model (cases where an arm's own call failed are left out of that arm), 0.0 minutes.
 
 ## Per supplier (rule arm)
 

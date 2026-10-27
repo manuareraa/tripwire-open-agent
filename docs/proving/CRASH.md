@@ -65,7 +65,15 @@ Script: `npx tsx scripts/eval_crash.ts --write` → `eval/CRASH.md`, `eval/crash
 
 All 80 come from the rules, because in the keyless run there is no Decider model and the pre-mortem is not built on this branch yet. The by-origin split (rules / Decider / pre-mortem) fills in once those arms have answers.
 
-**Model arm, Nemotron Lightning re-decides: not run yet.** It runs inside the decision graph during the live recording; afterwards the same script replays it and reports it by origin, next to the control.
+**Model arm, Nemotron Lightning re-decides: measured** from the live Nightshift recording of 2026-10-27 (316 recorded Lightning answers, replayed by `scripts/eval_crash.ts --write`):
+
+| Who proposed it | Proposed | Tested | Verified first try | Mis-set, reset, then verified | Mis-set, dropped | Decorative | Survived |
+|---|---|---|---|---|---|---|---|
+| Ultra Decider | 76 | 75 | 8 | 6 | 53 | 8 | 19% |
+| Ultra pre-mortem | 37 | 28 | 2 | 1 | 21 | 4 | 11% |
+| rules | 4 | 4 | 1 | 0 | 3 | 0 | 25% |
+
+10 crash-test prompts had no recorded answer (the replayed run differs slightly from the recorded one) and are counted as untested, not as passed. Most of Nemotron's own lines were mis-set: the call already changed when the number stopped just short of the line. That can mean the line is set too far out, or that Lightning's re-decision is unsteady near the line; this test cannot tell the two apart. Either way those lines are dropped before the human sees them. The control above uses a different re-decider (the rules), so its 59% is not a like-for-like comparison.
 
 ## Model-call budget for the live recording
 

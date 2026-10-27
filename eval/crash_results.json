@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T09:48:25.551Z",
+  "generated_at": "2026-10-27T15:07:40.600Z",
   "suppliers": 20,
   "note": "Measured by scripts/eval_crash.ts on the bundled sample data (20 suppliers). survived_share = verified / tested.",
   "arms": {
@@ -719,8 +719,1041 @@
       ]
     },
     "model": {
-      "label": "Nemotron Lightning re-decides",
-      "status": "not run yet: no recorded live CrashTester answers"
+      "label": "Nemotron Lightning re-decides (replayed from 316 recorded live answers)",
+      "unanswered_prompts": 10,
+      "all": {
+        "group": "all",
+        "proposed": 117,
+        "tested": 107,
+        "verified_first_try": 11,
+        "decorative": 12,
+        "mis_set_dropped": 77,
+        "untested": 10,
+        "already_true": 0,
+        "mis_set_reset_verified": 7,
+        "survived_share": 0.168
+      },
+      "by_origin": [
+        {
+          "group": "decider",
+          "proposed": 76,
+          "tested": 75,
+          "verified_first_try": 8,
+          "decorative": 8,
+          "mis_set_dropped": 53,
+          "untested": 1,
+          "already_true": 0,
+          "mis_set_reset_verified": 6,
+          "survived_share": 0.187
+        },
+        {
+          "group": "premortem",
+          "proposed": 37,
+          "tested": 28,
+          "verified_first_try": 2,
+          "decorative": 4,
+          "mis_set_dropped": 21,
+          "untested": 9,
+          "already_true": 0,
+          "mis_set_reset_verified": 1,
+          "survived_share": 0.107
+        },
+        {
+          "group": "rules",
+          "proposed": 4,
+          "tested": 4,
+          "verified_first_try": 1,
+          "decorative": 0,
+          "mis_set_dropped": 3,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 0,
+          "survived_share": 0.25
+        }
+      ],
+      "by_decision": [
+        {
+          "group": "dual_source",
+          "proposed": 103,
+          "tested": 95,
+          "verified_first_try": 9,
+          "decorative": 8,
+          "mis_set_dropped": 72,
+          "untested": 8,
+          "already_true": 0,
+          "mis_set_reset_verified": 6,
+          "survived_share": 0.158
+        },
+        {
+          "group": "keep",
+          "proposed": 6,
+          "tested": 6,
+          "verified_first_try": 1,
+          "decorative": 0,
+          "mis_set_dropped": 4,
+          "untested": 0,
+          "already_true": 0,
+          "mis_set_reset_verified": 1,
+          "survived_share": 0.333
+        },
+        {
+          "group": "exit",
+          "proposed": 8,
+          "tested": 6,
+          "verified_first_try": 1,
+          "decorative": 4,
+          "mis_set_dropped": 1,
+          "untested": 2,
+          "already_true": 0,
+          "mis_set_reset_verified": 0,
+          "survived_share": 0.167
+        }
+      ],
+      "rows": [
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.5",
+          "verdict": "mis_set",
+          "summary": "spend share 0.51 (past 0.5): exit instead of dual_source; 0.49 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 10",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 11 (past 10): exit instead of dual_source; 9 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 2",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.95 (past 2): exit instead of dual_source; 2.05 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-01",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup current ratio < 1.5",
+          "verdict": "untested",
+          "summary": "backup current ratio < 1.5: untested (no value today for backup current ratio)"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "mis_set",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 11",
+          "verdict": "verified",
+          "summary": "lead time weeks 13 (past 12): exit instead of dual_source; 11 (short of it): exit instead of dual_source → mis-set | reset lead time weeks > 12 → 11: lead time weeks 12 (past 11): exit instead of dual_source; 10 (short of it): still dual_source → verified",
+          "reset": 12
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "verified",
+          "summary": "current ratio 1.45 (past 1.5): exit instead of dual_source; 1.55 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-02",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 12",
+          "verdict": "verified",
+          "summary": "lead time weeks 13 (past 12): exit instead of dual_source; 11 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.45 (past 1.5): exit instead of dual_source; 1.55 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "lead time weeks > 14",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 15 (past 14): exit instead of dual_source; 13 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "current ratio < 2",
+          "verdict": "decorative",
+          "summary": "current ratio 1.95 (past 2): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-03",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup lead time weeks > 10",
+          "verdict": "untested",
+          "summary": "backup lead time weeks > 10: untested (no value today for backup lead time weeks)"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.25",
+          "verdict": "mis_set",
+          "summary": "spend share 0.26 (past 0.25): exit instead of dual_source; 0.24 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 28",
+          "verdict": "verified",
+          "summary": "lead time weeks 31 (past 30): exit instead of dual_source; 29 (short of it): exit instead of dual_source → mis-set | reset lead time weeks > 30 → 28: lead time weeks 29 (past 28): exit instead of dual_source; 27 (short of it): still dual_source → verified",
+          "reset": 30
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "gross margin < -0.3",
+          "verdict": "untested",
+          "summary": "gross margin < -0.3: untested (the line < -0.3 cannot be crossed (gross margin cannot go below it))"
+        },
+        {
+          "supplier": "SUP-04",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.5",
+          "verdict": "mis_set",
+          "summary": "spend share 0.51 (past 0.5): exit instead of dual_source; 0.49 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 8",
+          "verdict": "verified",
+          "summary": "lead time weeks 11 (past 10): exit instead of dual_source; 9 (short of it): exit instead of dual_source → mis-set | reset lead time weeks > 10 → 8: lead time weeks 9 (past 8): exit instead of dual_source; 7 (short of it): still dual_source → verified",
+          "reset": 10
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.45 (past 1.5): exit instead of dual_source; 1.55 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "gross margin < 0.06",
+          "verdict": "verified",
+          "summary": "gross margin 0.04 (past 0.05): exit instead of dual_source; 0.06 (short of it): exit instead of dual_source → mis-set | reset gross margin < 0.05 → 0.06: gross margin 0.05 (past 0.06): exit instead of dual_source; 0.07 (short of it): still dual_source → verified",
+          "reset": 0.05
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "revenue change pct < -10",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -11 (past -10): exit instead of dual_source; -9 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 3.5",
+          "verdict": "mis_set",
+          "summary": "debt to equity 3.55 (past 3.5): exit instead of dual_source; 3.45 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-05",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup current ratio < 1.2",
+          "verdict": "untested",
+          "summary": "backup current ratio < 1.2: untested (no value today for backup current ratio)"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.3",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.25 (past 1.3): exit instead of dual_source; 1.35 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.4",
+          "verdict": "mis_set",
+          "summary": "spend share 0.41 (past 0.4): exit instead of dual_source; 0.39 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 4.5",
+          "verdict": "verified",
+          "summary": "debt to equity 4.55 (past 4.5): exit instead of dual_source; 4.45 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-06",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "lead time weeks > 10",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 11 (past 10): exit instead of dual_source; 9 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.25",
+          "verdict": "mis_set",
+          "summary": "spend share 0.26 (past 0.25): exit instead of dual_source; 0.24 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 10",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 11 (past 10): exit instead of dual_source; 9 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1",
+          "verdict": "mis_set",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 2",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 3 (past 2): exit instead of dual_source; 2 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "gross margin < 0.1",
+          "verdict": "mis_set",
+          "summary": "gross margin 0.09 (past 0.1): exit instead of dual_source; 0.11 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-07",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "lead time weeks > 8",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 9 (past 8): exit instead of dual_source; 7 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.3",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.25 (past 1.3): exit instead of dual_source; 1.35 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "verified",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-08",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "current ratio < 1",
+          "verdict": "mis_set",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "sanctions matches > 0",
+          "verdict": "verified",
+          "summary": "sanctions matches 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "rules",
+          "tripwire": "spend share > 0.55",
+          "verdict": "mis_set",
+          "summary": "spend share 0.56 (past 0.55): exit instead of dual_source; 0.54 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 4",
+          "verdict": "verified",
+          "summary": "debt to equity 4.05 (past 4): exit instead of dual_source; 3.95 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-09",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.28",
+          "verdict": "verified",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): exit instead of dual_source → mis-set | reset spend share > 0.3 → 0.28: spend share 0.29 (past 0.28): exit instead of dual_source; 0.27 (short of it): still dual_source → verified",
+          "reset": 0.3
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.3",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.25 (past 1.3): exit instead of dual_source; 1.35 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "debt to equity > 3",
+          "verdict": "decorative",
+          "summary": "debt to equity 3.05 (past 3): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "revenue change pct < 10",
+          "verdict": "mis_set",
+          "summary": "revenue change pct 9 (past 10): exit instead of dual_source; 11 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-10",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "lead time weeks > 4",
+          "verdict": "decorative",
+          "summary": "lead time weeks 5 (past 4): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "mis_set",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.2",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.15 (past 1.2): exit instead of dual_source; 1.25 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-11",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup debt to equity > 3",
+          "verdict": "untested",
+          "summary": "backup debt to equity > 3: untested (no value today for backup debt to equity)"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1",
+          "verdict": "mis_set",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "debt to equity > 4",
+          "verdict": "mis_set",
+          "summary": "debt to equity 4.05 (past 4): exit instead of dual_source; 3.95 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-12",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1",
+          "verdict": "mis_set",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.35",
+          "verdict": "mis_set",
+          "summary": "spend share 0.36 (past 0.35): exit instead of dual_source; 0.34 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): still dual_source → verified"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < -15",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -16 (past -15): exit instead of dual_source; -14 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-13",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 2",
+          "verdict": "mis_set",
+          "summary": "debt to equity 2.05 (past 2): exit instead of dual_source; 1.95 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "mis_set",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.05",
+          "verdict": "verified",
+          "summary": "current ratio 0.95 (past 1): exit instead of dual_source; 1.05 (short of it): exit instead of dual_source → mis-set | reset current ratio < 1 → 1.05: current ratio 1 (past 1.05): exit instead of dual_source; 1.1 (short of it): still dual_source → verified",
+          "reset": 1
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 3",
+          "verdict": "mis_set",
+          "summary": "debt to equity 3.05 (past 3): exit instead of dual_source; 2.95 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-14",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.5",
+          "verdict": "mis_set",
+          "summary": "spend share 0.51 (past 0.5): exit instead of dual_source; 0.49 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 10",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 11 (past 10): exit instead of dual_source; 9 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 1 (past 0): exit instead of dual_source; 0 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < -5",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -6 (past -5): exit instead of dual_source; -4 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "current ratio < 0.8",
+          "verdict": "mis_set",
+          "summary": "current ratio 0.75 (past 0.8): exit instead of dual_source; 0.85 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 3",
+          "verdict": "mis_set",
+          "summary": "debt to equity 3.05 (past 3): exit instead of dual_source; 2.95 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-15",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "lead time weeks > 12",
+          "verdict": "mis_set",
+          "summary": "lead time weeks 13 (past 12): exit instead of dual_source; 11 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "mis_set",
+          "summary": "spend share 0.31 (past 0.3): exit instead of dual_source; 0.29 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "decorative",
+          "summary": "current ratio 1.45 (past 1.5): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup current ratio < 1",
+          "verdict": "untested",
+          "summary": "backup current ratio < 1: untested (no value today for backup current ratio)"
+        },
+        {
+          "supplier": "SUP-16",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup debt to equity > 3",
+          "verdict": "untested",
+          "summary": "backup debt to equity > 3: untested (no value today for backup debt to equity)"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.45 (past 1.5): dual_source instead of keep; 1.55 (short of it): dual_source instead of keep → mis-set"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "mis_set",
+          "summary": "spend share 0.31 (past 0.3): dual_source instead of keep; 0.29 (short of it): dual_source instead of keep → mis-set"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "verified",
+          "summary": "risk events 12m 1 (past 0): dual_source instead of keep; 0 (short of it): still keep → verified"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 28",
+          "verdict": "verified",
+          "summary": "revenue change pct -1 (past 0): exit instead of keep; 1 (short of it): exit instead of keep → mis-set | reset revenue change pct < 0 → 28: revenue change pct 27 (past 28): dual_source instead of keep; 29 (short of it): still keep → verified",
+          "reset": 0
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 3",
+          "verdict": "mis_set",
+          "summary": "debt to equity 3.05 (past 3): dual_source instead of keep; 2.95 (short of it): dual_source instead of keep → mis-set"
+        },
+        {
+          "supplier": "SUP-17",
+          "decision": "keep",
+          "origin": "premortem",
+          "tripwire": "gross margin < 0.3",
+          "verdict": "mis_set",
+          "summary": "gross margin 0.29 (past 0.3): dual_source instead of keep; 0.31 (short of it): dual_source instead of keep → mis-set"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "decider",
+          "tripwire": "current ratio > 1.5",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.55 (past 1.5): dual_source instead of exit; 1.45 (short of it): dual_source instead of exit → mis-set"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "decider",
+          "tripwire": "debt to equity < 5",
+          "verdict": "verified",
+          "summary": "debt to equity 4.95 (past 5): dual_source instead of exit; 5.05 (short of it): still exit → verified"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "decider",
+          "tripwire": "spend share < 0.3",
+          "verdict": "decorative",
+          "summary": "spend share 0.29 (past 0.3): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "decider",
+          "tripwire": "gross margin > 0.2",
+          "verdict": "decorative",
+          "summary": "gross margin 0.21 (past 0.2): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "premortem",
+          "tripwire": "backup current ratio < 1.5",
+          "verdict": "untested",
+          "summary": "backup current ratio < 1.5: untested (no value today for backup current ratio)"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "premortem",
+          "tripwire": "revenue change pct < -15",
+          "verdict": "decorative",
+          "summary": "revenue change pct -16 (past -15): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "premortem",
+          "tripwire": "backup debt to equity > 5",
+          "verdict": "untested",
+          "summary": "backup debt to equity > 5: untested (no value today for backup debt to equity)"
+        },
+        {
+          "supplier": "SUP-18",
+          "decision": "exit",
+          "origin": "premortem",
+          "tripwire": "risk events 12m > 0",
+          "verdict": "decorative",
+          "summary": "risk events 12m 1 (past 0): still exit → decorative"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.3",
+          "verdict": "decorative",
+          "summary": "spend share 0.31 (past 0.3): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.2",
+          "verdict": "mis_set",
+          "summary": "current ratio 1.15 (past 1.2): exit instead of dual_source; 1.25 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "debt to equity > 5",
+          "verdict": "mis_set",
+          "summary": "debt to equity 5.05 (past 5): exit instead of dual_source; 4.95 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "gross margin < 0.05",
+          "verdict": "mis_set",
+          "summary": "gross margin 0.04 (past 0.05): exit instead of dual_source; 0.06 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-19",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "backup debt to equity > 3",
+          "verdict": "untested",
+          "summary": "backup debt to equity > 3: untested (no value today for backup debt to equity)"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "spend share > 0.25",
+          "verdict": "decorative",
+          "summary": "spend share 0.26 (past 0.25): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "lead time weeks > 12",
+          "verdict": "decorative",
+          "summary": "lead time weeks 13 (past 12): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "current ratio < 1.5",
+          "verdict": "decorative",
+          "summary": "current ratio 1.45 (past 1.5): still dual_source → decorative"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "decider",
+          "tripwire": "risk events 12m > 2",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 3 (past 2): exit instead of dual_source; 2 (short of it): exit instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "risk events 12m > 1",
+          "verdict": "mis_set",
+          "summary": "risk events 12m 2 (past 1): exit instead of dual_source; 1 (short of it): keep instead of dual_source → mis-set"
+        },
+        {
+          "supplier": "SUP-20",
+          "decision": "dual_source",
+          "origin": "premortem",
+          "tripwire": "revenue change pct < 0",
+          "verdict": "mis_set",
+          "summary": "revenue change pct -1 (past 0): exit instead of dual_source; 1 (short of it): exit instead of dual_source → mis-set"
+        }
+      ]
     }
   }
 }
